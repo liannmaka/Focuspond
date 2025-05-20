@@ -1,19 +1,27 @@
 @import "tailwindcss";
 
+:root {
+  --egg-shell-white: #fdf9f3;
+  --soft-peach: #ffe5b4;
+  --apricot: #ff9472;
+  --walnut-brown: #8b5e3c;
+  --sage-green: #a8c686;
+}
+
+@theme inline {
+  --color-base-background: var(--egg-shell-white);
+  --color-light-background: var(--soft-peach);
+  --color-accent-button: var(--apricot);
+  --color-dark-accent: var(--walnut-brown);
+  --color-secondary-accent: var(--sage-green);
+  --font-manrope: var(--font-manrope);
+  --font-sora: var(--font-sora);
+}
 
 /* Default light mode for theme */
 /* :root {
   --background: #ffffff;
   --foreground: #171717;
-} */
-
-
-/* come back to this theme below after the release of MVP */
-/* @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 } */
 
 /* system preference detection theme switcher */
@@ -24,8 +32,7 @@
   }
 } */
 
-/* body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-} */
+body {
+  background: var(--egg-shell-white);
+  color: var(--walnut-brown);
+}
