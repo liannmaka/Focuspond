@@ -31,7 +31,3 @@
     --foreground: #ededed;
   }
 } */
-
-body {
-  background-color: var(--egg-shell-white);
-}
