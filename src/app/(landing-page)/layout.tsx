@@ -8,7 +8,7 @@ export default function LandingPageLayout({
   return (
     <div>
       <NavBar />
-      <main className="px-8 bg-base-background text-dark-accent">
+      <main className="pt-[69px] px-8">
         <div>{children}</div>
       </main>
     </div>

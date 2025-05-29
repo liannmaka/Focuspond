@@ -55,20 +55,26 @@ const NavBar: React.FC = () => {
   return (
     <header
       className={clsx(
-        "px-8 py-4 fixed w-full z-50 transition-transform duration-300 ease-in-out bg-base-background text-dark-accent md:py-6",
+        "fixed top-4 left-4 right-4 z-50 backdrop-blur-md rounded-xl px-6 transition-transform duration-300 ease-in-out",
         isVisible ? "translate-y-0 shadow-md" : "-translate-y-full shadow-none"
       )}
     >
-      <nav className="flex justify-between items-center">
+      <nav className="flex justify-between items-center h-[69px]">
         {/* Logo and App name */}
         <div>
           <Link
             href="/"
             className="flex"
+            title="Go to the homepage"
+            aria-label="Go to the homepage"
           >
-            <div className="font-extrabold tracking-tight text-walnut-brown">
-              <span className="font-manrope text-2xl md:text-3xl">Focus</span>
-              <span className="font-sora text-accent-button text-sm">Pond</span>
+            <div className=" tracking-tight text-walnut-brown">
+              <span className="font-manrope text-2xl md:text-3xl font-bold">
+                Focus
+              </span>
+              <span className="font-sora text-accent-button text-sm font-bold">
+                Pond
+              </span>
             </div>
             {/* <div>Logo</div> */}
           </Link>
@@ -86,7 +92,7 @@ const NavBar: React.FC = () => {
                 <span className="mr-2 text-base group-hover:scale-110 transition-transform duration-200">
                   {icon}
                 </span>
-                <span className="font-sora text-sm tracking-wide">
+                <span className="font-sora font-normal text-sm tracking-wide">
                   {linkLabel}
                 </span>
               </div>
@@ -144,7 +150,7 @@ const NavBar: React.FC = () => {
                   {icon}
                 </span>
                 {/* className="font-manrope text-sm" */}
-                <span className="font-sora text-sm tracking-wide">
+                <span className="font-sora font-normal text-sm tracking-wide">
                   {linkLabel}
                 </span>
               </div>
