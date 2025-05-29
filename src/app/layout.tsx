@@ -5,6 +5,11 @@ import "@/styles/globals.css";
 const manrope = localFont({
   src: [
     {
+      path: "../../public/fonts/manrope-regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
       path: "../../public/fonts/manrope-600.woff2",
       weight: "600",
       style: "normal",
@@ -23,6 +28,21 @@ const sora = localFont({
     {
       path: "../../public/fonts/sora-regular.woff2",
       weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/sora-500.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/sora-600.woff2",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/sora-700.woff2",
+      weight: "700",
       style: "normal",
     },
   ],
