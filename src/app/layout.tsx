@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "@/styles/globals.css";
+import "aos/dist/aos.css";
 
 const manrope = localFont({
   src: [

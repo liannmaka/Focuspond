@@ -16,17 +16,17 @@ const NavBar: React.FC = () => {
 
   const navLinks = [
     {
-      href: "/pitch",
+      href: "#pitch",
       linkLabel: "How It Helps",
       icon: <HelpingHand size={18} />,
     },
     {
-      href: "/audience",
+      href: "#audience",
       linkLabel: "Made For you",
       icon: <Gift size={18} />,
     },
     {
-      href: "/benefits",
+      href: "#benefits",
       linkLabel: "Standout Benefits",
       icon: <Sparkles size={18} />,
     },
@@ -38,7 +38,7 @@ const NavBar: React.FC = () => {
     const controlNavBar = () => {
       const currentScrollY = window.scrollY;
 
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+      if (currentScrollY > lastScrollY && currentScrollY > 40) {
         setIsVisible(false);
       } else {
         setIsVisible(true);
@@ -50,7 +50,7 @@ const NavBar: React.FC = () => {
     window.addEventListener("scroll", controlNavBar);
 
     return () => window.removeEventListener("scroll", controlNavBar);
-  }, []);
+  }, [isVisible]);
 
   return (
     <header
@@ -59,7 +59,7 @@ const NavBar: React.FC = () => {
         isVisible ? "translate-y-0 shadow-md" : "-translate-y-full shadow-none"
       )}
     >
-      <nav className="flex justify-between items-center h-[69px]">
+      <nav className="max-w-7xl mx-auto flex justify-between items-center h-[69px]">
         {/* Logo and App name */}
         <div>
           <Link
