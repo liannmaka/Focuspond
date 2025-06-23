@@ -2,33 +2,44 @@
 
 import Button from "@/components/ui/Button";
 import Link from "next/link";
+import Image from "next/image";
 import clsx from "clsx";
-import { Menu, X, HelpingHand, Gift, Sparkles } from "lucide-react";
+import {
+  Menu,
+  X,
+  LayoutGrid,
+  PlayCircle,
+  Lightbulb,
+  HelpCircle,
+} from "lucide-react";
 import { useEffect, useState } from "react";
-// import { usePathname } from "next/navigation";
 
 const NavBar: React.FC = () => {
   const [isVisible, setIsVisible] = useState<boolean>(true);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  // const pathName = usePathname();
   const toggleMenu = () => setIsOpen((prev) => !prev);
 
   const navLinks = [
     {
-      href: "#pitch",
-      linkLabel: "How It Helps",
-      icon: <HelpingHand size={18} />,
+      href: "#features",
+      linkLabel: "Features",
+      icon: <LayoutGrid size={16} />,
     },
     {
-      href: "#audience",
-      linkLabel: "Made For you",
-      icon: <Gift size={18} />,
+      href: "#how-it-works",
+      linkLabel: "How It Works",
+      icon: <PlayCircle size={16} />,
     },
     {
       href: "#benefits",
-      linkLabel: "Standout Benefits",
-      icon: <Sparkles size={18} />,
+      linkLabel: "Why FocusPond?",
+      icon: <Lightbulb size={16} />,
+    },
+    {
+      href: "#faq",
+      linkLabel: "FAQ",
+      icon: <HelpCircle size={16} />,
     },
   ];
 
@@ -68,15 +79,24 @@ const NavBar: React.FC = () => {
             title="Go to the homepage"
             aria-label="Go to the homepage"
           >
-            <div className=" tracking-tight text-walnut-brown">
-              <span className="font-manrope text-2xl md:text-3xl font-bold">
-                Focus
+            <div className=" tracking-tighter text-walnut-brown flex">
+              <span className="font-manrope text-2xl md:text-3xl font-bold flex">
+                F
+                <span className="inline-flex justify-center">
+                  <Image
+                    src="/svgs/brand-logo.png"
+                    alt="brand logo"
+                    width={35}
+                    height={35}
+                    priority
+                  />
+                </span>
+                cus
               </span>
-              <span className="font-sora text-accent-button text-sm font-bold">
+              <span className="font-sora text-accent-button text-sm font-bold self-end">
                 Pond
               </span>
             </div>
-            {/* <div>Logo</div> */}
           </Link>
         </div>
 
@@ -88,8 +108,8 @@ const NavBar: React.FC = () => {
               key={href}
               className="group inline-flex items-center px-2 py-1 rounded-md hover:text-accent-button transition-colors duration-200"
             >
-              <div className="flex">
-                <span className="mr-2 text-base group-hover:scale-110 transition-transform duration-200">
+              <div className="flex items-center">
+                <span className="mr-1 text-base group-hover:scale-110 transition-transform duration-200">
                   {icon}
                 </span>
                 <span className="font-sora font-normal text-sm tracking-wide">
@@ -101,20 +121,13 @@ const NavBar: React.FC = () => {
         </div>
 
         {/* Buttons */}
-        <div className="hidden items-center gap-4 lg:flex">
-          <Button
-            href="/login"
-            variant="outline"
-            size="sm"
-          >
-            Login
-          </Button>
+        <div className="hidden lg:flex">
           <Button
             href="/signup"
             size="sm"
-            className="hover:brightness-110 border border-accent-button"
+            className="border border-accent-button"
           >
-            Get started for free
+            Get started
           </Button>
         </div>
 
@@ -137,7 +150,7 @@ const NavBar: React.FC = () => {
         )}
       >
         {/* Navigation */}
-        <div className="flex flex-col py-8 space-y-4.5">
+        <div className="flex flex-col pb-7 pt-5 space-y-4.5">
           {navLinks.map(({ href, linkLabel, icon }) => (
             <Link
               href={href}
@@ -145,11 +158,9 @@ const NavBar: React.FC = () => {
               className="group inline-flex items-center px-2 py-2 rounded-md hover:text-accent-button transition-colors duration-200 border border-dark-accent"
             >
               <div className="flex">
-                {/* className="self-center mr-2.5" */}
                 <span className="mr-2 text-base group-hover:scale-110 transition-transform duration-200">
                   {icon}
                 </span>
-                {/* className="font-manrope text-sm" */}
                 <span className="font-sora font-normal text-sm tracking-wide">
                   {linkLabel}
                 </span>
@@ -159,20 +170,13 @@ const NavBar: React.FC = () => {
         </div>
 
         {/* Buttons */}
-        <div className="items-center gap-4 flex pb-3">
-          <Button
-            href="/login"
-            variant="outline"
-            size="sm"
-          >
-            Login
-          </Button>
+        <div className="items-center gap-4 flex pb-5">
           <Button
             href="/signup"
             size="sm"
-            className="hover:brightness-110 border border-accent-button"
+            className="border border-accent-button"
           >
-            Get started for free
+            Get started
           </Button>
         </div>
       </div>
