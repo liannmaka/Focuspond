@@ -61,7 +61,7 @@ const NavBar: React.FC = () => {
     window.addEventListener("scroll", controlNavBar);
 
     return () => window.removeEventListener("scroll", controlNavBar);
-  }, [isVisible]);
+  }, []);
 
   return (
     <header
