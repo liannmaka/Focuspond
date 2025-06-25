@@ -1,36 +1,60 @@
 "use client";
 
-import Button from "@/components/ui/Button";
+import SignupButton from "./ui/SignupButton";
 import Link from "next/link";
 import clsx from "clsx";
-import { Menu, X, HelpingHand, Gift, Sparkles } from "lucide-react";
-import { useEffect, useState } from "react";
-// import { usePathname } from "next/navigation";
+import {
+  Menu,
+  X,
+  LayoutGrid,
+  PlayCircle,
+  Lightbulb,
+  HelpCircle,
+} from "lucide-react";
+import { useEffect, useState, ReactNode } from "react";
+
+interface NavLink {
+  href: string;
+  linkLabel: string;
+  icon: ReactNode;
+}
+
+const navLinks: NavLink[] = [
+  {
+    href: "#features",
+    linkLabel: "Features",
+    icon: <LayoutGrid size={16} />,
+  },
+  {
+    href: "#how-it-works",
+    linkLabel: "How It Works",
+    icon: <PlayCircle size={16} />,
+  },
+  {
+    href: "#benefits",
+    linkLabel: "Why FocusPond?",
+    icon: <Lightbulb size={16} />,
+  },
+  {
+    href: "#faq",
+    linkLabel: "FAQ",
+    icon: <HelpCircle size={16} />,
+  },
+];
 
 const NavBar: React.FC = () => {
   const [isVisible, setIsVisible] = useState<boolean>(true);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  // const pathName = usePathname();
   const toggleMenu = () => setIsOpen((prev) => !prev);
 
-  const navLinks = [
-    {
-      href: "#pitch",
-      linkLabel: "How It Helps",
-      icon: <HelpingHand size={18} />,
-    },
-    {
-      href: "#audience",
-      linkLabel: "Made For you",
-      icon: <Gift size={18} />,
-    },
-    {
-      href: "#benefits",
-      linkLabel: "Standout Benefits",
-      icon: <Sparkles size={18} />,
-    },
-  ];
+  const linkStyles =
+    "group inline-flex items-center px-2 rounded-md hover:text-accent-button transition-colors duration-200";
+
+  const iconStyles =
+    "text-base group-hover:scale-110 transition-transform duration-200";
+
+  const linkLabelStyles = "font-sora font-normal text-sm tracking-wide";
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -50,7 +74,7 @@ const NavBar: React.FC = () => {
     window.addEventListener("scroll", controlNavBar);
 
     return () => window.removeEventListener("scroll", controlNavBar);
-  }, [isVisible]);
+  }, []);
 
   return (
     <header
@@ -59,24 +83,21 @@ const NavBar: React.FC = () => {
         isVisible ? "translate-y-0 shadow-md" : "-translate-y-full shadow-none"
       )}
     >
-      <nav className="max-w-7xl mx-auto flex justify-between items-center h-[69px]">
+      <nav className="max-w-7xl mx-auto flex justify-between items-center h-[var(--header-height)]">
         {/* Logo and App name */}
         <div>
           <Link
             href="/"
-            className="flex"
+            className="flex items-center text-walnut-brown tracking-tighter"
             title="Go to the homepage"
             aria-label="Go to the homepage"
           >
-            <div className=" tracking-tight text-walnut-brown">
-              <span className="font-manrope text-2xl md:text-3xl font-bold">
-                Focus
-              </span>
-              <span className="font-sora text-accent-button text-sm font-bold">
-                Pond
-              </span>
-            </div>
-            {/* <div>Logo</div> */}
+            <span className="font-manrope text-2xl md:text-3xl font-bold flex items-center">
+              Focus
+            </span>
+            <span className="font-sora text-accent-button text-sm font-bold self-end">
+              Pond
+            </span>
           </Link>
         </div>
 
@@ -86,94 +107,64 @@ const NavBar: React.FC = () => {
             <Link
               href={href}
               key={href}
-              className="group inline-flex items-center px-2 py-1 rounded-md hover:text-accent-button transition-colors duration-200"
+              className={clsx(linkStyles, "py-1")}
             >
-              <div className="flex">
-                <span className="mr-2 text-base group-hover:scale-110 transition-transform duration-200">
-                  {icon}
-                </span>
-                <span className="font-sora font-normal text-sm tracking-wide">
-                  {linkLabel}
-                </span>
+              <div className="flex items-center">
+                <span className={clsx(iconStyles, "mr-1")}>{icon}</span>
+                <span className={clsx(linkLabelStyles)}>{linkLabel}</span>
               </div>
             </Link>
           ))}
         </div>
 
-        {/* Buttons */}
-        <div className="hidden items-center gap-4 lg:flex">
-          <Button
-            href="/login"
-            variant="outline"
-            size="sm"
-          >
-            Login
-          </Button>
-          <Button
-            href="/signup"
-            size="sm"
-            className="hover:brightness-110 border border-accent-button"
-          >
-            Get started for free
-          </Button>
+        {/* Button */}
+        <div className="hidden lg:flex">
+          <SignupButton />
         </div>
 
         {/* Hamburger menu*/}
         <div className="flex items-center lg:hidden">
-          <div
+          <button
             onClick={toggleMenu}
+            aria-expanded={isOpen}
+            aria-controls="mobile-menu"
+            aria-label="Toggle navigation menu"
             className="cursor-pointer bg-light-background text-dark-accent p-1 rounded-md hover:scale-[1.04]"
           >
             {isOpen ? <X /> : <Menu />}
-          </div>
+          </button>
         </div>
       </nav>
 
       {/* Mobile View */}
       <div
+        id="mobile-menu"
         className={clsx(
           "lg:hidden transition-all duration-300 ease-in-out",
-          isOpen ? "max-h-80 opacity-100" : "max-h-0 opacity-0 overflow-hidden"
+          isOpen
+            ? "max-h-80 opacity-100 pointer-events-auto"
+            : "max-h-0 opacity-0 pointer-events-none overflow-hidden"
         )}
       >
-        {/* Navigation */}
-        <div className="flex flex-col py-8 space-y-4.5">
+        {/* Mobile Navigation */}
+        <div className="flex flex-col pb-7 pt-5 space-y-4.5">
           {navLinks.map(({ href, linkLabel, icon }) => (
             <Link
               href={href}
               key={href}
-              className="group inline-flex items-center px-2 py-2 rounded-md hover:text-accent-button transition-colors duration-200 border border-dark-accent"
+              className={clsx(linkStyles, "py-2 border border-dark-accent")}
             >
-              <div className="flex">
-                {/* className="self-center mr-2.5" */}
-                <span className="mr-2 text-base group-hover:scale-110 transition-transform duration-200">
-                  {icon}
-                </span>
-                {/* className="font-manrope text-sm" */}
-                <span className="font-sora font-normal text-sm tracking-wide">
-                  {linkLabel}
-                </span>
+              <div className="flex items-center">
+                <span className={clsx(iconStyles, "mr-2")}>{icon}</span>
+                <span className={clsx(linkLabelStyles)}>{linkLabel}</span>
               </div>
             </Link>
           ))}
         </div>
 
-        {/* Buttons */}
-        <div className="items-center gap-4 flex pb-3">
-          <Button
-            href="/login"
-            variant="outline"
-            size="sm"
-          >
-            Login
-          </Button>
-          <Button
-            href="/signup"
-            size="sm"
-            className="hover:brightness-110 border border-accent-button"
-          >
-            Get started for free
-          </Button>
+        {/* Button */}
+        <div className="items-center gap-4 flex pb-5">
+          <SignupButton />
         </div>
       </div>
     </header>

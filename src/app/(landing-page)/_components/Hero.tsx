@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Hero: React.FC = () => {
   return (
-    <section className="relative py-14 md:px-6 overflow-hidden min-h-[calc(100vh-69px)] flex items-center justify-center">
+    <section className="relative py-14 md:px-6 overflow-hidden min-h-[calc(100vh-var(--header-height))] flex items-center justify-center">
       <div className="max-w-7xl grid md:grid-cols-2 gap-12 items-center h-full">
         {/* Text Section */}
         <div>
