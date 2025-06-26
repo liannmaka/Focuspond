@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ChevronsRight } from "lucide-react";
 
 const Hero: React.FC = () => {
   return (
@@ -17,37 +18,21 @@ const Hero: React.FC = () => {
           <div className="mt-8 flex space-x-4 font-sora">
             <Link
               href="/signup"
-              className="bg-[#ff9472] text-white font-semibold px-6 py-3 rounded-lg tracking-wider shadow-md hover:scale-[1.02] transition hidden sm:inline-block hover:brightness-110"
+              aria-label="Sign up for FocusPond"
+              className="bg-accent-button text-white font-semibold px-4 py-3 rounded-lg tracking-wider shadow-md hover:scale-[1.02] transition text-sm sm:text-base sm:px-6 sm:py-3"
             >
               Start free
             </Link>
-            <Link
-              href="/signup"
-              className="sm:hidden p-2 rounded-md bg-[#ff9472] text-white group"
-              title="Get started for free"
-              aria-label="Get started for free"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 transform transition-transform duration-200 group-hover:translate-x-1"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M13 7l5 5m0 0l-5 5m5-5H6"
-                />
-              </svg>
-            </Link>
 
             <Link
-              href="#pitch"
-              className="text-sm md:text-base font-medium hover:underline"
+              href="#"
+              className="group text-xs font-medium hover:underline self-center sm:text-sm inline-flex"
             >
-              Learn More →
+              <span>Learn More</span>
+              <ChevronsRight
+                aria-hidden="true"
+                className="size-4 self-center group-hover:translate-x-1 will-change-transform"
+              />
             </Link>
           </div>
         </div>
