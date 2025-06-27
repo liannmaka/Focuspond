@@ -1,10 +1,15 @@
-import Image from "next/image";
+"use client";
+
 import Link from "next/link";
+import Lottie from "lottie-react";
+import heroImage from "../../../../public/lotties/hero-illustration-3.json";
 import { ChevronsRight } from "lucide-react";
+
+console.log(heroImage, "check this out when you run the server");
 
 const Hero: React.FC = () => {
   return (
-    <section className="relative py-14 md:px-6 overflow-hidden min-h-[calc(100vh-var(--header-height))] flex items-center justify-center">
+    <section className="relative py-14 md:px-6 lg:px-10 overflow-hidden min-h-[calc(100vh-var(--header-height))] flex items-center justify-center">
       <div className="max-w-7xl grid md:grid-cols-2 gap-12 items-center h-full">
         {/* Text Section */}
         <div>
@@ -15,7 +20,7 @@ const Hero: React.FC = () => {
             Turn your low-energy days into consistent wins with focused, mindful
             progress.
           </p>
-          <div className="mt-8 flex space-x-4 font-sora">
+          <div className="mt-8 flex space-x-4 md:space-x-6 font-sora">
             <Link
               href="/signup"
               aria-label="Sign up for FocusPond"
@@ -38,8 +43,9 @@ const Hero: React.FC = () => {
         </div>
 
         {/* Visual Section */}
-        <div className="relative">
-          <div className="bg-white/30 backdrop-blur-lg rounded-3xl p-8 shadow-lg ring-1 ring-white/10">
+        {/* relative class for the below div */}
+        <div>
+          {/* <div className="bg-white/30 backdrop-blur-lg rounded-3xl p-8 shadow-lg ring-1 ring-white/10">
             <Image
               src="/svgs/undraw.svg"
               alt="Hero illustration"
@@ -48,7 +54,9 @@ const Hero: React.FC = () => {
               className="w-full h-auto"
               priority
             />
-          </div>
+          </div> */}
+
+          <Lottie animationData={heroImage} />
         </div>
       </div>
     </section>
