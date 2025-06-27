@@ -140,7 +140,7 @@ const NavBar: React.FC = () => {
       <div
         id="mobile-menu"
         className={clsx(
-          "lg:hidden transition-all duration-300 ease-in-out",
+          "lg:hidden transition-all duration-300 ease-in-out will-change-transform ",
           isOpen
             ? "max-h-80 opacity-100 pointer-events-auto"
             : "max-h-0 opacity-0 pointer-events-none overflow-hidden"

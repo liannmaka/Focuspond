@@ -8,7 +8,7 @@ export default function LandingPageLayout({
   return (
     <div>
       <NavBar />
-      <main className="pt-[69px] px-8">
+      <main className="pt-[var(--header-height)] px-8">
         <div>{children}</div>
       </main>
     </div>
