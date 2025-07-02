@@ -9,8 +9,8 @@ console.log(heroImage, "check this out when you run the server");
 
 const Hero: React.FC = () => {
   return (
-    <section className="relative py-14 md:px-6 lg:px-10 overflow-hidden min-h-[calc(100vh-var(--header-height))] flex items-center justify-center">
-      <div className="max-w-7xl grid md:grid-cols-2 gap-12 items-center h-full">
+    <section className="relative py-14 px-8 lg:px-13 overflow-hidden min-h-[calc(100vh-var(--header-height))] flex items-center justify-center">
+      <div className="grid md:grid-cols-2 gap-12 items-center h-full">
         {/* Text Section */}
         <div>
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-sora font-semibold leading-tight">
@@ -43,19 +43,7 @@ const Hero: React.FC = () => {
         </div>
 
         {/* Visual Section */}
-        {/* relative class for the below div */}
-        <div>
-          {/* <div className="bg-white/30 backdrop-blur-lg rounded-3xl p-8 shadow-lg ring-1 ring-white/10">
-            <Image
-              src="/svgs/undraw.svg"
-              alt="Hero illustration"
-              width={400}
-              height={400}
-              className="w-full h-auto"
-              priority
-            />
-          </div> */}
-
+        <div className=" bg-white/30 backdrop-blur-lg rounded-3xl p-8 shadow-lg ring-1 ring-white/10">
           <Lottie animationData={heroImage} />
         </div>
       </div>

@@ -4,11 +4,18 @@ import React from "react";
 import { Brain, Turtle, Zap, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 import SectionDivider from "@/components/ui/SectionDivider";
+import { LucideIcon } from "lucide-react";
+
+interface AudienceData {
+  icon: LucideIcon;
+  iconColor: string;
+  title: string;
+  description: string;
+}
 
 // Centralized styles
 const styles = {
-  section: "pb-28 pt-16 bg-[#fdf9f3] relative",
-  container: "container mx-auto px-4",
+  section: "py-10 px-8 lg:px-13 bg-[#fdf9f3] relative",
   grid: "grid grid-cols-1 sm:grid-cols-2 gap-8 lg:gap-10",
   cardBase:
     "relative rounded-2xl shadow-md border border-[#ffe5b4]/40 p-6 pt-10 hover:shadow-lg transition-shadow",
@@ -16,30 +23,30 @@ const styles = {
   description: "mt-2 text-sm text-[#5c4a38] leading-relaxed font-manrope",
 };
 
-const audience = [
+const audience: AudienceData[] = [
   {
-    Icon: Brain,
+    icon: Brain,
     iconColor: "text-[#ff9472]",
     title: "Overthinkers & Perfectionists",
     description:
       "Stop wondering where to begin, pick your “frog of the day” and dive right in.",
   },
   {
-    Icon: Turtle,
+    icon: Turtle,
     iconColor: "text-[#a8c686]",
     title: "Chronic Procrastinators",
     description:
       "Break big tasks into a single “frog of the day” so you actually get started.",
   },
   {
-    Icon: Zap,
+    icon: Zap,
     iconColor: "text-yellow-500",
     title: "Neurodivergent Brains",
     description:
       "Flexible energy check + mini‑frog option keeps you moving without shame.",
   },
   {
-    Icon: BookOpen,
+    icon: BookOpen,
     iconColor: "text-[#8b5e3c]",
     title: "Busy Students & Remote Workers",
     description:
@@ -59,8 +66,13 @@ const WhoItsForSection = () => {
         viewport={{ once: true, amount: 0.2 }}
         variants={{ hidden: {}, visible: {} }}
       >
-        <h2 className="sr-only">Who This App Is For</h2>
-        <div className={styles.container}>
+        <div className="text-center">
+          <h2 className="inline-block px-4 py-1 text-lg font-sora bg-[#ffe5b4]/30 text-[#8b5e3c] mb-9 font-semibold rounded-full">
+            Who This App Is For
+          </h2>
+        </div>
+
+        <div>
           <div className={styles.grid}>
             {audience.map((item, idx) => {
               const bgColor =
@@ -79,7 +91,7 @@ const WhoItsForSection = () => {
                   >
                     {/* Floating icon */}
                     <div className={`absolute -top-4 ${item.iconColor}/20`}>
-                      <item.Icon
+                      <item.icon
                         size={32}
                         className={`${item.iconColor}`}
                       />

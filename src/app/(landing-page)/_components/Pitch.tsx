@@ -1,17 +1,4 @@
 "use client";
-// import Image from "next/image";
-// {/* Visual or Highlight Box */}
-//     <div className="relative">
-//       <div className="bg-white/30 backdrop-blur-xl rounded-3xl p-8 shadow-lg ring-1 ring-white/20">
-//         <Image
-//           src="/svgs/pitch-illustration.svg"
-//           alt="Productivity tools illustration"
-//           width={400}
-//           height={400}
-//           className="w-full h-auto"
-//         />
-//       </div>
-//     </div>
 
 import AOS from "aos";
 import { AlertCircle, Zap, EyeOff, Sun, BarChart2, Layers } from "lucide-react";
@@ -122,9 +109,8 @@ const Pitch = () => {
             <p className="mt-3 font-manrope text-sm/7 text-walnut-brown/90">
               <strong>How FocusPond fixes it:</strong> Every Pomodoro and Frog
               completion is logged in your Analytics Dashboard. See your weekly
-              focus time, Frog-completion rate, and streak at a glance. Each win
-              also earns a tiny “garden bloom” icon, so you visually track
-              progress, not just busywork.
+              focus time, Frog-completion rate, and streak at a glance. so you
+              visually track progress, not just busywork.
             </p>
           </Accordion>
         </div>
@@ -262,9 +248,8 @@ const Pitch = () => {
             <p className="mt-3 font-manrope text-sm/7 text-walnut-brown/90">
               <strong>How FocusPond fixes it:</strong> Every Pomodoro and Frog
               completion is logged in your Analytics Dashboard. See your weekly
-              focus time, Frog-completion rate, and streak at a glance. Each win
-              also earns a tiny “garden bloom” icon, so you visually track
-              progress, not just busywork.
+              focus time, Frog-completion rate, and streak at a glance. so you
+              visually track progress, not just busywork.
             </p>
           </div>
 
