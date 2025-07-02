@@ -4,6 +4,14 @@ import React from "react";
 import { Brain, Turtle, Zap, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 import SectionDivider from "@/components/ui/SectionDivider";
+import { LucideIcon } from "lucide-react";
+
+interface AudienceData {
+  icon: LucideIcon;
+  iconColor: string;
+  title: string;
+  description: string;
+}
 
 // Centralized styles
 const styles = {
@@ -15,30 +23,30 @@ const styles = {
   description: "mt-2 text-sm text-[#5c4a38] leading-relaxed font-manrope",
 };
 
-const audience = [
+const audience: AudienceData[] = [
   {
-    Icon: Brain,
+    icon: Brain,
     iconColor: "text-[#ff9472]",
     title: "Overthinkers & Perfectionists",
     description:
       "Stop wondering where to begin, pick your “frog of the day” and dive right in.",
   },
   {
-    Icon: Turtle,
+    icon: Turtle,
     iconColor: "text-[#a8c686]",
     title: "Chronic Procrastinators",
     description:
       "Break big tasks into a single “frog of the day” so you actually get started.",
   },
   {
-    Icon: Zap,
+    icon: Zap,
     iconColor: "text-yellow-500",
     title: "Neurodivergent Brains",
     description:
       "Flexible energy check + mini‑frog option keeps you moving without shame.",
   },
   {
-    Icon: BookOpen,
+    icon: BookOpen,
     iconColor: "text-[#8b5e3c]",
     title: "Busy Students & Remote Workers",
     description:
@@ -83,7 +91,7 @@ const WhoItsForSection = () => {
                   >
                     {/* Floating icon */}
                     <div className={`absolute -top-4 ${item.iconColor}/20`}>
-                      <item.Icon
+                      <item.icon
                         size={32}
                         className={`${item.iconColor}`}
                       />

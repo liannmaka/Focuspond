@@ -4,8 +4,17 @@ import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { AlertCircle, Zap, Sun, BarChart2 } from "lucide-react";
+import { LucideIcon } from "lucide-react";
 
-const painSolutionData = [
+interface PainSolutionData {
+  title: string;
+  problem: string;
+  promise: string;
+  payoff: string;
+  icon: LucideIcon;
+}
+
+const painSolutionData: PainSolutionData[] = [
   {
     title: "Procrastination & Overwhelm",
     problem:
@@ -13,7 +22,7 @@ const painSolutionData = [
     promise: "FocusPond helps you break the inertia.",
     payoff:
       "You’ll pick your Frog of the Day and dive straight into a focused 25-minute Pomodoro to gain momentum.",
-    Icon: AlertCircle,
+    icon: AlertCircle,
   },
   {
     title: "Low Energy Slumps",
@@ -22,7 +31,7 @@ const painSolutionData = [
     promise: "FocusPond meets you where you are.",
     payoff:
       "Use Mini‑Frog Mode to complete small wins and keep your streak alive on tough days.",
-    Icon: Zap,
+    icon: Zap,
   },
   {
     title: "Burnout & Unsustainable Routines",
@@ -31,7 +40,7 @@ const painSolutionData = [
     promise: "FocusPond encourages balance, not hustle.",
     payoff:
       "Alternate Pomodoros with mindful breaks, and never feel punished for missing a Frog, just keep moving.",
-    Icon: Sun,
+    icon: Sun,
   },
   {
     title: "Lack of Insight & No Sense of Progress",
@@ -40,7 +49,7 @@ const painSolutionData = [
     promise: "FocusPond makes progress visible.",
     payoff:
       "See every Frog and Pomodoro logged in your dashboard, and earn garden blooms that track real focus.",
-    Icon: BarChart2,
+    icon: BarChart2,
   },
 ];
 
@@ -62,7 +71,7 @@ const PainSolutionSection = () => {
           {/* Text Column */}
           <div className="md:w-1/2 space-y-4">
             <div className="flex items-center space-x-3">
-              <item.Icon className="w-6 h-6 text-[#ff9472]" />
+              <item.icon className="w-6 h-6 text-[#ff9472]" />
               <h3 className="text-xl font-semibold text-[#8b5e3c]">
                 {item.title}
               </h3>
@@ -87,4 +96,5 @@ const PainSolutionSection = () => {
     </section>
   );
 };
+
 export default PainSolutionSection;
