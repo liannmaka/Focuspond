@@ -83,7 +83,7 @@ const NavBar: React.FC = () => {
         isVisible ? "translate-y-0 shadow-md" : "-translate-y-full shadow-none"
       )}
     >
-      <nav className="max-w-7xl mx-auto flex justify-between items-center h-[var(--header-height)]">
+      <nav className="max-w-[90rem] mx-auto flex justify-between items-center h-[var(--header-height)]">
         {/* Logo and App name */}
         <div>
           <Link

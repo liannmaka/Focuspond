@@ -7,8 +7,7 @@ import SectionDivider from "@/components/ui/SectionDivider";
 
 // Centralized styles
 const styles = {
-  section: "pb-28 pt-16 bg-[#fdf9f3] relative",
-  container: "container mx-auto px-4",
+  section: "py-10 px-8 lg:px-13 bg-[#fdf9f3] relative",
   grid: "grid grid-cols-1 sm:grid-cols-2 gap-8 lg:gap-10",
   cardBase:
     "relative rounded-2xl shadow-md border border-[#ffe5b4]/40 p-6 pt-10 hover:shadow-lg transition-shadow",
@@ -59,8 +58,13 @@ const WhoItsForSection = () => {
         viewport={{ once: true, amount: 0.2 }}
         variants={{ hidden: {}, visible: {} }}
       >
-        <h2 className="sr-only">Who This App Is For</h2>
-        <div className={styles.container}>
+        <div className="text-center">
+          <h2 className="inline-block px-4 py-1 text-lg font-sora bg-[#ffe5b4]/30 text-[#8b5e3c] mb-9 font-semibold rounded-full">
+            Who This App Is For
+          </h2>
+        </div>
+
+        <div>
           <div className={styles.grid}>
             {audience.map((item, idx) => {
               const bgColor =

@@ -1,5 +1,6 @@
 const SectionDivider = () => {
   return (
+    // my-8
     <div className="relative my-8">
       <div className="h-px bg-light-background/30 w-full" />
       {/* 2. Centered “drop” diamond */}
