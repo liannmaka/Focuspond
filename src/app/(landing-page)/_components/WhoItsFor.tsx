@@ -13,7 +13,6 @@ interface AudienceData {
   description: string;
 }
 
-// Centralized styles
 const styles = {
   section: "py-10 px-8 lg:px-13 bg-[#fdf9f3] relative",
   grid: "grid grid-cols-1 sm:grid-cols-2 gap-8 lg:gap-10",
