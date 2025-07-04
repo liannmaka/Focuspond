@@ -55,7 +55,7 @@ const painSolutionData: PainSolutionData[] = [
 
 const PainSolutionSection = () => {
   return (
-    <section className="py-2 bg-[#fdf9f3]">
+    <section className="py-6">
       {painSolutionData.map(
         ({ title, problem, promise, payoff, Icon }, idx) => (
           <motion.div

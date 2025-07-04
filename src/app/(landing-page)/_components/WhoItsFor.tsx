@@ -14,7 +14,7 @@ interface AudienceData {
 }
 
 const styles = {
-  section: "py-10 px-8 bg-[#fdf9f3] relative",
+  section: "py-10 px-12 bg-[#fdf9f3] relative",
   grid: "grid grid-cols-1 sm:grid-cols-2 gap-8 lg:gap-10",
   cardBase:
     "relative rounded-2xl shadow-md border border-[#ffe5b4]/40 p-6 pt-10 hover:shadow-lg transition-shadow",
