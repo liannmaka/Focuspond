@@ -11,34 +11,35 @@ import {
   Lightbulb,
   HelpCircle,
 } from "lucide-react";
-import { useEffect, useState, ReactNode } from "react";
+import { useEffect, useState } from "react";
+import { LucideIcon } from "lucide-react";
 
 interface NavLink {
   href: string;
   linkLabel: string;
-  icon: ReactNode;
+  Icon: LucideIcon;
 }
 
 const navLinks: NavLink[] = [
   {
     href: "#features",
     linkLabel: "Features",
-    icon: <LayoutGrid size={16} />,
+    Icon: LayoutGrid,
   },
   {
     href: "#how-it-works",
     linkLabel: "How It Works",
-    icon: <PlayCircle size={16} />,
+    Icon: PlayCircle,
   },
   {
     href: "#benefits",
     linkLabel: "Why FocusPond?",
-    icon: <Lightbulb size={16} />,
+    Icon: Lightbulb,
   },
   {
     href: "#faq",
     linkLabel: "FAQ",
-    icon: <HelpCircle size={16} />,
+    Icon: HelpCircle,
   },
 ];
 
@@ -103,14 +104,16 @@ const NavBar: React.FC = () => {
 
         {/* Navigation Links */}
         <div className="hidden space-x-4 lg:flex">
-          {navLinks.map(({ href, linkLabel, icon }) => (
+          {navLinks.map(({ href, linkLabel, Icon }) => (
             <Link
               href={href}
               key={href}
               className={clsx(linkStyles, "py-1")}
             >
               <div className="flex items-center">
-                <span className={clsx(iconStyles, "mr-1")}>{icon}</span>
+                <span className={clsx(iconStyles, "mr-1")}>
+                  <Icon size={16} />
+                </span>
                 <span className={clsx(linkLabelStyles)}>{linkLabel}</span>
               </div>
             </Link>
@@ -148,14 +151,16 @@ const NavBar: React.FC = () => {
       >
         {/* Mobile Navigation */}
         <div className="flex flex-col pb-7 pt-5 space-y-4.5">
-          {navLinks.map(({ href, linkLabel, icon }) => (
+          {navLinks.map(({ href, linkLabel, Icon }) => (
             <Link
               href={href}
               key={href}
               className={clsx(linkStyles, "py-2 border border-dark-accent")}
             >
               <div className="flex items-center">
-                <span className={clsx(iconStyles, "mr-2")}>{icon}</span>
+                <span className={clsx(iconStyles, "mr-2")}>
+                  <Icon size={16} />
+                </span>
                 <span className={clsx(linkLabelStyles)}>{linkLabel}</span>
               </div>
             </Link>

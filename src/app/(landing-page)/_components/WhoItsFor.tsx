@@ -7,14 +7,14 @@ import SectionDivider from "@/components/ui/SectionDivider";
 import { LucideIcon } from "lucide-react";
 
 interface AudienceData {
-  icon: LucideIcon;
+  Icon: LucideIcon;
   iconColor: string;
   title: string;
   description: string;
 }
 
 const styles = {
-  section: "py-10 px-8 lg:px-13 bg-[#fdf9f3] relative",
+  section: "py-10 px-8 bg-[#fdf9f3] relative",
   grid: "grid grid-cols-1 sm:grid-cols-2 gap-8 lg:gap-10",
   cardBase:
     "relative rounded-2xl shadow-md border border-[#ffe5b4]/40 p-6 pt-10 hover:shadow-lg transition-shadow",
@@ -24,28 +24,28 @@ const styles = {
 
 const audience: AudienceData[] = [
   {
-    icon: Brain,
+    Icon: Brain,
     iconColor: "text-[#ff9472]",
     title: "Overthinkers & Perfectionists",
     description:
       "Stop wondering where to begin, pick your “frog of the day” and dive right in.",
   },
   {
-    icon: Turtle,
+    Icon: Turtle,
     iconColor: "text-[#a8c686]",
     title: "Chronic Procrastinators",
     description:
       "Break big tasks into a single “frog of the day” so you actually get started.",
   },
   {
-    icon: Zap,
+    Icon: Zap,
     iconColor: "text-yellow-500",
     title: "Neurodivergent Brains",
     description:
       "Flexible energy check + mini‑frog option keeps you moving without shame.",
   },
   {
-    icon: BookOpen,
+    Icon: BookOpen,
     iconColor: "text-[#8b5e3c]",
     title: "Busy Students & Remote Workers",
     description:
@@ -73,7 +73,7 @@ const WhoItsForSection = () => {
 
         <div>
           <div className={styles.grid}>
-            {audience.map((item, idx) => {
+            {audience.map(({ Icon, iconColor, title, description }, idx) => {
               const bgColor =
                 idx % 2 === 0 ? "bg-[#ffe5b4]/10" : "bg-[#a8c686]/10";
               return (
@@ -89,15 +89,15 @@ const WhoItsForSection = () => {
                     className={`${styles.cardBase} ${bgColor} flex flex-col h-full`}
                   >
                     {/* Floating icon */}
-                    <div className={`absolute -top-4 ${item.iconColor}/20`}>
-                      <item.icon
+                    <div className={`absolute -top-4 ${iconColor}/20`}>
+                      <Icon
                         size={32}
-                        className={`${item.iconColor}`}
+                        className={`${iconColor}`}
                       />
                     </div>
                     <div>
-                      <h3 className={styles.title}>{item.title}</h3>
-                      <p className={styles.description}>{item.description}</p>
+                      <h3 className={styles.title}>{title}</h3>
+                      <p className={styles.description}>{description}</p>
                     </div>
                   </div>
                 </motion.div>

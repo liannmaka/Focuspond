@@ -1,9 +1,9 @@
-import { ReactNode } from "react";
-import { CheckCircle, Clock, Activity, Repeat } from "lucide-react";
 import SectionDivider from "@/components/ui/SectionDivider";
+import { CheckCircle, Clock, Activity, Repeat } from "lucide-react";
+import { LucideIcon } from "lucide-react";
 
 interface Step {
-  icon: ReactNode;
+  Icon: LucideIcon;
   title: string;
   description: string;
 }
@@ -11,26 +11,26 @@ interface Step {
 const HowItWorks = () => {
   const steps: Step[] = [
     {
-      icon: <CheckCircle className="size-6 text-white" />,
+      Icon: CheckCircle,
       title: "1. Pick Your Frog",
       description:
         "Choose the day’s single most important (and difficult) task.",
     },
 
     {
-      icon: <Clock className="size-6 text-white" />,
+      Icon: Clock,
       title: "2. Start a Pomodoro",
       description:
         "Launch a 25-minute focus sprint on that Frog, no distractions allowed.",
     },
     {
-      icon: <Activity className="size-6 text-white" />,
+      Icon: Activity,
       title: "3. Track Progress",
       description:
         "Log your Pomodoros, watch your streak, and see real momentum.",
     },
     {
-      icon: <Repeat className="size-6 text-white" />,
+      Icon: Repeat,
       title: "4. Stay Consistent",
       description:
         "On low-energy days, toggle Mini-Frog Mode and use energy-based planning to keep going.",
@@ -58,14 +58,14 @@ const HowItWorks = () => {
 
           {/* Steps Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {steps.map(({ icon, title, description }) => (
+            {steps.map(({ Icon, title, description }) => (
               <div
                 key={title}
                 className="flex flex-col items-center space-y-4 rounded-2xl bg-white/80 backdrop-blur-sm border border-[#ffe5b4]/50 py-6 px-5"
               >
                 {/* Icon Circle */}
                 <div className="flex h-12 w-12 items-center justify-center rounded-full bg-accent-button">
-                  {icon}
+                  <Icon className="size-6 text-white" />
                 </div>
 
                 {/* Title */}
