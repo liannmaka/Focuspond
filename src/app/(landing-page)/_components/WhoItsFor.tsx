@@ -4,6 +4,7 @@ import React from "react";
 import { Brain, Turtle, Zap, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 import SectionDivider from "@/components/ui/SectionDivider";
+import Badge from "./../../../components/ui/Badge";
 import { LucideIcon } from "lucide-react";
 
 interface AudienceData {
@@ -14,11 +15,11 @@ interface AudienceData {
 }
 
 const styles = {
-  section: "py-10 px-12 bg-[#fdf9f3] relative",
-  grid: "grid grid-cols-1 sm:grid-cols-2 gap-8 lg:gap-10",
+  section: "py-10 px-7 lg:px-10 bg-[#fdf9f3] relative",
+  grid: "grid grid-cols-1 sm:grid-cols-2 gap-8",
   cardBase:
     "relative rounded-2xl shadow-md border border-[#ffe5b4]/40 p-6 pt-10 hover:shadow-lg transition-shadow",
-  title: "text-lg font-semibold text-[#8b5e3c] tracking-wide font-sora",
+  title: "text-base font-semibold tracking-wide font-sora",
   description: "mt-2 text-sm text-[#5c4a38] leading-relaxed font-manrope",
 };
 
@@ -65,12 +66,7 @@ const WhoItsForSection = () => {
         viewport={{ once: true, amount: 0.2 }}
         variants={{ hidden: {}, visible: {} }}
       >
-        <div className="text-center">
-          <h2 className="inline-block px-4 py-1 text-lg font-sora bg-[#ffe5b4]/30 text-[#8b5e3c] mb-9 font-semibold rounded-full">
-            Who This App Is For
-          </h2>
-        </div>
-
+        <Badge title="Who This App Is For" />
         <div>
           <div className={styles.grid}>
             {audience.map(({ Icon, iconColor, title, description }, idx) => {
