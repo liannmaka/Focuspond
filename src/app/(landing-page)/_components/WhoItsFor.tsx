@@ -18,7 +18,7 @@ const styles = {
   section: "py-10 px-7 lg:px-10 bg-[#fdf9f3] relative",
   grid: "grid grid-cols-1 sm:grid-cols-2 gap-8",
   cardBase:
-    "relative rounded-2xl shadow-md border border-[#ffe5b4]/40 p-6 pt-10 hover:shadow-lg transition-shadow",
+    "relative rounded-2xl shadow-md border border-light-background/40 p-6 pt-10 hover:shadow-lg transition-shadow",
   title: "text-base font-semibold tracking-wide font-sora",
   description: "mt-2 text-sm text-[#5c4a38] leading-relaxed font-manrope",
 };
