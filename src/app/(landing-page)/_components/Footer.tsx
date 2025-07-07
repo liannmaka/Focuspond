@@ -43,16 +43,6 @@ const Footer = () => {
             </Link>
           </div>
           {/* language change this will come later*/}
-          {/* <div>language</div> */}
-        </div>
-        <div className="px-4">
-          <SectionDivider />
-        </div>
-        <div className="flex flex-col space-y-6 md:space-y-0 md:flex-row md:justify-between px-8 pb-7">
-          <p className="text-xs text-dark-accent/80 text-center font-sora">
-            &copy; 2025 FocusPond – All rights reserved.
-          </p>
-
           <nav className="flex flex-wrap justify-center gap-6 text-sm text-dark-accent/90 font-medium font-sora">
             {footerNavLinks.map(({ href, linkLabel }, idx) => (
               <Link
@@ -64,6 +54,14 @@ const Footer = () => {
               </Link>
             ))}
           </nav>
+        </div>
+        <div className="px-4">
+          <SectionDivider />
+        </div>
+        <div className="px-8 pb-7">
+          <p className="text-xs text-dark-accent/80 text-center font-sora py-1">
+            &copy; 2025 FocusPond – All rights reserved.
+          </p>
         </div>
       </div>
     </footer>
