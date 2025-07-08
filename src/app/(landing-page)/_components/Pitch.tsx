@@ -1,7 +1,8 @@
 "use client";
 
+//  EyeOff,Layers
 import AOS from "aos";
-import { AlertCircle, Zap, EyeOff, Sun, BarChart2, Layers } from "lucide-react";
+import { AlertCircle, Zap, Sun, BarChart2 } from "lucide-react";
 import Link from "next/link";
 import Accordion from "@/components/ui/Accordion";
 import { useEffect } from "react";
