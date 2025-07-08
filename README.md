@@ -1,36 +1,104 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧠 Focuspond
 
-## Getting Started
+_A calm productivity app to help you stay focused, organize your tasks, and beat digital overwhelm._
 
-First, run the development server:
+---
+
+## 📖 About the Project
+
+**Focuspond** is a productivity tool that pairs the “Eat The Frog” method with gentle Pomodoro sprints,  
+so you can tackle your biggest, hardest tasks first, without burning out.
+
+Designed for makers, creatives, and deep workers, it’s a space to organize your thoughts, track your goals,  
+and actually _get things done_ without distractions.
+
+Built using **Next.js**, this is a passion project I'm building in public to help others do their best work.
+
+---
+
+## 🔗 Live Demo
+
+https://focuspond.vercel.app/
+
+---
+
+<!-- ## 📸 Screenshots -->
+
+<!-- Add screenshots here when you have UI ready -->
+<!-- Example:
+![Homepage](./screenshots/homepage.png)
+![Task View](./screenshots/tasks.png) -->
+
+<!-- ---
+
+## ✨ Features
+
+- [x] Landing page with app overview
+- [ ] User authentication (sign up, login)
+- [ ] Task creation and editing
+- [ ] Focus mode (distraction-free timer)
+- [ ] Task categories and priorities
+- [ ] Dark mode
+- [ ] Mobile responsiveness
+
+--- -->
+
+## 🛠️ Tech Stack
+
+- **Framework:** Next.js (App Router)
+- **Styling:** Tailwind CSS
+  <!-- - **State Management:** React Hooks -->
+  <!-- - **Auth:** TBD (e.g., Clerk, NextAuth, Firebase) -->
+  <!-- - **Database:** TBD (e.g., Supabase, MongoDB, Planetscale) -->
+- **Deployment:** Vercel
+
+---
+
+## 🚀 Getting Started
+
+Follow these steps to run Focuspond locally:
+
+### 1. Clone the Repo
 
 ```bash
-npm run dev
-# or
+git clone https://github.com/YOUR_USERNAME/focuspond.git
+```
+
+### 2. Install Dependencies
+
+cd focuspond
+
+```bash
+yarn install
+```
+
+### 3. Run the Development Server
+
+```bash
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+<!-- 🧭 Roadmap
+ Finish core task management
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+ Add Pomodoro/focus timer
 
-## Learn More
+ Notifications/reminders
 
-To learn more about Next.js, take a look at the following resources:
+ Custom dashboard for productivity stats
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+ Full mobile experience
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+ Polish and deploy MVP
 
-## Deploy on Vercel
+ Collect feedback and iterate
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+📬 Contact
+Chiamaka Lilian
+Let’s connect on LinkedIn
+Follow the project on Twitter/X -->
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+<!-- 📄 License
+ All rights reserved. -->
