@@ -7,7 +7,7 @@ _A calm productivity app to help you stay focused, organize your tasks, and beat
 ## 📖 About the Project
 
 **Focuspond** is a productivity tool that pairs the “Eat The Frog” method with gentle Pomodoro sprints,  
-so you can tackle your biggest, hardest tasks first—without burning out.
+so you can tackle your biggest, hardest tasks first, without burning out.
 
 Designed for makers, creatives, and deep workers, it’s a space to organize your thoughts, track your goals,  
 and actually _get things done_ without distractions.
@@ -22,15 +22,14 @@ https://focuspond.vercel.app/
 
 ---
 
-## 📸 Screenshots
+<!-- ## 📸 Screenshots -->
 
 <!-- Add screenshots here when you have UI ready -->
 <!-- Example:
 ![Homepage](./screenshots/homepage.png)
-![Task View](./screenshots/tasks.png)
--->
+![Task View](./screenshots/tasks.png) -->
 
----
+<!-- ---
 
 ## ✨ Features
 
@@ -42,15 +41,15 @@ https://focuspond.vercel.app/
 - [ ] Dark mode
 - [ ] Mobile responsiveness
 
----
+--- -->
 
 ## 🛠️ Tech Stack
 
 - **Framework:** Next.js (App Router)
 - **Styling:** Tailwind CSS
-- **State Management:** React Hooks
-- **Auth:** TBD (e.g., Clerk, NextAuth, Firebase)
-- **Database:** TBD (e.g., Supabase, MongoDB, Planetscale)
+  <!-- - **State Management:** React Hooks -->
+  <!-- - **Auth:** TBD (e.g., Clerk, NextAuth, Firebase) -->
+  <!-- - **Database:** TBD (e.g., Supabase, MongoDB, Planetscale) -->
 - **Deployment:** Vercel
 
 ---
@@ -68,11 +67,16 @@ git clone https://github.com/YOUR_USERNAME/focuspond.git
 ### 2. Install Dependencies
 
 cd focuspond
+
+```bash
 yarn install
+```
 
 ### 3. Run the Development Server
 
+```bash
 yarn dev
+```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
