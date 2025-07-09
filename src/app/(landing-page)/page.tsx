@@ -4,7 +4,6 @@ import Hero from "./_components/Hero";
 import WhoItsForSection from "./_components/WhoItsFor";
 import Pain from "./_components/PainSolution";
 import Faqs from "./_components/Faqs";
-import Footer from "./_components/Footer";
 
 export default function LandingPage() {
   return (
@@ -12,11 +11,7 @@ export default function LandingPage() {
       <Hero />
       <WhoItsForSection />
       <Pain />
-      <div className="bg-[#a8c686]/10">
-        <Faqs />
-        <Footer />
-      </div>
-
+      <Faqs />
       {/* <HowItWorks /> */}
       {/* <Pitch /> */}
     </div>
