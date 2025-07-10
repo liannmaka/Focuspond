@@ -23,8 +23,8 @@ const footerNavLinks: FooterNavLinks[] = [
 
 const Footer = () => {
   return (
-    <footer className="my-11 px-10">
-      <div className="max-w-7xl mx-auto rounded-3xl border border-light-background/40">
+    <footer className="py-10 px-10 bg-[#a8c686]/10">
+      <div className="max-w-[90rem] mx-auto rounded-3xl bg-base-background">
         <div className="flex flex-col space-y-6 md:space-y-0 items-center md:flex-row md:justify-between px-8 pt-7">
           {/* Appname */}
           <div>

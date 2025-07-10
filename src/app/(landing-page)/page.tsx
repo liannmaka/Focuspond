@@ -3,6 +3,7 @@ import Hero from "./_components/Hero";
 // import Pitch from "./_components/Pitch";
 import WhoItsForSection from "./_components/WhoItsFor";
 import Pain from "./_components/PainSolution";
+import Faqs from "./_components/Faqs";
 
 export default function LandingPage() {
   return (
@@ -10,6 +11,7 @@ export default function LandingPage() {
       <Hero />
       <WhoItsForSection />
       <Pain />
+      <Faqs />
       {/* <HowItWorks /> */}
       {/* <Pitch /> */}
     </div>

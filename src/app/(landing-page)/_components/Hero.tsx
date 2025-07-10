@@ -9,7 +9,7 @@ console.log(heroImage, "check this out when you run the server");
 
 const Hero: React.FC = () => {
   return (
-    <section className="relative py-14 px-7 overflow-hidden min-h-[calc(100vh-var(--header-height))] flex items-center justify-center">
+    <section className="relative py-14 px-7 overflow-hidden min-h-[calc(100vh-var(--header-height))] flex items-center justify-center container mx-auto">
       <div className="grid md:grid-cols-2 gap-12 items-center h-full p-">
         {/* Text Section */}
         <div>

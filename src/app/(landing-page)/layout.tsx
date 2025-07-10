@@ -9,7 +9,7 @@ export default function LandingPageLayout({
   return (
     <div>
       <NavBar />
-      <main className="pt-[var(--header-height)] container mx-auto">
+      <main className="pt-[var(--header-height)]">
         <div>{children}</div>
       </main>
       <Footer />
