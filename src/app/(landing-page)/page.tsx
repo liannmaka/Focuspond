@@ -1,19 +1,13 @@
-import Hero from "./_components/Hero";
-// import HowItWorks from "./_components/HowItWorks";
-// import Pitch from "./_components/Pitch";
-import WhoItsForSection from "./_components/WhoItsFor";
-import Pain from "./_components/PainSolution";
-import Faqs from "./_components/Faqs";
+import { Hero, WhoItsFor, PainSolution, Faqs, CtaBanner } from "./_components";
 
 export default function LandingPage() {
   return (
     <div>
       <Hero />
-      <WhoItsForSection />
-      <Pain />
+      <WhoItsFor />
+      <PainSolution />
+      <CtaBanner />
       <Faqs />
-      {/* <HowItWorks /> */}
-      {/* <Pitch /> */}
     </div>
   );
 }
