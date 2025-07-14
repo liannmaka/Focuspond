@@ -9,6 +9,8 @@
   --header-height: 68px;
 }
 
+/* #5c4a38 */
+
 @theme inline {
   --color-base-background: var(--egg-shell-white);
   --color-light-background: var(--soft-peach);

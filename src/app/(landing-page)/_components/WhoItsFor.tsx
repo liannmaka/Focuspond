@@ -20,7 +20,7 @@ const styles = {
   cardBase:
     "relative rounded-2xl shadow-md border border-light-background/40 p-6 pt-10 hover:shadow-lg transition-shadow",
   title: "text-base font-semibold tracking-wide font-sora",
-  description: "mt-2 text-sm text-[#5c4a38] leading-relaxed font-manrope",
+  description: "mt-2 text-sm leading-relaxed font-manrope",
 };
 
 const audience: AudienceData[] = [
