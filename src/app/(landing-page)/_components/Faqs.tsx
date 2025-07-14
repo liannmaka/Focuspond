@@ -59,7 +59,7 @@ const FaqItem = ({
     <div className="border-b border-dark-accent/20 pb-2.5">
       <button
         onClick={onClick}
-        className="flex justify-between w-full text-left px-4 pb-4 font-medium text-[#5c4a38] font-sora"
+        className="flex justify-between w-full text-left px-4 pb-4 font-medium font-sora cursor-pointer"
       >
         <span>{question}</span>
         <ChevronDown
@@ -77,7 +77,9 @@ const FaqItem = ({
           opacity: isOpen ? 1 : 0,
         }}
       >
-        <p className="py-2 text-sm text-[#5c4a38]/80 font-manrope">{answer}</p>
+        <p className="py-2 text-sm text-walnut-brown/80 font-manrope">
+          {answer}
+        </p>
       </div>
     </div>
   );
@@ -96,10 +98,10 @@ const Faqs = () => {
         <Badge title="FAQs" />
 
         <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl font-sora font-semibold text-[#5c4a38]">
+          <h2 className="text-3xl md:text-4xl font-sora font-semibold">
             Frequently asked questions
           </h2>
-          <p className="mt-4 text-[#5c4a38]/80 font-manrope text-base md:text-lg">
+          <p className="mt-4 text-walnut-brown/80 font-manrope text-base md:text-lg">
             Everything you need to know to get started with FocusPond.
           </p>
         </div>
@@ -117,9 +119,7 @@ const Faqs = () => {
         </div>
 
         <div className="text-center mt-12 font-sora">
-          <p className="text-[#5c4a38] font-medium text-sm">
-            Still have questions?
-          </p>
+          <p className="font-medium text-sm">Still have questions?</p>
           <a
             href="/contact"
             className="underline underline-offset-4 text-xs"

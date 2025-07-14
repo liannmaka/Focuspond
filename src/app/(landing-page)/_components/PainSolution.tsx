@@ -53,116 +53,48 @@ const painSolutionData: PainSolutionData[] = [
   },
 ];
 
-// const PainSolutionSection = () => {
-//   return (
-//     <section className="py-6 container mx-auto">
-//       {painSolutionData.map(
-//         ({ title, problem, promise, payoff, Icon }, idx) => (
-//           <motion.div
-//             key={idx}
-//             className={`flex flex-col md:flex-row ${
-//               idx % 2 ? "md:flex-row-reverse" : ""
-//             } items-center py-9 px-7 gap-13
-//                       `}
-//             initial={{ opacity: 0, y: 20 }}
-//             whileInView={{ opacity: 1, y: 0 }}
-//             viewport={{ once: true, amount: 0.3 }}
-//             transition={{ delay: idx * 0.1, duration: 0.6 }}
-//           >
-//             {/* Text Column */}
-//             <div className="md:w-1/2 space-y-4">
-//               <div className="flex items-center space-x-3">
-//                 <Icon className="w-6 h-6 text-[#ff9472]" />
-//                 <h3 className="text-xl font-semibold text-[#8b5e3c]">
-//                   {title}
-//                 </h3>
-//               </div>
-//               <p className="text-sm text-[#5c4a38]/90 italic">{problem}</p>
-//               <p className="text-sm text-[#5c4a38] font-medium">{promise}</p>
-//               <p className="text-sm text-[#5c4a38]">{payoff}</p>
-//             </div>
-
-//             {/* Illustration Column */}
-//             <div className="md:w-1/2 bg-white/30 backdrop-blur-lg rounded-3xl p-8 shadow-lg ring-1 ring-white/10">
-//               <Image
-//                 src={`/svgs/solution-${idx + 1}.svg`}
-//                 alt={title}
-//                 width={400}
-//                 height={300}
-//                 className="w-full h-auto"
-//               />
-//             </div>
-//           </motion.div>
-//         )
-//       )}
-//     </section>
-//   );
-// };
-
 const PainSolutionSection = () => {
   return (
-    <section className="bg-[#fdf9f3]">
-      <div className="container mx-auto">
-        {painSolutionData.map(
-          ({ title, problem, promise, payoff, Icon }, idx) => (
-            <motion.div
-              key={idx}
-              className={`flex flex-col md:flex-row ${
-                idx % 2 ? "md:flex-row-reverse" : ""
-              } items-center py-9 px-7 gap-13`}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ delay: idx * 0.1, duration: 0.6 }}
-            >
-              {/* Text Column */}
-              <div className="md:w-1/2 space-y-4">
-                <div className="flex items-center space-x-3">
-                  <Icon className="w-6 h-6 text-[#ff9472]" />
-                  <h3 className="text-xl font-semibold text-[#8b5e3c]">
-                    {title}
-                  </h3>
-                </div>
-                <p className="text-sm text-[#5c4a38]/90 italic">{problem}</p>
-                <p className="text-sm text-[#5c4a38] font-medium">{promise}</p>
-                <p className="text-sm text-[#5c4a38]">{payoff}</p>
+    <section className="py-6 container mx-auto">
+      {painSolutionData.map(
+        ({ title, problem, promise, payoff, Icon }, idx) => (
+          <motion.div
+            key={idx}
+            className={`flex flex-col md:flex-row ${
+              idx % 2 ? "md:flex-row-reverse" : ""
+            } items-center py-9 px-7 gap-13
+                      `}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ delay: idx * 0.1, duration: 0.6 }}
+          >
+            {/* Text Column */}
+            <div className="md:w-1/2 space-y-4">
+              <div className="flex items-center space-x-3">
+                <Icon className="w-6 h-6 text-[#ff9472]" />
+                <h3 className="text-xl font-semibold text-[#8b5e3c]">
+                  {title}
+                </h3>
               </div>
+              <p className="text-sm text-[#5c4a38]/90 italic">{problem}</p>
+              <p className="text-sm text-[#5c4a38] font-medium">{promise}</p>
+              <p className="text-sm text-[#5c4a38]">{payoff}</p>
+            </div>
 
-              {/* Illustration Column */}
-              <div className="md:w-1/2 bg-white/30 backdrop-blur-lg rounded-3xl p-8 shadow-lg ring-1 ring-white/10">
-                <Image
-                  src={`/svgs/solution-${idx + 1}.svg`}
-                  alt={title}
-                  width={400}
-                  height={300}
-                  className="w-full h-auto"
-                />
-              </div>
-            </motion.div>
-          )
-        )}
-      </div>
-
-      {/* ▼ Downward Curve SVG transitioning into FAQs section */}
-      <div className="w-full overflow-hidden leading-none">
-        <svg
-          viewBox="0 0 1440 200"
-          xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio="none"
-          className="block w-full h-[120px] sm:h-[140px] md:h-[200px]"
-        >
-          <path
-            fill="#a8c6861a" // same as bg-[#a8c686]/10
-            d="
-        M0,80
-        Q720,200 1440,80
-        L1440,200
-        L0,200
-        Z
-      "
-          />
-        </svg>
-      </div>
+            {/* Illustration Column */}
+            <div className="md:w-1/2 bg-white/30 backdrop-blur-lg rounded-3xl p-8 shadow-lg ring-1 ring-white/10">
+              <Image
+                src={`/svgs/solution-${idx + 1}.svg`}
+                alt={title}
+                width={400}
+                height={300}
+                className="w-full h-auto"
+              />
+            </div>
+          </motion.div>
+        )
+      )}
     </section>
   );
 };
