@@ -3,7 +3,7 @@ import Link from "next/link";
 const CtaBanner = () => {
   return (
     <section className="relative overflow-hidden">
-      <div className="container mx-auto px-7 pt-10 pb-20 md:pb-28 text-center relative z-10">
+      <div className="container mx-auto px-7 pt-28 pb-20 md:pb-28 text-center relative z-10">
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-sora font-semibold">
           Start your day with clarity
         </h2>

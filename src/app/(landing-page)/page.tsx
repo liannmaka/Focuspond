@@ -1,4 +1,11 @@
-import { Hero, WhoItsFor, PainSolution, Faqs, CtaBanner } from "./_components";
+import {
+  Hero,
+  WhoItsFor,
+  PainSolution,
+  Faqs,
+  CtaBanner,
+  Testimonial,
+} from "./_components";
 
 export default function LandingPage() {
   return (
@@ -6,6 +13,7 @@ export default function LandingPage() {
       <Hero />
       <WhoItsFor />
       <PainSolution />
+      <Testimonial />
       <CtaBanner />
       <Faqs />
     </div>
