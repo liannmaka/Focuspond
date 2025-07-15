@@ -62,7 +62,7 @@ const Testimonial = () => {
               repeat: Infinity,
               repeatType: "loop",
               ease: "linear",
-              duration: 10, // Adjust speed
+              duration: 35, // Adjust speed
             }}
           >
             {scrollingTestimonials.map((testimonial, idx) => (
