@@ -62,16 +62,16 @@ const Testimonial = () => {
               repeat: Infinity,
               repeatType: "loop",
               ease: "linear",
-              duration: 35, // Adjust speed
+              duration: 40, // Adjust speed
             }}
           >
             {scrollingTestimonials.map((testimonial, idx) => (
               <div
                 key={idx}
-                className="min-h-[150px] min-w-[280px] md:min-w-[320px] font-manrope bg-white/80 p-6 rounded-3xl flex flex-col"
+                className="min-h-[150px] min-w-[280px] md:min-w-[320px] flex flex-col rounded-2xl shadow-md bg-white/80 backdrop-blur-sm ring-1 ring-white/10 p-6 transition hover:shadow-lg"
               >
                 <p className="text-sm">“{testimonial.quote}”</p>
-                <div className="mt-auto pt-2 text-sm font-semibold">
+                <div className="mt-auto pt-4 text-sm font-semibold">
                   — {testimonial.name},{" "}
                   <span className="font-normal">{testimonial.role}</span>
                 </div>
