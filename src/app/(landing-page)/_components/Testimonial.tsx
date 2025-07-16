@@ -10,19 +10,19 @@ const testimonials = [
     name: "Ada O.",
     role: "Student, UI Lagos",
     quote:
-      "FocusPond helped me finally stop procrastinating my final year project. The vibe switcher is underrated!",
+      "Focuspond helped me finally stop procrastinating my final year project. The vibe switcher? Underrated magic.",
   },
   {
     name: "Tunde A.",
     role: "Frontend Developer",
     quote:
-      "I've tried many Pomodoro apps, but this one feels calm and intentional. I actually enjoy using it.",
+      "I’ve used so many Pomodoro tools, but this one actually makes me want to work. It’s calm and intentional.",
   },
   {
     name: "Chisom E.",
     role: "Product Designer",
     quote:
-      "Being able to just dive into my Frog of the Day changed how I start my mornings.",
+      "Starting with my Frog of the Day changed everything. Now I stop overthinking and just start.",
   },
   {
     name: "Ibrahim K.",
@@ -43,13 +43,12 @@ const Testimonial = () => {
       <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10">
         {/* Left Column: Title + Description */}
         <div>
-          <Badge title="Testimonials" />
+          <Badge title="Voices from the Pond" />
           <h2 className="text-3xl md:text-4xl font-sora font-semibold mt-2">
-            People love FocusPond
+            What our users are saying
           </h2>
           <p className="mt-4 text-walnut-brown/80 font-manrope text-base sm:text-lg max-w-md">
-            Hear how FocusPond is helping people get clear, consistent, and calm
-            with their day.
+            Focuspond gives users space to think, plan, and stay on track.
           </p>
         </div>
         {/* Right Column: Sliding Testimonials */}
