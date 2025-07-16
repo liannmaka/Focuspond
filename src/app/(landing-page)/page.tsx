@@ -1,11 +1,19 @@
-import { Hero, WhoItsFor, PainSolution, Faqs, CtaBanner } from "./_components";
+import {
+  Hero,
+  // WhoItsFor,
+  // PainSolution,
+  Faqs,
+  CtaBanner,
+  Testimonial,
+} from "./_components";
 
 export default function LandingPage() {
   return (
     <div>
       <Hero />
-      <WhoItsFor />
-      <PainSolution />
+      {/* <WhoItsFor /> */}
+      {/* <PainSolution /> */}
+      <Testimonial />
       <CtaBanner />
       <Faqs />
     </div>

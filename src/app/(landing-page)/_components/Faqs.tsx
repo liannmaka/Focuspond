@@ -93,9 +93,12 @@ const Faqs = () => {
   };
 
   return (
-    <section className="relative bg-secondary-accent/10 pb-16">
+    <section className="relative bg-secondary-accent/10 md:pt-10 pb-16">
       <div className="container mx-auto px-7">
-        <Badge title="FAQs" />
+        <Badge
+          title="FAQs"
+          className="text-center"
+        />
 
         <div className="text-center mb-10">
           <h2 className="text-3xl md:text-4xl font-sora font-semibold">

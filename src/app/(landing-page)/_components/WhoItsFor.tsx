@@ -66,7 +66,10 @@ const WhoItsForSection = () => {
         viewport={{ once: true, amount: 0.2 }}
         variants={{ hidden: {}, visible: {} }}
       >
-        <Badge title="Who This App Is For" />
+        <Badge
+          title="Who This App Is For"
+          className="text-center"
+        />
         <div>
           <div className={styles.grid}>
             {audience.map(({ Icon, iconColor, title, description }, idx) => {
