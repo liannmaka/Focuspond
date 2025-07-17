@@ -5,8 +5,6 @@ import Lottie from "lottie-react";
 import heroImage from "../../../../public/lotties/hero-illustration-3.json";
 import { ChevronsRight } from "lucide-react";
 
-console.log(heroImage, "check this out when you run the server");
-
 const Hero: React.FC = () => {
   return (
     <section className="relative py-14 px-7 overflow-hidden min-h-[calc(100vh-var(--header-height))] flex items-center justify-center container mx-auto">

@@ -3,8 +3,7 @@
 import React from "react";
 import { Brain, Turtle, Zap, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
-import SectionDivider from "@/components/ui/SectionDivider";
-import Badge from "./../../../components/ui/Badge";
+import { Badge, SectionDivider } from "@/components/ui";
 import { LucideIcon } from "lucide-react";
 
 interface AudienceData {

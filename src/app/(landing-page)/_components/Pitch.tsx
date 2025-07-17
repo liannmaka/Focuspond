@@ -1,17 +1,12 @@
 "use client";
 
 //  EyeOff,Layers
-import AOS from "aos";
+
 import { AlertCircle, Zap, Sun, BarChart2 } from "lucide-react";
 import Link from "next/link";
-import Accordion from "@/components/ui/Accordion";
-import { useEffect } from "react";
+import { Accordion } from "@/components/ui";
 
 const Pitch = () => {
-  useEffect(() => {
-    AOS.init({ once: true, duration: 600 });
-  }, []);
-
   return (
     <section
       id="pitch"

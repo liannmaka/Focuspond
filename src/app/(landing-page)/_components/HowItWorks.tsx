@@ -1,4 +1,4 @@
-import SectionDivider from "@/components/ui/SectionDivider";
+import { SectionDivider } from "@/components/ui";
 import { CheckCircle, Clock, Activity, Repeat } from "lucide-react";
 import { LucideIcon } from "lucide-react";
 

@@ -1,9 +1,8 @@
-// components/Testimonials.tsx
 "use client";
 
 import { motion } from "framer-motion";
 import { useRef } from "react";
-import Badge from "@/components/ui/Badge"; // optional
+import { Badge } from "@/components/ui";
 
 const testimonials = [
   {
