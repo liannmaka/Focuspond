@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Badge } from "@/components/ui";
-// import SectionDivider from "@/components/ui/SectionDivider";
 
 interface Benefit {
   title: string;
