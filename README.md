@@ -100,15 +100,13 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to see the a
 
 ## 📬 Contact
 
-Got feedback, ideas, or questions about Focuspond
+Got feedback, ideas, or questions about Focuspond?
 
 feel free to reach out via:
 
-- **Twitter/X:** [Chiamaka | Dev.chemist](@filix_lillyann)
+- **Twitter/X:** [Chiamaka | Dev.chemist](https://twitter.com/filix_lillyann)
 - **Email:** [ogbuolilian@gmail.com](mailto:ogbuolilian@gmail.com)
 - **LinkedIn:** [ogbuo-chiamaka](https://www.linkedin.com/in/ogbuo-chiamaka)
-
----
 
 📄 License
 &copy; 2025 FocusPond – All rights reserved.
