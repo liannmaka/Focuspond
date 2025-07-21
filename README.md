@@ -1,20 +1,18 @@
 # 🧠 Focuspond
 
-_A calm productivity app to help you stay focused, organize your tasks, and beat digital overwhelm._
+_A calm productivity and wellness app that helps you plan your day, tackle your most important task, and stay mindful, one Pomodoro at a time._
 
 ---
 
 ## 📖 About the Project
 
-**Focuspond** is a productivity tool that pairs the “Eat The Frog” method with gentle Pomodoro sprints,  
-so you can tackle your biggest, hardest tasks first, without burning out.
+**Focuspond** is designed for people who want to get meaningful work done, without burning out.
 
-Designed for makers, creatives, and deep workers, it’s a space to organize your thoughts, track your goals,  
-and actually _get things done_ without distractions.
+whether you are a student managing coursework, a remote worker juggling tasks, or a creative navigating daily chaos, Focuspond helps you plan with intention, focus on what matters, and stay grounded along the way.
 
-Built using **Next.js**, this is a passion project I'm building in public to help others do their best work.
+It combines structured productivity tools, like a daily planner, Pomodoro timer, and Frog-first task system, with gentle wellness features like mindful break prompts, mood check-ins, and end-of-day reflections.
 
----
+## No pressure. No hustle. Just small, consistent wins, one Pomodoro at a time.
 
 ## 🔗 Live Demo
 
@@ -47,6 +45,9 @@ https://focuspond.vercel.app/
 
 - **Framework:** Next.js (App Router)
 - **Styling:** Tailwind CSS
+- **Utility:** clsx - for conditional classNames
+- **Animation:** Framer Motion, lottie-react
+- **Icons:** Lucide React
   <!-- - **State Management:** React Hooks -->
   <!-- - **Auth:** TBD (e.g., Clerk, NextAuth, Firebase) -->
   <!-- - **Database:** TBD (e.g., Supabase, MongoDB, Planetscale) -->
@@ -58,15 +59,15 @@ https://focuspond.vercel.app/
 
 Follow these steps to run Focuspond locally:
 
-### 1. Clone the Repo
+### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/focuspond.git
+git clone https://github.com/YOUR_USERNAME/Focuspond.git
 ```
 
-### 2. Install Dependencies
-
 cd focuspond
+
+### 2. Install Dependencies
 
 ```bash
 yarn install
@@ -78,7 +79,7 @@ yarn install
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the application in action.
 
 <!-- 🧭 Roadmap
  Finish core task management
@@ -93,12 +94,16 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
  Polish and deploy MVP
 
- Collect feedback and iterate
+ Collect feedback and iterate -->
 
 📬 Contact
-Chiamaka Lilian
-Let’s connect on LinkedIn
-Follow the project on Twitter/X -->
+Got feedback, ideas, or questions about Focuspond
 
-<!-- 📄 License
- All rights reserved. -->
+feel free to reach out via:
+
+- **Twitter/X:** [Chiamaka | Dev.chemist](@filix_lillyann)
+- **Email:** [ogbuolilian@gmail.com](mailto:ogbuolilian@gmail.com)
+- **LinkedIn:** [ogbuo-chiamaka](https://www.linkedin.com/in/ogbuo-chiamaka)
+
+📄 License
+&copy; 2025 FocusPond – All rights reserved.
