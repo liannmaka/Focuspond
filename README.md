@@ -12,7 +12,7 @@ whether you are a student managing coursework, a remote worker juggling tasks, o
 
 It combines structured productivity tools, like a daily planner, Pomodoro timer, and Frog-first task system, with gentle wellness features like mindful break prompts, mood check-ins, and end-of-day reflections.
 
-## No pressure. No hustle. Just small, consistent wins, one Pomodoro at a time.
+No pressure. No hustle. Just small, consistent wins, one Pomodoro at a time.
 
 ## 🔗 Live Demo
 
@@ -96,7 +96,10 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to see the a
 
  Collect feedback and iterate -->
 
-📬 Contact
+---
+
+## 📬 Contact
+
 Got feedback, ideas, or questions about Focuspond
 
 feel free to reach out via:
@@ -104,6 +107,8 @@ feel free to reach out via:
 - **Twitter/X:** [Chiamaka | Dev.chemist](@filix_lillyann)
 - **Email:** [ogbuolilian@gmail.com](mailto:ogbuolilian@gmail.com)
 - **LinkedIn:** [ogbuo-chiamaka](https://www.linkedin.com/in/ogbuo-chiamaka)
+
+---
 
 📄 License
 &copy; 2025 FocusPond – All rights reserved.
