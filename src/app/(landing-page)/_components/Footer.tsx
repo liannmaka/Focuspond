@@ -44,15 +44,17 @@ const Footer = () => {
           </div>
           {/* language change this will come later*/}
           <nav className="flex flex-wrap justify-center gap-6 text-sm text-dark-accent/90 font-medium font-sora">
-            {footerNavLinks.map(({ href, linkLabel }, idx) => (
-              <Link
-                key={idx}
-                href={href}
-                className="hover:underline"
-              >
-                {linkLabel}
-              </Link>
-            ))}
+            {footerNavLinks.map(
+              ({ href, linkLabel }: FooterNavLinks, idx: number) => (
+                <Link
+                  key={idx}
+                  href={href}
+                  className="hover:underline"
+                >
+                  {linkLabel}
+                </Link>
+              )
+            )}
           </nav>
         </div>
         <div className="px-4">
@@ -60,7 +62,7 @@ const Footer = () => {
         </div>
         <div className="px-8 pb-7">
           <p className="text-xs text-dark-accent/80 text-center font-sora py-1">
-            &copy; 2025 FocusPond – All rights reserved.
+            &copy; 2025 FocusPond - All rights reserved.
           </p>
         </div>
       </div>
