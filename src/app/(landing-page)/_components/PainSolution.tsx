@@ -1,8 +1,6 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import { SectionDivider } from "@/components/ui";
 import { Badge } from "@/components/ui";
+import Image from "next/image";
 
 interface Benefit {
   title: string;
@@ -13,99 +11,78 @@ interface Benefit {
 
 const benefits: Benefit[] = [
   {
-    badge: "Break the inertia",
-    title: "Overcome procrastination",
+    badge: "Focus-First Planning",
+    title: "Plan your day with intention",
     paragraph:
-      "Start your day with your Frog of the Day and a short Pomodoro session. Small wins add up to big progress.",
+      "Begin each day by picking your Frog, the one task that truly matters. No clutter. Just calm, focused energy.",
     image: "/svgs/solution-1.svg",
   },
   {
-    badge: "Work with your energy",
-    title: "Power through low-motivation days",
+    badge: "Gentle Pomodoro Rhythm",
+    title: "Work in focused sprints, rest with intention",
     paragraph:
-      "Use Mini-Frog Mode to complete light tasks, even on rough days. Stay steady without burning out.",
+      "Alternate between deep focus and mindful breaks. Stay productive, not drained.",
     image: "/svgs/solution-2.svg",
   },
   {
-    badge: "Consistency without burnout",
-    title: "Focus, rest, repeat",
+    badge: "Mood-Aware Productivity",
+    title: "Check in with how you feel",
     paragraph:
-      "Alternate Pomodoro sprints with mindful breaks. Stay balanced, not drained.",
+      "Your energy matters. Use mood check-ins and mini-frogs to stay aligned, even on tough days.",
     image: "/svgs/solution-3.svg",
   },
   {
-    badge: "See your growth",
-    title: "Make your progress visible",
+    badge: "Gentle Progress Tracking",
+    title: "Reflect, log, and grow your foocus",
     paragraph:
-      "Track your Frogs and focus sessions. Watch your garden bloom as you build momentum.",
+      "See streaks, your completed Frogs, and your focus blooms, because every small win counts.",
     image: "/svgs/solution-4.svg",
   },
 ];
 
 const StickyScrollBenefits = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const sectionsRef = useRef<(HTMLDivElement | null)[]>([]);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const idx = Number(entry.target.getAttribute("data-idx"));
-            setActiveIndex(idx);
-          }
-        });
-      },
-      { rootMargin: "-30% 0px -60% 0px", threshold: 0.1 }
-    );
-
-    sectionsRef.current.forEach((el) => {
-      if (el) observer.observe(el);
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <>
-      {/* <SectionDivider /> */}
-      <section className="bg-[#ffe5b4]/10 w-full py-20 px-7 ">
-        <div className="container mx-auto flex flex-col md:flex-row gap-10">
-          {/* Left: Scrollable Text */}
-          <div className="flex-1 space-y-60 relative">
-            {benefits.map((item, idx) => (
+      <SectionDivider />
+      <section>
+        <div className="container px-7 mx-auto pt-16 pb-20 space-y-28">
+          {benefits.map(
+            ({ badge, title, paragraph, image }: Benefit, index: number) => (
               <div
-                key={idx}
-                data-idx={idx}
-                ref={(el) => {
-                  sectionsRef.current[idx] = el;
-                }}
+                key={index}
+                className="grid lg:grid-cols-2 lg:gap-x-10 gap-y-12 relative overflow-hidden"
               >
-                <Badge title={item.badge} />
-                <h3 className="text-3xl md:text-4xl font-sora font-semibold mb-2">
-                  {item.title}
-                </h3>
+                {/* left container */}
+                <div>
+                  <Badge title={badge} />
+                  <h3 className="text-2xl md:text-3xl font-sora font-semibold leading-tight">
+                    {title}
+                  </h3>
+                  <p className="mt-4 font-manrope text-base md:text-lg max-w-md">
+                    {paragraph}
+                  </p>
+                </div>
 
-                <p className="text-walnut-brown/80 font-manrope text-base sm:text-lg max-w-md">
-                  {item.paragraph}
-                </p>
+                {/* right container */}
+                <div className="relative w-fit mx-auto md:pr-0">
+                  <div className="hidden md:block absolute top-1/2 -translate-y-1/2 translate-x-[50%] h-[120%] w-[60vw] right-0 bg-[#fff0e8] rounded-l-3xl rounded-br-3xl z-0" />
+                  <div className="relative z-10">
+                    <Image
+                      src={image}
+                      alt={title}
+                      width={400}
+                      height={300}
+                    />
+                  </div>
+                </div>
               </div>
-            ))}
-          </div>
-
-          {/* Right: Sticky Image */}
-          <div className="flex-1 hidden md:block sticky top-32 h-[400px]">
-            <div className="w-full h-full flex items-center justify-center">
-              <Image
-                src={benefits[activeIndex].image}
-                alt={benefits[activeIndex].title}
-                width={500}
-                height={350}
-                className="rounded-3xl shadow-md object-contain bg-white/30 backdrop-blur-lg ring-1 ring-white/10 p-8"
-              />
-            </div>
-          </div>
+            )
+          )}
         </div>
+
+        {/* <div class="relative size-32 ...">
+  <div class="absolute top-0 right-0 size-16 ...">03</div>
+</div> */}
       </section>
     </>
   );

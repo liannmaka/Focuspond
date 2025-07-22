@@ -39,14 +39,14 @@ const Testimonial = () => {
 
   return (
     <section className="relative py-24 bg-[#a8c686]/10 overflow-hidden">
-      <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10">
+      <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-10">
         {/* Left Column: Title + Description */}
         <div>
           <Badge title="Voices from the Pond" />
-          <h2 className="text-3xl md:text-4xl font-sora font-semibold mt-2">
+          <h2 className="text-3xl md:text-4xl font-sora font-semibold leading-tight">
             What our users are saying
           </h2>
-          <p className="mt-4 text-walnut-brown/80 font-manrope text-base sm:text-lg max-w-md">
+          <p className="mt-4 font-manrope text-base sm:text-lg max-w-md">
             Focuspond gives users space to think, plan, and stay on track.
           </p>
         </div>

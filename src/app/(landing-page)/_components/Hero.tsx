@@ -14,7 +14,7 @@ const Hero: React.FC = () => {
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-sora font-semibold leading-tight">
             Crush your goals, not your energy.
           </h1>
-          <p className="font-manrope mt-6 text-base md:text-lg text-walnut-brown/80 max-w-md">
+          <p className="font-manrope mt-6 text-base sm:text-lg max-w-md">
             Turn your low-energy days into consistent wins with focused, mindful
             progress.
           </p>

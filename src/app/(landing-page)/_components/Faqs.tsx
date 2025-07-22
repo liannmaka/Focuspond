@@ -101,10 +101,10 @@ const Faqs = () => {
         />
 
         <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl font-sora font-semibold">
+          <h2 className="text-3xl md:text-4xl font-sora font-semibold leading-tight">
             Frequently asked questions
           </h2>
-          <p className="mt-4 text-walnut-brown/80 font-manrope text-base md:text-lg">
+          <p className="mt-4 font-manrope text-base sm:text-lg max-w-md mx-auto">
             Everything you need to know to get started with FocusPond.
           </p>
         </div>
