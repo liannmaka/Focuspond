@@ -24,6 +24,8 @@
       "@/features/*": ["features/*"],
       "@/hooks/*": ["hooks/*"],
       "@/styles/*": ["styles/*"],
+      "@/data/*": ["data/*"],
+      "@/types/*": ["types/*"],
       "@/constants/*": ["constants/*"]
     }
   },
