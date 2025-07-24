@@ -1,4 +1,6 @@
-export const faqs = [
+import { FaqData } from "@/types/landing-page/faq";
+
+export const faqs: FaqData[] = [
   {
     question: "What is Focuspond?",
     answer:
