@@ -41,9 +41,9 @@ const Hero: React.FC = () => {
         </div>
 
         {/* Visual Section */}
-        <div className=" bg-white/30 backdrop-blur-lg rounded-3xl p-8 shadow-lg ring-1 ring-white/10">
-          <Lottie animationData={heroImage} />
-        </div>
+        {/* <div className="bg-white/30 backdrop-blur-lg rounded-3xl p-8 shadow-lg ring-1 ring-white/10"> */}
+        <Lottie animationData={heroImage} />
+        {/* </div> */}
       </div>
     </section>
   );

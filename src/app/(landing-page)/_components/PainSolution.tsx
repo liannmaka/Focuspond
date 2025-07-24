@@ -44,45 +44,55 @@ const StickyScrollBenefits = () => {
   return (
     <>
       <SectionDivider />
-      <section>
-        <div className="container px-7 mx-auto pt-16 pb-20 space-y-28">
-          {benefits.map(
-            ({ badge, title, paragraph, image }: Benefit, index: number) => (
-              <div
-                key={index}
-                className="grid lg:grid-cols-2 lg:gap-x-10 gap-y-12 relative overflow-hidden"
-              >
-                {/* left container */}
-                <div>
-                  <Badge title={badge} />
-                  <h3 className="text-2xl md:text-3xl font-sora font-semibold leading-tight">
-                    {title}
-                  </h3>
-                  <p className="mt-4 font-manrope text-base md:text-lg max-w-md">
-                    {paragraph}
-                  </p>
-                </div>
-
-                {/* right container */}
-                <div className="relative w-fit mx-auto md:pr-0">
-                  <div className="hidden md:block absolute top-1/2 -translate-y-1/2 translate-x-[50%] h-[120%] w-[60vw] right-0 bg-[#fff0e8] rounded-l-3xl rounded-br-3xl z-0" />
-                  <div className="relative z-10">
-                    <Image
-                      src={image}
-                      alt={title}
-                      width={400}
-                      height={300}
-                    />
-                  </div>
-                </div>
-              </div>
-            )
-          )}
+      <section className="pt-14 pb-20 md:space-y-20">
+        <div className="px-7 text-center">
+          <h2 className="text-3xl md:text-4xl font-sora font-semibold leading-tight mb-10">
+            A calm way to stay productive
+          </h2>
+          <div className="hidden lg:inline-flex space-x-4">
+            {benefits.map(({ badge }) => (
+              <Badge
+                key={badge}
+                title={badge}
+              />
+            ))}
+          </div>
         </div>
 
-        {/* <div class="relative size-32 ...">
-  <div class="absolute top-0 right-0 size-16 ...">03</div>
-</div> */}
+        {benefits.map(({ badge, title, paragraph, image }, idx) => (
+          <div
+            key={idx}
+            className="relative w-full"
+          >
+            <div
+              className="hidden md:block absolute inset-y-0 right-0 w-[50%] bg-[#fff0e8]
+                         rounded-tl-full rounded-bl-full z-0"
+              aria-hidden="true"
+            />
+            <div className="container mx-auto px-7 grid gap-y-5 lg:grid-cols-2  lg:gap-x-10 relative z-10">
+              {/* Left: Text */}
+              <div>
+                <Badge title={badge} />
+                <h3 className="text-2xl md:text-3xl font-sora font-semibold leading-tight">
+                  {title}
+                </h3>
+                <p className="mt-4 font-manrope text-base md:text-lg max-w-md">
+                  {paragraph}
+                </p>
+              </div>
+              {/* Right: Image */}
+              <div className="flex justify-center">
+                <Image
+                  src={image}
+                  alt={title}
+                  width={400}
+                  height={300}
+                  className="relative"
+                />
+              </div>
+            </div>
+          </div>
+        ))}
       </section>
     </>
   );
