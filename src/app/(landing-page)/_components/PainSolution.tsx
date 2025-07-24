@@ -1,102 +1,101 @@
-"use client";
-
-import React from "react";
+import { SectionDivider } from "@/components/ui";
+import { Badge } from "@/components/ui";
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { AlertCircle, Zap, Sun, BarChart2 } from "lucide-react";
-import { LucideIcon } from "lucide-react";
 
-interface PainSolutionData {
+interface Benefit {
   title: string;
-  problem: string;
-  promise: string;
-  payoff: string;
-  Icon: LucideIcon;
+  paragraph: string;
+  badge: string;
+  image: string;
 }
 
-const painSolutionData: PainSolutionData[] = [
+const benefits: Benefit[] = [
   {
-    title: "Procrastination & Overwhelm",
-    problem:
-      "It’s hard to begin when a task feels too big, vague, or intimidating. So you delay it altogether.",
-    promise: "FocusPond helps you break the inertia.",
-    payoff:
-      "You’ll pick your Frog of the Day and dive straight into a focused 25-minute Pomodoro to gain momentum.",
-    Icon: AlertCircle,
+    badge: "Focus-First Planning",
+    title: "Plan your day with intention",
+    paragraph:
+      "Begin each day by picking your Frog, the one task that truly matters. No clutter. Just calm, focused energy.",
+    image: "/svgs/solution-1.svg",
   },
   {
-    title: "Low Energy Slumps",
-    problem:
-      "You want to work, but low energy or mental fatigue keeps you stuck and frustrated.",
-    promise: "FocusPond meets you where you are.",
-    payoff:
-      "Use Mini‑Frog Mode to complete small wins and keep your streak alive on tough days.",
-    Icon: Zap,
+    badge: "Gentle Pomodoro Rhythm",
+    title: "Work in focused sprints, rest with intention",
+    paragraph:
+      "Alternate between deep focus and mindful breaks. Stay productive, not drained.",
+    image: "/svgs/solution-2.svg",
   },
   {
-    title: "Burnout & Unsustainable Routines",
-    problem:
-      "Overworking leads to burnout, making it harder to stay consistent.",
-    promise: "FocusPond encourages balance, not hustle.",
-    payoff:
-      "Alternate Pomodoros with mindful breaks, and never feel punished for missing a Frog, just keep moving.",
-    Icon: Sun,
+    badge: "Mood-Aware Productivity",
+    title: "Check in with how you feel",
+    paragraph:
+      "Your energy matters. Use mood check-ins and mini-frogs to stay aligned, even on tough days.",
+    image: "/svgs/solution-3.svg",
   },
   {
-    title: "Lack of Insight & No Sense of Progress",
-    problem:
-      "You’re busy all day but have no clear sense of what you’ve accomplished.",
-    promise: "FocusPond makes progress visible.",
-    payoff:
-      "See every Frog and Pomodoro logged in your dashboard, and earn garden blooms that track real focus.",
-    Icon: BarChart2,
+    badge: "Gentle Progress Tracking",
+    title: "Reflect, log, and grow your foocus",
+    paragraph:
+      "See streaks, your completed Frogs, and your focus blooms, because every small win counts.",
+    image: "/svgs/solution-4.svg",
   },
 ];
 
-const PainSolutionSection = () => {
+const StickyScrollBenefits = () => {
   return (
-    <section className="py-6 container mx-auto">
-      {painSolutionData.map(
-        ({ title, problem, promise, payoff, Icon }, idx) => (
-          <motion.div
+    <>
+      <SectionDivider />
+      <section className="pt-14 pb-20 md:space-y-20">
+        <div className="px-7 text-center">
+          <h2 className="text-3xl md:text-4xl font-sora font-semibold leading-tight mb-10">
+            A calm way to stay productive
+          </h2>
+          <div className="hidden lg:inline-flex space-x-4">
+            {benefits.map(({ badge }) => (
+              <Badge
+                key={badge}
+                title={badge}
+              />
+            ))}
+          </div>
+        </div>
+
+        {benefits.map(({ badge, title, paragraph, image }, idx) => (
+          <div
             key={idx}
-            className={`flex flex-col md:flex-row ${
-              idx % 2 ? "md:flex-row-reverse" : ""
-            } items-center py-9 px-7 gap-13
-                      `}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ delay: idx * 0.1, duration: 0.6 }}
+            className="relative w-full"
           >
-            {/* Text Column */}
-            <div className="md:w-1/2 space-y-4">
-              <div className="flex items-center space-x-3">
-                <Icon className="w-6 h-6 text-[#ff9472]" />
-                <h3 className="text-xl font-semibold text-[#8b5e3c]">
+            <div
+              className="hidden md:block absolute inset-y-0 right-0 w-[50%] bg-[#fff0e8]
+                         rounded-tl-full rounded-bl-full z-0"
+              aria-hidden="true"
+            />
+            <div className="container mx-auto px-7 grid gap-y-5 lg:grid-cols-2  lg:gap-x-10 relative z-10">
+              {/* Left: Text */}
+              <div>
+                <Badge title={badge} />
+                <h3 className="text-2xl md:text-3xl font-sora font-semibold leading-tight">
                   {title}
                 </h3>
+                <p className="mt-4 font-manrope text-base md:text-lg max-w-md">
+                  {paragraph}
+                </p>
               </div>
-              <p className="text-sm text-[#5c4a38]/90 italic">{problem}</p>
-              <p className="text-sm text-[#5c4a38] font-medium">{promise}</p>
-              <p className="text-sm text-[#5c4a38]">{payoff}</p>
+              {/* Right: Image */}
+              <div className="flex justify-center">
+                <Image
+                  src={image}
+                  alt={title}
+                  width={400}
+                  height={300}
+                  className="relative"
+                />
+              </div>
             </div>
-
-            {/* Illustration Column */}
-            <div className="md:w-1/2 bg-white/30 backdrop-blur-lg rounded-3xl p-8 shadow-lg ring-1 ring-white/10">
-              <Image
-                src={`/svgs/solution-${idx + 1}.svg`}
-                alt={title}
-                width={400}
-                height={300}
-                className="w-full h-auto"
-              />
-            </div>
-          </motion.div>
-        )
-      )}
-    </section>
+          </div>
+        ))}
+      </section>
+    </>
   );
 };
 
-export default PainSolutionSection;
+export default StickyScrollBenefits;

@@ -5,8 +5,6 @@ import Lottie from "lottie-react";
 import heroImage from "../../../../public/lotties/hero-illustration-3.json";
 import { ChevronsRight } from "lucide-react";
 
-console.log(heroImage, "check this out when you run the server");
-
 const Hero: React.FC = () => {
   return (
     <section className="relative py-14 px-7 overflow-hidden min-h-[calc(100vh-var(--header-height))] flex items-center justify-center container mx-auto">
@@ -16,7 +14,7 @@ const Hero: React.FC = () => {
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-sora font-semibold leading-tight">
             Crush your goals, not your energy.
           </h1>
-          <p className="font-manrope mt-6 text-base md:text-lg text-walnut-brown/80 max-w-md">
+          <p className="font-manrope mt-6 text-base sm:text-lg max-w-md">
             Turn your low-energy days into consistent wins with focused, mindful
             progress.
           </p>
@@ -43,9 +41,9 @@ const Hero: React.FC = () => {
         </div>
 
         {/* Visual Section */}
-        <div className=" bg-white/30 backdrop-blur-lg rounded-3xl p-8 shadow-lg ring-1 ring-white/10">
-          <Lottie animationData={heroImage} />
-        </div>
+        {/* <div className="bg-white/30 backdrop-blur-lg rounded-3xl p-8 shadow-lg ring-1 ring-white/10"> */}
+        <Lottie animationData={heroImage} />
+        {/* </div> */}
       </div>
     </section>
   );

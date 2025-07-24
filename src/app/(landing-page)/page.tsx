@@ -1,7 +1,7 @@
 import {
   Hero,
   // WhoItsFor,
-  // PainSolution,
+  PainSolution,
   Faqs,
   CtaBanner,
   Testimonial,
@@ -12,7 +12,7 @@ export default function LandingPage() {
     <div>
       <Hero />
       {/* <WhoItsFor /> */}
-      {/* <PainSolution /> */}
+      <PainSolution />
       <Testimonial />
       <CtaBanner />
       <Faqs />

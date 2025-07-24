@@ -3,8 +3,7 @@
 import React from "react";
 import { Brain, Turtle, Zap, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
-import SectionDivider from "@/components/ui/SectionDivider";
-import Badge from "./../../../components/ui/Badge";
+import { Badge, SectionDivider } from "@/components/ui";
 import { LucideIcon } from "lucide-react";
 
 interface AudienceData {
@@ -15,7 +14,7 @@ interface AudienceData {
 }
 
 const styles = {
-  section: "py-10 px-7 lg:px-10 bg-[#fdf9f3] relative container mx-auto",
+  section: "py-10 px-7 lg:px-10 relative container mx-auto",
   grid: "grid grid-cols-1 sm:grid-cols-2 gap-8",
   cardBase:
     "relative rounded-2xl shadow-md border border-light-background/40 p-6 pt-10 hover:shadow-lg transition-shadow",

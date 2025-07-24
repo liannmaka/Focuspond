@@ -1,4 +1,4 @@
-import SectionDivider from "@/components/ui/SectionDivider";
+import { SectionDivider } from "@/components/ui";
 import Link from "next/link";
 
 interface FooterNavLinks {
