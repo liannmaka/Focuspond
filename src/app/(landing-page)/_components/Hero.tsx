@@ -41,7 +41,7 @@ const Hero: React.FC = () => {
         </div>
 
         {/* Visual Section */}
-        <div className="md:mb-14">
+        <div className="md:mb-14 lg:mb-16">
           <Lottie animationData={heroImage} />
         </div>
       </div>
