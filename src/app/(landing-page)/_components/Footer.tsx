@@ -62,7 +62,7 @@ const Footer = () => {
         </div>
         <div className="px-8 pb-7">
           <p className="text-xs text-dark-accent/80 text-center font-sora py-1">
-            &copy; 2025 FocusPond - All rights reserved.
+            &copy; {new Date().getFullYear()} FocusPond - All rights reserved.
           </p>
         </div>
       </div>

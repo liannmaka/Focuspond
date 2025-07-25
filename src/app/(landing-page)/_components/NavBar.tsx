@@ -38,7 +38,7 @@ const navLinks: NavLink[] = [
   },
   {
     href: "#faq",
-    linkLabel: "FAQ",
+    linkLabel: "FAQs",
     Icon: HelpCircle,
   },
 ];
