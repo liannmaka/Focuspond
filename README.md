@@ -44,6 +44,7 @@ https://focuspond.vercel.app/
 ## 🛠️ Tech Stack
 
 - **Framework:** Next.js (App Router)
+- **Language:** TypeScript
 - **Styling:** Tailwind CSS
 - **Utility:** clsx - for conditional classNames
 - **Animation:** Framer Motion, lottie-react
