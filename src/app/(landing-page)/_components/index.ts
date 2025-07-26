@@ -6,3 +6,4 @@ export { default as CtaBanner } from "./CtaBanner";
 export { default as Faqs } from "./faq/Faqs";
 export { default as Footer } from "./Footer";
 export { default as Testimonial } from "./Testimonial";
+export { default as Features } from "./Features";

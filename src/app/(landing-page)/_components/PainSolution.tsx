@@ -33,7 +33,7 @@ const benefits: Benefit[] = [
   },
   {
     badge: "Gentle Progress Tracking",
-    title: "Reflect, log, and grow your foocus",
+    title: "Reflect, log, and grow your focus",
     paragraph:
       "See streaks, your completed Frogs, and your focus blooms, because every small win counts.",
     image: "/svgs/solution-4.svg",
@@ -81,7 +81,7 @@ const StickyScrollBenefits = () => {
                 </p>
               </div>
               {/* Right: Image */}
-              <div className="flex justify-center">
+              <div className="flex justify-center h-auto w-auto">
                 <Image
                   src={image}
                   alt={title}

@@ -5,6 +5,7 @@ import {
   Faqs,
   CtaBanner,
   Testimonial,
+  Features,
 } from "./_components";
 
 export default function LandingPage() {
@@ -13,6 +14,7 @@ export default function LandingPage() {
       <Hero />
       {/* <WhoItsFor /> */}
       <PainSolution />
+      <Features />
       <Testimonial />
       <CtaBanner />
       <Faqs />
