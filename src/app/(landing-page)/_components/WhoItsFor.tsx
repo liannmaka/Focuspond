@@ -3,7 +3,7 @@
 import React from "react";
 import { Brain, Turtle, Zap, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
-import { Badge, SectionDivider } from "@/components/ui";
+import { Badge } from "@/components/ui";
 import { LucideIcon } from "lucide-react";
 
 interface AudienceData {
@@ -14,7 +14,7 @@ interface AudienceData {
 }
 
 const styles = {
-  section: "py-10 px-7 lg:px-10 relative container mx-auto",
+  section: "md:pt-10 pb-20 px-7 lg:px-10 relative container mx-auto",
   grid: "grid grid-cols-1 sm:grid-cols-2 gap-8",
   cardBase:
     "relative rounded-2xl shadow-md border border-light-background/40 p-6 pt-10 hover:shadow-lg transition-shadow",
@@ -55,56 +55,53 @@ const audience: AudienceData[] = [
 
 const WhoItsForSection = () => {
   return (
-    <>
-      <SectionDivider />
-      <motion.section
-        className={styles.section}
-        aria-labelledby="who-this-is-for"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={{ hidden: {}, visible: {} }}
-      >
-        <Badge
-          title="Who This App Is For"
-          className="text-center"
-        />
-        <div>
-          <div className={styles.grid}>
-            {audience.map(({ Icon, iconColor, title, description }, idx) => {
-              const bgColor =
-                idx % 2 === 0 ? "bg-[#ffe5b4]/10" : "bg-[#a8c686]/10";
-              return (
-                <motion.div
-                  key={idx}
-                  className="h-full"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.3 }}
-                  transition={{ delay: idx * 0.1, duration: 0.6 }}
+    <motion.section
+      className={styles.section}
+      aria-labelledby="who-this-is-for"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={{ hidden: {}, visible: {} }}
+    >
+      <Badge
+        title="Who This App Is For"
+        className="text-center"
+      />
+      <div>
+        <div className={styles.grid}>
+          {audience.map(({ Icon, iconColor, title, description }, idx) => {
+            const bgColor =
+              idx % 2 === 0 ? "bg-[#ffe5b4]/10" : "bg-[#a8c686]/10";
+            return (
+              <motion.div
+                key={idx}
+                className="h-full"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ delay: idx * 0.1, duration: 0.6 }}
+              >
+                <div
+                  className={`${styles.cardBase} ${bgColor} flex flex-col h-full`}
                 >
-                  <div
-                    className={`${styles.cardBase} ${bgColor} flex flex-col h-full`}
-                  >
-                    {/* Floating icon */}
-                    <div className={`absolute -top-4 ${iconColor}/20`}>
-                      <Icon
-                        size={32}
-                        className={`${iconColor}`}
-                      />
-                    </div>
-                    <div>
-                      <h3 className={styles.title}>{title}</h3>
-                      <p className={styles.description}>{description}</p>
-                    </div>
+                  {/* Floating icon */}
+                  <div className={`absolute -top-4 ${iconColor}/20`}>
+                    <Icon
+                      size={32}
+                      className={`${iconColor}`}
+                    />
                   </div>
-                </motion.div>
-              );
-            })}
-          </div>
+                  <div>
+                    <h3 className={styles.title}>{title}</h3>
+                    <p className={styles.description}>{description}</p>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
-      </motion.section>
-    </>
+      </div>
+    </motion.section>
   );
 };
 
