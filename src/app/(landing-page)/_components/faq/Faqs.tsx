@@ -4,7 +4,7 @@ import React from "react";
 import Badge from "@/components/ui/Badge";
 import FaqItem from "./FaqItem";
 import { faqs } from "@/data/faq";
-import { FaqData } from "@/types/landing-page/faq";
+import { FaqData } from "@/types/landing-page";
 import { useState } from "react";
 
 const Faqs = () => {

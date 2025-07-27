@@ -1,5 +1,5 @@
 import React from "react";
-import { FaqItemProp } from "@/types/landing-page/faq";
+import { FaqItemProp } from "@/types/landing-page";
 import { useRef } from "react";
 import { ChevronDown } from "lucide-react";
 
