@@ -1,10 +1,6 @@
 import { SectionDivider } from "@/components/ui";
 import Link from "next/link";
-
-interface FooterNavLinks {
-  href: string;
-  linkLabel: string;
-}
+import { FooterNavLinks } from "@/types/landing-page";
 
 const footerNavLinks: FooterNavLinks[] = [
   {
