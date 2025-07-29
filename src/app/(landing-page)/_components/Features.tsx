@@ -6,7 +6,7 @@ const Features = () => {
   return (
     <>
       <SectionDivider />
-      <section className="pt-14 pb-20">
+      <section className="pt-10 pb-20">
         <div className="container mx-auto px-7">
           <div className="text-center mb-5">
             <Badge title="Features" />
