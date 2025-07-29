@@ -1,89 +1,93 @@
-import { SectionDivider } from "@/components/ui";
-import { CheckCircle, Clock, Activity, Repeat } from "lucide-react";
-import { LucideIcon } from "lucide-react";
+"use client";
 
-interface Step {
-  Icon: LucideIcon;
-  title: string;
-  description: string;
-}
+import React from "react";
+import Link from "next/link";
+import { Calendar, Timer, HeartPulse, BookOpen } from "lucide-react";
+import { Badge } from "@/components/ui";
 
-const HowItWorks = () => {
-  const steps: Step[] = [
+export default function HowItWorksIcons() {
+  const steps = [
     {
-      Icon: CheckCircle,
-      title: "1. Pick Your Frog",
-      description:
-        "Choose the day’s single most important (and difficult) task.",
-    },
-
-    {
-      Icon: Clock,
-      title: "2. Start a Pomodoro",
-      description:
-        "Launch a 25-minute focus sprint on that Frog, no distractions allowed.",
+      icon: <HeartPulse className="w-6 h-6 text-[#ff9472]" />,
+      title: "Check Your Mood",
+      desc: "Log how you feel to stay aware of your energy.",
     },
     {
-      Icon: Activity,
-      title: "3. Track Progress",
-      description:
-        "Log your Pomodoros, watch your streak, and see real momentum.",
+      icon: <Calendar className="w-6 h-6 text-[#ff9472]" />,
+      title: "Plan Your Day",
+      desc: "Pick your Frog of the Day to focus on what matters most.",
     },
     {
-      Icon: Repeat,
-      title: "4. Stay Consistent",
-      description:
-        "On low-energy days, toggle Mini-Frog Mode and use energy-based planning to keep going.",
+      icon: <Timer className="w-6 h-6 text-[#ff9472]" />,
+      title: "Start a Sprint",
+      desc: "Use the Pomodoro timer to work deeply and rest mindfully.",
+    },
+    {
+      icon: <BookOpen className="w-6 h-6 text-[#ff9472]" />,
+      title: "Reflect & Grow",
+      desc: "Review your wins and lessons to reset for tomorrow.",
     },
   ];
 
   return (
-    <>
-      <SectionDivider />
-      <section
-        id="how-it-works"
-        className="pt-7 pb-16 md:px-6"
-      >
-        <div className="max-w-5xl mx-auto space-y-8">
-          {/* Headline + Subheadline */}
-          <div className="text-center">
-            <h2 className="text-2xl md:text-3xl lg:4xl font-sora font-semibold">
-              How It Works
-            </h2>
-            <p className="mt-4 font-manrope text-base/7 text-walnut-brown/90 md:text-lg/7 max-w-2xl mx-auto">
-              A simple, four step flow that guides you from “big scary task” to
-              “completed Frog,” even on your lowest energy days.
-            </p>
-          </div>
+    <section className="pt-20 pb-28 bg-[#a8c686]/10 relative overflow-hidden">
+      <div className="container mx-auto px-7">
+        <Badge
+          title="How it works"
+          className="text-center mb-4"
+        />
 
-          {/* Steps Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {steps.map(({ Icon, title, description }) => (
+        {/* Timeline Line + Icons + Text */}
+        <div className="relative">
+          {/* Connecting line behind the icons */}
+          <div className="absolute top-6 left-0 w-full h-px bg-gray-200 z-0 hidden lg:block" />
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-16 gap-x-10 text-center relative z-10">
+            {steps.map((step, idx) => (
               <div
-                key={title}
-                className="flex flex-col items-center space-y-4 rounded-2xl bg-white/80 backdrop-blur-sm border border-[#ffe5b4]/50 py-6 px-5"
+                key={idx}
+                className="flex flex-col items-center px-2"
               >
-                {/* Icon Circle */}
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-accent-button">
-                  <Icon className="size-6 text-white" />
+                <div className="bg-white/60 p-4 rounded-full mb-10 shadow-sm z-10">
+                  {step.icon}
                 </div>
-
-                {/* Title */}
-                <h3 className="font-sora text-base font-semibold text-center">
-                  {title}
+                <h3 className="text-base font-semibold font-sora">
+                  {step.title}
                 </h3>
-
-                {/* Description */}
-                <p className="font-manrope text-sm text-walnut-brown/80 leading-relaxed text-center">
-                  {description}
+                <p className="font-manrope text-sm mt-2 max-w-xs">
+                  {step.desc}
                 </p>
               </div>
             ))}
           </div>
         </div>
-      </section>
-    </>
-  );
-};
 
-export default HowItWorks;
+        {/* CTA Button */}
+        <div className="text-center mt-12">
+          <Link
+            href="/signup"
+            aria-label="Sign up for FocusPond"
+            className="inline-block bg-accent-button text-white font-semibold px-6 py-3 rounded-lg tracking-wider shadow-md hover:scale-[1.02] transition duration-200 text-sm sm:text-base font-sora"
+          >
+            Pick Your First Frog
+          </Link>
+        </div>
+      </div>
+
+      {/* Decorative Wave at Bottom */}
+      <div className="absolute bottom-0 left-0 w-full leading-none">
+        <svg
+          viewBox="0 0 1440 200"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="none"
+          className="block w-full h-[100px] sm:h-[140px] md:h-[200px]"
+        >
+          <path
+            fill="#fdf9f3"
+            d="M0,80 Q720,200 1440,80 L1440,200 L0,200 Z"
+          />
+        </svg>
+      </div>
+    </section>
+  );
+}
