@@ -32,13 +32,18 @@ export default function HowItWorksIcons() {
   return (
     <section className="pt-20 pb-28 bg-[#a8c686]/10 relative overflow-hidden">
       <div className="container mx-auto px-7">
-        <Badge
-          title="How it works"
-          className="text-center mb-4"
-        />
+        <div>
+          <Badge title="The Focuspond Way" />
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-sora font-semibold leading-tight text-[#6f472d]">
+            Flow through your day with ease.
+          </h2>
+          <p className="mt-4 font-manrope text-base sm:text-lg text-[#5a3a24]">
+            A gentle rhythm to help you plan, focus, and reflect with ease.
+          </p>
+        </div>
 
         {/* Timeline Line + Icons + Text */}
-        <div className="relative">
+        <div className="relative my-20">
           {/* Connecting line behind the icons */}
           <div className="absolute top-6 left-0 w-full h-px bg-gray-200 z-0 hidden lg:block" />
 
@@ -46,7 +51,7 @@ export default function HowItWorksIcons() {
             {steps.map((step, idx) => (
               <div
                 key={idx}
-                className="flex flex-col items-center px-2"
+                className="flex flex-col items-center px-2 text-[#5a3a24]"
               >
                 <div className="bg-white/60 p-4 rounded-full mb-10 shadow-sm z-10">
                   {step.icon}
@@ -63,7 +68,7 @@ export default function HowItWorksIcons() {
         </div>
 
         {/* CTA Button */}
-        <div className="text-center mt-12">
+        <div className="text-center">
           <Link
             href="/signup"
             aria-label="Sign up for FocusPond"

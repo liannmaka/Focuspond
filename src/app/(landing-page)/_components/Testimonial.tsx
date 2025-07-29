@@ -42,11 +42,11 @@ const Testimonial = () => {
       <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-10">
         {/* Left Column: Title + Description */}
         <div>
-          <Badge title="Voices from the Pond" />
-          <h2 className="text-3xl md:text-4xl font-sora font-semibold leading-tight">
+          <Badge title="Voices From The Pond" />
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-sora font-semibold leading-tight text-[#6f472d]">
             What our users are saying
           </h2>
-          <p className="mt-4 font-manrope text-base sm:text-lg max-w-md">
+          <p className="mt-4 font-manrope text-base sm:text-lg max-w-md text-wrap text-[#5a3a24]">
             Focuspond gives users space to think, plan, and stay on track.
           </p>
         </div>
@@ -66,7 +66,7 @@ const Testimonial = () => {
             {scrollingTestimonials.map((testimonial, idx) => (
               <div
                 key={idx}
-                className="min-h-[150px] min-w-[280px] md:min-w-[320px] flex flex-col rounded-2xl shadow-md bg-white/80 backdrop-blur-sm ring-1 ring-white/10 p-6 transition hover:shadow-lg"
+                className="text-[#5a3a24] min-h-[150px] min-w-[280px] md:min-w-[320px] flex flex-col rounded-2xl shadow-md bg-white/80 backdrop-blur-sm ring-1 ring-white/10 p-6 transition hover:shadow-lg"
               >
                 <p className="text-sm">“{testimonial.quote}”</p>
                 <div className="mt-auto pt-4 text-sm font-semibold">

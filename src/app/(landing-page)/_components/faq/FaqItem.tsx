@@ -13,7 +13,7 @@ const FaqItem: React.FC<FaqItemProp> = React.memo(
           aria-expanded={isOpen}
           aria-controls={`faq-content-${question}`}
           onClick={onClick}
-          className="flex justify-between w-full text-left px-4 pb-4 font-medium font-sora cursor-pointer"
+          className="flex justify-between w-full text-left px-4 pb-4 font-medium font-sora cursor-pointer text-[#5a3a24]"
         >
           <span>{question}</span>
           <ChevronDown
@@ -25,7 +25,7 @@ const FaqItem: React.FC<FaqItemProp> = React.memo(
 
         <div
           ref={contentRef}
-          className="px-4 overflow-hidden transition-all duration-500 ease-in-out"
+          className="px-4 overflow-hidden transition-all duration-500 ease-in-out text-[#5a3a24]"
           id={`faq-content-${question}`}
           role="region"
           aria-labelledby={`faq-header-${question}`}
@@ -34,7 +34,7 @@ const FaqItem: React.FC<FaqItemProp> = React.memo(
             opacity: isOpen ? 1 : 0,
           }}
         >
-          <p className="py-2 text-sm text-walnut-brown/80 font-manrope">
+          <p className="py-2 text-sm text-walnut-brown/80 font-manrope ">
             {answer}
           </p>
         </div>

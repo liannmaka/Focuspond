@@ -4,10 +4,10 @@ const CtaBanner = () => {
   return (
     <section className="relative overflow-hidden">
       <div className="container mx-auto px-7 pt-28 pb-20 md:pb-28 text-center relative z-10">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-sora font-semibold">
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-sora font-semibold">
           Start your day with clarity
         </h2>
-        <p className="mt-4 text-walnut-brown/80 font-manrope text-base sm:text-lg">
+        <p className="mt-4 font-manrope text-base sm:text-lg">
           No account needed. Works offline. Zero pressure.
         </p>
         <Link
