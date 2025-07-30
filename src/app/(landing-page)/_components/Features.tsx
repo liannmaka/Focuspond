@@ -8,8 +8,16 @@ const Features = () => {
       <SectionDivider />
       <section className="pt-10 pb-20">
         <div className="container mx-auto px-7">
-          <div className="text-center mb-5">
+          <div className="text-center mb-16">
             <Badge title="Features" />
+            {/* text-3xl md:text-4xl font-semibold leading-tight */}
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold font-sora leading-tight">
+              Gentle tools to support your focus
+            </h2>
+            <p className="mt-4 max-w-2xl mx-auto text-base font-manrope sm:text-lg">
+              Each feature is designed to help you plan, work, and reflect with
+              intention, without the noise or burnout.
+            </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
             {features.map(
@@ -21,16 +29,16 @@ const Features = () => {
                   index % 2 === 0 ? "bg-[#ffe5b4]/10" : "bg-[#a8c686]/10";
                 return (
                   <div
-                    className={`rounded-2xl p-6 shadow-md hover:shadow-lg transition-shadow duration-200 border border-light-background/40 relative ${bgColor}`}
+                    className={`rounded-2xl px-6 py-8 shadow-md hover:shadow-lg transition-shadow duration-200 border border-light-background/40 relative ${bgColor}`}
                     key={index}
                   >
                     <div className={`${iconColor}/20 absolute -top-4`}>
                       <Icon className={`w-8 h-8 ${iconColor}`} />
                     </div>
-                    <h3 className="text-lg font-semibold text-center mb-3 font-sora tracking-wide">
+                    <h3 className="text-lg font-semibold text-center mb-3 font-sora tracking-wide text-[#5a3a24]">
                       {title}
                     </h3>
-                    <p className="text-sm font-manrope leading-relaxed text-center">
+                    <p className="text-sm font-manrope leading-relaxed text-center text-[#5a3a24]">
                       {description}
                     </p>
                   </div>

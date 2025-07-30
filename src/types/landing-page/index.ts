@@ -18,3 +18,8 @@ export interface Feature {
   title: string;
   description: string;
 }
+
+export interface FooterNavLinks {
+  href: string;
+  linkLabel: string;
+}

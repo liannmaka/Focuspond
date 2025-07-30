@@ -23,10 +23,13 @@ const Faqs = () => {
         />
 
         <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl font-sora font-semibold leading-tight">
+          <h2
+            className="text-2xl sm:text-3xl lg:text-4xl
+           font-sora font-semibold leading-tight text-[#6f472d]"
+          >
             Frequently asked questions
           </h2>
-          <p className="mt-4 font-manrope text-base sm:text-lg max-w-md mx-auto">
+          <p className="mt-4 font-manrope text-base sm:text-lg max-w-2xl mx-auto text-[#5a3a24]">
             Everything you need to know to get started with FocusPond.
           </p>
         </div>
@@ -43,7 +46,7 @@ const Faqs = () => {
           ))}
         </div>
 
-        <div className="text-center mt-12 font-sora">
+        <div className="text-center mt-12 font-sora text-[#5a3a24]">
           <p className="font-medium text-sm">Still have questions?</p>
           <a
             href="/contact"

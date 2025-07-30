@@ -76,7 +76,7 @@ const StickyScrollBenefits = () => {
                 <h3 className="text-2xl md:text-3xl font-sora font-semibold leading-tight">
                   {title}
                 </h3>
-                <p className="mt-4 font-manrope text-base md:text-lg max-w-md">
+                <p className="mt-4 font-manrope text-base md:text-lg text-balance">
                   {paragraph}
                 </p>
               </div>

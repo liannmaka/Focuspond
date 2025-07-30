@@ -1,4 +1,4 @@
-import { FaqData } from "@/types/landing-page/faq";
+import { FaqData } from "@/types/landing-page";
 
 export const faqs: FaqData[] = [
   {

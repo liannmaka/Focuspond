@@ -1,10 +1,6 @@
 import { SectionDivider } from "@/components/ui";
 import Link from "next/link";
-
-interface FooterNavLinks {
-  href: string;
-  linkLabel: string;
-}
+import { FooterNavLinks } from "@/types/landing-page";
 
 const footerNavLinks: FooterNavLinks[] = [
   {
@@ -34,7 +30,7 @@ const Footer = () => {
               title="Go to the homepage"
               aria-label="Go to the homepage"
             >
-              <span className="font-manrope text-2xl md:text-3xl font-bold flex items-center">
+              <span className="font-manrope text-2xl md:text-3xl font-bold flex items-center text-[#6f472d]">
                 Focus
               </span>
               <span className="font-sora text-accent-button text-sm font-bold self-end">
@@ -43,7 +39,7 @@ const Footer = () => {
             </Link>
           </div>
           {/* language change this will come later*/}
-          <nav className="flex flex-wrap justify-center gap-6 text-sm text-dark-accent/90 font-medium font-sora">
+          <nav className="flex flex-wrap justify-center gap-6 text-sm text-[#5a3a24] font-medium font-sora">
             {footerNavLinks.map(
               ({ href, linkLabel }: FooterNavLinks, idx: number) => (
                 <Link
@@ -61,7 +57,7 @@ const Footer = () => {
           <SectionDivider />
         </div>
         <div className="px-8 pb-7">
-          <p className="text-xs text-dark-accent/80 text-center font-sora py-1">
+          <p className="text-xs text-[#5a3a24] text-center font-sora py-1">
             &copy; {new Date().getFullYear()} FocusPond - All rights reserved.
           </p>
         </div>
