@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { LucideIcon } from "lucide-react";
+import Image from "next/image";
 
 interface NavLink {
   href: string;
@@ -86,19 +87,21 @@ const NavBar: React.FC = () => {
     >
       <nav className="max-w-[90rem] mx-auto flex justify-between items-center h-[var(--header-height)]">
         {/* Logo and App name */}
-        <div>
+        <div className="flex items-center">
+          <Image
+            src="/svgs/second-logo.png"
+            alt="uuuu"
+            width={50}
+            height={40}
+          />
           <Link
             href="/"
-            className="flex items-center text-walnut-brown tracking-tighter"
+            className="text-walnut-brown font-sora text-2xl font-semibold"
             title="Go to the homepage"
             aria-label="Go to the homepage"
           >
-            <span className="font-manrope text-2xl md:text-3xl font-bold flex items-center">
-              Focus
-            </span>
-            <span className="font-sora text-accent-button text-sm font-bold self-end">
-              Pond
-            </span>
+            <span>Focus</span>
+            <span className="text-accent-button">pond</span>
           </Link>
         </div>
 
