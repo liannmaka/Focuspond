@@ -33,7 +33,7 @@ export default function HowItWorksIcons() {
     <section className="pt-20 pb-28 bg-[#a8c686]/10 relative overflow-hidden">
       <div className="container mx-auto px-7">
         <div>
-          <Badge title="The Focuspond Way" />
+          <Badge title="The FocusPond Way" />
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-sora font-semibold leading-tight text-[#6f472d]">
             Flow through your day with ease.
           </h2>
