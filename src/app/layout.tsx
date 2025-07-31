@@ -50,7 +50,7 @@ const sora = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Focuspond",
+  title: "FocusPond",
   description:
     "Focuspond is a calm, frog-inspired Pomodoro app that blends Eat the Frog and mindfulness. Built for real humans who are tired, overwhelmed, or neurodivergent. It helps you tackle tasks with gentle focus and playful flow.",
 };
