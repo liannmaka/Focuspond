@@ -3,6 +3,7 @@
 import SignupButton from "./ui/SignupButton";
 import Link from "next/link";
 import clsx from "clsx";
+import BrandLogo from "@/components/ui/brandLog";
 import {
   Menu,
   X,
@@ -13,7 +14,6 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { LucideIcon } from "lucide-react";
-import Image from "next/image";
 
 interface NavLink {
   href: string;
@@ -88,20 +88,15 @@ const NavBar: React.FC = () => {
       <nav className="max-w-[90rem] mx-auto flex justify-between items-center h-[var(--header-height)]">
         {/* Logo and App name */}
         <div className="flex items-center">
-          <Image
-            src="/svgs/second-logo.png"
-            alt="uuuu"
-            width={50}
-            height={40}
-          />
+          <BrandLogo />
           <Link
             href="/"
-            className="text-walnut-brown font-sora text-2xl font-semibold"
+            className="text-walnut-brown font-sora text-2xl font-semibold tracking-tight -ml-2 pt-2"
             title="Go to the homepage"
             aria-label="Go to the homepage"
           >
             <span>Focus</span>
-            <span className="text-accent-button">pond</span>
+            <span className="text-accent-button">Pond</span>
           </Link>
         </div>
 

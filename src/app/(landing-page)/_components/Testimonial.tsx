@@ -47,7 +47,7 @@ const Testimonial = () => {
             What our users are saying
           </h2>
           <p className="mt-4 font-manrope text-base sm:text-lg max-w-md text-wrap text-[#5a3a24]">
-            Focuspond gives users space to think, plan, and stay on track.
+            FocusPond gives users space to think, plan, and stay on track.
           </p>
         </div>
         {/* Right Column: Sliding Testimonials */}
