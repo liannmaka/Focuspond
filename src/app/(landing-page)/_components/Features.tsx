@@ -1,6 +1,6 @@
 import { SectionDivider, Badge } from "@/components/ui";
 import { Feature } from "@/types/landing-page";
-import { features } from "@/data/features";
+import { features } from "@/data/landing-page/features";
 
 const Features = () => {
   return (
