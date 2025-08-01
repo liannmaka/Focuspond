@@ -4,45 +4,9 @@ import SignupButton from "./ui/SignupButton";
 import Link from "next/link";
 import clsx from "clsx";
 import BrandLogo from "@/components/ui/brandLog";
-import {
-  Menu,
-  X,
-  LayoutGrid,
-  PlayCircle,
-  Lightbulb,
-  HelpCircle,
-} from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
-import { LucideIcon } from "lucide-react";
-
-interface NavLink {
-  href: string;
-  linkLabel: string;
-  Icon: LucideIcon;
-}
-
-const navLinks: NavLink[] = [
-  {
-    href: "#features",
-    linkLabel: "Features",
-    Icon: LayoutGrid,
-  },
-  {
-    href: "#how-it-works",
-    linkLabel: "How It Works",
-    Icon: PlayCircle,
-  },
-  {
-    href: "#benefits",
-    linkLabel: "Why FocusPond?",
-    Icon: Lightbulb,
-  },
-  {
-    href: "#faq",
-    linkLabel: "FAQs",
-    Icon: HelpCircle,
-  },
-];
+import { navLinks } from "@/data/landing-page/navbar";
 
 const NavBar: React.FC = () => {
   const [isVisible, setIsVisible] = useState<boolean>(true);
