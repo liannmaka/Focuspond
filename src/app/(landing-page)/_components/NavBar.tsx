@@ -52,7 +52,9 @@ const NavBar: React.FC = () => {
       <nav className="max-w-[90rem] mx-auto flex justify-between items-center h-[var(--header-height)]">
         {/* Logo and App name */}
         <div className="flex items-center">
-          <BrandLogo />
+          <div className="-ml-4">
+            <BrandLogo />
+          </div>
           <Link
             href="/"
             className="text-walnut-brown font-sora text-2xl font-semibold tracking-tight -ml-2 pt-2"
