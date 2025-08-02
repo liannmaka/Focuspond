@@ -45,7 +45,7 @@ const NavBar: React.FC = () => {
   return (
     <header
       className={clsx(
-        "fixed top-4 left-4 right-4 z-50 backdrop-blur-md rounded-xl px-6 transition-transform duration-300 ease-in-out",
+        "fixed top-4 left-8 right-8 z-50 rounded-xl backdrop-blur-md px-6 transition-transform duration-300 ease-in-out",
         isVisible ? "translate-y-0 shadow-md" : "-translate-y-full shadow-none"
       )}
     >
@@ -57,7 +57,7 @@ const NavBar: React.FC = () => {
           </div>
           <Link
             href="/"
-            className="text-walnut-brown font-sora text-2xl font-semibold tracking-tight -ml-2 pt-2"
+            className="text-walnut-brown font-sora text-2xl font-semibold tracking-tight -ml-2 pt-1"
             title="Go to the homepage"
             aria-label="Go to the homepage"
           >
