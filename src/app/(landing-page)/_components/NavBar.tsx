@@ -45,7 +45,7 @@ const NavBar: React.FC = () => {
   return (
     <header
       className={clsx(
-        "fixed top-4 left-8 right-8 z-50 rounded-xl backdrop-blur-md px-6 transition-transform duration-300 ease-in-out",
+        "bg-[#fdf9f3]/80 fixed top-4 left-4 right-4 z-50 rounded-xl backdrop-blur-md px-6 transition-transform duration-300 ease-in-out",
         isVisible ? "translate-y-0 shadow-md" : "-translate-y-full shadow-none"
       )}
     >
