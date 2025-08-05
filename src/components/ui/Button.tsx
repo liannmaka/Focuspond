@@ -35,7 +35,7 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
 }) => {
   const baseStyles =
-    "inline-flex items-center justify-center gap-2 rounded-lg transition-all font-sora font-medium hover:scale-[1.02] transition duration-200 ease-in-out tracking-wider";
+    "inline-flex items-center justify-center gap-2 rounded-lg transition-all font-sora tracking-wider";
 
   const variants: Record<Variant, string> = {
     primary: "bg-accent-button text-white shadow-md",
@@ -47,8 +47,8 @@ const Button: React.FC<ButtonProps> = ({
   const sizes: Record<Size, string> = {
     xs: "px-3 py-1.5 text-xs",
     sm: "px-3.5 py-2 text-sm",
-    md: "px-4 py-2 text-base",
-    lg: "px-6 py-3 text-lg",
+    md: "px-5 py-3 text-base",
+    lg: "px-6 py-3 text-base",
   };
 
   const combinedClass = clsx(

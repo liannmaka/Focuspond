@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Button from "@/components/ui/Button";
 import Lottie from "lottie-react";
 import heroImage from "../../../../public/lotties/hero-illustration-3.json";
 import { ChevronsRight } from "lucide-react";
@@ -19,13 +20,14 @@ const Hero: React.FC = () => {
             progress.
           </p>
           <div className="mt-8 flex space-x-4 md:space-x-6 font-sora">
-            <Link
+            <Button
               href="/signup"
+              size="lg"
               aria-label="Sign up for FocusPond"
-              className="bg-accent-button text-white font-semibold px-4 py-3 rounded-lg tracking-wider shadow-md hover:scale-[1.02] transition text-sm sm:text-base sm:px-6 sm:py-3"
+              className="font-semibold"
             >
               Start free
-            </Link>
+            </Button>
 
             <Link
               href="#"
