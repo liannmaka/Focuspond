@@ -107,33 +107,40 @@ const NavBar: React.FC = () => {
       <div
         id="mobile-menu"
         className={clsx(
-          "lg:hidden",
+          "lg:hidden overflow-hidden transition-all duration-700 ease-in-out",
           isOpen
             ? "max-h-80 opacity-100 pointer-events-auto"
-            : "max-h-0 opacity-0 pointer-events-none overflow-hidden"
+            : "max-h-0 opacity-0 pointer-events-none"
         )}
       >
         {/* Mobile Navigation */}
-        <div className="flex flex-col pb-7 pt-5 space-y-4.5">
-          {navLinks.map(({ href, linkLabel, Icon }) => (
-            <Link
-              href={href}
-              key={href}
-              className={clsx(linkStyles, "py-2 border border-dark-accent")}
-            >
-              <div className="flex items-center">
-                <span className={clsx(iconStyles, "mr-2")}>
-                  <Icon size={16} />
-                </span>
-                <span className={clsx(linkLabelStyles)}>{linkLabel}</span>
-              </div>
-            </Link>
-          ))}
-        </div>
+        <div
+          className={clsx(
+            "transition-transform duration-500 delay-300 ease-in-out",
+            isOpen ? "translate-y-0" : "-translate-y-2"
+          )}
+        >
+          <div className="flex flex-col pb-7 pt-5 space-y-4.5">
+            {navLinks.map(({ href, linkLabel, Icon }) => (
+              <Link
+                href={href}
+                key={href}
+                className={clsx(linkStyles, "py-2 border border-dark-accent")}
+              >
+                <div className="flex items-center">
+                  <span className={clsx(iconStyles, "mr-2")}>
+                    <Icon size={16} />
+                  </span>
+                  <span className={clsx(linkLabelStyles)}>{linkLabel}</span>
+                </div>
+              </Link>
+            ))}
+          </div>
 
-        {/* Button */}
-        <div className="items-center gap-4 flex pb-5">
-          <SignupButton />
+          {/* Button */}
+          <div className="items-center gap-4 flex pb-5">
+            <SignupButton />
+          </div>
         </div>
       </div>
     </header>
