@@ -35,7 +35,7 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
 }) => {
   const baseStyles =
-    "inline-flex items-center justify-center gap-2 rounded-lg transition-all font-sora tracking-wider";
+    "inline-flex items-center justify-center rounded-lg font-sora";
 
   const variants: Record<Variant, string> = {
     primary: "bg-accent-button text-white shadow-md",

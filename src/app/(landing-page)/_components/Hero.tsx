@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import Button from "@/components/ui/Button";
 import Lottie from "lottie-react";
 import heroImage from "../../../../public/lotties/hero-illustration-3.json";
@@ -19,26 +18,28 @@ const Hero: React.FC = () => {
             Turn your low-energy days into consistent wins with focused, mindful
             progress.
           </p>
-          <div className="mt-8 flex space-x-4 md:space-x-6 font-sora">
+          <div className="mt-8 flex space-x-4">
             <Button
               href="/signup"
               size="lg"
               aria-label="Sign up for FocusPond"
-              className="font-semibold"
+              className="font-semibold tracking-wider"
             >
               Start free
             </Button>
-
-            <Link
-              href="#"
-              className="group text-xs font-medium hover:underline self-center sm:text-sm inline-flex"
+            <Button
+              variant="ghost"
+              href="#benefits"
+              size="sm"
             >
-              <span>Learn More</span>
-              <ChevronsRight
-                aria-hidden="true"
-                className="size-4 self-center group-hover:translate-x-1 will-change-transform"
-              />
-            </Link>
+              <div className="group inline-flex font-medium hover:underline tracking-wide">
+                <span>Learn More</span>
+                <ChevronsRight
+                  aria-hidden="true"
+                  className="size-4 self-center group-hover:translate-x-1 will-change-transform"
+                />
+              </div>
+            </Button>
           </div>
         </div>
 
