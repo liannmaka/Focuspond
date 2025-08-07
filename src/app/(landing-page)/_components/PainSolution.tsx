@@ -88,6 +88,7 @@ const StickyScrollBenefits = () => {
                   width={400}
                   height={300}
                   className="relative"
+                  priority
                 />
               </div>
             </div>

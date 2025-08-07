@@ -37,7 +37,7 @@
 }
 
 @utility hero-section-wrapper {
-  @apply relative py-14 overflow-hidden min-h-[calc(100vh-var(--header-height))];
+  @apply relative pt-18 pb-10 lg:py-14 overflow-hidden min-h-[calc(100vh-var(--header-height))];
 }
 
 /* Default light mode for theme */
