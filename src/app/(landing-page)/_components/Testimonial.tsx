@@ -39,7 +39,7 @@ const Testimonial = () => {
 
   return (
     <section className="relative py-24 bg-[#a8c686]/10 overflow-hidden">
-      <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-10">
+      <div className="content-center grid grid-cols-1 lg:grid-cols-2 gap-10">
         {/* Left Column: Title + Description */}
         <div>
           <Badge title="Voices From The Pond" />

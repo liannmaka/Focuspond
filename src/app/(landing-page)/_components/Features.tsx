@@ -7,7 +7,7 @@ const Features = () => {
     <>
       <SectionDivider />
       <section className="pt-10 pb-20">
-        <div className="container mx-auto px-7">
+        <div className="content-center">
           <div className="text-center mb-16">
             <Badge title="Features" />
             {/* text-3xl md:text-4xl font-semibold leading-tight */}

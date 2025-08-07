@@ -17,8 +17,27 @@
   --color-accent-button: var(--apricot);
   --color-dark-accent: var(--walnut-brown);
   --color-secondary-accent: var(--sage-green);
+
   --font-manrope: var(--font-manrope);
   --font-sora: var(--font-sora);
+}
+
+@layer base {
+  h1 {
+    @apply text-3xl md:text-4xl lg:text-5xl font-sora font-semibold leading-tight;
+  }
+}
+
+@utility content-center {
+  @apply container mx-auto px-7;
+}
+
+@utility flex-center {
+  @apply flex items-center justify-center;
+}
+
+@utility hero-section-wrapper {
+  @apply relative py-14 overflow-hidden min-h-[calc(100vh-var(--header-height))];
 }
 
 /* Default light mode for theme */
