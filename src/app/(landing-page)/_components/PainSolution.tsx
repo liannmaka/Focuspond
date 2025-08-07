@@ -69,7 +69,7 @@ const StickyScrollBenefits = () => {
                          rounded-tl-full rounded-bl-full z-0"
               aria-hidden="true"
             />
-            <div className="container mx-auto px-7 grid gap-y-5 lg:grid-cols-2  lg:gap-x-10 relative z-10">
+            <div className="content-center grid gap-y-5 lg:grid-cols-2  lg:gap-x-10 relative z-10">
               {/* Left: Text */}
               <div>
                 <Badge title={badge} />

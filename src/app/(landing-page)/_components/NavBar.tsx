@@ -15,7 +15,7 @@ const NavBar: React.FC = () => {
   const toggleMenu = () => setIsOpen((prev) => !prev);
 
   const linkStyles =
-    "group inline-flex items-center px-2 rounded-md hover:text-accent-button transition-colors duration-200";
+    "group inline-flex items-center px-2 hover:text-accent-button transition-colors duration-200";
 
   const iconStyles =
     "text-base group-hover:scale-110 transition-transform duration-200";
@@ -45,7 +45,7 @@ const NavBar: React.FC = () => {
   return (
     <header
       className={clsx(
-        "bg-[#fdf9f3]/80 fixed top-4 left-4 right-4 z-50 rounded-xl backdrop-blur-md px-6 transition-transform duration-300 ease-in-out",
+        "bg-base-background/80 fixed top-4 left-4 right-4 z-50 rounded-xl backdrop-blur-md px-6 transition-transform duration-300 ease-in-out",
         isVisible ? "translate-y-0 shadow-md" : "-translate-y-full shadow-none"
       )}
     >
@@ -72,7 +72,7 @@ const NavBar: React.FC = () => {
             <Link
               href={href}
               key={href}
-              className={clsx(linkStyles, "py-1")}
+              className={clsx(linkStyles, "py-4")}
             >
               <div className="flex items-center">
                 <span className={clsx(iconStyles, "mr-1")}>
@@ -125,7 +125,10 @@ const NavBar: React.FC = () => {
               <Link
                 href={href}
                 key={href}
-                className={clsx(linkStyles, "py-2 border border-dark-accent")}
+                className={clsx(
+                  linkStyles,
+                  "py-2 rounded-md border border-dark-accent"
+                )}
               >
                 <div className="flex items-center">
                   <span className={clsx(iconStyles, "mr-2")}>
@@ -138,7 +141,7 @@ const NavBar: React.FC = () => {
           </div>
 
           {/* Button */}
-          <div className="items-center gap-4 flex pb-5">
+          <div className="pb-5">
             <SignupButton />
           </div>
         </div>

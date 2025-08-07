@@ -16,7 +16,7 @@ const Faqs = () => {
 
   return (
     <section className="relative bg-secondary-accent/10 md:pt-10 pb-16">
-      <div className="container mx-auto px-7">
+      <div className="content-center">
         <Badge
           title="FAQs"
           className="text-center"

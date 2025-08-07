@@ -7,13 +7,11 @@ import { ChevronsRight } from "lucide-react";
 
 const Hero: React.FC = () => {
   return (
-    <section className="relative py-14 px-7 overflow-hidden min-h-[calc(100vh-var(--header-height))] flex items-center justify-center container mx-auto">
-      <div className="grid md:grid-cols-2 gap-12 items-center h-full p-">
+    <section className="hero-section-wrapper flex-center content-center">
+      <div className="grid md:grid-cols-2 gap-12 items-center h-full">
         {/* Text Section */}
         <div>
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-sora font-semibold leading-tight">
-            Crush your goals, not your energy.
-          </h1>
+          <h1>Crush your goals, not your energy.</h1>
           <p className="font-manrope mt-6 text-base sm:text-lg max-w-md">
             Turn your low-energy days into consistent wins with focused, mindful
             progress.
