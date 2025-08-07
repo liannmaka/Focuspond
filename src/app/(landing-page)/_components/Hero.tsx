@@ -8,7 +8,7 @@ import { ChevronsRight } from "lucide-react";
 const Hero: React.FC = () => {
   return (
     <section className="hero-section-wrapper flex-center content-center">
-      <div className="grid md:grid-cols-2 gap-12 items-center h-full">
+      <div className="grid lg:grid-cols-2 lg:gap-12 gap-4 items-center h-full">
         {/* Text Section */}
         <div>
           <h1>Crush your goals, not your energy.</h1>
