@@ -21,10 +21,24 @@ const Hero: React.FC = () => {
               href="/signup"
               size="lg"
               aria-label="Sign up for FocusPond"
-              className="font-semibold tracking-wider"
+              className="relative overflow-hidden font-semibold tracking-wider group"
             >
-              Start free
+              <span className="relative z-10">Start free</span>
+              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <span className="absolute inset-0 animate-shimmer" />
+              </span>
             </Button>
+
+            {/* <Button
+              href="/signup"
+              size="lg"
+              aria-label="Sign up for FocusPond"
+              className="relative overflow-hidden font-semibold tracking-wider group"
+            >
+              <span className="relative z-10">Start free</span>
+              <span className="absolute inset-0 animate-shimmer bg-gradient-to-r from-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </Button> */}
+
             <Button
               variant="ghost"
               href="#benefits"
@@ -34,7 +48,7 @@ const Hero: React.FC = () => {
                 <span>Learn More</span>
                 <ChevronsRight
                   aria-hidden="true"
-                  className="size-4 self-center group-hover:translate-x-1 will-change-transform"
+                  className="size-4 self-center group-hover:translate-x-0.5 will-change-transform transition-transform duration-300"
                 />
               </div>
             </Button>

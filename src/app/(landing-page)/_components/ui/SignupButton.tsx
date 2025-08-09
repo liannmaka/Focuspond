@@ -6,7 +6,7 @@ const SignupButton = () => {
       href="/signup"
       size="sm"
       aria-label="Sign up for FocusPond"
-      className="border border-accent-button font-medium tracking-wider"
+      className="border border-accent-button font-medium tracking-wider transition-transform duration-300 hover:-translate-y-0.5"
     >
       Get started
     </Button>
