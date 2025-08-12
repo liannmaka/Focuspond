@@ -1,21 +1,21 @@
 "use client";
 
 import Button from "@/components/ui/Button";
-import Lottie from "lottie-react";
 import clsx from "clsx";
 import heroImage from "../../../../public/lotties/hero-illustration-3.json";
+import { useLottie } from "lottie-react";
 import { ChevronsRight } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const Hero: React.FC = () => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
+  const options = { animationData: heroImage, loop: true, autoplay: true };
+  const { View, animationItem } = useLottie(options);
+
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoaded(true);
-    }, 400);
-    return () => clearTimeout(timer);
-  }, []);
+    if (animationItem) setIsLoaded(true);
+  }, [animationItem]);
 
   return (
     <section className="hero-section-wrapper flex-center content-center">
@@ -63,13 +63,14 @@ const Hero: React.FC = () => {
         >
           {!isLoaded && <span className="absolute inset-0 animate-shimmer" />}
 
-          <Lottie
-            animationData={heroImage}
+          <div
             className={clsx(
               "transition-opacity duration-500 w-full h-full",
               isLoaded ? "opacity-100" : "opacity-0"
             )}
-          />
+          >
+            {View}
+          </div>
         </div>
       </div>
     </section>
