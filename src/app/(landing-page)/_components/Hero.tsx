@@ -10,14 +10,10 @@ import { useEffect, useState } from "react";
 const Hero: React.FC = () => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
-  console.log("isLoaded", isLoaded);
-
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoaded(true);
-      console.log("inside setTimer isLoaded", isLoaded);
     }, 400);
-    console.log("outside setTimer isLoaded", isLoaded);
     return () => clearTimeout(timer);
   }, []);
 
@@ -32,18 +28,6 @@ const Hero: React.FC = () => {
             progress.
           </p>
           <div className="mt-8 flex space-x-4">
-            {/* <Button
-              href="/signup"
-              size="lg"
-              aria-label="Sign up for FocusPond"
-              className="relative overflow-hidden font-semibold tracking-wider group"
-            >
-              <span className="relative z-10">Start free</span>
-              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <span className="absolute inset-0 animate-shimmer" />
-              </span>
-            </Button> */}
-
             <Button
               href="/signup"
               size="lg"
@@ -73,20 +57,16 @@ const Hero: React.FC = () => {
         {/* Visual Section */}
         <div
           className={clsx(
-            "md:mb-14 lg:mb-16 relative",
-            !isLoaded ? "min-h-[300px] md:min-h-[400px]" : ""
+            "md:mb-14 lg:mb-16 relative aspect-[146/101] overflow-hidden",
+            !isLoaded && "bg-gray-300/30 rounded-xl mt-8 lg:mt-0"
           )}
         >
-          {!isLoaded && (
-            <>
-              <div className="absolute inset-0 bg-gray-300/30 rounded-xl mt-8 w-full h-full " />
-              <span className="absolute inset-0 animate-shimmer" />
-            </>
-          )}
+          {!isLoaded && <span className="absolute inset-0 animate-shimmer" />}
+
           <Lottie
             animationData={heroImage}
             className={clsx(
-              "transition-opacity duration-500",
+              "transition-opacity duration-500 w-full h-full",
               isLoaded ? "opacity-100" : "opacity-0"
             )}
           />
