@@ -2,10 +2,21 @@
 
 import Button from "@/components/ui/Button";
 import Lottie from "lottie-react";
+import clsx from "clsx";
 import heroImage from "../../../../public/lotties/hero-illustration-3.json";
 import { ChevronsRight } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const Hero: React.FC = () => {
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 400);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <section className="hero-section-wrapper flex-center content-center">
       <div className="grid lg:grid-cols-2 lg:gap-12 gap-4 items-center h-full">
@@ -21,10 +32,12 @@ const Hero: React.FC = () => {
               href="/signup"
               size="lg"
               aria-label="Sign up for FocusPond"
-              className="font-semibold tracking-wider"
+              className="relative overflow-hidden font-semibold tracking-wider group"
             >
-              Start free
+              <span className="relative z-10">Start free</span>
+              <span className="absolute inset-0 animate-shimmer bg-gradient-to-r from-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </Button>
+
             <Button
               variant="ghost"
               href="#benefits"
@@ -34,7 +47,7 @@ const Hero: React.FC = () => {
                 <span>Learn More</span>
                 <ChevronsRight
                   aria-hidden="true"
-                  className="size-4 self-center group-hover:translate-x-1 will-change-transform"
+                  className="size-4 self-center group-hover:translate-x-0.5 will-change-transform transition-transform duration-300"
                 />
               </div>
             </Button>
@@ -42,8 +55,21 @@ const Hero: React.FC = () => {
         </div>
 
         {/* Visual Section */}
-        <div className="md:mb-14 lg:mb-16">
-          <Lottie animationData={heroImage} />
+        <div
+          className={clsx(
+            "md:mb-14 lg:mb-16 relative aspect-[146/101] overflow-hidden",
+            !isLoaded && "bg-gray-300/30 rounded-xl mt-8 lg:mt-0"
+          )}
+        >
+          {!isLoaded && <span className="absolute inset-0 animate-shimmer" />}
+
+          <Lottie
+            animationData={heroImage}
+            className={clsx(
+              "transition-opacity duration-500 w-full h-full",
+              isLoaded ? "opacity-100" : "opacity-0"
+            )}
+          />
         </div>
       </div>
     </section>
