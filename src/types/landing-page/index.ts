@@ -28,3 +28,10 @@ export interface FooterNavLinks {
   href: string;
   linkLabel: string;
 }
+
+export interface Benefit {
+  title: string;
+  paragraph: string;
+  badge: string;
+  image: string;
+}
