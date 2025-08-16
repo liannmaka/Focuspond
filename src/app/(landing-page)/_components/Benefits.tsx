@@ -33,7 +33,7 @@ const StickyScrollBenefits = () => {
               aria-hidden="true"
             />
             <div className="content-center grid gap-y-5 lg:grid-cols-2  lg:gap-x-10 relative z-10">
-              {/* Left: Text */}
+              {/* Left: Text column*/}
               <div>
                 <Badge title={badge} />
                 <h3 className="text-2xl md:text-3xl font-sora font-semibold leading-tight">
@@ -43,7 +43,7 @@ const StickyScrollBenefits = () => {
                   {paragraph}
                 </p>
               </div>
-              {/* Right: Image */}
+              {/* Right: Image column*/}
               <div className="flex justify-center">
                 <Image
                   src={image}
