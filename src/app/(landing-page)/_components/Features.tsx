@@ -10,7 +10,6 @@ const Features = () => {
         <div className="content-center">
           <div className="text-center mb-16">
             <Badge title="Features" />
-            {/* text-3xl md:text-4xl font-semibold leading-tight */}
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold font-sora leading-tight">
               Gentle tools to support your focus
             </h2>
