@@ -38,7 +38,7 @@ const Footer = () => {
               </span>
             </Link>
           </div>
-          {/* language change this will come later*/}
+          {/* language change: this will come later*/}
           <nav className="flex flex-wrap justify-center gap-6 text-sm text-[#5a3a24] font-medium font-sora">
             {footerNavLinks.map(
               ({ href, linkLabel }: FooterNavLinks, idx: number) => (

@@ -4,7 +4,13 @@ import { motion } from "framer-motion";
 import { useRef } from "react";
 import { Badge } from "@/components/ui";
 
-const testimonials = [
+interface Testimonial {
+  name: string;
+  role: string;
+  quote: string;
+}
+
+const testimonials: Testimonial[] = [
   {
     name: "Ada O.",
     role: "Student, UI Lagos",
