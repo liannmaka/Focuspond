@@ -2,39 +2,17 @@
 
 import React from "react";
 import Link from "next/link";
-import { Calendar, Timer, HeartPulse, BookOpen } from "lucide-react";
 import { Badge } from "@/components/ui";
+import { HowItWork } from "@/types/landing-page";
+import { steps } from "@/data/landing-page/howitworks";
 
-export default function HowItWorksIcons() {
-  const steps = [
-    {
-      icon: <HeartPulse className="w-6 h-6 text-[#ff9472]" />,
-      title: "Check Your Mood",
-      desc: "Log how you feel to stay aware of your energy.",
-    },
-    {
-      icon: <Calendar className="w-6 h-6 text-[#ff9472]" />,
-      title: "Plan Your Day",
-      desc: "Pick your Frog of the Day to focus on what matters most.",
-    },
-    {
-      icon: <Timer className="w-6 h-6 text-[#ff9472]" />,
-      title: "Start a Sprint",
-      desc: "Use the Pomodoro timer to work deeply and rest mindfully.",
-    },
-    {
-      icon: <BookOpen className="w-6 h-6 text-[#ff9472]" />,
-      title: "Reflect & Grow",
-      desc: "Review your wins and lessons to reset for tomorrow.",
-    },
-  ];
-
+const HowItWorks = () => {
   return (
-    <section className="pt-20 pb-28 bg-[#a8c686]/10 relative overflow-hidden">
+    <section className="pt-20 pb-28 bg-secondary-accent/10 relative overflow-hidden">
       <div className="content-center">
         <div>
-          <Badge title="The FocusPond Way" />
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-sora font-semibold leading-tight text-[#6f472d]">
+          <Badge title="How It Works" />
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-sora font-semibold leading-tight text-darker-accent">
             Flow through your day with ease.
           </h2>
           <p className="mt-4 font-manrope text-base sm:text-lg text-[#5a3a24]">
@@ -44,35 +22,32 @@ export default function HowItWorksIcons() {
 
         {/* Timeline Line + Icons + Text */}
         <div className="relative my-20">
-          {/* Connecting line behind the icons */}
-          <div className="absolute top-6 left-0 w-full h-px bg-gray-200 z-0 hidden lg:block" />
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-16 gap-x-10 text-center relative z-10">
-            {steps.map((step, idx) => (
-              <div
-                key={idx}
-                className="flex flex-col items-center px-2 text-[#5a3a24]"
-              >
-                <div className="bg-white/60 p-4 rounded-full mb-10 shadow-sm z-10">
-                  {step.icon}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-16 gap-x-10 text-center">
+            {steps.map(
+              ({ Icon, title, description }: HowItWork, idx: number) => (
+                <div
+                  key={idx}
+                  className="flex flex-col items-center px-2 text-[#5a3a24]"
+                >
+                  <div className="bg-white/60 p-4 rounded-full mb-10 shadow-sm z-10">
+                    <Icon className="w-6 h-6 text-[#ff9472]" />
+                  </div>
+                  <h3 className="text-base font-semibold font-sora">{title}</h3>
+                  <p className="font-manrope text-sm mt-2 max-w-xs">
+                    {description}
+                  </p>
                 </div>
-                <h3 className="text-base font-semibold font-sora">
-                  {step.title}
-                </h3>
-                <p className="font-manrope text-sm mt-2 max-w-xs">
-                  {step.desc}
-                </p>
-              </div>
-            ))}
+              )
+            )}
           </div>
         </div>
 
         {/* CTA Button */}
-        <div className="text-center">
+        <div className="text-center relative z-10">
           <Link
             href="/signup"
             aria-label="Sign up for FocusPond"
-            className="inline-block bg-accent-button text-white font-semibold px-6 py-3 rounded-lg tracking-wider shadow-md hover:scale-[1.02] transition duration-200 text-sm sm:text-base font-sora"
+            className="inline-block bg-accent-button text-white font-semibold px-6 py-3 rounded-lg tracking-wider shadow-md text-sm sm:text-base font-sora transition-transform duration-300 hover:-translate-y-0.5"
           >
             Pick Your First Frog
           </Link>
@@ -95,4 +70,6 @@ export default function HowItWorksIcons() {
       </div>
     </section>
   );
-}
+};
+
+export default HowItWorks;

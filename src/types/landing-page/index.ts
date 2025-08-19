@@ -35,3 +35,9 @@ export interface Benefit {
   badge: string;
   image: string;
 }
+
+export interface HowItWork {
+  Icon: LucideIcon;
+  title: string;
+  description: string;
+}

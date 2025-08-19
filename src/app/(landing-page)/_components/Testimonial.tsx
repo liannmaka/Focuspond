@@ -44,12 +44,12 @@ const Testimonial = () => {
   const scrollingTestimonials = [...testimonials, ...testimonials];
 
   return (
-    <section className="relative py-24 bg-[#a8c686]/10 overflow-hidden">
+    <section className="relative py-24 bg-secondary-accent/10 overflow-hidden">
       <div className="content-center grid grid-cols-1 lg:grid-cols-2 gap-10">
         {/* Left Column: Title + Description */}
         <div>
           <Badge title="Voices From The Pond" />
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-sora font-semibold leading-tight text-[#6f472d]">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-sora font-semibold leading-tight text-darker-accent">
             What our users are saying
           </h2>
           <p className="mt-4 font-manrope text-base sm:text-lg max-w-md text-wrap text-[#5a3a24]">

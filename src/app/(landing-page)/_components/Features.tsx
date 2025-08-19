@@ -25,7 +25,9 @@ const Features = () => {
                 index: number
               ) => {
                 const bgColor =
-                  index % 2 === 0 ? "bg-[#ffe5b4]/10" : "bg-[#a8c686]/10";
+                  index % 2 === 0
+                    ? "bg-light-background/10"
+                    : "bg-secondary-accent/10";
                 return (
                   <div
                     className={`rounded-2xl px-6 py-8 shadow-md hover:shadow-lg transition-shadow duration-200 border border-light-background/40 relative ${bgColor}`}

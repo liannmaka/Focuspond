@@ -6,6 +6,7 @@
   --apricot: #ff9472;
   --walnut-brown: #8b5e3c;
   --sage-green: #a8c686;
+  --darker-walnut-brown: #6f472d;
   --header-height: 68px;
 }
 
@@ -16,6 +17,7 @@
   --color-light-background: var(--soft-peach);
   --color-accent-button: var(--apricot);
   --color-dark-accent: var(--walnut-brown);
+  --color-darker-accent: var(--darker-walnut-brown);
   --color-secondary-accent: var(--sage-green);
 
   --font-manrope: var(--font-manrope);
