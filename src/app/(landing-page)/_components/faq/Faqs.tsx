@@ -25,7 +25,7 @@ const Faqs = () => {
         <div className="text-center mb-10">
           <h2
             className="text-2xl sm:text-3xl lg:text-4xl
-           font-sora font-semibold leading-tight text-[#6f472d]"
+           font-sora font-semibold leading-tight text-darker-accent"
           >
             Frequently asked questions
           </h2>

@@ -38,7 +38,8 @@ const Button: React.FC<ButtonProps> = ({
     "inline-flex items-center justify-center rounded-lg font-sora";
 
   const variants: Record<Variant, string> = {
-    primary: "bg-accent-button text-white shadow-md",
+    primary:
+      "bg-accent-button text-white shadow-md transition-transform duration-300 hover:-translate-y-0.5",
     outline:
       "border border-dark-accent bg-transparent hover:bg-light-background",
     ghost: "bg-transparent",
