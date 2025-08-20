@@ -14,7 +14,7 @@ const HowItWorks = () => {
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-sora font-semibold leading-tight text-darker-accent">
             Flow through your day with ease.
           </h2>
-          <p className="mt-4 font-manrope text-base sm:text-lg text-[#5a3a24]">
+          <p className="paragraph-for-gb">
             A gentle rhythm to help you plan, focus, and reflect with ease.
           </p>
         </div>

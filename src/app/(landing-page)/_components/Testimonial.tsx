@@ -52,7 +52,7 @@ const Testimonial = () => {
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-sora font-semibold leading-tight text-darker-accent">
             What our users are saying
           </h2>
-          <p className="mt-4 font-manrope text-base sm:text-lg max-w-md text-wrap text-[#5a3a24]">
+          <p className="paragraph-for-gb max-w-md text-wrap">
             FocusPond gives users space to think, plan, and stay on track.
           </p>
         </div>

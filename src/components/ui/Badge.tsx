@@ -6,9 +6,7 @@ interface BadgeProps {
 const Badge: React.FC<BadgeProps> = ({ title, className }) => {
   return (
     <div className={className}>
-      <h2 className="inline-block px-4 py-1 text-xs font-sora bg-[#ffe5b4]/60 text-[#6f472d] mb-8 font-semibold rounded-full">
-        {title}
-      </h2>
+      <h2 className="badge">{title}</h2>
     </div>
   );
 };

@@ -29,7 +29,7 @@ const Faqs = () => {
           >
             Frequently asked questions
           </h2>
-          <p className="mt-4 font-manrope text-base sm:text-lg max-w-2xl mx-auto text-[#5a3a24]">
+          <p className="paragraph-for-gb max-w-2xl mx-auto">
             Everything you need to know to get started with FocusPond.
           </p>
         </div>

@@ -30,6 +30,16 @@
   }
 }
 
+@layer components {
+  .card {
+    @apply rounded-2xl px-6 py-8 shadow-md hover:shadow-lg transition-shadow duration-200 border border-light-background/40;
+  }
+
+  .badge {
+    @apply inline-block px-4 py-1 text-xs font-sora bg-[#ffe5b4]/60 text-[#6f472d] mb-8 font-semibold rounded-full;
+  }
+}
+
 @utility content-center {
   @apply container mx-auto px-7;
 }
@@ -40,6 +50,10 @@
 
 @utility hero-section-wrapper {
   @apply relative pt-18 pb-10 lg:py-14 overflow-hidden min-h-[calc(100vh-var(--header-height))];
+}
+
+@utility paragraph-for-gb {
+  @apply mt-4 font-manrope text-base sm:text-lg text-[#5a3a24];
 }
 
 @keyframes shimmer {
