@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { SectionDivider, Badge } from "@/components/ui";
 import { Feature } from "@/types/landing-page";
 import { features } from "@/data/landing-page/features";
@@ -30,11 +31,11 @@ const Features = () => {
                     : "bg-secondary-accent/10";
                 return (
                   <div
-                    className={`rounded-2xl px-6 py-8 shadow-md hover:shadow-lg transition-shadow duration-200 border border-light-background/40 relative ${bgColor}`}
+                    className={clsx("card relative", bgColor)}
                     key={index}
                   >
                     <div className={`${iconColor}/20 absolute -top-4`}>
-                      <Icon className={`w-8 h-8 ${iconColor}`} />
+                      <Icon className={clsx("w-8 h-8", iconColor)} />
                     </div>
                     <h3 className="text-lg font-semibold text-center mb-3 font-sora tracking-wide text-[#5a3a24]">
                       {title}
