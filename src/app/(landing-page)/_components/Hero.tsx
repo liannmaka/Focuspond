@@ -1,8 +1,8 @@
 "use client";
 
-import Button from "@/components/ui/Button";
 import clsx from "clsx";
 import heroImage from "../../../../public/lotties/hero-illustration-3.json";
+import { Button } from "@/components/ui";
 import { useLottie } from "lottie-react";
 import { ChevronsRight } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -32,7 +32,7 @@ const Hero: React.FC = () => {
               href="/signup"
               size="lg"
               aria-label="Sign up for FocusPond"
-              className="relative overflow-hidden font-semibold tracking-wider group"
+              className="relative overflow-hidden font-semibold group"
             >
               <span className="relative z-10">Start free</span>
               <span className="absolute inset-0 animate-shimmer bg-gradient-to-r from-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
