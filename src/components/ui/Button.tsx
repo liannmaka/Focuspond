@@ -39,7 +39,7 @@ const Button: React.FC<ButtonProps> = ({
 
   const variants: Record<Variant, string> = {
     primary:
-      "bg-accent-button text-white shadow-md transition-transform duration-300 hover:-translate-y-0.5",
+      "bg-accent-button text-white shadow-md transition-transform duration-300 hover:-translate-y-0.5 tracking-wider",
     outline:
       "border border-dark-accent bg-transparent hover:bg-light-background",
     ghost: "bg-transparent",
@@ -47,8 +47,8 @@ const Button: React.FC<ButtonProps> = ({
 
   const sizes: Record<Size, string> = {
     xs: "px-3 py-1.5 text-xs",
-    sm: "px-3.5 py-2 text-sm",
-    md: "px-5 py-3 text-base",
+    sm: "px-4 py-2.5 text-sm",
+    md: "px-5 py-3 text-sm lg:text-base",
     lg: "px-6 py-3 text-base",
   };
 

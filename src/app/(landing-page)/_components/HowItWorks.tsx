@@ -1,8 +1,7 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
-import { Badge } from "@/components/ui";
+import { Badge, Button } from "@/components/ui";
 import { HowItWork } from "@/types/landing-page";
 import { steps } from "@/data/landing-page/howitworks";
 
@@ -44,13 +43,13 @@ const HowItWorks = () => {
 
         {/* CTA Button */}
         <div className="text-center relative z-10">
-          <Link
+          <Button
             href="/signup"
             aria-label="Sign up for FocusPond"
-            className="inline-block bg-accent-button text-white font-semibold px-6 py-3 rounded-lg tracking-wider shadow-md text-sm sm:text-base font-sora transition-transform duration-300 hover:-translate-y-0.5"
+            className="font-medium"
           >
             Pick Your First Frog
-          </Link>
+          </Button>
         </div>
       </div>
 
