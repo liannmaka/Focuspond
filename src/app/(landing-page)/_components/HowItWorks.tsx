@@ -28,7 +28,7 @@ const HowItWorks = () => {
                   key={idx}
                   className="flex flex-col items-center px-2 text-[#5a3a24]"
                 >
-                  <div className="bg-white/60 p-4 rounded-full mb-10 shadow-sm z-10">
+                  <div className="bg-white/80 p-4 rounded-full mb-10 shadow-sm z-10">
                     <Icon className="w-6 h-6 text-[#ff9472]" />
                   </div>
                   <h3 className="text-base font-semibold font-sora">{title}</h3>
@@ -45,6 +45,7 @@ const HowItWorks = () => {
         <div className="text-center relative z-10">
           <Button
             href="/signup"
+            size="sm"
             aria-label="Sign up for FocusPond"
             className="font-medium"
           >
