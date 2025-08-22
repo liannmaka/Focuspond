@@ -59,7 +59,7 @@ const WhoitsFor = () => {
   return (
     <section className="pt-8 pb-20">
       <div className="content-center">
-        <div className="text-center mb-8">
+        <div className="text-center mb-14">
           <Badge title="Who it's for" />
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold font-sora leading-tight">
             Find the flow that fits you
@@ -81,7 +81,7 @@ const WhoitsFor = () => {
                     key={persona.id}
                     onClick={() => setSelected(persona.id)}
                     aria-pressed={active}
-                    className={`px-3 py-1 rounded-full text-sm font-medium transition-all duration-200 focus:outline-none ${
+                    className={`px-3 py-1.5 font-sora rounded-full text-xs font-medium transition-all duration-200 focus:outline-none ${
                       active
                         ? "bg-[#ff9472] text-white shadow-sm"
                         : "bg-white/80 text-[#8b5e3c] border border-white/60 hover:shadow-sm"
@@ -93,7 +93,7 @@ const WhoitsFor = () => {
               })}
             </div>
 
-            <h3 className="text-xl font-semibold text-[#5a3a24] mb-3">
+            <h3 className="text-xl font-semibold text-[#5a3a24] mb-3 font-sora">
               {p.headline}
             </h3>
 
