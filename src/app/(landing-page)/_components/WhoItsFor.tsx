@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Button from "@/components/ui/Button";
 import { Badge } from "@/components/ui";
 
 const PERSONAS = [
@@ -110,16 +109,6 @@ const WhoitsFor = () => {
                 </motion.li>
               ))}
             </ul>
-
-            <div>
-              <Button
-                href="/signup"
-                size="sm"
-                className="font-medium"
-              >
-                Try Focuspond — No signup
-              </Button>
-            </div>
           </div>
 
           {/* RIGHT: mockup / crossfade */}

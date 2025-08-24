@@ -45,7 +45,6 @@ const HowItWorks = () => {
         <div className="text-center relative z-10">
           <Button
             href="/signup"
-            size="sm"
             aria-label="Sign up for FocusPond"
             className="font-medium"
           >
