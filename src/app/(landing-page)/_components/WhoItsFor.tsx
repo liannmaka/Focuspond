@@ -83,7 +83,7 @@ const WhoitsFor = () => {
                     className={`px-3 py-1.5 font-sora rounded-full text-xs font-medium transition-all duration-200 focus:outline-none ${
                       active
                         ? "bg-[#ff9472] text-white shadow-sm"
-                        : "bg-white/80 text-[#8b5e3c] border border-white/60 hover:shadow-sm"
+                        : "bg-white/80 text-[#8b5e3c] border border-white/80 hover:shadow-sm"
                     }`}
                   >
                     {persona.label}
