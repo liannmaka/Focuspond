@@ -3,8 +3,8 @@ import { FaqItemProp } from "@/types/landing-page";
 import { useRef } from "react";
 import { ChevronDown } from "lucide-react";
 
-const FaqItem: React.FC<FaqItemProp> = React.memo(
-  ({ question, answer, isOpen, onClick }) => {
+const FaqItem = React.memo(
+  ({ question, answer, isOpen, onClick }: FaqItemProp) => {
     const contentRef = useRef<HTMLDivElement>(null);
 
     return (

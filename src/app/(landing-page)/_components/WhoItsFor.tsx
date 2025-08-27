@@ -7,18 +7,18 @@ import { Badge } from "@/components/ui";
 const PERSONAS = [
   {
     id: "student",
-    label: "Student",
-    headline: "Focus during study sessions",
+    label: "Students & Learners",
+    headline: "Focus without burnout",
     bullets: [
-      "Break big assignments into one Frog.",
-      "25-min sprints reduce burnout.",
-      "Mood checks help you pace study days.",
+      "Use the Frog method to tackle your most important lesson or goal.",
+      "Learn or practice in 25-minute sprints with mindful breaks.",
+      "Track your mood to balance energy through focused learning.",
     ],
     image: "/svgs/solution-1.svg",
   },
   {
-    id: "remote",
-    label: "Remote worker",
+    id: "professional",
+    label: "Professional",
     headline: "Get deep work done, from anywhere",
     bullets: [
       "Block distractions during async work.",
@@ -28,8 +28,8 @@ const PERSONAS = [
     image: "/svgs/solution-1.svg",
   },
   {
-    id: "side",
-    label: "Side-hustler",
+    id: "creator",
+    label: "Creator",
     headline: "Ship work without losing your day job",
     bullets: [
       "Mini-Frogs for short focused sessions.",
@@ -39,8 +39,8 @@ const PERSONAS = [
     image: "/svgs/solution-1.svg",
   },
   {
-    id: "nd",
-    label: "Neurodivergent",
+    id: "well",
+    label: "Wellness seeker",
     headline: "Gentle, predictable structure",
     bullets: [
       "Vibe switcher matches your tone.",
