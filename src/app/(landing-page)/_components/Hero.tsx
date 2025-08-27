@@ -19,7 +19,7 @@ const Hero = () => {
 
   return (
     <section className="hero-section-wrapper flex-center content-center">
-      <div className="grid lg:grid-cols-2 lg:gap-12 gap-4">
+      <div className="grid lg:grid-cols-2 lg:gap-12 gap-4 items-center">
         {/* Text Section */}
         <div>
           <h1>Crush your goals, not your energy.</h1>

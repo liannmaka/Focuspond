@@ -8,7 +8,7 @@ import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { navLinks } from "@/data/landing-page/navbar";
 
-const NavBar: React.FC = () => {
+const NavBar = () => {
   const [isVisible, setIsVisible] = useState<boolean>(true);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
