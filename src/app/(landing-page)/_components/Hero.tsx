@@ -7,7 +7,7 @@ import { useLottie } from "lottie-react";
 import { ChevronsRight } from "lucide-react";
 import { useEffect, useState } from "react";
 
-const Hero: React.FC = () => {
+const Hero = () => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
   const options = { animationData: heroImage, loop: true, autoplay: true };
@@ -19,7 +19,7 @@ const Hero: React.FC = () => {
 
   return (
     <section className="hero-section-wrapper flex-center content-center">
-      <div className="grid lg:grid-cols-2 lg:gap-12 gap-4 items-center h-full">
+      <div className="grid lg:grid-cols-2 lg:gap-12 gap-4">
         {/* Text Section */}
         <div>
           <h1>Crush your goals, not your energy.</h1>

@@ -44,14 +44,12 @@ const StickyScrollBenefits = () => {
                 </p>
               </div>
               {/* Right: Image column*/}
-              <div className="flex justify-center">
+              <div className="relative flex justify-center">
                 <Image
                   src={image}
                   alt={title}
                   width={400}
-                  height={300}
-                  className="relative"
-                  priority
+                  height={400}
                 />
               </div>
             </div>

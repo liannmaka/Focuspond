@@ -1,116 +1,137 @@
-// "use client";
+"use client";
 
-// import React from "react";
-// import { Brain, Turtle, Zap, BookOpen } from "lucide-react";
-// import { motion } from "framer-motion";
-// import { Badge } from "@/components/ui";
-// import { LucideIcon } from "lucide-react";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Badge } from "@/components/ui";
 
-// interface AudienceData {
-//   Icon: LucideIcon;
-//   iconColor: string;
-//   title: string;
-//   description: string;
-// }
+const PERSONAS = [
+  {
+    id: "student",
+    label: "Students & Learners",
+    headline: "Focus without burnout",
+    bullets: [
+      "Use the Frog method to tackle your most important lesson or goal.",
+      "Learn or practice in 25-minute sprints with mindful breaks.",
+      "Track your mood to balance energy through focused learning.",
+    ],
+    image: "/svgs/solution-1.svg",
+  },
+  {
+    id: "professional",
+    label: "Professional",
+    headline: "Get deep work done, from anywhere",
+    bullets: [
+      "Block distractions during async work.",
+      "Quick notes capture ideas fast.",
+      "End-of-day reflection clears tomorrow.",
+    ],
+    image: "/svgs/solution-1.svg",
+  },
+  {
+    id: "creator",
+    label: "Creator",
+    headline: "Ship work without losing your day job",
+    bullets: [
+      "Mini-Frogs for short focused sessions.",
+      "Streaks reward steady progress.",
+      "Save priority frogs for later.",
+    ],
+    image: "/svgs/solution-1.svg",
+  },
+  {
+    id: "well",
+    label: "Wellness seeker",
+    headline: "Gentle, predictable structure",
+    bullets: [
+      "Vibe switcher matches your tone.",
+      "One Frog reduces overwhelm.",
+      "Mindful breaks for fluctuating focus.",
+    ],
+    image: "/svgs/solution-1.svg",
+  },
+];
 
-// const styles = {
-//   section: "md:pt-10 pb-20 px-7 lg:px-10 relative container mx-auto",
-//   grid: "grid grid-cols-1 sm:grid-cols-2 gap-8",
-//   cardBase:
-//     "relative rounded-2xl shadow-md border border-light-background/40 p-6 pt-10 hover:shadow-lg transition-shadow",
-//   title: "text-base font-semibold tracking-wide font-sora",
-//   description: "mt-2 text-sm leading-relaxed font-manrope",
-// };
+const WhoitsFor = () => {
+  const [selected, setSelected] = useState(PERSONAS[0].id);
+  const p = PERSONAS.find((x) => x.id === selected)!;
 
-// const audience: AudienceData[] = [
-//   {
-//     Icon: Brain,
-//     iconColor: "text-[#ff9472]",
-//     title: "Overthinkers & Perfectionists",
-//     description:
-//       "Stop wondering where to begin, pick your “frog of the day” and dive right in.",
-//   },
-//   {
-//     Icon: Turtle,
-//     iconColor: "text-[#a8c686]",
-//     title: "Chronic Procrastinators",
-//     description:
-//       "Break big tasks into a single “frog of the day” so you actually get started.",
-//   },
-//   {
-//     Icon: Zap,
-//     iconColor: "text-yellow-500",
-//     title: "Neurodivergent Brains",
-//     description:
-//       "Flexible energy check + mini‑frog option keeps you moving without shame.",
-//   },
-//   {
-//     Icon: BookOpen,
-//     iconColor: "text-[#8b5e3c]",
-//     title: "Busy Students & Remote Workers",
-//     description:
-//       "Prioritize your top task, then use Pomodoro sprints to power through.",
-//   },
-// ];
-
-// const WhoItsForSection = () => {
-//   return (
-//     <motion.section
-//       className={styles.section}
-//       aria-labelledby="who-this-is-for"
-//       initial="hidden"
-//       whileInView="visible"
-//       viewport={{ once: true, amount: 0.2 }}
-//       variants={{ hidden: {}, visible: {} }}
-//     >
-//       <Badge
-//         title="Who This App Is For"
-//         className="text-center"
-//       />
-//       <div>
-//         <div className={styles.grid}>
-//           {audience.map(({ Icon, iconColor, title, description }, idx) => {
-//             const bgColor =
-//               idx % 2 === 0 ? "bg-[#ffe5b4]/10" : "bg-[#a8c686]/10";
-//             return (
-//               <motion.div
-//                 key={idx}
-//                 className="h-full"
-//                 initial={{ opacity: 0, y: 20 }}
-//                 whileInView={{ opacity: 1, y: 0 }}
-//                 viewport={{ once: true, amount: 0.3 }}
-//                 transition={{ delay: idx * 0.1, duration: 0.6 }}
-//               >
-//                 <div
-//                   className={`${styles.cardBase} ${bgColor} flex flex-col h-full`}
-//                 >
-//                   {/* Floating icon */}
-//                   <div className={`absolute -top-4 ${iconColor}/20`}>
-//                     <Icon
-//                       size={32}
-//                       className={`${iconColor}`}
-//                     />
-//                   </div>
-//                   <div>
-//                     <h3 className={styles.title}>{title}</h3>
-//                     <p className={styles.description}>{description}</p>
-//                   </div>
-//                 </div>
-//               </motion.div>
-//             );
-//           })}
-//         </div>
-//       </div>
-//     </motion.section>
-//   );
-// };
-
-// export default WhoItsForSection;
-
-const WhoItsFor = () => {
   return (
-    <div className="py-32 text-3xl font-semibold text-center">Coming Soon</div>
+    <section className="pt-8 pb-20">
+      <div className="content-center">
+        <div className="text-center mb-14">
+          <Badge title="Who it's for" />
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold font-sora leading-tight">
+            Find the flow that fits you
+          </h2>
+          <p className="mt-4 max-w-2xl mx-auto text-base font-manrope sm:text-lg">
+            A few ways Focuspond helps people like you get into meaningful work,
+            without burning out.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-8 items-start">
+          {/* LEFT: persona chips + bullets */}
+          <div>
+            <div className="flex gap-3 flex-wrap justify-start mb-6">
+              {PERSONAS.map((persona) => {
+                const active = persona.id === selected;
+                return (
+                  <button
+                    key={persona.id}
+                    onClick={() => setSelected(persona.id)}
+                    aria-pressed={active}
+                    className={`px-3 py-1.5 font-sora rounded-full text-xs font-medium transition-all duration-200 focus:outline-none ${
+                      active
+                        ? "bg-[#ff9472] text-white shadow-sm"
+                        : "bg-white/80 text-[#8b5e3c] border border-white/80 hover:shadow-sm"
+                    }`}
+                  >
+                    {persona.label}
+                  </button>
+                );
+              })}
+            </div>
+
+            <h3 className="text-xl font-semibold text-[#5a3a24] mb-3 font-sora">
+              {p.headline}
+            </h3>
+
+            <ul className="space-y-3 mb-6">
+              {p.bullets.map((b, i) => (
+                <motion.li
+                  key={i}
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.06, duration: 0.28 }}
+                  className="text-sm text-[#5a3a24]/85"
+                >
+                  • {b}
+                </motion.li>
+              ))}
+            </ul>
+          </div>
+
+          {/* RIGHT: mockup / crossfade */}
+          <div className="flex items-center justify-center">
+            <div className="w-full max-w-md h-64 bg-white/80 backdrop-blur-sm rounded-3xl shadow-lg flex items-center justify-center overflow-hidden">
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={p.id}
+                  src={p.image}
+                  alt={p.headline}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.45 }}
+                  className="object-contain w-full h-full p-6"
+                />
+              </AnimatePresence>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
 
-export default WhoItsFor;
+export default WhoitsFor;
