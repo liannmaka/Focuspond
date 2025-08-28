@@ -1,31 +1,29 @@
 import clsx from "clsx";
 
-interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-  children: React.ReactNode;
+type CardProps = React.PropsWithChildren<
+  React.HTMLAttributes<HTMLDivElement>
+> & {
   shadow?: boolean;
   bordered?: boolean;
   rounded?: boolean;
-  className?: string;
-}
+};
 
-const Card: React.FC<CardProps> = ({
+const Card = ({
   children,
   shadow = true,
   bordered = false,
   rounded = true,
-  className,
-  ...props
-}) => {
+  ...rest
+}: CardProps) => {
   return (
     <div
       className={clsx(
         "p-4 transition duration-300",
         shadow && "shadow-md",
         bordered && "border border-gray-200",
-        rounded && "rounded-2xl",
-        className
+        rounded && "rounded-2xl"
       )}
-      {...props}
+      {...rest}
     >
       {children}
     </div>
