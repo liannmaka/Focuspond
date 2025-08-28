@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import WaveDivider from "./ui/WaveDivider";
 import { Badge, Button } from "@/components/ui";
 import { HowItWork } from "@/types/landing-page";
 import { steps } from "@/data/landing-page/howitworks";
@@ -55,17 +56,7 @@ const HowItWorks = () => {
 
       {/* Decorative Wave at Bottom */}
       <div className="absolute bottom-0 left-0 w-full leading-none">
-        <svg
-          viewBox="0 0 1440 200"
-          xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio="none"
-          className="block w-full h-[100px] sm:h-[140px] md:h-[200px]"
-        >
-          <path
-            fill="#fdf9f3"
-            d="M0,80 Q720,200 1440,80 L1440,200 L0,200 Z"
-          />
-        </svg>
+        <WaveDivider />
       </div>
     </section>
   );
