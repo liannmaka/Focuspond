@@ -1,4 +1,5 @@
 import Link from "next/link";
+import WaveDivider from "./ui/WaveDivider";
 
 const CtaBanner = () => {
   return (
@@ -21,17 +22,7 @@ const CtaBanner = () => {
 
       {/* SVG Curve at Bottom */}
       <div className="absolute bottom-0 left-0 w-full leading-none">
-        <svg
-          viewBox="0 0 1440 200"
-          xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio="none"
-          className="block w-full h-[100px] sm:h-[140px] md:h-[200px]"
-        >
-          <path
-            fill="#a8c6861a"
-            d="M0,80 Q720,200 1440,80 L1440,200 L0,200 Z"
-          />
-        </svg>
+        <WaveDivider fill="#a8c6861a" />
       </div>
     </section>
   );
