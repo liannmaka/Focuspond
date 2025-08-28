@@ -5,7 +5,7 @@ import { Loader2 } from "lucide-react";
 type Variant = "primary" | "outline" | "ghost";
 type Size = "xs" | "sm" | "md" | "lg";
 
-interface ButtonProps {
+type ButtonProps = {
   href?: string;
   className?: string;
   children: React.ReactNode;
@@ -18,7 +18,7 @@ interface ButtonProps {
   type?: "button" | "submit" | "reset";
   ariaLabel?: string;
   onClick?: () => void;
-}
+};
 
 const Button: React.FC<ButtonProps> = ({
   href,

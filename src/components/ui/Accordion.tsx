@@ -2,13 +2,13 @@
 
 import { useState, useRef, useEffect } from "react";
 
-interface AccordionProps {
+type AccordionProps = {
   title: string;
   icon?: React.ReactNode;
   children: React.ReactNode;
-}
+};
 
-const Accordion: React.FC<AccordionProps> = ({ title, icon, children }) => {
+const Accordion = ({ title, icon, children }: AccordionProps) => {
   const [open, setOpen] = useState<boolean>(false);
   const contentRef = useRef<HTMLDivElement>(null);
 

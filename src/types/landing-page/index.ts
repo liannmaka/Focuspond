@@ -1,15 +1,8 @@
 import { LucideIcon } from "lucide-react";
-
 export interface NavLink {
   href: string;
   linkLabel: string;
   Icon: LucideIcon;
-}
-export interface FaqItemProp {
-  question: string;
-  answer: string;
-  isOpen: boolean;
-  onClick: () => void;
 }
 
 export interface FaqData {

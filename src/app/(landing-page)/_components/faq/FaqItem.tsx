@@ -1,7 +1,13 @@
 import React from "react";
-import { FaqItemProp } from "@/types/landing-page";
 import { useRef } from "react";
 import { ChevronDown } from "lucide-react";
+
+type FaqItemProp = {
+  question: string;
+  answer: string;
+  isOpen: boolean;
+  onClick: () => void;
+};
 
 const FaqItem = React.memo(
   ({ question, answer, isOpen, onClick }: FaqItemProp) => {

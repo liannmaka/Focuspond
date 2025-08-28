@@ -1,9 +1,9 @@
-interface BadgeProps {
+type BadgeProps = {
   title: string;
   className?: string;
-}
+};
 
-const Badge: React.FC<BadgeProps> = ({ title, className }) => {
+const Badge = ({ title, className }: BadgeProps) => {
   return (
     <div className={className}>
       <h2 className="badge">{title}</h2>
