@@ -46,7 +46,9 @@ const NavBar = () => {
     <header
       className={clsx(
         "bg-base-background/80 fixed top-4 left-4 right-4 z-50 rounded-xl backdrop-blur-md px-6 transition-transform duration-300 ease-in-out",
-        isVisible ? "translate-y-0 shadow-md" : "-translate-y-full shadow-none"
+        isVisible
+          ? "translate-y-0 shadow-md"
+          : "-translate-y-[calc(100%+1rem)] shadow-none"
       )}
     >
       <nav className="max-w-[90rem] mx-auto flex justify-between items-center h-[var(--header-height)]">
