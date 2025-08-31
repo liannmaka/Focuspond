@@ -80,8 +80,8 @@ const Button: React.FC<ButtonProps> = ({
     return (
       <Link
         href={href}
-        className={combinedClass}
         aria-label={ariaLabel}
+        className={combinedClass}
       >
         {content}
       </Link>
@@ -90,11 +90,11 @@ const Button: React.FC<ButtonProps> = ({
   return (
     <button
       type={type}
-      className={combinedClass}
       disabled={disabled || loading}
       aria-label={ariaLabel}
       aria-busy={loading}
       onClick={onClick}
+      className={combinedClass}
     >
       {content}
     </button>
