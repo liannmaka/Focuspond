@@ -3,57 +3,11 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Badge } from "@/components/ui";
-
-const PERSONAS = [
-  {
-    id: "student",
-    label: "Students & Learners",
-    headline: "Learn with focus",
-    bullets: [
-      "Use the Frog method to tackle your most important lesson or goal.",
-      "Learn or practice in 25-minute sprints with mindful breaks.",
-      "Track your mood to balance energy through focused learning.",
-    ],
-    image: "/svgs/student.svg",
-  },
-  {
-    id: "professional",
-    label: "Professional",
-    headline: "Work with clarity",
-    bullets: [
-      "Block time with focus sprints to cut through distractions.",
-      "Capture ideas quickly with Quick Notes.",
-      "Wrap up your day calmly with reflection and clear next steps.",
-    ],
-    image: "/svgs/professional.svg",
-  },
-  {
-    id: "creator",
-    label: "Creator",
-    headline: "Create with flow",
-    bullets: [
-      "Use Mini-Frogs for short, focused creative bursts.",
-      "Build consistency with streaks and gentle progress tracking.",
-      "Save big tasks for when your energy is highest.",
-    ],
-    image: "/svgs/creator.svg",
-  },
-  {
-    id: "well",
-    label: "Wellness seeker",
-    headline: "Live with balance",
-    bullets: [
-      "Match the app's tone to your mood with the Vibe Switcher.",
-      "Start with one Frog to keep things simple and manageable.",
-      "Take mindful breaks to recharge and restore focus.",
-    ],
-    image: "/svgs/wellness.svg",
-  },
-];
+import { whoitsfor } from "@/data/landing-page/whoitsfor";
 
 const WhoitsFor = () => {
-  const [selected, setSelected] = useState(PERSONAS[0].id);
-  const p = PERSONAS.find((x) => x.id === selected)!;
+  const [selected, setSelected] = useState(whoitsfor[0].id);
+  const p = whoitsfor.find((x) => x.id === selected)!;
 
   return (
     <section className="pt-8 pb-20">
@@ -61,11 +15,11 @@ const WhoitsFor = () => {
         <div className="text-center mb-14">
           <Badge title="Who it's for" />
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold font-sora leading-tight">
-            Find the flow that fits you
+            Your flow, your way
           </h2>
           <p className="mt-4 max-w-2xl mx-auto text-base font-manrope sm:text-lg">
-            A few ways Focuspond helps people like you get into meaningful work,
-            without burning out.
+            Different paths, same goal: calm, meaningful progress without the
+            burnout.
           </p>
         </div>
 
@@ -73,7 +27,7 @@ const WhoitsFor = () => {
           {/* LEFT: persona chips + bullets */}
           <div>
             <div className="flex gap-3 flex-wrap justify-start mb-6">
-              {PERSONAS.map((persona) => {
+              {whoitsfor.map((persona) => {
                 const active = persona.id === selected;
                 return (
                   <button
