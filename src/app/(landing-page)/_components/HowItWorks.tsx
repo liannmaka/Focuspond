@@ -22,7 +22,7 @@ const HowItWorks = () => {
 
         {/* Timeline Line + Icons + Text */}
         <div className="relative my-20">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-16 gap-x-10 text-center">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-y-16 gap-x-10 text-center">
             {steps.map(
               ({ Icon, title, description }: HowItWork, idx: number) => (
                 <div

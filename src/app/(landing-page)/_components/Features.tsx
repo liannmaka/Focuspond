@@ -19,7 +19,7 @@ const Features = () => {
               intention, without the noise or burnout.
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
             {features.map(
               (
                 { Icon, iconColor, title, description }: Feature,

@@ -23,10 +23,10 @@ const WhoitsFor = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 items-start">
+        <div className="grid lg:grid-cols-2 gap-8 items-start">
           {/* LEFT: persona chips + bullets */}
           <div>
-            <div className="flex gap-3 flex-wrap justify-start mb-6">
+            <div className="flex gap-3 flex-wrap justify-start mb-8">
               {whoitsfor.map((persona) => {
                 const active = persona.id === selected;
                 return (
