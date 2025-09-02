@@ -34,3 +34,11 @@ export interface HowItWork {
   title: string;
   description: string;
 }
+
+export interface WhoitsFor {
+  id: string;
+  label: string;
+  headline: string;
+  bullets: string[];
+  image: string;
+}
