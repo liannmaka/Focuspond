@@ -14,7 +14,7 @@ const PERSONAS = [
       "Learn or practice in 25-minute sprints with mindful breaks.",
       "Track your mood to balance energy through focused learning.",
     ],
-    image: "/svgs/solution-1.svg",
+    image: "/svgs/student.svg",
   },
   {
     id: "professional",
@@ -25,7 +25,7 @@ const PERSONAS = [
       "Capture ideas quickly with Quick Notes.",
       "Wrap up your day calmly with reflection and clear next steps.",
     ],
-    image: "/svgs/solution-1.svg",
+    image: "/svgs/professional.svg",
   },
   {
     id: "creator",
@@ -36,7 +36,7 @@ const PERSONAS = [
       "Build consistency with streaks and gentle progress tracking.",
       "Save big tasks for when your energy is highest.",
     ],
-    image: "/svgs/solution-1.svg",
+    image: "/svgs/creator.svg",
   },
   {
     id: "well",
@@ -47,7 +47,7 @@ const PERSONAS = [
       "Start with one Frog to keep things simple and manageable.",
       "Take mindful breaks to recharge and restore focus.",
     ],
-    image: "/svgs/solution-1.svg",
+    image: "/svgs/wellness.svg",
   },
 ];
 
@@ -113,7 +113,7 @@ const WhoitsFor = () => {
 
           {/* RIGHT: mockup / crossfade */}
           <div className="flex items-center justify-center">
-            <div className="w-full max-w-md h-64 bg-white/80 backdrop-blur-sm rounded-3xl shadow-lg flex items-center justify-center overflow-hidden">
+            <div className="w-full max-w-md h-64 bg-white/80 backdrop-blur-lg rounded-2xl shadow-lg flex items-center justify-center overflow-hidden">
               <AnimatePresence mode="wait">
                 <motion.img
                   key={p.id}
