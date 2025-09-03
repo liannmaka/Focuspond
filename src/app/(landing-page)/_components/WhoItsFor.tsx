@@ -38,7 +38,7 @@ const WhoitsFor = () => {
                     className={`px-3 py-1.5 font-sora rounded-full text-xs font-medium transition-all duration-200 focus:outline-none ${
                       active
                         ? "bg-[#ff9472] text-white shadow-sm"
-                        : "bg-white/80 text-[#8b5e3c] border border-white/80 hover:shadow-sm"
+                        : "bg-white/80 border border-white/80 hover:shadow-sm"
                     }`}
                   >
                     {persona.label}
@@ -47,7 +47,7 @@ const WhoitsFor = () => {
               })}
             </div>
 
-            <h3 className="text-xl font-semibold text-[#5a3a24] mb-3 font-sora">
+            <h3 className="text-xl font-semibold mb-3 font-sora">
               {person.headline}
             </h3>
 
@@ -58,7 +58,7 @@ const WhoitsFor = () => {
                   initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.06, duration: 0.28 }}
-                  className="text-sm text-[#5a3a24]/85"
+                  className="text-sm font-manrope"
                 >
                   • {b}
                 </motion.li>
