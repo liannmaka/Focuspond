@@ -6,8 +6,9 @@ import { Badge } from "@/components/ui";
 import { whoitsfor } from "@/data/landing-page/whoitsfor";
 
 const WhoitsFor = () => {
-  const [selected, setSelected] = useState(whoitsfor[0].id);
-  const p = whoitsfor.find((x) => x.id === selected)!;
+  const [selected, setSelected] = useState<string>(whoitsfor[0].id);
+  const person = whoitsfor.find((x) => x.id === selected)!;
+  console.log("person", person);
 
   return (
     <section className="pt-8 pb-20">
@@ -37,7 +38,7 @@ const WhoitsFor = () => {
                     className={`px-3 py-1.5 font-sora rounded-full text-xs font-medium transition-all duration-200 focus:outline-none ${
                       active
                         ? "bg-[#ff9472] text-white shadow-sm"
-                        : "bg-white/80 text-[#8b5e3c] border border-white/80 hover:shadow-sm"
+                        : "bg-white/80 border border-white/80 hover:shadow-sm"
                     }`}
                   >
                     {persona.label}
@@ -46,18 +47,18 @@ const WhoitsFor = () => {
               })}
             </div>
 
-            <h3 className="text-xl font-semibold text-[#5a3a24] mb-3 font-sora">
-              {p.headline}
+            <h3 className="text-xl font-semibold mb-3 font-sora">
+              {person.headline}
             </h3>
 
             <ul className="space-y-3 mb-6">
-              {p.bullets.map((b, i) => (
+              {person.bullets.map((b, i) => (
                 <motion.li
                   key={i}
                   initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.06, duration: 0.28 }}
-                  className="text-sm text-[#5a3a24]/85"
+                  className="text-sm font-manrope"
                 >
                   • {b}
                 </motion.li>
@@ -70,9 +71,9 @@ const WhoitsFor = () => {
             <div className="w-full max-w-md h-64 bg-white/80 backdrop-blur-lg rounded-2xl shadow-lg flex items-center justify-center overflow-hidden">
               <AnimatePresence mode="wait">
                 <motion.img
-                  key={p.id}
-                  src={p.image}
-                  alt={p.headline}
+                  key={person.id}
+                  src={person.image}
+                  alt={person.headline}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
