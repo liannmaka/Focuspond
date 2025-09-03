@@ -6,8 +6,9 @@ import { Badge } from "@/components/ui";
 import { whoitsfor } from "@/data/landing-page/whoitsfor";
 
 const WhoitsFor = () => {
-  const [selected, setSelected] = useState(whoitsfor[0].id);
-  const p = whoitsfor.find((x) => x.id === selected)!;
+  const [selected, setSelected] = useState<string>(whoitsfor[0].id);
+  const person = whoitsfor.find((x) => x.id === selected)!;
+  console.log("person", person);
 
   return (
     <section className="pt-8 pb-20">
@@ -47,11 +48,11 @@ const WhoitsFor = () => {
             </div>
 
             <h3 className="text-xl font-semibold text-[#5a3a24] mb-3 font-sora">
-              {p.headline}
+              {person.headline}
             </h3>
 
             <ul className="space-y-3 mb-6">
-              {p.bullets.map((b, i) => (
+              {person.bullets.map((b, i) => (
                 <motion.li
                   key={i}
                   initial={{ opacity: 0, y: 6 }}
@@ -70,9 +71,9 @@ const WhoitsFor = () => {
             <div className="w-full max-w-md h-64 bg-white/80 backdrop-blur-lg rounded-2xl shadow-lg flex items-center justify-center overflow-hidden">
               <AnimatePresence mode="wait">
                 <motion.img
-                  key={p.id}
-                  src={p.image}
-                  alt={p.headline}
+                  key={person.id}
+                  src={person.image}
+                  alt={person.headline}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
