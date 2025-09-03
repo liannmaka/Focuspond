@@ -8,7 +8,6 @@ import { whoitsfor } from "@/data/landing-page/whoitsfor";
 const WhoitsFor = () => {
   const [selected, setSelected] = useState<string>(whoitsfor[0].id);
   const person = whoitsfor.find((x) => x.id === selected)!;
-  console.log("person", person);
 
   return (
     <section className="pt-8 pb-20">
