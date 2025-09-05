@@ -42,3 +42,9 @@ export interface WhoitsFor {
   bullets: string[];
   image: string;
 }
+
+export interface Testimonial {
+  name: string;
+  role: string;
+  quote: string;
+}
