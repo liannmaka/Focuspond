@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Badge } from "@/components/ui";
 import { whoitsfor } from "@/data/landing-page/whoitsfor";
@@ -36,7 +36,7 @@ const WhoitsFor = () => {
                     aria-pressed={active}
                     className={`px-3 py-1.5 font-sora rounded-full text-xs font-medium transition-all duration-200 focus:outline-none ${
                       active
-                        ? "bg-[#ff9472] text-white shadow-sm"
+                        ? "bg-accent-button text-white shadow-sm"
                         : "bg-white/80 border border-white/80 hover:shadow-sm"
                     }`}
                   >
