@@ -1,4 +1,4 @@
-import { NavLink } from "@/types/landing-page";
+import { NavLink, FooterNavLinks } from "@/types/landing-page";
 import { LayoutGrid, PlayCircle, Lightbulb, HelpCircle } from "lucide-react";
 
 export const navLinks: NavLink[] = [
@@ -21,5 +21,20 @@ export const navLinks: NavLink[] = [
     href: "#faq",
     linkLabel: "FAQs",
     Icon: HelpCircle,
+  },
+];
+
+export const footerNavLinks: FooterNavLinks[] = [
+  {
+    href: "/pricing",
+    linkLabel: "Pricing",
+  },
+  {
+    href: "/contact",
+    linkLabel: "Contact Us",
+  },
+  {
+    href: "/signup",
+    linkLabel: "Login or Sign Up",
   },
 ];
