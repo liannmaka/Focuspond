@@ -27,30 +27,32 @@ const Hero = () => {
             Turn your low-energy days into consistent wins with focused, mindful
             progress.
           </p>
-          <div className="mt-8 flex space-x-4">
+          <div className="mt-8 flex sm:space-x-4">
             <Button
               href="/signup"
               size="lg"
               aria-label="Sign up for FocusPond"
               className="relative overflow-hidden font-semibold group"
             >
-              <span className="relative z-10">Start free</span>
+              <span className="relative z-10">Start for free</span>
               <span className="absolute inset-0 animate-shimmer bg-gradient-to-r from-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </Button>
 
-            <Button
-              variant="ghost"
-              href="#benefits"
-              size="sm"
-            >
-              <div className="group inline-flex font-medium hover:underline tracking-wide">
-                <span>Learn More</span>
-                <ChevronsRight
-                  aria-hidden="true"
-                  className="size-4 self-center group-hover:translate-x-0.5 will-change-transform transition-transform duration-300"
-                />
-              </div>
-            </Button>
+            <div className="hidden sm:block">
+              <Button
+                variant="ghost"
+                href="#benefits"
+                size="sm"
+              >
+                <div className="inline-flex group font-medium hover:underline tracking-wide">
+                  <span>Learn More</span>
+                  <ChevronsRight
+                    aria-hidden="true"
+                    className="size-4 self-center group-hover:translate-x-0.5 will-change-transform transition-transform duration-300"
+                  />
+                </div>
+              </Button>
+            </div>
           </div>
         </div>
 
