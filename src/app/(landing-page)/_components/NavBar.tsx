@@ -6,7 +6,7 @@ import clsx from "clsx";
 import BrandLogo from "@/components/ui/brandLog";
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
-import { navLinks } from "@/data/landing-page/navbar";
+import { navLinks } from "@/data/landing-page/navigation";
 
 const NavBar = () => {
   const [isVisible, setIsVisible] = useState<boolean>(true);
@@ -14,8 +14,7 @@ const NavBar = () => {
 
   const toggleMenu = () => setIsOpen((prev) => !prev);
 
-  const linkStyles =
-    "group inline-flex items-center px-2 hover:text-accent-button transition-colors duration-200";
+  const linkStyles = "group inline-flex items-center px-2";
 
   const iconStyles =
     "text-base group-hover:scale-110 transition-transform duration-200";
@@ -74,7 +73,7 @@ const NavBar = () => {
             <Link
               href={href}
               key={href}
-              className={clsx(linkStyles, "py-4")}
+              className={clsx(linkStyles, "link-animation py-4")}
             >
               <div className="flex items-center">
                 <span className={clsx(iconStyles, "mr-1")}>
@@ -129,7 +128,7 @@ const NavBar = () => {
                 key={href}
                 className={clsx(
                   linkStyles,
-                  "py-2 rounded-md border border-dark-accent"
+                  "link-animation py-2 rounded-md border border-dark-accent"
                 )}
               >
                 <div className="flex items-center">
