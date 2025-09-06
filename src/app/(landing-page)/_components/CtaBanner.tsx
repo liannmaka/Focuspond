@@ -1,5 +1,5 @@
-import Link from "next/link";
 import WaveDivider from "./ui/WaveDivider";
+import { Button } from "@/components/ui";
 
 const CtaBanner = () => {
   return (
@@ -11,13 +11,15 @@ const CtaBanner = () => {
         <p className="mt-4 font-manrope text-base sm:text-lg">
           No account needed. Works offline. Zero pressure.
         </p>
-        <Link
+        <Button
           href="/signup"
+          size="lg"
           aria-label="Sign up for FocusPond"
-          className="inline-block mt-6 bg-accent-button text-white font-semibold px-6 py-3 rounded-lg tracking-wider shadow-md hover:scale-[1.02] transition duration-200 text-sm sm:text-base sm:px-6 sm:py-3 font-sora"
+          className="relative overflow-hidden font-semibold mt-6 group"
         >
-          Start free
-        </Link>
+          <span className="relative z-10">Start for free</span>
+          <span className="absolute inset-0 animate-shimmer bg-gradient-to-r from-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        </Button>
       </div>
 
       {/* SVG Curve at Bottom */}
