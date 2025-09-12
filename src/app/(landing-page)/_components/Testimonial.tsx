@@ -8,6 +8,8 @@ import { testimonials } from "@/data/landing-page/testimonial";
 const Testimonial = () => {
   const trackRef = useRef<HTMLDivElement>(null);
 
+  console.log("track", trackRef.current);
+
   // Duplicate testimonials to create seamless infinite loop
   const scrollingTestimonials = [...testimonials, ...testimonials];
 
@@ -27,14 +29,14 @@ const Testimonial = () => {
         {/* Right Column: Sliding Testimonials */}
         <div className="relative overflow-hidden w-full">
           <motion.div
-            className="flex gap-6"
+            className="flex gap-6 my-4"
             ref={trackRef}
             animate={{ x: [0, -1000] }} // Adjust value based on content width
             transition={{
               repeat: Infinity,
               repeatType: "loop",
               ease: "linear",
-              duration: 40, // Adjust speed
+              duration: 20, // Adjust speed
             }}
           >
             {scrollingTestimonials.map((testimonial, idx) => (
