@@ -9,7 +9,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     name: "Josh E.",
-    role: "Frontend Engineer",
+    role: "Software Engineer",
     quote:
       "I’ve used so many Pomodoro tools, but this one actually makes me want to work. It’s calm and intentional.",
   },
