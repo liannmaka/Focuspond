@@ -7,8 +7,8 @@ import { Badge } from "@/components/ui";
 import { testimonials } from "@/data/landing-page/testimonial";
 
 const Testimonial = () => {
-  const FAST_SPEED = 150;
-  const SLOW_SPEED = 50;
+  const FAST_SPEED = 15;
+  const SLOW_SPEED = 100;
 
   const [ref, { width }] = useMeasure();
   const xTranslation = useMotionValue(0);
@@ -17,29 +17,23 @@ const Testimonial = () => {
   const [mustFinish, setMustFinish] = useState<boolean>(false);
   const [rerender, setRerender] = useState<boolean>(false);
 
-  console.log("outside", mustFinish);
-
   useEffect(() => {
     let controls;
     const finalPosition = -width / 2 - 6;
 
-    console.log("finalPosition", finalPosition);
-
     if (mustFinish) {
-      console.log("true useEffect", mustFinish);
       controls = animate(xTranslation, [xTranslation.get(), finalPosition], {
         ease: "linear",
         duration: duration * (1 - xTranslation.get() / finalPosition),
         onComplete: () => {
           setMustFinish(false);
           setRerender(!rerender);
-          console.log("complete", mustFinish);
         },
       });
     } else {
       controls = animate(xTranslation, [0, finalPosition], {
         ease: "linear",
-        duration: width / duration, // Adjust speed
+        duration: duration, // Adjust speed
         repeat: Infinity,
         repeatType: "loop",
         repeatDelay: 0,
@@ -74,12 +68,10 @@ const Testimonial = () => {
             onHoverStart={() => {
               setMustFinish(true);
               setDuration(SLOW_SPEED);
-              console.log("in", mustFinish);
             }}
             onHoverEnd={() => {
               setMustFinish(true);
               setDuration(FAST_SPEED);
-              console.log("out", mustFinish);
             }}
           >
             {scrollingTestimonials.map((testimonial, idx) => (
