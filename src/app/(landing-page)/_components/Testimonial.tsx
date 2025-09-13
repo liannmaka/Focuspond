@@ -2,32 +2,52 @@
 
 import useMeasure from "react-use-measure";
 import { animate, motion, useMotionValue } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui";
 import { testimonials } from "@/data/landing-page/testimonial";
 
 const Testimonial = () => {
-  const [ref, { width }] = useMeasure();
+  const FAST_SPEED = 150;
+  const SLOW_SPEED = 50;
 
+  const [ref, { width }] = useMeasure();
   const xTranslation = useMotionValue(0);
 
-  const SPEED = 100;
+  const [duration, setDuration] = useState<number>(FAST_SPEED);
+  const [mustFinish, setMustFinish] = useState<boolean>(false);
+  const [rerender, setRerender] = useState<boolean>(false);
+
+  console.log("outside", mustFinish);
 
   useEffect(() => {
+    let controls;
     const finalPosition = -width / 2 - 6;
 
     console.log("finalPosition", finalPosition);
 
-    const controls = animate(xTranslation, [0, finalPosition], {
-      ease: "linear",
-      duration: width / SPEED, // Adjust speed
-      repeat: Infinity,
-      repeatType: "loop",
-      repeatDelay: 0,
-    });
+    if (mustFinish) {
+      console.log("true useEffect", mustFinish);
+      controls = animate(xTranslation, [xTranslation.get(), finalPosition], {
+        ease: "linear",
+        duration: duration * (1 - xTranslation.get() / finalPosition),
+        onComplete: () => {
+          setMustFinish(false);
+          setRerender(!rerender);
+          console.log("complete", mustFinish);
+        },
+      });
+    } else {
+      controls = animate(xTranslation, [0, finalPosition], {
+        ease: "linear",
+        duration: width / duration, // Adjust speed
+        repeat: Infinity,
+        repeatType: "loop",
+        repeatDelay: 0,
+      });
+    }
 
-    return controls.stop;
-  }, [xTranslation, width]);
+    return controls?.stop;
+  }, [xTranslation, width, duration, rerender, mustFinish]);
 
   // Duplicate testimonials to create seamless infinite loop
   const scrollingTestimonials = [...testimonials, ...testimonials];
@@ -51,6 +71,16 @@ const Testimonial = () => {
             className="flex gap-6 my-4 w-max"
             ref={ref}
             style={{ x: xTranslation }}
+            onHoverStart={() => {
+              setMustFinish(true);
+              setDuration(SLOW_SPEED);
+              console.log("in", mustFinish);
+            }}
+            onHoverEnd={() => {
+              setMustFinish(true);
+              setDuration(FAST_SPEED);
+              console.log("out", mustFinish);
+            }}
           >
             {scrollingTestimonials.map((testimonial, idx) => (
               <div
