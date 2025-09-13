@@ -77,8 +77,7 @@ const Testimonial = () => {
             {scrollingTestimonials.map((testimonial, idx) => (
               <div
                 key={idx}
-                className="text-[#5a3a24] min-h-[150px] min-w-[260px] sm:min-w-[280px] md:min-w-[320px] 
-        max-w-[320px] flex flex-col rounded-2xl shadow-md bg-white/80 backdrop-blur-sm ring-1 ring-white/10 p-6 transition hover:shadow-lg"
+                className="card"
               >
                 <p className="text-sm">“{testimonial.quote}”</p>
                 <div className="mt-auto pt-4 text-sm font-semibold">
