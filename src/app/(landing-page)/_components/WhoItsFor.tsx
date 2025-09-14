@@ -65,7 +65,7 @@ const WhoitsFor = () => {
             </ul>
           </div>
 
-          {/* RIGHT: mockup / crossfade */}
+          {/* RIGHT: crossfade */}
           <div className="flex items-center justify-center">
             <div className="w-full max-w-md h-64 bg-white/80 backdrop-blur-lg rounded-2xl shadow-lg flex items-center justify-center overflow-hidden">
               <AnimatePresence mode="wait">
