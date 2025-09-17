@@ -3,7 +3,7 @@
 import SignupButton from "./ui/SignupButton";
 import Link from "next/link";
 import clsx from "clsx";
-import BrandLogo from "@/components/ui/brandLog";
+import { BrandLogo } from "@/components/ui";
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { navLinks } from "@/data/landing-page/navigation";

@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { forwardRef } from "react";
+import { forwardRef, HTMLAttributes } from "react";
 
 const shadowClasses = {
   none: "",
@@ -18,7 +18,7 @@ const roundedClasses = {
 
 type Rounded = keyof typeof roundedClasses;
 
-type CardProps = React.HTMLAttributes<HTMLDivElement> & {
+type CardProps = HTMLAttributes<HTMLDivElement> & {
   shadow?: Shadow;
   rounded?: Rounded;
 };

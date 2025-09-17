@@ -1,6 +1,5 @@
 import Link from "next/link";
-import BrandLogo from "@/components/ui/brandLog";
-import { SectionDivider } from "@/components/ui";
+import { BrandLogo, SectionDivider } from "@/components/ui";
 import { footerNavLinks } from "@/data/landing-page/navigation";
 
 const Footer = () => {
