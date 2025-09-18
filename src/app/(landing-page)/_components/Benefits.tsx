@@ -7,7 +7,10 @@ const StickyScrollBenefits = () => {
   return (
     <>
       <SectionDivider />
-      <section className="pt-10 pb-20 md:space-y-20">
+      <section
+        className="pt-10 pb-20 md:space-y-20"
+        id="benefits"
+      >
         <div className="px-7 text-center">
           <h2 className="text-3xl md:text-4xl font-sora font-semibold leading-tight mb-10">
             A calm way to stay productive

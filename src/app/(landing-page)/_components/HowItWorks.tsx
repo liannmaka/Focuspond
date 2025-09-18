@@ -8,7 +8,10 @@ import { steps } from "@/data/landing-page/howitworks";
 
 const HowItWorks = () => {
   return (
-    <section className="pt-20 pb-28 bg-secondary-accent/10 relative overflow-hidden">
+    <section
+      className="pt-20 pb-28 bg-secondary-accent/10 relative overflow-hidden"
+      id="how-it-works"
+    >
       <div className="content-center">
         <div>
           <Badge title="How It Works" />
