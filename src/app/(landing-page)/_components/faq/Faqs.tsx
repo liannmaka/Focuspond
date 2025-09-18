@@ -15,7 +15,10 @@ const Faqs = () => {
   };
 
   return (
-    <section className="relative bg-secondary-accent/10 pt-8 pb-16">
+    <section
+      className="relative bg-secondary-accent/10 pt-8 pb-16"
+      id="faqs"
+    >
       <div className="content-center">
         <Badge
           title="FAQs"

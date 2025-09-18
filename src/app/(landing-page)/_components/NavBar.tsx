@@ -41,6 +41,14 @@ const NavBar = () => {
     return () => window.removeEventListener("scroll", controlNavBar);
   }, []);
 
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+      setIsOpen(false);
+    }
+  };
+
   return (
     <header
       className={clsx(
@@ -70,10 +78,11 @@ const NavBar = () => {
         {/* Navigation Links */}
         <div className="hidden space-x-4 lg:flex">
           {navLinks.map(({ href, linkLabel, Icon }) => (
-            <Link
-              href={href}
+            <button
               key={href}
-              className={clsx(linkStyles, "link-animation py-4")}
+              onClick={() => scrollToSection(href)}
+              className={clsx(linkStyles, "link-animation py-4 cursor-pointer")}
+              aria-label={linkLabel}
             >
               <div className="flex items-center">
                 <span className={clsx(iconStyles, "mr-1")}>
@@ -81,7 +90,7 @@ const NavBar = () => {
                 </span>
                 <span className={clsx(linkLabelStyles)}>{linkLabel}</span>
               </div>
-            </Link>
+            </button>
           ))}
         </div>
 
@@ -123,12 +132,12 @@ const NavBar = () => {
         >
           <div className="flex flex-col pb-7 pt-5 space-y-4.5">
             {navLinks.map(({ href, linkLabel, Icon }) => (
-              <Link
-                href={href}
+              <button
                 key={href}
+                onClick={() => scrollToSection(href)}
                 className={clsx(
                   linkStyles,
-                  "link-animation py-2 rounded-md border border-dark-accent"
+                  "link-animation py-2 rounded-md border border-dark-accent cursor-pointer"
                 )}
               >
                 <div className="flex items-center">
@@ -137,7 +146,7 @@ const NavBar = () => {
                   </span>
                   <span className={clsx(linkLabelStyles)}>{linkLabel}</span>
                 </div>
-              </Link>
+              </button>
             ))}
           </div>
 

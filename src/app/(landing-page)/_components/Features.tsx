@@ -7,7 +7,10 @@ const Features = () => {
   return (
     <>
       <SectionDivider />
-      <section className="pt-10 pb-20">
+      <section
+        className="pt-10 pb-20"
+        id="features"
+      >
         <div className="content-center">
           <div className="text-center mb-16">
             <Badge title="Features" />
