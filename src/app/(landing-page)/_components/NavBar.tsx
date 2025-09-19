@@ -11,18 +11,16 @@ import { navLinks } from "@/data/landing-page/navigation";
 const NavBar = () => {
   const [isVisible, setIsVisible] = useState<boolean>(true);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
-  // check this scroll stuff well and study properly
   const [activeSection, setActiveSection] = useState<string>("");
 
-  const toggleMenu = () => setIsOpen((prev) => !prev);
-
-  const linkStyles = "group inline-flex items-center px-2";
+  const linkStyles = "group inline-flex items-center px-2 font-normal";
 
   const iconStyles =
     "text-base group-hover:scale-110 transition-transform duration-200";
 
-  const linkLabelStyles = "font-sora font-normal text-sm tracking-wide";
+  const linkLabelStyles = "font-sora text-sm tracking-wide";
+
+  const activeLink = "font-medium text-accent-button"
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -44,7 +42,7 @@ const NavBar = () => {
     return () => window.removeEventListener("scroll", controlNavBar);
   }, []);
 
-  // check this scroll stuff well and study properly
+  // useEffect for active section highlight as you scroll
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
@@ -55,6 +53,7 @@ const NavBar = () => {
         const section = document.getElementById(href);
         if (section) {
           const { offsetTop, offsetHeight } = section;
+
           if (scrollY >= offsetTop - 100 && scrollY < offsetTop + offsetHeight - 100) {
             setActiveSection(href);
             found = true;
@@ -72,9 +71,12 @@ const NavBar = () => {
     handleScroll(); // Set initial active section
 
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [navLinks]);
+  }, []);
 
-  // check this scroll stuff well and study properly
+  // toggle for Hamburger menu
+  const toggleMenu = () => setIsOpen((prev) => !prev);
+
+  // set active state on click
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -116,11 +118,11 @@ const NavBar = () => {
             <button
               key={href}
               onClick={() => { scrollToSection(href); setActiveSection(href); }}
-              className={clsx(linkStyles, "link-animation py-4 cursor-pointer", activeSection === href ? "active-link" : "")}
+              className={clsx(linkStyles, "link-animation py-4 cursor-pointer", activeSection === href ? activeLink : "")}
               aria-label={linkLabel}
             >
               <div className="flex items-center">
-                <span className={clsx(iconStyles, "mr-1", activeSection === href ? "active-link" : "")}>
+                <span className={clsx(iconStyles, "mr-1")}>
                   <Icon size={16} />
                 </span>
                 <span className={clsx(linkLabelStyles)}>{linkLabel}</span>
@@ -169,10 +171,11 @@ const NavBar = () => {
             {navLinks.map(({ href, linkLabel, Icon }) => (
               <button
                 key={href}
-                onClick={() => scrollToSection(href)}
+                onClick={() => { scrollToSection(href); setActiveSection(href); }}
                 className={clsx(
                   linkStyles,
-                  "link-animation py-2 rounded-md border border-dark-accent cursor-pointer"
+                  "link-animation py-2 rounded-md border border-dark-accent cursor-pointer",
+                  activeSection === href ? activeLink : ""
                 )}
               >
                 <div className="flex items-center">
