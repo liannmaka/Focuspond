@@ -11,15 +11,16 @@ import { navLinks } from "@/data/landing-page/navigation";
 const NavBar = () => {
   const [isVisible, setIsVisible] = useState<boolean>(true);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [activeSection, setActiveSection] = useState<string>("");
 
-  const toggleMenu = () => setIsOpen((prev) => !prev);
-
-  const linkStyles = "group inline-flex items-center px-2";
+  const linkStyles = "group inline-flex items-center px-2 font-normal";
 
   const iconStyles =
     "text-base group-hover:scale-110 transition-transform duration-200";
 
-  const linkLabelStyles = "font-sora font-normal text-sm tracking-wide";
+  const linkLabelStyles = "font-sora text-sm tracking-wide";
+
+  const activeLink = "font-medium text-accent-button";
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -41,10 +42,49 @@ const NavBar = () => {
     return () => window.removeEventListener("scroll", controlNavBar);
   }, []);
 
+  // useEffect for active section highlight as you scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      let found = false;
+
+      // Loop through navLinks to find which section is in view
+      for (const { href } of navLinks) {
+        const section = document.getElementById(href);
+        if (section) {
+          const { offsetTop, offsetHeight } = section;
+
+          if (
+            scrollY >= offsetTop - 100 &&
+            scrollY < offsetTop + offsetHeight - 100
+          ) {
+            setActiveSection(href);
+            found = true;
+            break;
+          }
+        }
+      }
+
+      if (!found) {
+        setActiveSection("");
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll(); // Set initial active section
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // toggle for Hamburger menu
+  const toggleMenu = () => setIsOpen((prev) => !prev);
+
+  // set active state on click
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
+      setActiveSection(id);
       setIsOpen(false);
     }
   };
@@ -80,8 +120,15 @@ const NavBar = () => {
           {navLinks.map(({ href, linkLabel, Icon }) => (
             <button
               key={href}
-              onClick={() => scrollToSection(href)}
-              className={clsx(linkStyles, "link-animation py-4 cursor-pointer")}
+              onClick={() => {
+                scrollToSection(href);
+                setActiveSection(href);
+              }}
+              className={clsx(
+                linkStyles,
+                "link-animation py-4 cursor-pointer",
+                activeSection === href ? activeLink : ""
+              )}
               aria-label={linkLabel}
             >
               <div className="flex items-center">
@@ -134,10 +181,14 @@ const NavBar = () => {
             {navLinks.map(({ href, linkLabel, Icon }) => (
               <button
                 key={href}
-                onClick={() => scrollToSection(href)}
+                onClick={() => {
+                  scrollToSection(href);
+                  setActiveSection(href);
+                }}
                 className={clsx(
                   linkStyles,
-                  "link-animation py-2 rounded-md border border-dark-accent cursor-pointer"
+                  "link-animation py-2 rounded-md border border-dark-accent cursor-pointer",
+                  activeSection === href ? activeLink : ""
                 )}
               >
                 <div className="flex items-center">
