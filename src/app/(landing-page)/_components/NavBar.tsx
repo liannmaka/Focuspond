@@ -12,6 +12,9 @@ const NavBar = () => {
   const [isVisible, setIsVisible] = useState<boolean>(true);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
+  // check this scroll stuff well and study properly
+  const [activeSection, setActiveSection] = useState<string>("");
+
   const toggleMenu = () => setIsOpen((prev) => !prev);
 
   const linkStyles = "group inline-flex items-center px-2";
@@ -41,10 +44,42 @@ const NavBar = () => {
     return () => window.removeEventListener("scroll", controlNavBar);
   }, []);
 
+  // check this scroll stuff well and study properly
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      let found = false;
+
+      // Loop through navLinks to find which section is in view
+      for (const { href } of navLinks) {
+        const section = document.getElementById(href);
+        if (section) {
+          const { offsetTop, offsetHeight } = section;
+          if (scrollY >= offsetTop - 100 && scrollY < offsetTop + offsetHeight - 100) {
+            setActiveSection(href);
+            found = true;
+            break;
+          }
+        }
+      }
+
+      if (!found) {
+        setActiveSection("");
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll(); // Set initial active section
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [navLinks]);
+
+  // check this scroll stuff well and study properly
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
+      setActiveSection(id);
       setIsOpen(false);
     }
   };
@@ -80,12 +115,12 @@ const NavBar = () => {
           {navLinks.map(({ href, linkLabel, Icon }) => (
             <button
               key={href}
-              onClick={() => scrollToSection(href)}
-              className={clsx(linkStyles, "link-animation py-4 cursor-pointer")}
+              onClick={() => { scrollToSection(href); setActiveSection(href); }}
+              className={clsx(linkStyles, "link-animation py-4 cursor-pointer", activeSection === href ? "active-link" : "")}
               aria-label={linkLabel}
             >
               <div className="flex items-center">
-                <span className={clsx(iconStyles, "mr-1")}>
+                <span className={clsx(iconStyles, "mr-1", activeSection === href ? "active-link" : "")}>
                   <Icon size={16} />
                 </span>
                 <span className={clsx(linkLabelStyles)}>{linkLabel}</span>
