@@ -20,7 +20,7 @@ const NavBar = () => {
 
   const linkLabelStyles = "font-sora text-sm tracking-wide";
 
-  const activeLink = "font-medium text-accent-button"
+  const activeLink = "font-medium text-accent-button";
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -54,7 +54,10 @@ const NavBar = () => {
         if (section) {
           const { offsetTop, offsetHeight } = section;
 
-          if (scrollY >= offsetTop - 100 && scrollY < offsetTop + offsetHeight - 100) {
+          if (
+            scrollY >= offsetTop - 100 &&
+            scrollY < offsetTop + offsetHeight - 100
+          ) {
             setActiveSection(href);
             found = true;
             break;
@@ -117,8 +120,15 @@ const NavBar = () => {
           {navLinks.map(({ href, linkLabel, Icon }) => (
             <button
               key={href}
-              onClick={() => { scrollToSection(href); setActiveSection(href); }}
-              className={clsx(linkStyles, "link-animation py-4 cursor-pointer", activeSection === href ? activeLink : "")}
+              onClick={() => {
+                scrollToSection(href);
+                setActiveSection(href);
+              }}
+              className={clsx(
+                linkStyles,
+                "link-animation py-4 cursor-pointer",
+                activeSection === href ? activeLink : ""
+              )}
               aria-label={linkLabel}
             >
               <div className="flex items-center">
@@ -171,7 +181,10 @@ const NavBar = () => {
             {navLinks.map(({ href, linkLabel, Icon }) => (
               <button
                 key={href}
-                onClick={() => { scrollToSection(href); setActiveSection(href); }}
+                onClick={() => {
+                  scrollToSection(href);
+                  setActiveSection(href);
+                }}
                 className={clsx(
                   linkStyles,
                   "link-animation py-2 rounded-md border border-dark-accent cursor-pointer",
