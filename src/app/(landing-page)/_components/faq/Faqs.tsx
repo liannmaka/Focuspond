@@ -1,8 +1,7 @@
 "use client";
 
-import React from "react";
-import Badge from "@/components/ui/Badge";
 import FaqItem from "./FaqItem";
+import { Badge } from "@/components/ui";
 import { faqs } from "@/data/landing-page/faq";
 import { FaqData } from "@/types/landing-page";
 import { useState } from "react";
