@@ -3,6 +3,11 @@ import { LayoutGrid, PlayCircle, Lightbulb, HelpCircle } from "lucide-react";
 
 export const navLinks: NavLink[] = [
   {
+    href: "benefits",
+    linkLabel: "Why FocusPond?",
+    Icon: Lightbulb,
+  },
+  {
     href: "features",
     linkLabel: "Features",
     Icon: LayoutGrid,
@@ -11,11 +16,6 @@ export const navLinks: NavLink[] = [
     href: "how-it-works",
     linkLabel: "How It Works",
     Icon: PlayCircle,
-  },
-  {
-    href: "benefits",
-    linkLabel: "Why FocusPond?",
-    Icon: Lightbulb,
   },
   {
     href: "faqs",

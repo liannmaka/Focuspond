@@ -80,7 +80,7 @@ const Faqs = () => {
           <p className="font-medium text-sm">Still have questions?</p>
           <Link
             href="/contact"
-            className="relative text-xs text-[#5a3a24] underline underline-offset-4 decoration-[#5a3a24]/50
+            className="relative text-xs underline underline-offset-4 decoration-[#5a3a24]/50
              after:absolute after:left-0 after:-bottom-[2px] 
              after:w-0 after:h-[1.5px] after:bg-[#5a3a24] 
              after:transition-all after:duration-300 
