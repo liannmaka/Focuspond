@@ -1,9 +1,9 @@
 "use client";
 
 import FaqItem from "./FaqItem";
+import Link from "next/link";
 import { Badge } from "@/components/ui";
 import { faqs } from "@/data/landing-page/faq";
-import { FaqData } from "@/types/landing-page";
 import { useState } from "react";
 
 const Faqs = () => {
@@ -12,6 +12,10 @@ const Faqs = () => {
   const handleToggle = (index: number) => {
     setActiveIndex((prev) => (prev === index ? null : index));
   };
+
+  const leftFaqs = faqs.filter((_, idx) => idx % 2 === 0);
+
+  const rightFaqs = faqs.filter((_, idx) => idx % 2 === 1);
 
   return (
     <section
@@ -37,25 +41,53 @@ const Faqs = () => {
         </div>
 
         <div className="grid gap-9 sm:grid-cols-1 lg:grid-cols-2">
-          {faqs.map(({ question, answer }: FaqData, idx: number) => (
-            <FaqItem
-              key={idx}
-              question={question}
-              answer={answer}
-              isOpen={activeIndex === idx}
-              onClick={() => handleToggle(idx)}
-            />
-          ))}
+          {/* left column */}
+          <div className="flex flex-col gap-y-9">
+            {leftFaqs.map((faq, idx) => {
+              const actualIndex = idx * 2;
+              return (
+                <FaqItem
+                  key={actualIndex}
+                  index={actualIndex}
+                  question={faq.question}
+                  answer={faq.answer}
+                  isOpen={activeIndex === actualIndex}
+                  onClick={() => handleToggle(actualIndex)}
+                />
+              );
+            })}
+          </div>
+
+          {/* right column */}
+          <div className="flex flex-col gap-y-9">
+            {rightFaqs.map((faq, idx) => {
+              const actualIndex = idx * 2 + 1;
+              return (
+                <FaqItem
+                  key={actualIndex}
+                  index={actualIndex}
+                  question={faq.question}
+                  answer={faq.answer}
+                  isOpen={activeIndex === actualIndex}
+                  onClick={() => handleToggle(actualIndex)}
+                />
+              );
+            })}
+          </div>
         </div>
 
         <div className="text-center mt-12 font-sora text-[#5a3a24]">
           <p className="font-medium text-sm">Still have questions?</p>
-          <a
+          <Link
             href="/contact"
-            className="underline underline-offset-4 text-xs"
+            className="relative text-xs text-[#5a3a24] underline underline-offset-4 decoration-[#5a3a24]/50
+             after:absolute after:left-0 after:-bottom-[2px] 
+             after:w-0 after:h-[1.5px] after:bg-[#5a3a24] 
+             after:transition-all after:duration-300 
+             hover:after:w-full"
           >
             Contact Us
-          </a>
+          </Link>
         </div>
       </div>
     </section>
