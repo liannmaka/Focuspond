@@ -1,5 +1,6 @@
 "use client";
 
+import clsx from "clsx";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Badge } from "@/components/ui";
@@ -34,11 +35,12 @@ const WhoitsFor = () => {
                     key={persona.id}
                     onClick={() => setSelected(persona.id)}
                     aria-pressed={active}
-                    className={`px-3 py-1.5 font-sora rounded-full text-xs font-medium transition-all duration-200 focus:outline-none ${
+                    className={clsx(
+                      "px-3 py-1.5 font-sora rounded-full text-xs font-medium transition-all duration-200 focus:outline-none cursor-pointer",
                       active
                         ? "bg-accent-button text-white shadow-sm"
                         : "bg-white/80 border border-white/80 hover:shadow-sm"
-                    }`}
+                    )}
                   >
                     {persona.label}
                   </button>
