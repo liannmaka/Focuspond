@@ -8,7 +8,7 @@ import { testimonials } from "@/data/landing-page/testimonial";
 
 const Testimonial = () => {
   const FAST_SPEED = 15;
-  const SLOW_SPEED = 100;
+  const SLOW_SPEED = 80;
 
   const [ref, { width }] = useMeasure();
   const xTranslation = useMotionValue(0);
@@ -17,6 +17,32 @@ const Testimonial = () => {
   const [mustFinish, setMustFinish] = useState<boolean>(false);
   const [rerender, setRerender] = useState<boolean>(false);
 
+  // Detect if the primary pointer is "coarse" (touchscreen)
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(pointer: coarse)");
+
+    const handleChange = () => {
+      const coarse = mediaQuery.matches;
+      setIsTouchDevice(coarse);
+
+      // On touch devices, always use slow speed
+      setDuration(coarse ? SLOW_SPEED : FAST_SPEED);
+    };
+
+    // Initialize
+    handleChange();
+
+    // Listen for changes (e.g. if user switches input modes — rare but possible)
+    mediaQuery.addEventListener("change", handleChange);
+
+    return () => {
+      mediaQuery.removeEventListener("change", handleChange);
+    };
+  }, []);
+
+  // Animation
   useEffect(() => {
     let controls;
     const finalPosition = -width / 2 - 6;
@@ -65,14 +91,23 @@ const Testimonial = () => {
             className="flex gap-6 my-4 w-max"
             ref={ref}
             style={{ x: xTranslation }}
-            onHoverStart={() => {
-              setMustFinish(true);
-              setDuration(SLOW_SPEED);
-            }}
-            onHoverEnd={() => {
-              setMustFinish(true);
-              setDuration(FAST_SPEED);
-            }}
+            // Desktop: Hover to slow down
+            onHoverStart={
+              !isTouchDevice
+                ? () => {
+                    setMustFinish(true);
+                    setDuration(SLOW_SPEED);
+                  }
+                : undefined
+            }
+            onHoverEnd={
+              !isTouchDevice
+                ? () => {
+                    setMustFinish(true);
+                    setDuration(FAST_SPEED);
+                  }
+                : undefined
+            }
           >
             {scrollingTestimonials.map((testimonial, idx) => (
               <div
