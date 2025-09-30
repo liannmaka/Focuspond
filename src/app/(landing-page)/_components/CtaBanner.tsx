@@ -12,7 +12,7 @@ const CtaBanner = () => {
           No account needed. Works offline. Zero pressure.
         </p>
         <Button
-          href="/signup"
+          href="/waitlist"
           size="lg"
           aria-label="Sign up for FocusPond"
           className="relative overflow-hidden font-semibold mt-6 group"

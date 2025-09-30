@@ -7,6 +7,7 @@ import { BrandLogo } from "@/components/ui";
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { navLinks } from "@/data/landing-page/navigation";
+// import { scrollToSection } from "@/lib/utils";
 
 const NavBar = () => {
   const [isVisible, setIsVisible] = useState<boolean>(true);
@@ -79,15 +80,16 @@ const NavBar = () => {
   // toggle for Hamburger menu
   const toggleMenu = () => setIsOpen((prev) => !prev);
 
-  // set active state on click
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
-      setActiveSection(id);
+      // setActiveSection(id);
       setIsOpen(false);
     }
   };
+
+  // set active state on click
 
   return (
     <header

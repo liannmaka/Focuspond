@@ -29,7 +29,7 @@ const Hero = () => {
           </p>
           <div className="mt-8 flex sm:space-x-4">
             <Button
-              href="/signup"
+              href="/waitlist"
               size="lg"
               aria-label="Sign up for FocusPond"
               className="relative overflow-hidden font-semibold group"
