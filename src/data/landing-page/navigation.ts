@@ -34,7 +34,7 @@ export const footerNavLinks: FooterNavLinks[] = [
     linkLabel: "Contact Us",
   },
   {
-    href: "/signup",
+    href: "/waitlist",
     linkLabel: "Login or Sign Up",
   },
 ];

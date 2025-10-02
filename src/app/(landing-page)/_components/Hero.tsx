@@ -18,7 +18,7 @@ const Hero = () => {
   }, [animationItem]);
 
   return (
-    <section className="hero-section-wrapper flex-center content-center">
+    <section className="hero-section-wrapper content-center pb-5 md:pb-0">
       <div className="grid lg:grid-cols-2 lg:gap-12 gap-4 items-center">
         {/* Text Section */}
         <div>
@@ -29,7 +29,7 @@ const Hero = () => {
           </p>
           <div className="mt-8 flex sm:space-x-4">
             <Button
-              href="/signup"
+              href="/waitlist"
               size="lg"
               aria-label="Sign up for FocusPond"
               className="relative overflow-hidden font-semibold group"

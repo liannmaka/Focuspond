@@ -48,3 +48,8 @@ export interface Testimonial {
   role: string;
   quote: string;
 }
+
+export interface Waitlist {
+  Icon: LucideIcon;
+  benefit: string;
+}

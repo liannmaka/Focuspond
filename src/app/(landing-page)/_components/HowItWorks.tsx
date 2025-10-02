@@ -48,7 +48,7 @@ const HowItWorks = () => {
         {/* CTA Button */}
         <div className="text-center relative z-10">
           <Button
-            href="/signup"
+            href="/waitlist"
             aria-label="Sign up for FocusPond"
             className="font-medium"
           >
