@@ -18,7 +18,7 @@ const Hero = () => {
   }, [animationItem]);
 
   return (
-    <section className="hero-section-wrapper flex-center content-center">
+    <section className="hero-section-wrapper content-center pb-5 md:pb-0">
       <div className="grid lg:grid-cols-2 lg:gap-12 gap-4 items-center">
         {/* Text Section */}
         <div>
