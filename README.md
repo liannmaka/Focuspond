@@ -1,4 +1,4 @@
-# 🧠 Focuspond
+# Focuspond 💧
 
 _A calm productivity and wellness app that helps you plan your day, tackle your most important task, and stay mindful, one Pomodoro at a time._
 
