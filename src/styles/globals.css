@@ -94,6 +94,10 @@
   }
 } */
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: var(--egg-shell-white);
   color: var(--walnut-brown);
