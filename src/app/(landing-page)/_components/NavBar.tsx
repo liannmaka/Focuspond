@@ -7,7 +7,6 @@ import { BrandLogo } from "@/components/ui";
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { navLinks } from "@/data/landing-page/navigation";
-// import { scrollToSection } from "@/lib/utils";
 
 const NavBar = () => {
   const [isVisible, setIsVisible] = useState<boolean>(true);
@@ -80,17 +79,6 @@ const NavBar = () => {
   // toggle for Hamburger menu
   const toggleMenu = () => setIsOpen((prev) => !prev);
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-      // setActiveSection(id);
-      setIsOpen(false);
-    }
-  };
-
-  // set active state on click
-
   return (
     <header
       className={clsx(
@@ -120,11 +108,12 @@ const NavBar = () => {
         {/* Navigation Links */}
         <div className="hidden space-x-4 lg:flex">
           {navLinks.map(({ href, linkLabel, Icon }) => (
-            <button
+            <Link
               key={href}
+              href={`/#${href}`}
               onClick={() => {
-                scrollToSection(href);
                 setActiveSection(href);
+                setIsOpen(false);
               }}
               className={clsx(
                 linkStyles,
@@ -139,7 +128,7 @@ const NavBar = () => {
                 </span>
                 <span className={clsx(linkLabelStyles)}>{linkLabel}</span>
               </div>
-            </button>
+            </Link>
           ))}
         </div>
 
@@ -181,17 +170,19 @@ const NavBar = () => {
         >
           <div className="flex flex-col pb-7 pt-5 space-y-4.5">
             {navLinks.map(({ href, linkLabel, Icon }) => (
-              <button
+              <Link
                 key={href}
+                href={`/#${href}`}
                 onClick={() => {
-                  scrollToSection(href);
                   setActiveSection(href);
+                  setIsOpen(false);
                 }}
                 className={clsx(
                   linkStyles,
                   "link-animation py-2 rounded-md border border-dark-accent cursor-pointer",
                   activeSection === href ? activeLink : ""
                 )}
+                aria-label={linkLabel}
               >
                 <div className="flex items-center">
                   <span className={clsx(iconStyles, "mr-2")}>
@@ -199,7 +190,7 @@ const NavBar = () => {
                   </span>
                   <span className={clsx(linkLabelStyles)}>{linkLabel}</span>
                 </div>
-              </button>
+              </Link>
             ))}
           </div>
 
