@@ -1,49 +1,109 @@
 "use client";
 
-import { useFormStatus } from "react-dom";
-import Form from "next/form";
+import { toast } from "sonner";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-const SubmitButton = () => {
-  const { pending } = useFormStatus();
+const WaitForm = z.object({
+  email: z.email({ message: "Enter a valid email address" }),
+  honeypot: z.string().optional(),
+});
 
+type FormValues = z.infer<typeof WaitForm>;
+type SubmitButtonProps = {
+  isSubmitting: boolean;
+};
+
+const SubmitButton = ({ isSubmitting }: SubmitButtonProps) => {
   return (
     <button
       type="submit"
-      disabled={pending}
-      aria-disabled={pending}
-      className="cursor-pointer bg-accent-button px-4 py-2.5 rounded-full m-2 text-white relative overflow-hidden font-medium group ring-4 ring-base-background shadow disabled:bg-gray-400 disabled:cursor-not-allowed"
+      disabled={isSubmitting}
+      className="cursor-pointer bg-accent-button px-4 py-2.5 rounded-full m-2 text-white relative overflow-hidden font-medium group ring-4 ring-base-background shadow disabled:bg-accent-button/70 disabled:cursor-not-allowed"
     >
-      {pending ? (
-        <>
-          <div>I will design this myself</div>
-        </>
-      ) : (
-        <>
-          <span className="relative z-10">Join Waitlist</span>
-          <span className="absolute inset-0 animate-shimmer bg-gradient-to-r from-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        </>
-      )}
+      <span className="relative z-10">
+        {isSubmitting ? "Joining…" : "Join waitlist"}
+      </span>
+      <span className="absolute inset-0 animate-shimmer bg-gradient-to-r from-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
     </button>
   );
 };
 
 const WaitlistForm = () => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<FormValues>({
+    resolver: zodResolver(WaitForm),
+    defaultValues: { email: "", honeypot: "" },
+  });
+
+  async function onSubmit(values: FormValues) {
+    try {
+      const payload = { ...values };
+
+      const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const json = await res.json().catch(() => ({}));
+
+      if (!res.ok || !json.ok) {
+        throw new Error(json?.message || "Failed to submit");
+      }
+
+      reset();
+      toast.success(json.message || "Thanks, you are on the waitlist.");
+    } catch (err: unknown) {
+      console.error("Waitlist submit error:", err);
+
+      const message =
+        err instanceof Error ? err.message : "Submission failed. Try again.";
+
+      toast.error(message);
+    }
+  }
+
   return (
-    <Form
-      action="/waitlist"
+    <form
+      onSubmit={handleSubmit(onSubmit)}
       className="max-w-xs mx-auto"
     >
-      <div className="text-xs flex w-full rounded-full overflow-hidden border border-light-background/40 bg-white/80 font-sora">
-        <input
-          type="email"
-          name="email"
-          placeholder="Your Email"
-          required
-          className="flex-1 px-4 py-3 bg-transparent text-gray-700 focus:outline-none"
-        />
-        <SubmitButton />
+      <div className="block mb-2">
+        <div className="text-xs flex w-full rounded-full overflow-hidden border border-light-background/40 bg-white/80 font-sora">
+          <input
+            {...register("email")}
+            type="email"
+            name="email"
+            placeholder="Your Email"
+            required
+            className="flex-1 px-4 py-3 bg-transparent text-gray-700 focus:outline-none"
+          />
+          <SubmitButton isSubmitting={isSubmitting} />
+        </div>
+        {errors.email && (
+          <p className="text-red-600 text-sm mt-1">{errors.email.message}</p>
+        )}
       </div>
-    </Form>
+
+      {/* honeypot — visually hidden */}
+      <label
+        style={{ display: "none" }}
+        aria-hidden="true"
+      >
+        <span>Leave this empty</span>
+        <input
+          {...register("honeypot")}
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </label>
+    </form>
   );
 };
 
