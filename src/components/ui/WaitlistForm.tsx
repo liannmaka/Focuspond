@@ -87,7 +87,7 @@ const WaitlistForm = () => {
           <SubmitButton isSubmitting={isSubmitting} />
         </div>
         {errors.email && (
-          <p className="text-red-600 text-sm mt-1">{errors.email.message}</p>
+          <p className="text-red-600 text-[10px] mt-1">{errors.email.message}</p>
         )}
       </div>
 
