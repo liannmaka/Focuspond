@@ -1,4 +1,4 @@
-import { NavBar, Footer } from "./_components";
+import { NavBar } from "./_components";
 
 export default function LandingPageLayout({
   children,
@@ -11,7 +11,6 @@ export default function LandingPageLayout({
       <main className="pt-[var(--header-height)]">
         <div>{children}</div>
       </main>
-      <Footer />
     </div>
   );
 }

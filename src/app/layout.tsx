@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Toaster } from "sonner";
 import "@/styles/globals.css";
 
 const manrope = localFont({
@@ -64,6 +65,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${manrope.variable} ${sora.variable} antialiased`}>
         {children}
+        <Toaster
+          position="top-center"
+          richColors
+        />
       </body>
     </html>
   );
