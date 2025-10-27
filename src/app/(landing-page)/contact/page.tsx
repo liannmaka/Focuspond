@@ -1,135 +1,210 @@
 "use client";
 
-import { Button } from "@/components/ui";
-import Form from "next/form";
-import Link from "next/link";
 import { Mail, Linkedin } from "lucide-react";
+import { toast } from "sonner";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const ContactForm = z.object({
+  name: z
+    .string()
+    .min(1, { message: "Name is required" })
+    .max(30, { message: "Name is too long" }),
+  email: z.email({ message: "Please enter a valid email address" }),
+  message: z
+    .string()
+    .min(1, { message: "Message is required" })
+    .min(10, { message: "Message must be at least 10 characters" })
+    .max(1000, { message: "Message must not exceed 1000 characters" }),
+});
+
+type FormValues = z.infer<typeof ContactForm>;
 
 export default function ContactUsPage() {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting, isValid },
+  } = useForm<FormValues>({
+    resolver: zodResolver(ContactForm),
+    defaultValues: { name: "", email: "", message: "" },
+  });
+
+  const onSubmit = async (data: FormValues) => {
+    try {
+      const res = await fetch("/api/contact-form", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        throw new Error(result.message || "Something went wrong");
+      }
+
+      toast.success(result.message || "Message sent successfully!");
+      reset();
+    } catch (err) {
+      console.error("Contact form submit error:", err);
+      toast.error("Failed to send message. Please try again.");
+    }
+  };
+
   return (
     <div className="min-h-screen">
-      <div className="grid lg:grid-cols-2 gap-4 lg:gap-12 items-center pt-14 pb-10 content-center">
+      <div className="grid gap-y-12 lg:grid-cols-2 gap-x-4 lg:gap-12 items-center pt-14 pb-10 content-center">
         {/* column 1 */}
         <section className="max-w-lg mx-auto">
           {/* Intro */}
-          <div>
-            <h1 className="text-4xl font-bold font-sora">Contact Us</h1>
-            <p className="my-5 font-manrope text-base">
-              We’d love to hear from you. Whether you have a question, feedback,
-              or just want to say hi, our pond is always open.
+          <div className="text-center lg:text-left">
+            <h1 className="text-3xl font-sora lg:text-4xl">Contact Us</h1>
+            <p className="my-5 font-manrope">
+              We&apos;d love to hear from you. Whether you have a question,
+              feedback, or just want to say hi, our pond is always open.
             </p>
           </div>
 
           {/* Direct Contact */}
           <div>
-            <h3 className="text-lg font-medium mb-2">Prefer direct contact?</h3>
-            <p className="flex items-center">
+            <h3 className="font-medium mb-2 text-center font-sora lg:text-left">
+              Prefer direct contact?
+            </h3>
+            <p className="flex items-center justify-center lg:justify-start">
               <span className="block h-5 w-[3px] bg-accent-button rounded-full mr-3" />
               <Mail className="w-5 h-5 shrink-0 mr-1" />
-
-              <Link
+              <a
                 href="mailto:ogbuolilian@gmail.com"
-                className="hover:underline font-medium transition-colors duration-200"
-              >
-                ogbuolilian@gmail.com
-              </Link>
-            </p>
-            <div className="mt-4 flex items-center gap-4 text-sm">
-              <Link
-                href="https://twitter.com/yourtwitterhandle"
+                className="hover:underline font-medium text-xs transition-colors duration-200 font-sora"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-blue-500 transition-colors"
+              >
+                ogbuolilian@gmail.com
+              </a>
+            </p>
+            <div className="mt-4 flex gap-4 text-xs items-center justify-center lg:justify-start">
+              <a
+                href="https://x.com/filix_lillyann"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-accent-button transition-colors font-manrope"
               >
                 <span>X (Twitter)</span>
-              </Link>
+              </a>
 
               <span>•</span>
 
-              <Link
-                href="https://linkedin.com/in/yourlinkedin"
+              <a
+                href="https://www.linkedin.com/in/ogbuo-chiamaka"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1 hover:text-blue-600 transition-colors"
+                className="flex items-center gap-1 hover:text-accent-button transition-colors font-manrope"
               >
                 <Linkedin className="w-4 h-4" />
                 <span>LinkedIn</span>
-              </Link>
+              </a>
             </div>
           </div>
         </section>
 
         {/* Contact Form column 2*/}
         <section className="w-full max-w-lg mx-auto bg-white/80 shadow-md rounded-2xl p-10 border border-gray-100">
-          <h2 className="text-xl font-medium mb-4">Send a message</h2>
+          <h2 className="text-2xl font-medium mb-4 font-sora">
+            Let&apos;s get in touch
+          </h2>
 
-          <Form
-            action="/contact"
+          <form
+            onSubmit={handleSubmit(onSubmit)}
             className="space-y-5"
           >
             <div>
               <label
                 htmlFor="name"
-                className="block text-sm font-medium mb-1"
+                className="block text-xs font-medium mb-1 font-manrope"
               >
-                Name
+                Name*
               </label>
               <input
+                {...register("name")}
                 id="name"
                 name="name"
                 type="text"
                 required
                 placeholder="Your name"
-                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:ring-2 focus:ring-blue-100 focus:outline-none"
+                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:ring-2 focus:ring-light-background/40 focus:outline-none placeholder:text-xs font-manrope"
               />
+              {errors.name && (
+                <p className="text-red-600 text-[10px] mt-1">
+                  {errors.name.message}
+                </p>
+              )}
             </div>
 
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium mb-1"
+                className="block text-xs font-medium mb-1 font-manrope"
               >
-                Email
+                Email*
               </label>
               <input
+                {...register("email")}
                 id="email"
                 name="email"
                 type="email"
                 required
                 placeholder="you@example.com"
-                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:ring-2 focus:ring-blue-100 focus:outline-none"
+                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:ring-2 focus:ring-light-background/40 focus:outline-none placeholder:text-xs font-manrope"
               />
+              {errors.email && (
+                <p className="text-red-600 text-[10px] mt-1">
+                  {errors.email.message}
+                </p>
+              )}
             </div>
 
             <div>
               <label
                 htmlFor="message"
-                className="block text-sm font-medium mb-1"
+                className="block text-xs font-medium mb-1 font-manrope"
               >
-                Message
+                Message*
               </label>
               <textarea
+                {...register("message")}
                 id="message"
                 name="message"
                 rows={4}
                 required
                 placeholder="Write your message here..."
-                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:ring-2 focus:ring-blue-100 focus:outline-none resize-none"
+                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:ring-2 focus:ring-light-background/40 focus:outline-none resize-none placeholder:text-xs font-manrope"
               />
+              <p className="text-[10px] font-manrope">
+                Message must be at least 10 characters
+              </p>
+              {errors.message && (
+                <p className="text-red-600 text-[10px] mt-1">
+                  {errors.message.message}
+                </p>
+              )}
             </div>
             <div className="text-right">
-              <Button
+              <button
                 type="submit"
-                href="/waitlist"
-                size="lg"
-                aria-label="Sign up for FocusPond"
-                className="relative overflow-hidden font-semibold group"
+                aria-label="Submit contact form"
+                disabled={isSubmitting || !isValid}
+                className="cursor-pointer relative overflow-hidden font-semibold group inline-flex items-center justify-center rounded-lg font-sora bg-accent-button text-white shadow-md transition-transform duration-300 hover:-translate-y-0.5 tracking-wider px-4 py-2.5 text-sm disabled:bg-accent-button/70 disabled:cursor-not-allowed"
               >
-                <span className="relative z-10">Send Message</span>
+                <span className="relative z-10">
+                  {isSubmitting ? "Sending" : "Send Message"}
+                </span>
                 <span className="absolute inset-0 animate-shimmer bg-gradient-to-r from-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              </Button>
+              </button>
             </div>
-          </Form>
+          </form>
         </section>
       </div>
     </div>

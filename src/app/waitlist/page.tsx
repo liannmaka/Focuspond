@@ -8,10 +8,10 @@ export default function WaitlistPage() {
       <div className="px-7">
         <div className="text-center mb-6">
           <Badge title="Join the Waitlist" />
-          <h1 className="text-3xl font-bold font-sora">
+          <h1 className="text-3xl font-sora lg:text-4xl">
             Focus deeply. Rest intentionally.
           </h1>
-          <p className="my-3 font-manrope text-sm">
+          <p className="my-5 font-manrope">
             Be the first to experience FocusPond when we launch.
           </p>
         </div>
