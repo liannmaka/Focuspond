@@ -139,7 +139,7 @@ export default function ContactUsPage() {
                 type="text"
                 required
                 placeholder="Your name"
-                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:outline-none placeholder:text-xs font-manrope"
+                className="w-full rounded-lg border border-gray-300 text-gray-700 px-4 py-2.5 focus:outline-none placeholder:text-xs font-manrope"
               />
               {errors.name && (
                 <p className="text-red-600 text-[10px] mt-1">
@@ -162,7 +162,7 @@ export default function ContactUsPage() {
                 type="email"
                 required
                 placeholder="Your email"
-                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:outline-none placeholder:text-xs font-manrope"
+                className="w-full rounded-lg border border-gray-300 text-gray-700 px-4 py-2.5 focus:outline-none placeholder:text-xs font-manrope"
               />
               {errors.email && (
                 <p className="text-red-600 text-[10px] mt-1">
@@ -185,7 +185,7 @@ export default function ContactUsPage() {
                 rows={4}
                 required
                 placeholder="Write your message here..."
-                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:outline-none resize-none placeholder:text-xs font-manrope"
+                className="w-full rounded-lg border border-gray-300 text-gray-700 px-4 py-2.5 focus:outline-none resize-none placeholder:text-xs font-manrope"
               />
               <p className="text-[10px] font-manrope">
                 Message must be at least 10 characters

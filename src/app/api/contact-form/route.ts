@@ -44,9 +44,9 @@ export async function POST(req: Request) {
 
     const { data, error } = await supabase
       .from("contact")
-      .insert([{ name: cleanName, email: cleanEmail, message: cleanMessage }])
-      .select()
-      .single();
+      .insert([{ name: cleanName, email: cleanEmail, message: cleanMessage }]);
+    //   .select()
+    //   .single();
 
     if (error) {
       console.log("Supabase error (contact insert):", error);
