@@ -45,7 +45,7 @@ export async function POST(req: Request) {
       );
     }
 
-    // upsert into waitlist table
+    // checking the waitlist table
     const { error: existingError, data: existing } = await supabase
       .from("waitlist")
       .select("email")
@@ -69,7 +69,7 @@ export async function POST(req: Request) {
 
     const { data, error } = await supabase
       .from("waitlist")
-      .insert({ email })
+      .insert([{ email }])
       .select()
       .single();
 

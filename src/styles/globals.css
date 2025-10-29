@@ -41,7 +41,7 @@
 }
 
 @utility content-center {
-  @apply container mx-auto px-7 lg:px-14;
+  @apply container mx-auto px-7 lg:px-11;
 }
 
 @utility flex-center {

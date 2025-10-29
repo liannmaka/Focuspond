@@ -6,21 +6,24 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const WaitForm = z.object({
-  email: z.email({ message: "Enter a valid email address" }),
+  email: z.email({ message: "Please enter a valid email address" }),
   honeypot: z.string().optional(),
 });
 
 type FormValues = z.infer<typeof WaitForm>;
+
 type SubmitButtonProps = {
   isSubmitting: boolean;
+  isValid: boolean;
 };
 
-const SubmitButton = ({ isSubmitting }: SubmitButtonProps) => {
+const SubmitButton = ({ isSubmitting, isValid }: SubmitButtonProps) => {
   return (
     <button
       type="submit"
-      disabled={isSubmitting}
-      className="cursor-pointer bg-accent-button px-4 py-2.5 rounded-full m-2 text-white relative overflow-hidden font-medium group ring-4 ring-base-background shadow disabled:bg-accent-button/70 disabled:cursor-not-allowed"
+      aria-label="Submit waitlist"
+      disabled={isSubmitting || !isValid}
+      className="font-sora cursor-pointer bg-accent-button px-4 py-2.5 rounded-full m-2 text-white relative overflow-hidden font-medium group ring-4 ring-base-background shadow disabled:bg-accent-button/70 disabled:cursor-not-allowed"
     >
       <span className="relative z-10">
         {isSubmitting ? "Joining…" : "Join waitlist"}
@@ -35,20 +38,19 @@ const WaitlistForm = () => {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isValid },
   } = useForm<FormValues>({
     resolver: zodResolver(WaitForm),
     defaultValues: { email: "", honeypot: "" },
   });
 
-  async function onSubmit(values: FormValues) {
+  const onSubmit = async (values: FormValues) => {
     try {
-      const payload = { ...values };
 
       const res = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(values),
       });
 
       const json = await res.json().catch(() => ({}));
@@ -67,7 +69,7 @@ const WaitlistForm = () => {
 
       toast.error(message);
     }
-  }
+  };
 
   return (
     <form
@@ -75,19 +77,24 @@ const WaitlistForm = () => {
       className="max-w-xs mx-auto"
     >
       <div className="block mb-2">
-        <div className="text-xs flex w-full rounded-full overflow-hidden border border-light-background/40 bg-white/80 font-sora">
+        <div className="text-xs flex w-full rounded-full overflow-hidden border border-light-background/40 bg-white/80 font-manrope">
           <input
             {...register("email")}
             type="email"
             name="email"
-            placeholder="Your Email"
+            placeholder="Your email"
             required
-            className="flex-1 px-4 py-3 bg-transparent text-gray-700 focus:outline-none"
+            className="flex-1 px-4 py-3 bg-transparent text-gray-700 focus:outline-none placeholder:text-xs"
           />
-          <SubmitButton isSubmitting={isSubmitting} />
+          <SubmitButton
+            isSubmitting={isSubmitting}
+            isValid={isValid}
+          />
         </div>
         {errors.email && (
-          <p className="text-red-600 text-[10px] mt-1">{errors.email.message}</p>
+          <p className="text-red-600 text-[10px] mt-1">
+            {errors.email.message}
+          </p>
         )}
       </div>
 
