@@ -5,6 +5,8 @@ import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { LuLinkedin } from "react-icons/lu";
+import { RiTwitterXFill } from "react-icons/ri";
 
 const ContactForm = z.object({
   name: z
@@ -89,25 +91,25 @@ export default function ContactUsPage() {
                 ogbuolilian@gmail.com
               </a>
             </p>
-            <div className="mt-4 flex gap-4 text-xs items-center justify-center lg:justify-start">
+            <div className="mt-4 flex gap-2 text-base items-center justify-center lg:justify-start">
               <a
                 href="https://x.com/filix_lillyann"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-accent-button underline transition-colors font-manrope"
-              >
-                <span>Twitter</span>
+                className="transition-colors text-[#ff9472] hover:text-[#ff7f50]"
+                aria-label="Twitter"
+              >  
+                <RiTwitterXFill />
               </a>
-
-              <span>•</span>
 
               <a
                 href="https://www.linkedin.com/in/ogbuo-chiamaka"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline text-accent-button transition-colors font-manrope"
+                className="transition-colors text-[#ff9472] hover:text-[#ff7f50]"
+                aria-label="LinkedIn"
               >
-                <span>LinkedIn</span>
+                <LuLinkedin />
               </a>
             </div>
           </div>
