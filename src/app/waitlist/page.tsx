@@ -11,7 +11,8 @@ export default function WaitlistPage() {
           <h1 className="text-3xl font-sora lg:text-4xl">
             Focus deeply. Rest intentionally.
           </h1>
-          <p className="my-5 font-manrope">
+          {/* my-5 font-manrope text-[15px] text-dark-accent/90 */}
+          <p className="my-5 font-manrope text-[15px] text-dark-accent/90">
             Be the first to experience FocusPond when we launch.
           </p>
         </div>

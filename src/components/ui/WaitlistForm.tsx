@@ -46,12 +46,11 @@ const WaitlistForm = () => {
 
   const onSubmit = async (values: FormValues) => {
     try {
-      const payload = { ...values };
 
       const res = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(values),
       });
 
       const json = await res.json().catch(() => ({}));
@@ -83,7 +82,7 @@ const WaitlistForm = () => {
             {...register("email")}
             type="email"
             name="email"
-            placeholder="Your Email"
+            placeholder="Your email"
             required
             className="flex-1 px-4 py-3 bg-transparent text-gray-700 focus:outline-none placeholder:text-xs"
           />

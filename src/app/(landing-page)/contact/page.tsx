@@ -1,6 +1,6 @@
 "use client";
 
-import { Mail, Linkedin } from "lucide-react";
+import { Mail } from "lucide-react";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -50,7 +50,11 @@ export default function ContactUsPage() {
       reset();
     } catch (err) {
       console.error("Contact form submit error:", err);
-      toast.error("Failed to send message. Please try again.");
+
+      const message =
+      err instanceof Error ? err.message : "Failed to send message. Please try again.";
+  
+       toast.error(message);
     }
   };
 
@@ -62,7 +66,7 @@ export default function ContactUsPage() {
           {/* Intro */}
           <div className="text-center lg:text-left">
             <h1 className="text-3xl font-sora lg:text-4xl">Contact Us</h1>
-            <p className="my-5 font-manrope">
+            <p className="my-5 font-manrope text-[15px] text-dark-accent/90">
               We&apos;d love to hear from you. Whether you have a question,
               feedback, or just want to say hi, our pond is always open.
             </p>
@@ -90,9 +94,9 @@ export default function ContactUsPage() {
                 href="https://x.com/filix_lillyann"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-accent-button transition-colors font-manrope"
+                className="text-accent-button underline transition-colors font-manrope"
               >
-                <span>X (Twitter)</span>
+                <span>Twitter</span>
               </a>
 
               <span>•</span>
@@ -101,9 +105,8 @@ export default function ContactUsPage() {
                 href="https://www.linkedin.com/in/ogbuo-chiamaka"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1 hover:text-accent-button transition-colors font-manrope"
+                className="underline text-accent-button transition-colors font-manrope"
               >
-                <Linkedin className="w-4 h-4" />
                 <span>LinkedIn</span>
               </a>
             </div>
@@ -120,10 +123,10 @@ export default function ContactUsPage() {
             onSubmit={handleSubmit(onSubmit)}
             className="space-y-5"
           >
-            <div>
+            <div className="text-xs">
               <label
                 htmlFor="name"
-                className="block text-xs font-medium mb-1 font-manrope"
+                className="block mb-1 font-manrope"
               >
                 Name*
               </label>
@@ -134,7 +137,7 @@ export default function ContactUsPage() {
                 type="text"
                 required
                 placeholder="Your name"
-                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:ring-2 focus:ring-light-background/40 focus:outline-none placeholder:text-xs font-manrope"
+                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:outline-none placeholder:text-xs font-manrope"
               />
               {errors.name && (
                 <p className="text-red-600 text-[10px] mt-1">
@@ -143,10 +146,10 @@ export default function ContactUsPage() {
               )}
             </div>
 
-            <div>
+            <div className="text-xs">
               <label
                 htmlFor="email"
-                className="block text-xs font-medium mb-1 font-manrope"
+                className="block mb-1 font-manrope"
               >
                 Email*
               </label>
@@ -156,8 +159,8 @@ export default function ContactUsPage() {
                 name="email"
                 type="email"
                 required
-                placeholder="you@example.com"
-                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:ring-2 focus:ring-light-background/40 focus:outline-none placeholder:text-xs font-manrope"
+                placeholder="Your email"
+                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:outline-none placeholder:text-xs font-manrope"
               />
               {errors.email && (
                 <p className="text-red-600 text-[10px] mt-1">
@@ -166,10 +169,10 @@ export default function ContactUsPage() {
               )}
             </div>
 
-            <div>
+            <div className="text-xs">
               <label
                 htmlFor="message"
-                className="block text-xs font-medium mb-1 font-manrope"
+                className="block mb-1 font-manrope"
               >
                 Message*
               </label>
@@ -180,7 +183,7 @@ export default function ContactUsPage() {
                 rows={4}
                 required
                 placeholder="Write your message here..."
-                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:ring-2 focus:ring-light-background/40 focus:outline-none resize-none placeholder:text-xs font-manrope"
+                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:outline-none resize-none placeholder:text-xs font-manrope"
               />
               <p className="text-[10px] font-manrope">
                 Message must be at least 10 characters
@@ -199,7 +202,7 @@ export default function ContactUsPage() {
                 className="cursor-pointer relative overflow-hidden font-semibold group inline-flex items-center justify-center rounded-lg font-sora bg-accent-button text-white shadow-md transition-transform duration-300 hover:-translate-y-0.5 tracking-wider px-4 py-2.5 text-sm disabled:bg-accent-button/70 disabled:cursor-not-allowed"
               >
                 <span className="relative z-10">
-                  {isSubmitting ? "Sending" : "Send Message"}
+                  {isSubmitting ? "Sending" : "Send message"}
                 </span>
                 <span className="absolute inset-0 animate-shimmer bg-gradient-to-r from-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </button>
