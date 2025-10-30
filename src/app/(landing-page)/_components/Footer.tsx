@@ -29,12 +29,12 @@ const Footer = () => {
           </div>
 
           {/* language change: this will come later*/}
-          <nav className="flex flex-wrap justify-center gap-6 text-sm font-medium font-sora">
+          <nav className="flex flex-wrap justify-center gap-6 text-sm font-sora">
             {footerNavLinks.map(({ href, linkLabel }, idx: number) => (
               <Link
                 key={idx}
                 href={href}
-                className={`link-animation ${pathName === href ? "text-accent-button" : "text-[#5a3a24/90]"}`}
+                className={`link-animation ${pathName === href ? "text-accent-button font-medium" : "text-dark-accent"}`}
               >
                 {linkLabel}
               </Link>    
