@@ -207,7 +207,7 @@ export default function ContactUsPage() {
                   disabled={isSubmitting || !isValid}
                   className="cursor-pointer relative overflow-hidden font-semibold group inline-flex items-center justify-center rounded-lg font-sora bg-accent-button text-white shadow-md transition-transform duration-300 hover:-translate-y-0.5 tracking-wider px-4 py-2.5 text-sm disabled:bg-accent-button/70 disabled:cursor-not-allowed min-w-[9rem]"
                 >
-                 {isSubmitting ? "Sending" : "Send message"}
+                  {isSubmitting ? "Sending" : "Send message"}
                 </button>
               </div>
             </form>
