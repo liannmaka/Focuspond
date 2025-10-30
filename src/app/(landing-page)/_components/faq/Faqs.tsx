@@ -19,9 +19,9 @@ const Faqs = () => {
   const rightFaqs = faqs.filter((_, idx) => idx % 2 === 1);
 
   return (
-    <>
+    <div className="bg-secondary-accent/10">
       <section
-        className="relative bg-secondary-accent/10 pt-8 pb-16"
+        className="relative pt-8 pb-16"
         id="faqs"
       >
         <div className="content-center">
@@ -37,7 +37,7 @@ const Faqs = () => {
             >
               Frequently asked questions
             </h2>
-            <p className="paragraph-for-gb max-w-2xl mx-auto">
+            <p className="paragraph-for-gb max-w-md mx-auto">
               Everything you need to know to get started with FocusPond.
             </p>
           </div>
@@ -94,7 +94,7 @@ const Faqs = () => {
         </div>
       </section>
       <Footer />
-    </>
+    </div>
   );
 };
 

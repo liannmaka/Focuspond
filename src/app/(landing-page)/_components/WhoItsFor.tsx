@@ -18,7 +18,7 @@ const WhoitsFor = () => {
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold font-sora leading-tight">
             Your flow, your way
           </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-base font-manrope sm:text-lg">
+          <p className="mt-4 max-w-md mx-auto text-base font-manrope sm:text-lg">
             Different paths, same goal: calm, meaningful progress without the
             burnout.
           </p>

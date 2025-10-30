@@ -23,7 +23,7 @@ const SubmitButton = ({ isSubmitting, isValid }: SubmitButtonProps) => {
       type="submit"
       aria-label="Submit waitlist"
       disabled={isSubmitting || !isValid}
-      className="font-sora cursor-pointer bg-accent-button px-4 py-2.5 rounded-full m-2 text-white relative overflow-hidden font-medium group ring-4 ring-base-background shadow disabled:bg-accent-button/70 disabled:cursor-not-allowed"
+      className="font-sora cursor-pointer bg-accent-button px-4 py-2.5 rounded-full m-2 text-white relative overflow-hidden font-medium group ring-4 ring-base-background shadow disabled:bg-accent-button/70 disabled:cursor-not-allowed min-w-[7rem]"
     >
       <span className="relative z-10">
         {isSubmitting ? "Joining…" : "Join waitlist"}
@@ -46,7 +46,6 @@ const WaitlistForm = () => {
 
   const onSubmit = async (values: FormValues) => {
     try {
-
       const res = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
