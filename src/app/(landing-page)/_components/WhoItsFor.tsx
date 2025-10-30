@@ -69,7 +69,7 @@ const WhoitsFor = () => {
 
           {/* RIGHT: crossfade */}
           <div className="flex items-center justify-center">
-            {/* <div className="w-full max-w-md h-64 bg-white/80 backdrop-blur-lg rounded-2xl shadow-lg flex items-center justify-center overflow-hidden">
+            <div className="w-full max-w-md h-64 bg-white/80 backdrop-blur-lg rounded-2xl shadow-lg flex items-center justify-center overflow-hidden">
               <AnimatePresence mode="wait">
                 <motion.img
                   key={person.id}
@@ -80,22 +80,6 @@ const WhoitsFor = () => {
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.3 }}
                   className="object-contain w-full h-full p-6"
-                />
-              </AnimatePresence>
-            </div> */}
-
-            <div className="w-full max-w-md h-64 bg-white/80 backdrop-blur-lg rounded-2xl shadow-lg flex items-center justify-center overflow-hidden relative">
-              <AnimatePresence mode="wait">
-                <motion.img
-                  key={person.id}
-                  src={person.image}
-                  alt={person.headline}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.3 }}
-                  className="object-contain w-full h-full p-6 transition-opacity duration-300 opacity-0"
-                  onLoad={(e) => e.currentTarget.classList.add("opacity-100")}
                 />
               </AnimatePresence>
             </div>
