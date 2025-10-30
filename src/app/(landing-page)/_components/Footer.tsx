@@ -1,8 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import { BrandLogo, SectionDivider } from "@/components/ui";
 import { footerNavLinks } from "@/data/landing-page/navigation";
+import { usePathname } from "next/navigation";
 
 const Footer = () => {
+  const pathName = usePathname();
+
   return (
     <footer className="py-10 px-10">
       <div className="max-w-[90rem] mx-auto rounded-3xl bg-white/80 backdrop-blur-md ring-1 ring-white/10 shadow-md">
@@ -24,15 +29,15 @@ const Footer = () => {
           </div>
 
           {/* language change: this will come later*/}
-          <nav className="flex flex-wrap justify-center gap-6 text-sm text-[#5a3a24] font-medium font-sora">
+          <nav className="flex flex-wrap justify-center gap-6 text-sm font-sora">
             {footerNavLinks.map(({ href, linkLabel }, idx: number) => (
               <Link
                 key={idx}
                 href={href}
-                className="link-animation"
+                className={`link-animation ${pathName === href ? "text-accent-button font-medium" : "text-dark-accent"}`}
               >
                 {linkLabel}
-              </Link>
+              </Link>    
             ))}
           </nav>
         </div>
