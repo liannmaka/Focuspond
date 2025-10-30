@@ -4,7 +4,7 @@ import { waitlist } from "@/data/landing-page/waitlist";
 
 export default function WaitlistPage() {
   return (
-    <div className="max-w-lg mx-auto min-h-[calc(100vh-var(--header-height))] flex flex-col justify-center pt-14 md:pt-0 pb-10 md:pb-0">
+    <div className="max-w-lg mx-auto min-h-[calc(100vh-var(--header-height))] flex flex-col justify-center pt-14 md:pt-0 md:pb-0">
       <div className="px-7">
         <div className="text-center mb-6">
           <Badge title="Join the Waitlist" />

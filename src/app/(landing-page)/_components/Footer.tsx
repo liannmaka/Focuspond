@@ -4,7 +4,7 @@ import { footerNavLinks } from "@/data/landing-page/navigation";
 
 const Footer = () => {
   return (
-    <footer className="py-10 px-10 bg-[#a8c686]/10">
+    <footer className="py-10 px-10">
       <div className="max-w-[90rem] mx-auto rounded-3xl bg-white/80 backdrop-blur-md ring-1 ring-white/10 shadow-md">
         <div className="flex flex-col space-y-6 md:space-y-0 items-center md:flex-row md:justify-between px-8 pt-7">
           {/* Appname */}
