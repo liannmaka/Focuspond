@@ -88,7 +88,7 @@ const NavBar = () => {
           : "-translate-y-[calc(100%+1rem)] shadow-none"
       )}
     >
-      <nav className="max-w-[90rem] mx-auto flex justify-between items-center h-[var(--header-height)]">
+      <nav className="max-w-360 mx-auto flex justify-between items-center h-(--header-height)">
         {/* Logo and App name */}
         <div className="flex items-center">
           <div className="-ml-4">
