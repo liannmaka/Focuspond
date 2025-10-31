@@ -8,7 +8,7 @@ const SignupButton = () => {
       aria-label="Sign up for FocusPond"
       className="font-medium"
     >
-      Start for free
+      Get Early Access
     </Button>
   );
 };

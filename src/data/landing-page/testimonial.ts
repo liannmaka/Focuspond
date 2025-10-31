@@ -8,10 +8,10 @@ export const testimonials: Testimonial[] = [
       "Focuspond helped me finally stop procrastinating my final year project. The vibe switcher? Underrated magic.",
   },
   {
-    name: "Josh E.",
+    name: "James S.",
     role: "Software Engineer",
     quote:
-      "I’ve used so many Pomodoro tools, but this one actually makes me want to work. It’s calm and intentional.",
+      "I’ve used so many Productivity tools, but this one actually makes me want to work. It’s calm and intentional.",
   },
   {
     name: "Chiamaka O.",

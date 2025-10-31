@@ -5,21 +5,25 @@ export const steps: HowItWork[] = [
   {
     Icon: HeartPulse,
     title: "1.  Check Your Mood",
-    description: "Log how you feel to stay aware of your energy.",
+    description:
+      "Start your day with a quick mood check-in to tune into your energy.",
   },
   {
     Icon: Calendar,
     title: "2.  Plan Your Day",
-    description: "Pick your Frog of the Day to focus on what matters most.",
+    description:
+      "Choose your Frog, your most important task and set your focus for the day.",
   },
   {
     Icon: Timer,
     title: "3.  Start a Sprint",
-    description: "Use the Pomodoro timer to work deeply and rest mindfully.",
+    description:
+      "Work in calm, focused sprints with gentle breaks that recharge your mind.",
   },
   {
     Icon: BookOpen,
     title: "4.  Reflect & Grow",
-    description: "Review your wins and lessons to reset for tomorrow.",
+    description:
+      "End your day with calm reflection. Celebrate your wins and reset for tomorrow.",
   },
 ];

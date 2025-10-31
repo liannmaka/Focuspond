@@ -37,7 +37,7 @@ const Footer = () => {
                 className={`link-animation ${pathName === href ? "text-accent-button font-medium" : "text-dark-accent"}`}
               >
                 {linkLabel}
-              </Link>    
+              </Link>
             ))}
           </nav>
         </div>

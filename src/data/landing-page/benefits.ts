@@ -9,28 +9,28 @@ export const benefits: Benefit[] = [
     badge: "Focus-First Planning",
     title: "Plan your day with intention",
     paragraph:
-      "Begin each day by picking your Frog, the one task that truly matters. No clutter. Just calm, focused energy.",
+      "Start your day by choosing your Frog, the one task that truly matters. No clutter, no overwhelm. Just calm, focused energy.",
     image: solutionOne,
   },
   {
     badge: "Gentle Pomodoro Rhythm",
-    title: "Work in focused sprints, rest with intention",
+    title: "Work in focused sprints, rest with care",
     paragraph:
-      "Alternate between deep focus and mindful breaks. Stay productive, not drained.",
+      "Find your natural rhythm. Focus deeply, take mindful breaks, and keep your energy steady throughout the day.",
     image: solutionTwo,
   },
   {
     badge: "Mood-Aware Productivity",
-    title: "Check in with how you feel",
+    title: "Stay connected to how you feel",
     paragraph:
-      "Your energy matters. Use mood check-ins and mini-frogs to stay aligned, even on tough days.",
+      "Your energy shapes your focus. Use mood check-ins and mini-Frogs to stay aligned and kind to yourself, even on tough days.",
     image: solutionThree,
   },
   {
     badge: "Gentle Progress Tracking",
     title: "Reflect, log, and grow your focus",
     paragraph:
-      "See streaks, your completed Frogs, and your focus blooms, because every small win counts.",
+      "End your day calmly by noting your wins and insights. See your streaks and completed Frogs, because every small step forward counts.",
     image: solutionFour,
   },
 ];
