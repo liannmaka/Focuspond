@@ -7,7 +7,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LuLinkedin } from "react-icons/lu";
 import { RiTwitterXFill } from "react-icons/ri";
-import { Footer } from "../_components";
+import Footer from "../_components/Footer";
 
 const ContactForm = z.object({
   name: z

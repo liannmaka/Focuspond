@@ -1,4 +1,4 @@
-import { NavBar } from "./_components";
+import NavBar from "./_components/NavBar";
 
 export default function LandingPageLayout({
   children,
@@ -8,7 +8,7 @@ export default function LandingPageLayout({
   return (
     <div>
       <NavBar />
-      <main className="pt-[var(--header-height)]">
+      <main className="pt-(--header-height)">
         <div>{children}</div>
       </main>
     </div>
