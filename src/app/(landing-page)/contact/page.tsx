@@ -52,8 +52,6 @@ export default function ContactUsPage() {
       toast.success(result.message || "Message sent successfully!");
       reset();
     } catch (err) {
-      console.error("Contact form submit error:", err);
-
       const message =
         err instanceof Error
           ? err.message
@@ -205,7 +203,7 @@ export default function ContactUsPage() {
                   type="submit"
                   aria-label="Submit contact form"
                   disabled={isSubmitting || !isValid}
-                  className="cursor-pointer relative overflow-hidden font-semibold group inline-flex items-center justify-center rounded-lg font-sora bg-accent-button text-white shadow-md transition-transform duration-300 hover:-translate-y-0.5 tracking-wider px-4 py-2.5 text-sm disabled:bg-accent-button/70 disabled:cursor-not-allowed min-w-[9rem]"
+                  className="cursor-pointer relative overflow-hidden font-semibold group inline-flex items-center justify-center rounded-lg font-sora bg-accent-button text-white shadow-md transition-transform duration-300 hover:-translate-y-0.5 tracking-wider px-4 py-2.5 text-sm disabled:bg-accent-button/70 disabled:cursor-not-allowed min-w-36"
                 >
                   {isSubmitting ? "Sending" : "Send message"}
                 </button>

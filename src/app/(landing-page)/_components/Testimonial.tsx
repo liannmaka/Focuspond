@@ -85,9 +85,6 @@ const Testimonial = () => {
           <p className="paragraph-for-gb max-w-md text-wrap">
             FocusPond gives users space to think, plan, and stay on track.
           </p>
-          <p className="text-xs text-[#5a3a24]/60 mt-4 italic">
-            Early impressions, full stories coming soon.
-          </p>
         </div>
         {/* Right Column: Sliding Testimonials */}
         <div className="relative overflow-hidden w-full">
@@ -124,7 +121,7 @@ const Testimonial = () => {
 
                 <div className="flex items-center gap-3 mt-6">
                   {/* Placeholder Avatar */}
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#a8c686]/50 to-[#ff9472]/50" />
+                  <div className="w-8 h-8 rounded-full bg-linear-to-br from-[#a8c686]/50 to-[#ff9472]/50" />
                   <div className="text-sm">
                     <div className="font-semibold text-darker-accent">
                       {testimonial.name}

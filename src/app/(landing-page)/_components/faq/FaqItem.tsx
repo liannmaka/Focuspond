@@ -23,7 +23,7 @@ const FaqItem = memo(
         >
           <span className="pr-2">{question}</span>
           <ChevronDown
-            className={`flex-shrink-0 transition-transform duration-300 ${
+            className={`shrink-0 transition-transform duration-300 ${
               isOpen ? "rotate-180" : ""
             }`}
           />

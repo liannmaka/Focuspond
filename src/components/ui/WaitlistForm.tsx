@@ -23,12 +23,12 @@ const SubmitButton = ({ isSubmitting, isValid }: SubmitButtonProps) => {
       type="submit"
       aria-label="Submit waitlist"
       disabled={isSubmitting || !isValid}
-      className="font-sora cursor-pointer bg-accent-button px-4 py-2.5 rounded-full m-2 text-white relative overflow-hidden font-medium group ring-4 ring-base-background shadow disabled:bg-accent-button/70 disabled:cursor-not-allowed min-w-[7rem]"
+      className="font-sora cursor-pointer bg-accent-button px-4 py-2.5 rounded-full m-2 text-white relative overflow-hidden font-medium group ring-4 ring-base-background shadow disabled:bg-accent-button/70 disabled:cursor-not-allowed min-w-28"
     >
       <span className="relative z-10">
         {isSubmitting ? "Joining…" : "Join waitlist"}
       </span>
-      <span className="absolute inset-0 animate-shimmer bg-gradient-to-r from-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      <span className="absolute inset-0 animate-shimmer bg-linear-to-r from-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
     </button>
   );
 };
