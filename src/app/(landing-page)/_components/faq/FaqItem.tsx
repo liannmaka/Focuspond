@@ -38,7 +38,7 @@ const FaqItem = memo(
           style={{
             maxHeight: isOpen ? contentRef.current?.scrollHeight : 0,
             opacity: isOpen ? 1 : 0,
-             transform: isOpen ? "translateY(0)" : "translateY(-4px)"
+            transform: isOpen ? "translateY(0)" : "translateY(-4px)",
           }}
         >
           <p className="py-2 text-sm text-walnut-brown/80 font-manrope ">
@@ -51,6 +51,5 @@ const FaqItem = memo(
 );
 
 FaqItem.displayName = "FaqItem";
-
 
 export default FaqItem;

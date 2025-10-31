@@ -55,7 +55,6 @@ export const metadata: Metadata = {
   description:
     "Focuspond is a productivity and wellness web app that helps you stay focused, take mindful breaks, and end your day with calm clarity. Built for real humans who are tired, overwhelmed, or neurodivergent.",
 };
-            
 
 export default function RootLayout({
   children,

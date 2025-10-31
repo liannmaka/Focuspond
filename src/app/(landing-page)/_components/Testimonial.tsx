@@ -10,7 +10,6 @@ import { testimonials } from "@/data/landing-page/testimonial";
 const Testimonial = () => {
   const FAST_SPEED = 15;
   const SLOW_SPEED = 80;
-  
 
   const [ref, { width }] = useMeasure();
   const xTranslation = useMotionValue(0);
@@ -44,7 +43,6 @@ const Testimonial = () => {
     };
   }, []);
 
-  
   // Animation
   useEffect(() => {
     let controls;
@@ -71,7 +69,6 @@ const Testimonial = () => {
 
     return controls?.stop;
   }, [xTranslation, width, duration, rerender, mustFinish]);
-
 
   // Duplicate testimonials to create seamless infinite loop
   const scrollingTestimonials = [...testimonials, ...testimonials];
@@ -121,21 +118,22 @@ const Testimonial = () => {
                 key={idx}
                 className="card"
               >
-                <p className="text-sm leading-relaxed text-darker-accent/90">“{testimonial.quote}”</p>
-                {/* <div className="mt-auto pt-4 text-sm font-semibold">
-                  — {testimonial.name},{" "}
-                  <span className="font-normal">{testimonial.role}</span>
-                </div> */}
+                <p className="text-sm leading-relaxed text-darker-accent/90">
+                  “{testimonial.quote}”
+                </p>
 
-                 <div className="flex items-center gap-3 mt-6">
+                <div className="flex items-center gap-3 mt-6">
                   {/* Placeholder Avatar */}
                   <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#a8c686]/50 to-[#ff9472]/50" />
                   <div className="text-sm">
-                    <div className="font-semibold text-darker-accent">{testimonial.name}</div>
-                    <div className="text-xs text-darker-accent/70">{testimonial.role}</div>
+                    <div className="font-semibold text-darker-accent">
+                      {testimonial.name}
+                    </div>
+                    <div className="text-xs text-darker-accent/70">
+                      {testimonial.role}
+                    </div>
                   </div>
                 </div>
-
               </div>
             ))}
           </motion.div>

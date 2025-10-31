@@ -1,11 +1,12 @@
 import { ReactNode } from "react";
-import { NavBar, Footer } from "app/(landing-page)/_components";
+import NavBar from "app/(landing-page)/_components/NavBar";
+import Footer from "app/(landing-page)/_components/Footer";
 
 export default function WaitlistLayout({ children }: { children: ReactNode }) {
   return (
     <div>
       <NavBar />
-      <main className="pt-[var(--header-height)]">{children}</main>
+      <main className="pt-(--header-height)">{children}</main>
       <Footer />
     </div>
   );
