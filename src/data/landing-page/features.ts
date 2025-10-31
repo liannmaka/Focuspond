@@ -16,54 +16,54 @@ export const features: Feature[] = [
     iconColor: "text-[#ff9472]",
     title: "Daily Planner",
     description:
-      "Organize your day with simple checklists and auto-roll unfinished tasks.",
+      "Plan your day with calm clarity, unfinished tasks roll over automatically.",
   },
   {
     Icon: Timer,
     iconColor: "text-[#a8c686]",
     title: "Focus Timer",
     description:
-      "Break work into Pomodoro sessions with mindful breaks to maintain energy.",
+      "Stay focused with Pomodoro sessions and mindful breaks to recharge.",
   },
   {
     Icon: FileText,
     iconColor: "text-yellow-500",
     title: "Quick Notes",
     description:
-      "Jot down thoughts instantly to clear your mind, without leaving the app.",
+      "Capture thoughts instantly, clear your mind without losing flow.",
   },
   {
     Icon: RefreshCcw,
     iconColor: "text-[#8b5e3c]",
     title: "Vibe Switcher",
     description:
-      "Toggle app tone between Formal and Pidgin to match your mood.",
+      "Switch between Formal and Pidgin tones, work the way you feel.",
   },
   {
     Icon: HeartPulse,
     iconColor: "text-[#ff9472]",
     title: "Mood Check-In",
-    description:
-      "Reflect on your feelings with quick emoji or phrase check-ins.",
+    description: "Check in on your mood, express how you feel in seconds.",
   },
   {
     Icon: Award,
     iconColor: "text-[#a8c686]",
     title: "Frog Selection",
     description:
-      "Pick your most important task of the day, your ‘Frog’ and tackle it first.",
+      "Choose your day's “Frog”, the one task that moves you forward.",
   },
   {
     Icon: Coffee,
     iconColor: "text-yellow-500",
     title: "Mindful Breaks",
     description:
-      "Get gentle prompts during breaks to stretch, breathe, or hydrate.",
+      "Pause with intention, stretch, breathe, or hydrate during breaks.",
   },
   {
     Icon: BookOpen,
     iconColor: "text-[#8b5e3c]",
     title: "End-of-Day Reflection",
-    description: "Review your wins and insights to wrap up your day calmly.",
+    description:
+      "Reflect on your wins and insights, end your day feeling grounded.",
   },
 ];

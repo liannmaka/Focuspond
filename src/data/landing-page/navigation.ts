@@ -35,6 +35,6 @@ export const footerNavLinks: FooterNavLinks[] = [
   },
   {
     href: "/waitlist",
-    linkLabel: "Login or Sign Up",
+    linkLabel: "Get Started",
   },
 ];

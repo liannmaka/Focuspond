@@ -13,7 +13,7 @@ const StickyScrollBenefits = () => {
       >
         <div className="px-7 text-center">
           <h2 className="text-3xl md:text-4xl font-sora font-semibold leading-tight mb-10">
-            A calm way to stay productive
+            A calmer way to focus, work and grow.
           </h2>
           <div className="hidden lg:inline-flex space-x-4">
             {benefits.map(({ badge }) => (

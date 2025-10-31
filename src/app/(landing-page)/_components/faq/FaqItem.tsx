@@ -19,7 +19,7 @@ const FaqItem = memo(
           aria-expanded={isOpen}
           aria-controls={`faq-content-${index}`}
           onClick={onClick}
-          className="flex justify-between items-center w-full text-left px-4 pb-4 font-medium font-sora cursor-pointer text-[#5a3a24]"
+          className="flex justify-between items-center w-full text-left px-4 pb-4 font-medium font-sora cursor-pointer text-[#5a3a24] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#a8c686]/40 rounded-md"
         >
           <span className="pr-2">{question}</span>
           <ChevronDown
@@ -38,6 +38,7 @@ const FaqItem = memo(
           style={{
             maxHeight: isOpen ? contentRef.current?.scrollHeight : 0,
             opacity: isOpen ? 1 : 0,
+             transform: isOpen ? "translateY(0)" : "translateY(-4px)"
           }}
         >
           <p className="py-2 text-sm text-walnut-brown/80 font-manrope ">
@@ -50,5 +51,6 @@ const FaqItem = memo(
 );
 
 FaqItem.displayName = "FaqItem";
+
 
 export default FaqItem;

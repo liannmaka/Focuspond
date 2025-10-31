@@ -38,14 +38,14 @@ const Features = () => {
                     rounded="2xl"
                     shadow="md"
                     className={clsx(
-                      "px-6 py-8 border border-light-background/40 relative hover:shadow-lg",
+                      "px-6 py-8 border border-light-background/40 relative hover:shadow-lg hover:translate-y-[-4px] transition-transform duration-200",
                       bgColor
                     )}
                   >
                     <div className={`${iconColor}/20 absolute -top-4`}>
                       <Icon className={clsx("w-8 h-8", iconColor)} />
                     </div>
-                    <h3 className="text-lg font-semibold text-center mb-3 font-sora tracking-wide text-[#5a3a24]">
+                    <h3 className="text-lg font-semibold text-center mb-3 font-sora tracking-tight text-[#5a3a24]">
                       {title}
                     </h3>
                     <p className="text-sm font-manrope leading-relaxed text-center text-[#5a3a24]">
