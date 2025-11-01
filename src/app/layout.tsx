@@ -51,9 +51,37 @@ const sora = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "FocusPond",
+  title: "Focuspond ~ Your calm space to plan, focus, and reflect.",
   description:
-    "Focuspond is a productivity and wellness web app that helps you stay focused, take mindful breaks, and end your day with calm clarity. Built for real humans who are tired, overwhelmed, or neurodivergent.",
+    "Focuspond is a mindful productivity space that helps you plan your day, focus deeply, take mindful breaks, and end with calm reflection ~ all in one quiet flow.",
+  metadataBase: new URL("https://focuspond.vercel.app/"),
+  openGraph: {
+    title: "Focuspond ~ Your calm space to plan, focus, and reflect.",
+    description:
+      "Focuspond is a mindful productivity space that helps you plan your day, focus deeply, take mindful breaks, and end with calm reflection ~ all in one quiet flow.",
+    url: "https://focuspond.vercel.app/",
+    siteName: "Focuspond",
+    images: [
+      {
+        url: "https://focuspond.vercel.app/hero-preview.png",
+        width: 1200,
+        height: 627,
+        alt: "Focuspond social preview card",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Focuspond ~ Your calm space to plan, focus, and reflect.",
+    description:
+      "Focuspond is a mindful productivity space that helps you plan your day, focus deeply, take mindful breaks, and end with calm reflection ~ all in one quiet flow.",
+    images: ["https://focuspond.vercel.app/hero-preview.png"],
+    creator: "@filix_lillyann",
+  },
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
