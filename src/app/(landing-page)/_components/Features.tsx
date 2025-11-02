@@ -38,7 +38,7 @@ const Features = () => {
                     rounded="2xl"
                     shadow="md"
                     className={clsx(
-                      "px-6 py-8 border border-light-background/40 relative hover:shadow-lg hover:translate-y-[-4px] transition-transform duration-200",
+                      "px-6 py-8 border border-light-background/40 relative hover:shadow-lg hover:-translate-y-1 transition-transform duration-200",
                       bgColor
                     )}
                   >
