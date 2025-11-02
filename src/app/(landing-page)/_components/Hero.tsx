@@ -1,22 +1,22 @@
 "use client";
 
-import clsx from "clsx";
-import heroImage from "../../../../public/lotties/hero-illustration-3.json";
+// import clsx from "clsx";
+// import heroImage from "../../../../public/lotties/hero-illustration-3.json";
 import { BrandLogo, Button } from "@/components/ui";
-import { useLottie } from "lottie-react";
+// import { useLottie } from "lottie-react";
 import { ChevronsRight } from "lucide-react";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import Link from "next/link";
 
 const Hero = () => {
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+//   const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
-  const options = { animationData: heroImage, loop: true, autoplay: true };
-  const { View, animationItem } = useLottie(options);
+//   const options = { animationData: heroImage, loop: true, autoplay: true };
+//   const { View, animationItem } = useLottie(options);
 
-  useEffect(() => {
-    if (animationItem) setIsLoaded(true);
-  }, [animationItem]);
+//   useEffect(() => {
+//     if (animationItem) setIsLoaded(true);
+//   }, [animationItem]);
 
 
 
