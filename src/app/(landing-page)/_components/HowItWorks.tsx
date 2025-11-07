@@ -60,7 +60,7 @@ const HowItWorks = () => {
             className="relative overflow-hidden font-semibold group"
           >
             <span className="relative z-10">Get Early Access</span>
-            <span className="absolute inset-0 animate-shimmer bg-gradient-to-r from-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <span className="absolute inset-0 animate-shimmer bg-linear-to-r from-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </Button>
         </div>
       </div>
