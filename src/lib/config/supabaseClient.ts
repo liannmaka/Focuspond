@@ -2,13 +2,8 @@
 
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 
-import {
-  SUPABASE_FOCUSPOND_BASE_URL,
-  SUPABASE_FOCUSPOND_ANON_KEY,
-} from "../constants";
-
-const url = SUPABASE_FOCUSPOND_BASE_URL;
-const anonKey = SUPABASE_FOCUSPOND_ANON_KEY;
+const url = process.env.NEXT_PUBLIC_SUPABASE_FOCUSPOND_BASE_URL;
+const anonKey = process.env.NEXT_PUBLIC_SUPABASE_FOCUSPOND_ANON_KEY;
 
 // Basic runtime validation with helpful error messages
 if (!url || !anonKey) {

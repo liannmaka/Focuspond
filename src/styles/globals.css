@@ -100,10 +100,10 @@ html {
   scroll-behavior: smooth;
 }
 
-body {
+/* body {
   background-color: var(--egg-shell-white);
   color: var(--walnut-brown);
-}
+} */
 
 /* Match Chrome autofill background to Focuspond's soft white tone */
 input:-webkit-autofill,

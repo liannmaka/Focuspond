@@ -1,9 +1,12 @@
 import clsx from "clsx";
-import { Badge, Card, WaitlistForm } from "@/components/ui";
+import { Badge, Card } from "@/components/ui";
+import WaitlistForm from "../_components/ui/WaitlistForm";
 import { waitlist } from "@/data/landing-page/waitlist";
+import Footer from "../_components/Footer";
 
 export default function WaitlistPage() {
   return (
+    <>
     <div className="max-w-lg mx-auto min-h-[calc(100vh-var(--header-height))] flex flex-col justify-center pt-14 md:pt-0 md:pb-0">
       <div className="px-7">
         <div className="text-center mb-6">
@@ -44,5 +47,7 @@ export default function WaitlistPage() {
         })}
       </div>
     </div>
+    <Footer/>
+    </>
   );
 }

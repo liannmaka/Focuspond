@@ -63,7 +63,7 @@ export const metadata: Metadata = {
     siteName: "Focuspond",
     images: [
       {
-        url: "https://focuspond.vercel.app/preview-card.png",
+        url: "https://focuspond.vercel.app/images/preview-card.png",
         width: 1200,
         height: 627,
         alt: "Focuspond social preview card",
@@ -76,7 +76,7 @@ export const metadata: Metadata = {
     title: "Focuspond ~ Your calm space to plan, focus, and reflect.",
     description:
       "Focuspond is a mindful productivity space that helps you plan your day, focus deeply, take mindful breaks, and end with calm reflection ~ all in one quiet flow.",
-    images: ["https://focuspond.vercel.app/preview-card.png"],
+    images: ["https://focuspond.vercel.app/images/preview-card.png"],
     creator: "@filix_lillyann",
   },
   icons: {
