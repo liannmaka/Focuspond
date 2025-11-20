@@ -1,11 +1,6 @@
 // lib/supabaseServer.ts
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 
-import {
-  SUPABASE_FOCUSPOND_SERVICE_ROLE_KEY,
-  SUPABASE_FOCUSPOND_BASE_URL,
-} from "../constants";
-
 /**
  * Server-only factory for a Supabase client using the service role key.
  * IMPORTANT: Never expose SUPABASE_SERVICE_ROLE_KEY to the browser.
@@ -16,8 +11,8 @@ import {
  */
 
 // Environment values
-const url = SUPABASE_FOCUSPOND_BASE_URL;
-const serviceRoleKey = SUPABASE_FOCUSPOND_SERVICE_ROLE_KEY;
+const url = process.env.NEXT_PUBLIC_SUPABASE_FOCUSPOND_BASE_URL;
+const serviceRoleKey = process.env.SUPABASE_FOCUSPOND_SERVICE_ROLE_KEY;
 
 if (!url || !serviceRoleKey) {
   // Fail fast on the server to avoid accidentally running without credentials
