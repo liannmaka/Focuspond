@@ -3,4 +3,3 @@ export { default as Button } from "./Button";
 export { default as Card } from "./Card";
 export { default as SectionDivider } from "./SectionDivider";
 export { default as BrandLogo } from "./BrandLogo";
-export { default as WaitlistForm } from "./WaitlistForm";
