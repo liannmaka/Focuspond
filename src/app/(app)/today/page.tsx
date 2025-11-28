@@ -1,5 +1,5 @@
 export default function TodayPage(){
     return (
-        <div>Today page</div>
+        <div>how do you feel</div>
     );
 }

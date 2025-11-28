@@ -51,14 +51,16 @@ const sora = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Focuspond ~ Your calm space to plan, focus, and reflect.",
-  description:
-    "Focuspond is a mindful productivity space that helps you plan your day, focus deeply, take mindful breaks, and end with calm reflection ~ all in one quiet flow.",
+//   title: {
+//     default: "FocusPond",
+//     template: "%s | FocusPond",
+//   },
+  description: "Stay focused and productive with mood-based task suggestions",
+  manifest: "/manifest.webmanifest",
   metadataBase: new URL("https://focuspond.vercel.app/"),
   openGraph: {
-    title: "Focuspond ~ Your calm space to plan, focus, and reflect.",
-    description:
-      "Focuspond is a mindful productivity space that helps you plan your day, focus deeply, take mindful breaks, and end with calm reflection ~ all in one quiet flow.",
+    title: "Focuspond",
+    description: "Stay focused and productive with mood-based task suggestions",
     url: "https://focuspond.vercel.app/",
     siteName: "Focuspond",
     images: [
@@ -73,9 +75,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Focuspond ~ Your calm space to plan, focus, and reflect.",
-    description:
-      "Focuspond is a mindful productivity space that helps you plan your day, focus deeply, take mindful breaks, and end with calm reflection ~ all in one quiet flow.",
+    title: "Focuspond",
+    description: "Stay focused and productive with mood-based task suggestions",
     images: ["https://focuspond.vercel.app/images/preview-card.png"],
     creator: "@filix_lillyann",
   },
@@ -91,6 +92,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link
+          rel="manifest"
+          href="/manifest.webmanifest"
+        />
+        <meta
+          name="theme-color"
+          content="#ff9472"
+        />
+      </head>
       <body className={`${manrope.variable} ${sora.variable} antialiased`}>
         {children}
         <Toaster

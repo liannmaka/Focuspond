@@ -1,10 +1,6 @@
 // # App shell with bottom nav
 
-export default function PwaLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function PwaLayout({ children }: { children: React.ReactNode }) {
   return (
     <div>
       <main>
