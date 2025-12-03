@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "FocusPond - Mood-Aware Productivity",
     short_name: "FocusPond",
     description: "Stay focused and productive with mood-based task suggestions",
-    start_url: "/today",
+    start_url: "/",
     display: "standalone",
     background_color: "#ffffff",
     theme_color: "#ff9472",
@@ -18,6 +18,17 @@ export default function manifest(): MetadataRoute.Manifest {
       {
         src: "/icons/icon-512x512.png",
         sizes: "512x512",
+        type: "image/png",
+      },
+      {
+        src: "/icons/maskable-icon-512x512.png",
+        sizes: "640x640",
+        type: "image/png",
+        purpose: "maskable",
+      },
+      {
+        src: "/icons/icon-256x256.png",
+        sizes: "256x256",
         type: "image/png",
       },
     ],
