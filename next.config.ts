@@ -8,7 +8,7 @@ const revision = execSync("git rev-parse HEAD", { encoding: "utf8" })
   .slice(0, 7);
 
 const withSerwist = withSerwistInit({
-  swSrc: "app/sw.ts",
+  swSrc: "src/app/sw.ts",
   swDest: "public/sw.js",
   disable: process.env.NODE_ENV === "development",
   cacheOnNavigation: true,
