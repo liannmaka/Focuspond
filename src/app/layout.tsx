@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { Toaster } from "sonner";
 import "@/styles/globals.css";
@@ -50,15 +50,21 @@ const sora = localFont({
   variable: "--font-sora",
 });
 
+const APP_NAME = "FocusPond - Mood-Aware Productivity";
+const APP_DESCRIPTION =
+  "Stay focused and productive with mood-based task suggestions";
+
 export const metadata: Metadata = {
-  title: "Focuspond ~ Your calm space to plan, focus, and reflect.",
-  description:
-    "Focuspond is a mindful productivity space that helps you plan your day, focus deeply, take mindful breaks, and end with calm reflection ~ all in one quiet flow.",
+  title: {
+    default: APP_NAME,
+    template: "%s | FocusPond",
+  },
+  description: APP_DESCRIPTION,
+  manifest: "/manifest.webmanifest",
   metadataBase: new URL("https://focuspond.vercel.app/"),
   openGraph: {
-    title: "Focuspond ~ Your calm space to plan, focus, and reflect.",
-    description:
-      "Focuspond is a mindful productivity space that helps you plan your day, focus deeply, take mindful breaks, and end with calm reflection ~ all in one quiet flow.",
+    title: APP_NAME,
+    description: APP_DESCRIPTION,
     url: "https://focuspond.vercel.app/",
     siteName: "Focuspond",
     images: [
@@ -73,15 +79,18 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Focuspond ~ Your calm space to plan, focus, and reflect.",
-    description:
-      "Focuspond is a mindful productivity space that helps you plan your day, focus deeply, take mindful breaks, and end with calm reflection ~ all in one quiet flow.",
+    title: APP_NAME,
+    description: APP_DESCRIPTION,
     images: ["https://focuspond.vercel.app/images/preview-card.png"],
     creator: "@filix_lillyann",
   },
   icons: {
     icon: "/favicon.ico",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#ff9472",
 };
 
 export default function RootLayout({

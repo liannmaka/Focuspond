@@ -1,7 +1,5 @@
 // Mood check-in (First screen)
 
-export default function MoodPage(){
-    return (
-        <div>Mood page</div>
-    );
+export default function MoodPage() {
+  return <div>Mood page</div>;
 }
