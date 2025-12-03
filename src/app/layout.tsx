@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { Toaster } from "sonner";
 import "@/styles/globals.css";
@@ -50,17 +50,21 @@ const sora = localFont({
   variable: "--font-sora",
 });
 
+const APP_NAME = "FocusPond - Mood-Aware Productivity";
+const APP_DESCRIPTION =
+  "Stay focused and productive with mood-based task suggestions";
+
 export const metadata: Metadata = {
-//   title: {
-//     default: "FocusPond",
-//     template: "%s | FocusPond",
-//   },
-  description: "Stay focused and productive with mood-based task suggestions",
+  title: {
+    default: APP_NAME,
+    template: "%s | FocusPond",
+  },
+  description: APP_DESCRIPTION,
   manifest: "/manifest.webmanifest",
   metadataBase: new URL("https://focuspond.vercel.app/"),
   openGraph: {
-    title: "Focuspond",
-    description: "Stay focused and productive with mood-based task suggestions",
+    title: APP_NAME,
+    description: APP_DESCRIPTION,
     url: "https://focuspond.vercel.app/",
     siteName: "Focuspond",
     images: [
@@ -75,14 +79,18 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Focuspond",
-    description: "Stay focused and productive with mood-based task suggestions",
+    title: APP_NAME,
+    description: APP_DESCRIPTION,
     images: ["https://focuspond.vercel.app/images/preview-card.png"],
     creator: "@filix_lillyann",
   },
   icons: {
     icon: "/favicon.ico",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#ff9472",
 };
 
 export default function RootLayout({
@@ -92,16 +100,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link
-          rel="manifest"
-          href="/manifest.webmanifest"
-        />
-        <meta
-          name="theme-color"
-          content="#ff9472"
-        />
-      </head>
       <body className={`${manrope.variable} ${sora.variable} antialiased`}>
         {children}
         <Toaster
