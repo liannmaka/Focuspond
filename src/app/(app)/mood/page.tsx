@@ -137,7 +137,6 @@ export default function MoodCheckIn() {
                   >
                     {mood.label}
                   </div>
-                  {/* <span className="text-[32px] sm:hidden">{mood.emoji}</span> */}
                   <div className="font-manrope text-dark-accent/70 text-[13px]">
                     {mood.description}
                   </div>
@@ -192,7 +191,6 @@ export default function MoodCheckIn() {
             backgroundColor: selectedMood
               ? selectedMood.colors.light
               : "#F5F5F0",
-            // backgroundColor: `${selectedMood.colors.light}`,
             transition: "background 0.6s cubic-bezier(0.4, 0, 0.2, 1)",
           }}
         >
@@ -249,19 +247,13 @@ export default function MoodCheckIn() {
 
               {/* Mood label */}
               <div
-                className="-mr-10"
-                style={{
-                  position: "absolute",
-                  bottom: "60px",
-                  textAlign: "center",
-                  zIndex: 1,
-                }}
+                className="text-center"
               >
                 <div
                   className="font-sora"
                   style={{
-                    fontSize: "32px",
-                    fontWeight: "700",
+                    fontSize: "28px",
+                    fontWeight: "600",
                     color: selectedMood.colors.dark,
                     marginBottom: "8px",
                     textShadow: "0 2px 8px rgba(255,255,255,0.8)",
