@@ -91,6 +91,7 @@ const WhoitsFor = () => {
                       className={`object-contain p-6 transition-opacity duration-500 ${
                         isLoading ? "opacity-0" : "opacity-100"
                       }`}
+                      onLoadingComplete={() => setIsLoading(false)}
                       onError={() => {
                         setIsError(true);
                         setIsLoading(false);
