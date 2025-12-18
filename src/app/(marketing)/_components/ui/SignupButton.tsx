@@ -3,12 +3,12 @@ import Button from "@/components/ui/Button";
 const SignupButton = () => {
   return (
     <Button
-      href="/waitlist"
+      href="/mood"
       size="sm"
       aria-label="Sign up for FocusPond"
       className="font-medium"
     >
-      Get Early Access
+      Start for free
     </Button>
   );
 };

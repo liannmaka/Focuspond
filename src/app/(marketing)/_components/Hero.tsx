@@ -28,12 +28,12 @@ const Hero = () => {
           </p>
           <div className="mt-8 flex sm:space-x-4">
             <Button
-              href="/waitlist"
+              href="/mood"
               size="lg"
               aria-label="Sign up for FocusPond"
               className="relative overflow-hidden font-semibold group"
             >
-              <span className="relative z-10">Get Early Access</span>
+              <span className="relative z-10">Start for free</span>
               <span className="absolute inset-0 animate-shimmer bg-linear-to-r from-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </Button>
 
