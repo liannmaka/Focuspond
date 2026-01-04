@@ -13,7 +13,7 @@ import {
   LayoutGrid,
 } from "lucide-react";
 
-export default function Sidebar() {
+export default function SideBar() {
   const pathname = usePathname();
 
   const mainNavItems = [

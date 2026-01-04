@@ -24,7 +24,7 @@ export default function TopBar() {
   }, [isSearchOpen]);
 
   return (
-    <header className="sticky top-0 z-30 backdrop-blur-xl border-b border-gray-100 pt-[env(safe-area-inset-top)]">
+    <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-xl border-b border-gray-100 pt-[env(safe-area-inset-top)]">
       <div className="flex items-center justify-between h-16 px-4 md:px-6 md:justify-end">
         {/* Mobile: Profile + Sign In */}
         <div className="flex items-center gap-3 md:hidden p-2">
