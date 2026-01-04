@@ -1,13 +1,12 @@
 "use client";
 
-import { User, Bell, Search, CircleSmall } from "lucide-react";
+import { User, Bell, Search, MoreVertical } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 export default function TopBar() {
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
   const searchRef = useRef<HTMLDivElement>(null);
 
-  // Close on click outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -25,68 +24,60 @@ export default function TopBar() {
   }, [isSearchOpen]);
 
   return (
-    <header className="sticky top-0 z-30">
-      <div className="flex items-center justify-between h-[70px] px-4 md:px-6 md:justify-end">
-        {/* Mobile: Profile + login/sign up */}
-        <div className="flex items-center gap-3 cursor-pointer p-2 md:hidden">
-          <div className="w-8 h-8 bg-gray-200 rounded-full flex justify-center items-center ring-2 ring-gray-100">
+    <header className="sticky top-0 z-30 backdrop-blur-xl border-b border-gray-100 pt-[env(safe-area-inset-top)]">
+      <div className="flex items-center justify-between h-16 px-4 md:px-6 md:justify-end">
+        {/* Mobile: Profile + Sign In */}
+        <div className="flex items-center gap-3 md:hidden p-2">
+          <div className="w-9 h-9 bg-linear-to-br from-accent-button/20 to-secondary-accent/20 rounded-full flex justify-center items-center ring-2 ring-gray-100 active:scale-95 transition-transform cursor-pointer">
             <User
-              size={20}
-              color="#fff"
+              size={18}
+              className="text-dark-accent"
             />
           </div>
-          <button className="text-accent-button font-sora text-sm">
-            Sign In | Sign Up
+
+          <button className="px-3 py-1.5 bg-accent-button text-white rounded-lg font-sora text-xs font-medium active:scale-95 transition-transform cursor-pointer hover:-translate-y-0.5">
+            Sign In
           </button>
         </div>
 
         {/* Right Actions */}
         <div
-          className="flex items-center gap-2 relative"
+          className="flex items-center gap-1 relative"
           ref={searchRef}
         >
           {/* Search */}
           <button
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer text-dark-accent"
             onClick={() => setIsSearchOpen(!isSearchOpen)}
+            className="p-2 hover:bg-gray-50 active:bg-gray-100 active:scale-90 rounded-lg transition-all text-dark-accent tap-target cursor-pointer"
           >
             <Search size={20} />
           </button>
 
-          {/* Search Dropdown - Works at ALL sizes */}
+          {/* Search Dropdown */}
           {isSearchOpen && (
-            <div className="absolute top-12 right-0 w-[calc(100vw-2rem)] max-w-md bg-white rounded-xl shadow-xl border border-gray-100 p-4 animate-in slide-in-from-top-2 duration-200">
-              <div className="flex items-center gap-2 mb-3">
+            <div className="absolute top-14 right-0 w-[calc(100vw-2rem)] max-w-md bg-white rounded-xl shadow-xl border border-gray-100 p-4 animate-in slide-in-from-top-2 duration-200">
+              <div className="flex items-center gap-2 my-1">
                 <Search className="w-4 h-4 text-dark-accent" />
                 <input
                   type="text"
-                  placeholder="Search tasks"
+                  placeholder="Search task"
                   autoFocus
-                  className="flex-1 outline-none text-darker-accent placeholder:text-gray-500 font-sora text-[13px]"
+                  className="flex-1 outline-none text-dark-accent placeholder:text-gray-400 text-[13px] placeholder:font-manrope placeholder:font-light"
                 />
               </div>
             </div>
           )}
 
           {/* Notifications */}
-          <button className="p-2 hover:bg-gray-100 text-dark-accent rounded-lg transition-colors cursor-pointer">
+          <button className="p-2 hover:bg-gray-50 active:bg-gray-100 active:scale-90 text-dark-accent rounded-lg transition-all tap-target relative cursor-pointer">
             <Bell size={20} />
+            {/* <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-accent-button rounded-full" /> */}
           </button>
 
-          <button className="flex cursor-pointer items-center p-2 hover:bg-gray-100 text-dark-accent rounded-lg transition-colors">
-            <CircleSmall
-              strokeWidth={4}
-              size={8}
-            />
-            <CircleSmall
-              strokeWidth={4}
-              size={8}
-            />
-            <CircleSmall
-              strokeWidth={4}
-              size={8}
-            />
-          </button>
+          {/* More Menu */}
+          <button className="p-2 hover:bg-gray-50 active:bg-gray-100 active:scale-90 text-dark-accent rounded-lg transition-all tap-target cursor-pointer">
+            <MoreVertical size={20} />
+          </button>   
         </div>
       </div>
     </header>
