@@ -168,6 +168,7 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Match Chrome autofill background to Focuspond's soft white tone */
@@ -234,4 +235,45 @@ select:-webkit-autofill {
 
 .hide-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome/Safari/Opera */
+}
+
+/* ===================================
+   PWA-SPECIFIC STYLES
+   =================================== */
+
+/* Safe area support for iOS notch */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top);
+  }
+}
+
+/* Prevent pull-to-refresh */
+body {
+  overscroll-behavior-y: contain;
+}
+
+/* Remove tap highlight */
+button,
+[role="button"],
+a {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+/* Prevent text selection on UI elements */
+.no-select {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Minimum tap target size for touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .tap-target {
+    min-width: 44px;
+    min-height: 44px;
+  }
 }
