@@ -1,6 +1,6 @@
 import BottomNav from "../_components/BottomNav";
-import SideBar from "../_components/SideBar";
 import TopBar from "../_components/TopBar";
+import SideBar from "../_components/SideBar";
 
 export default function PwaLayout({ children }: { children: React.ReactNode }) {
   return (
