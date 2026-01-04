@@ -1,12 +1,12 @@
 import BottomNav from "../_components/BottomNav";
 import TopBar from "../_components/TopBar";
-import SideBar from "../_components/SideBar";
+// import SideBar from "../_components/SideBar";
 
 export default function PwaLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-base-background/10">
       {/* DESKTOP: Sidebar */}
-      <SideBar />
+      {/* <SideBar /> */}
 
       {/* Main Content Area */}
       <div className="md:ml-64 flex flex-col min-h-screen">
