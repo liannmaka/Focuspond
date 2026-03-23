@@ -1,105 +1,88 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  Calendar,
-  CalendarDays,
-  Inbox,
-  CheckCircle,
   Settings,
-  LogOut,
-  User,
-  LayoutGrid,
+  Layers,
+  House,
+  Sun,
+  ChartNoAxesCombined,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { memo } from "react";
+
+import DashboardPanel from "../_layouts/DashboardPanel";
+import IconButton from "./IconButton";
+
+const getCurrentSection = (pathname: string) => {
+  if (pathname.startsWith("/home")) return "home";
+  if (pathname.startsWith("/analytics")) return "analytics";
+  return "others";
+};
+
+const PRIMARY_NAV_ITEMS = [
+  { icon: House, href: "/home/all", tab: "home" },
+  { icon: ChartNoAxesCombined, href: "/analytics", tab: "analytics" },
+  { icon: Layers, href: "/tools", tab: "tools" },
+];
 
 export default function SideBar() {
   const pathname = usePathname();
 
-  const mainNavItems = [
-    { href: "/dashboard/all", label: "All Tasks", icon: LayoutGrid },
-    { href: "/dashboard/today", label: "Today", icon: Calendar },
-    { href: "/dashboard/week", label: "This Week", icon: CalendarDays },
-    { href: "/dashboard/backlog", label: "Backlog", icon: Inbox },
-    { href: "/dashboard/completed", label: "Completed", icon: CheckCircle },
-  ];
-
-  const bottomNavItems = [
-    { href: "/dashboard/settings", label: "Settings", icon: Settings },
-    { href: "/dashboard/profile", label: "Profile", icon: User },
-  ];
+  const currentSection = getCurrentSection(pathname);
 
   return (
-    <aside className="hidden md:flex fixed left-0 top-0 h-screen w-64 bg-white border-r border-gray-100 flex-col z-40">
-      {/* Logo/Brand */}
-      <div className="p-6 border-b border-gray-100">
-        <Link
-          href="/dashboard"
-          className="flex items-center gap-3 group"
-        >
-          <div className="w-10 h-10 rounded-xl bg-linear-to-br from-accent-button to-secondary-accent flex items-center justify-center shadow-sm group-hover:shadow-md transition-all">
-            <span className="text-xl">🌼</span>
-          </div>
-          <span className="text-xl font-bold bg-linear-to-r from-dark-accent to-dark-accent/80 bg-clip-text text-transparent">
-            FocusPond
-          </span>
-        </Link>
-      </div>
-
-      {/* Main Navigation */}
-      <nav className="flex-1 px-3 py-6 space-y-1 overflow-y-auto">
-        {mainNavItems.map((item) => {
-          const Icon = item.icon;
-          const isActive = pathname === item.href;
-
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`
-                flex items-center gap-3 px-4 py-3 rounded-xl
-                transition-all duration-200 group
-                ${
-                  isActive
-                    ? "bg-linear-to-r from-accent-button to-accent-button/90 text-white shadow-md shadow-accent-button/20"
-                    : "text-gray-600 hover:bg-gray-50 hover:text-dark-accent"
-                }
-              `}
-            >
-              <Icon
-                className={`w-5 h-5 ${isActive ? "" : "group-hover:scale-110 transition-transform"}`}
-                strokeWidth={isActive ? 2.5 : 2}
-              />
-              <span className={isActive ? "font-semibold" : "font-medium"}>
-                {item.label}
-              </span>
-            </Link>
-          );
-        })}
-      </nav>
-
-      {/* Bottom Actions */}
-      <div className="p-3 border-t border-gray-100 space-y-1">
-        {bottomNavItems.map((item) => {
-          const Icon = item.icon;
-
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-dark-accent transition-all font-medium group"
-            >
-              <Icon className="w-5 h-5 group-hover:scale-110 transition-transform" />
-              <span>{item.label}</span>
-            </Link>
-          );
-        })}
-
-        <button className="flex items-center gap-3 px-4 py-3 rounded-xl w-full text-left text-gray-600 hover:bg-red-50 hover:text-red-600 transition-all font-medium group">
-          <LogOut className="w-5 h-5 group-hover:scale-110 transition-transform" />
-          <span>Logout</span>
-        </button>
+    // <aside className="hidden md:flex fixed left-0 top-14 h-[calc(100vh-env(safe-area-inset-top)-3.5rem)] border-t border-dark-accent/15 flex-col z-40 bg-white/98">
+    //   <div className="flex h-full w-full">
+    //     <IconRail currentSection={currentSection} />
+    //     {currentSection === "home" && <DetailPanel />}
+    //   </div>
+    // </aside>
+    <aside className="hidden bg-white/98">
+      <div className="flex h-full w-full">
+        <IconRail currentSection={currentSection} />
+        {currentSection === "home" && <DetailPanel />}
       </div>
     </aside>
   );
 }
+
+const IconRail = memo(({ currentSection }: { currentSection: string }) => {
+  const router = useRouter();
+
+  const handleNavigation = (href: string) => {
+    router.push(href);
+  };
+
+  return (
+    <nav className="w-14 border-r border-dark-accent/15 px-2 py-2 flex flex-col justify-between bg-linear-to-b from-white to-base-background/30">
+      <div className="space-y-1">
+        {PRIMARY_NAV_ITEMS.map(({ icon, href, tab }) => (
+          <IconButton
+            key={tab}
+            icon={icon}
+            isActive={currentSection === tab}
+            onClick={() => handleNavigation(href)}
+          />
+        ))}
+      </div>
+
+      <div className="space-y-1">
+        {/* divider */}
+        <div className="h-px bg-dark-accent/20 mx-1.5 mb-2" />
+        <IconButton icon={Sun} />
+        <IconButton icon={Settings} />
+      </div>
+    </nav>
+  );
+});
+
+IconRail.displayName = "IconRail";
+
+const DetailPanel = () => {
+  return (
+    <div className="w-[235px] border-r border-dark-accent/15">
+      <DashboardPanel />
+    </div>
+  );
+};

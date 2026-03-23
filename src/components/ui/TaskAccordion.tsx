@@ -1,7 +1,4 @@
-// components/TaskAccordion.tsx
-"use client";
-
-import { Plus } from "lucide-react";
+import { Plus, ChevronRight } from "lucide-react";
 import { useState } from "react";
 
 interface Task {
@@ -10,14 +7,14 @@ interface Task {
   completed: boolean;
 }
 
-interface TaskAccordionProps {
+type TaskAccordionProps = {
   title: string;
   taskCount: number;
   totalTasks: number;
   tasks: Task[];
   defaultOpen?: boolean;
   onAddTask?: () => void;
-}
+};
 
 export function TaskAccordion({
   title,
@@ -31,34 +28,24 @@ export function TaskAccordion({
   const isEmpty = tasks.length === 0;
 
   return (
-    <div className="pl-1">
+    <div>
       {/* Header */}
-      <div className="flex items-center justify-between pt-4 pb-2 border-b border-gray-100">
+      <div className="flex items-center justify-between pt-4 pb-2 border-b border-dark-accent/10">
         <div className="flex items-center gap-3 flex-1">
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="p-2 transition-transform duration-200 hover:bg-gray-50 rounded-lg cursor-pointer"
+            className="p-2 transition-transform duration-200 hover:bg-light-background/20 rounded-lg cursor-pointer"
           >
-            <svg
-              className={`w-5 h-5 text-gray-400 transition-transform duration-200 ${
+            <ChevronRight
+              className={`w-5 h-5 text-dark-accent/80 transition-transform duration-200 ${
                 isOpen ? "rotate-90" : ""
               }`}
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
+            />
           </button>
 
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="font-medium font-sora text-sm text-dark-accent"
+            className="font-medium font-sora text-sm text-darker-accent"
           >
             {title} {tasks.length ? `(${taskCount} / ${totalTasks})` : ""}
           </button>
@@ -66,10 +53,10 @@ export function TaskAccordion({
 
         <button
           onClick={onAddTask}
-          className="p-2 hover:bg-gray-50 rounded-lg transition-colors flex items-center gap-2 text-dark-accent cursor-pointer"
+          className="p-2 hover:bg-light-background/20 rounded-lg transition-colors flex items-center gap-2 text-dark-accent cursor-pointer"
         >
-          <span className="font-sora text-xs">Add Task</span>
-          <Plus className="w-5 h-5" />
+          <span className="font-sora text-[11px]">Add Task</span>
+          <Plus className="w-4 h-4" />
         </button>
       </div>
 
@@ -81,10 +68,8 @@ export function TaskAccordion({
       >
         {isEmpty ? (
           // Empty State
-          <div className="py-6 text-center">
-            <p className="text-gray-400 text-[13px] font-manrope">
-              No task here
-            </p>
+          <div className="text-dark-accent/70 py-6 text-center">
+            <p className="text-[13px] font-manrope">No task here</p>
           </div>
         ) : (
           // Task List
@@ -92,13 +77,13 @@ export function TaskAccordion({
             {tasks.map((task) => (
               <div
                 key={task.id}
-                className="flex items-center gap-3 py-3 px-2 hover:bg-gray-50 rounded-lg transition-colors group cursor-pointer"
+                className="flex items-center gap-3 py-3 px-2 hover:bg-light-background/15 rounded-lg transition-colors group cursor-pointer"
               >
                 <button
                   className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all shrink-0 ${
                     task.completed
                       ? "bg-accent-button border-accent-button"
-                      : "border-gray-300 group-hover:border-gray-400"
+                      : "border-dark-accent/30 group-hover:border-dark-accent/50"
                   }`}
                 >
                   {task.completed && (
@@ -121,7 +106,7 @@ export function TaskAccordion({
                 <span
                   className={`flex-1 text-[13px] font-manrope ${
                     task.completed
-                      ? "text-gray-400 line-through"
+                      ? "text-dark-accent/40 line-through"
                       : "text-dark-accent"
                   }`}
                 >

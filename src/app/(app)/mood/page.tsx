@@ -44,7 +44,7 @@ export default function MoodCheckIn() {
         duration: 2000,
       });
 
-      router.push("/dashboard/all");
+      router.push("/home/all");
     } catch (error) {
       console.error("Failed to save mood:", error);
 
@@ -65,7 +65,7 @@ export default function MoodCheckIn() {
   };
 
   const handleSkip = () => {
-    router.push("/dashboard/all");
+    router.push("/home/all");
   };
 
   return (
@@ -246,9 +246,7 @@ export default function MoodCheckIn() {
               </div>
 
               {/* Mood label */}
-              <div
-                className="text-center"
-              >
+              <div className="text-center">
                 <div
                   className="font-sora"
                   style={{

@@ -2,13 +2,11 @@
 
 import { TaskAccordion } from "@/components/ui/TaskAccordion";
 
-export default function TodayPage() {
-  // const todayTasks = [];
-
+export default function WeekPage() {
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto md:mx-0">
       <TaskAccordion
-        title="Today"
+        title="This week"
         taskCount={0}
         totalTasks={0}
         tasks={[]}

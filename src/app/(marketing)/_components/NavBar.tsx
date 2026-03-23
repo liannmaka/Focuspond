@@ -96,7 +96,7 @@ const NavBar = () => {
           </div>
           <Link
             href="/"
-            className="text-walnut-brown font-sora text-2xl font-semibold tracking-tight -ml-2 pt-1"
+            className="font-sora text-2xl font-semibold tracking-tight -ml-2 pt-1"
             title="Go to the homepage"
             aria-label="Go to the homepage"
           >
