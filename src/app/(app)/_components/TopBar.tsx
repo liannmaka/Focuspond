@@ -4,7 +4,7 @@ import { BrandLogo } from "@/components/ui";
 import { User, Bell, Search, MoreVertical, Smile } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-export default function TopBar({ className }: { className: string }) {
+export default function TopBar({ className }: { className?: string }) {
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
   const searchRef = useRef<HTMLDivElement>(null);
   console.log("top", searchRef.current);

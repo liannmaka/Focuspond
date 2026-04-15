@@ -28,7 +28,7 @@ export default function BottomNav({className}: {className: string}) {
     //   </div>
     // </nav>
     // h-16 = 64px
-    <nav className={`bg-white/98 ${className}`}>
+    <nav className={"bg-white/98"}>
       <div className="flex items-center justify-between px-4">
         {tabs.map(({ icon, href, label }) => {
           const Icon = icon;

@@ -1,6 +1,6 @@
 "use client";
 
-import { TaskAccordion } from "@/components/ui/TaskAccordion";
+// import { TaskAccordion } from "@/components/ui/TaskAccordion";
 
 export default function AllPage() {
   // const todayTasks = [
@@ -10,74 +10,74 @@ export default function AllPage() {
   // ];
 
   return (
-    <div className="max-w-4xl mx-auto space-y-0 md:mx-0">
-      <TaskAccordion
-        title="Today"
-        taskCount={0}
-        totalTasks={0}
-        tasks={[]}
-        defaultOpen={true}
-        onAddTask={() => console.log("Add today task")}
-      />
+    // <div className="max-w-4xl mx-auto space-y-0 md:mx-0">
+    //   <TaskAccordion
+    //     title="Today"
+    //     taskCount={0}
+    //     totalTasks={0}
+    //     tasks={[]}
+    //     defaultOpen={true}
+    //     onAddTask={() => console.log("Add today task")}
+    //   />
 
-      <TaskAccordion
-        title="This week"
-        taskCount={0}
-        totalTasks={0}
-        tasks={[]}
-        defaultOpen={false}
-        onAddTask={() => console.log("Add week task")}
-      />
+    //   <TaskAccordion
+    //     title="This week"
+    //     taskCount={0}
+    //     totalTasks={0}
+    //     tasks={[]}
+    //     defaultOpen={false}
+    //     onAddTask={() => console.log("Add week task")}
+    //   />
 
-      <TaskAccordion
-        title="Backlog"
-        taskCount={0}
-        totalTasks={0}
-        tasks={[]}
-        defaultOpen={false}
-        onAddTask={() => console.log("Add backlog task")}
-      />
-      <TaskAccordion
-        title="Backlog"
-        taskCount={0}
-        totalTasks={0}
-        tasks={[]}
-        defaultOpen={false}
-        onAddTask={() => console.log("Add backlog task")}
-      />
-      <TaskAccordion
-        title="Backlog"
-        taskCount={0}
-        totalTasks={0}
-        tasks={[]}
-        defaultOpen={false}
-        onAddTask={() => console.log("Add backlog task")}
-      />
-      <TaskAccordion
-        title="Backlog"
-        taskCount={0}
-        totalTasks={0}
-        tasks={[]}
-        defaultOpen={false}
-        onAddTask={() => console.log("Add backlog task")}
-      />
-      <TaskAccordion
-        title="Backlog"
-        taskCount={0}
-        totalTasks={0}
-        tasks={[]}
-        defaultOpen={false}
-        onAddTask={() => console.log("Add backlog task")}
-      />
-      <TaskAccordion
-        title="Backlog"
-        taskCount={0}
-        totalTasks={0}
-        tasks={[]}
-        defaultOpen={false}
-        onAddTask={() => console.log("Add backlog task")}
-      />
-    </div>
-    // <div>Hello All</div>
+    //   <TaskAccordion
+    //     title="Backlog"
+    //     taskCount={0}
+    //     totalTasks={0}
+    //     tasks={[]}
+    //     defaultOpen={false}
+    //     onAddTask={() => console.log("Add backlog task")}
+    //   />
+    //   <TaskAccordion
+    //     title="Backlog"
+    //     taskCount={0}
+    //     totalTasks={0}
+    //     tasks={[]}
+    //     defaultOpen={false}
+    //     onAddTask={() => console.log("Add backlog task")}
+    //   />
+    //   <TaskAccordion
+    //     title="Backlog"
+    //     taskCount={0}
+    //     totalTasks={0}
+    //     tasks={[]}
+    //     defaultOpen={false}
+    //     onAddTask={() => console.log("Add backlog task")}
+    //   />
+    //   <TaskAccordion
+    //     title="Backlog"
+    //     taskCount={0}
+    //     totalTasks={0}
+    //     tasks={[]}
+    //     defaultOpen={false}
+    //     onAddTask={() => console.log("Add backlog task")}
+    //   />
+    //   <TaskAccordion
+    //     title="Backlog"
+    //     taskCount={0}
+    //     totalTasks={0}
+    //     tasks={[]}
+    //     defaultOpen={false}
+    //     onAddTask={() => console.log("Add backlog task")}
+    //   />
+    //   <TaskAccordion
+    //     title="Backlog"
+    //     taskCount={0}
+    //     totalTasks={0}
+    //     tasks={[]}
+    //     defaultOpen={false}
+    //     onAddTask={() => console.log("Add backlog task")}
+    //   />
+    // </div>
+    <div>Hello All</div>
   );
 }
