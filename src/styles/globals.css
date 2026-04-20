@@ -92,6 +92,7 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --breakpoint-lg-plus: 1250px;
 }
 
 @layer base {
@@ -129,7 +130,7 @@
 }
 
 @utility hero-section-wrapper {
-  @apply relative pt-18;
+  @apply min-h-[500px]  lg-plus:min-h-[calc(100vh-var(--header-height))] pt-(--header-height); 
 }
 
 @utility paragraph-for-gb {
