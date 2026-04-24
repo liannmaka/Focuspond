@@ -32,18 +32,10 @@ export default function SideBar() {
   const currentSection = getCurrentSection(pathname);
 
   return (
-    // <aside className="hidden md:flex fixed left-0 top-14 h-[calc(100vh-env(safe-area-inset-top)-3.5rem)] border-t border-dark-accent/15 flex-col z-40 bg-white/98">
-    //   <div className="flex h-full w-full">
-    //     <IconRail currentSection={currentSection} />
-    //     {currentSection === "home" && <DetailPanel />}
-    //   </div>
-    // </aside>
-    <aside className="hidden bg-white/98">
-      <div className="flex h-full w-full">
-        <IconRail currentSection={currentSection} />
-        {currentSection === "home" && <DetailPanel />}
-      </div>
-    </aside>
+    <>
+      <IconRail currentSection={currentSection} />
+      {currentSection === "home" && <DetailPanel />}
+    </>
   );
 }
 
@@ -55,7 +47,7 @@ const IconRail = memo(({ currentSection }: { currentSection: string }) => {
   };
 
   return (
-    <nav className="w-14 border-r border-dark-accent/15 px-2 py-2 flex flex-col justify-between bg-linear-to-b from-white to-base-background/30">
+    <nav className="h-full border-r border-dark-accent/15 px-2 py-2 flex flex-col justify-between bg-linear-to-b from-white to-base-background/30">
       <div className="space-y-1">
         {PRIMARY_NAV_ITEMS.map(({ icon, href, tab }) => (
           <IconButton
@@ -81,7 +73,7 @@ IconRail.displayName = "IconRail";
 
 const DetailPanel = () => {
   return (
-    <div className="w-[235px] border-r border-dark-accent/15">
+    <div className="h-full border-r border-dark-accent/15">
       <DashboardPanel />
     </div>
   );
