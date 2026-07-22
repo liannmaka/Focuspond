@@ -88,7 +88,7 @@ const NavBar = () => {
           : "-translate-y-[calc(100%+1rem)] shadow-none"
       )}
     >
-      <nav className="max-w-360 mx-auto flex justify-between items-center h-(--header-height)">
+      <nav className="max-w-360 mx-auto flex justify-between items-center py-2">
         {/* Logo and App name */}
         <div className="flex items-center">
           <div className="-ml-4">
@@ -96,7 +96,7 @@ const NavBar = () => {
           </div>
           <Link
             href="/"
-            className="text-walnut-brown font-sora text-2xl font-semibold tracking-tight -ml-2 pt-1"
+            className="font-sora text-2xl font-semibold tracking-tight -ml-2 pt-1"
             title="Go to the homepage"
             aria-label="Go to the homepage"
           >

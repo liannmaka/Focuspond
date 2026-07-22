@@ -92,6 +92,7 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --breakpoint-lg-plus: 1250px;
 }
 
 @layer base {
@@ -108,10 +109,20 @@
   .card {
     @apply text-[#5a3a24] min-h-[150px] min-w-[260px] sm:min-w-[280px] md:min-w-[320px] max-w-[320px] flex flex-col rounded-2xl shadow-md bg-white/80 backdrop-blur-sm ring-1 ring-white/10 p-6 transition hover:shadow-lg;
   }
+
+  .mood-button {
+    @apply items-center gap-2 py-1.5 border border-dark-accent/30 border-dashed cursor-pointer;
+  }
+
+  .topbar-icon-button {
+    @apply rounded-lg p-2 text-dark-accent cursor-pointer transition-all active:bg-light-background/40 active:scale-90 hover:border-dark-accent/25 hover:bg-light-background/30 md:w-9.5 md:h-9.5 md:border-[1.5px] md:border-dark-accent/15 md:rounded-full md:flex md:justify-center md:items-center md:p-0;
+  }
 }
 
 @utility content-center {
-  @apply container mx-auto px-7 lg:px-11;
+  /* @apply container mx-auto px-7 lg:px-11; */
+
+  @apply mx-auto w-full max-w-7xl px-7 lg:px-11;
 }
 
 @utility flex-center {
@@ -119,7 +130,7 @@
 }
 
 @utility hero-section-wrapper {
-  @apply relative pt-18;
+  @apply min-h-[500px]  lg-plus:min-h-[calc(100vh-var(--header-height))] pt-(--header-height); 
 }
 
 @utility paragraph-for-gb {
@@ -275,5 +286,7 @@ a {
   .tap-target {
     min-width: 44px;
     min-height: 44px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
 }

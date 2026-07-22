@@ -1,10 +1,4 @@
-export type MoodLevel =
-  | "very-high"
-  | "high"
-  | "medium"
-  | "low"
-  | "very-low"
-  | "not-set";
+export type MoodLevel = "very-high" | "high" | "medium" | "low";
 
 export type EnergyLevel = "high" | "medium" | "low";
 

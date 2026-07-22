@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 
 // get user id when you implement authentication, the below is for the page router
 // import { useSession } from "@supabase/auth-helpers-react";
-import { syncMoodsToSupabase } from "@/lib/pwa/sync/moodSync";
+// import { syncMoodsToSupabase } from "@/lib/pwa/sync/moodSync";
 
 function createUserId() {
   if (typeof window === "undefined") return null;
@@ -33,45 +33,45 @@ export function MoodSyncListener() {
 
     if (!userId) return;
 
-    const debouncedSync = () => {
-      if (syncTimeoutRef.current) clearTimeout(syncTimeoutRef.current);
-      syncTimeoutRef.current = setTimeout(() => {
-        if (navigator.onLine) {
-          syncMoodsToSupabase(userId);
-        }
-      }, 2000);
-       console.log("syncing...");
-    };
+    // const debouncedSync = () => {
+    //   if (syncTimeoutRef.current) clearTimeout(syncTimeoutRef.current);
+    //   syncTimeoutRef.current = setTimeout(() => {
+    //     if (navigator.onLine) {
+    //       syncMoodsToSupabase(userId);
+    //     }
+    //   }, 2000);
+    //   console.log("syncing...");
+    // };
 
-    debouncedSync();
+    // debouncedSync();
 
-    const handleOnline = () => {
-      console.log("Network reconnected, syncing...");
-      debouncedSync();
-    };
-    window.addEventListener("online", handleOnline);
+    // const handleOnline = () => {
+    //   console.log("Network reconnected, syncing...");
+    //   debouncedSync();
+    // };
+    // window.addEventListener("online", handleOnline);
 
-    periodicIntervalRef.current = setInterval(
-      () => {
-        if (navigator.onLine) {
-          console.log("Periodic sync triggered");
-          syncMoodsToSupabase(userId);
-        }
-      },
-      5 * 60 * 1000
-    );    
+    // periodicIntervalRef.current = setInterval(
+    //   () => {
+    //     if (navigator.onLine) {
+    //       console.log("Periodic sync triggered");
+    //       syncMoodsToSupabase(userId);
+    //     }
+    //   },
+    //   5 * 60 * 1000
+    // );
 
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === "visible" && navigator.onLine) {
-        console.log("👁️ Tab visible, syncing...");
-        debouncedSync();
-      }
-    };
-    document.addEventListener("visibilitychange", handleVisibilityChange);
+    // const handleVisibilityChange = () => {
+    //   if (document.visibilityState === "visible" && navigator.onLine) {
+    //     console.log("👁️ Tab visible, syncing...");
+    //     debouncedSync();
+    //   }
+    // };
+    // document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
-      window.removeEventListener("online", handleOnline);
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      // window.removeEventListener("online", handleOnline);
+      // document.removeEventListener("visibilitychange", handleVisibilityChange);
       if (syncTimeoutRef.current) clearTimeout(syncTimeoutRef.current);
       if (periodicIntervalRef.current)
         clearInterval(periodicIntervalRef.current);

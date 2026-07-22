@@ -3,17 +3,14 @@
 import { TaskAccordion } from "@/components/ui/TaskAccordion";
 
 export default function AllPage() {
-  // const todayTasks = [];
-
-  //  { id: "1", title: "Check in with mood", completed: false },
+  // const todayTasks = [
+  //   { id: "1", title: "Check in with mood", completed: false },
   //   { id: "2", title: "Use mood suggestion to work or not", completed: false },
   //   { id: "3", title: "Explore pomodoro timer", completed: true },
-
-  // const weekTasks = [];
-  // const backlogTasks = [];
+  // ];
 
   return (
-    <div className="max-w-4xl mx-auto space-y-0">
+    <div className="max-w-4xl mx-auto space-y-0 md:mx-0">
       <TaskAccordion
         title="Today"
         taskCount={0}

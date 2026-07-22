@@ -8,7 +8,7 @@ const CtaBanner = () => {
         <h2 className="text-2xl sm:text-3xl lg:text-4xl font-sora font-semibold">
           Start your day with clarity
         </h2>
-        <p className="mt-4 font-manrope text-base sm:text-lg">
+        <p className="mt-4 font-manrope text-base sm:text-lg container">
           No account needed. Works offline. Zero pressure.
         </p>
         <Button
