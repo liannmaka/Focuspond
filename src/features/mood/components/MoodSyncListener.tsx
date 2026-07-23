@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 
 // get user id when you implement authentication, the below is for the page router
 // import { useSession } from "@supabase/auth-helpers-react";
-// import { syncMoodsToSupabase } from "@/lib/pwa/sync/moodSync";
+// import { syncMoodsToSupabase } from "@/features/mood/lib/moodSync";
 
 function createUserId() {
   if (typeof window === "undefined") return null;

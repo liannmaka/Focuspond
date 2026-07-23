@@ -1,7 +1,7 @@
 // src/lib/db/indexedDB.ts
 
 import Dexie, { Table } from "dexie";
-import type { MoodLevel, EnergyLevel } from "@/constants/moods";
+import type { MoodLevel, EnergyLevel } from "@/features/mood/constants/moods";
 
 // Why liveQuery() exists
 

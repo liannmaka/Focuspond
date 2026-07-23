@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react";
 import { BrandLogo } from "@/components/ui";
 import { cn, getTimeBasedQuestion } from "@/lib/utils";
-import { moodDB } from "@/lib/config/indexedDB";
-import { MOODS, Mood } from "@/constants/moods";
+import { moodDB } from "@/features/mood/lib/indexedDB";
+import { MOODS, Mood } from "@/features/mood/constants/moods";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 

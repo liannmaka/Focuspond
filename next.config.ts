@@ -2,10 +2,21 @@ import type { NextConfig } from "next";
 import withSerwistInit from "@serwist/next";
 import { execSync } from "child_process";
 
-// git commit hash as cache version
-const revision = execSync("git rev-parse HEAD", { encoding: "utf8" })
-  .trim()
-  .slice(0, 7);
+// Cache-busting revision for the service worker precache.
+// Prefer the platform-provided commit SHA (Vercel), fall back to a local git
+// lookup, and finally to "dev" — so builds never fail in environments without
+// a .git directory (Docker images, some CI runners, copied artifacts).
+const revision = (() => {
+  const fromCI = process.env.VERCEL_GIT_COMMIT_SHA;
+  if (fromCI) return fromCI.slice(0, 7);
+  try {
+    return execSync("git rev-parse HEAD", { encoding: "utf8" })
+      .trim()
+      .slice(0, 7);
+  } catch {
+    return "dev";
+  }
+})();
 
 const withSerwist = withSerwistInit({
   swSrc: "src/app/sw.ts",

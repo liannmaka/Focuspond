@@ -1,6 +1,6 @@
 "use client";
 
-import { TaskAccordion } from "@/components/ui/TaskAccordion";
+import { TaskAccordion } from "@/features/tasks/components/TaskAccordion";
 
 export default function AllPage() {
   // const todayTasks = [

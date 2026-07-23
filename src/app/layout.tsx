@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { Toaster } from "sonner";
-import { MoodSyncListener } from "@/components/providers/MoodSyncListener";
+import { MoodSyncListener } from "@/features/mood/components/MoodSyncListener";
 import "@/styles/globals.css";
 
 const manrope = localFont({
@@ -101,7 +101,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${manrope.variable} ${sora.variable} antialiased`}>
+      <body
+        className={`${manrope.variable} ${sora.variable} antialiased`}
+        suppressHydrationWarning
+      >
         {children}
         <MoodSyncListener />
         <Toaster

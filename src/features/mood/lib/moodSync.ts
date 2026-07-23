@@ -1,4 +1,4 @@
-import { moodDB } from "@/lib/config/indexedDB";
+import { moodDB } from "@/features/mood/lib/indexedDB";
 import { supabase } from "@/lib/config/supabaseClient";
 
 export async function syncMoodsToSupabase(userId: string) {

@@ -64,20 +64,21 @@ Follow these steps to run Focuspond locally:
 
 ```bash
 git clone https://github.com/YOUR_USERNAME/Focuspond.git
-```
-
 cd focuspond
+```
 
 ### 2. Install Dependencies
 
+> This project uses **pnpm** (see `packageManager` in `package.json`).
+
 ```bash
-yarn install
+pnpm install
 ```
 
 ### 3. Run the Development Server
 
 ```bash
-yarn dev
+pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser to see the application in action.
