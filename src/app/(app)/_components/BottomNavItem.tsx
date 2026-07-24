@@ -18,7 +18,6 @@ export default function BottomNavItem({
       href={href}
       className="flex flex-col items-center justify-center gap-1 h-full relative active:scale-[0.97] transition-transform duration-150 ease-out tap-target"
     >
-      {/* Active indicator for current location */}
       <div
         className={`absolute top-0 left-1/2 -translate-x-1/2 w-12 h-1 rounded-full bg-linear-to-r from-accent-button to-accent-button/80 shadow-sm transition-opacity duration-200
         ${isActiveRoute ? "opacity-100" : "opacity-0"}
