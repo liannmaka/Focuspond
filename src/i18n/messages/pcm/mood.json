@@ -1,0 +1,42 @@
+{
+  "welcome": "Welcome to Focuspond!",
+  "intro": "Make we start with small mood check-in",
+  "question": "How you dey feel this {period}?",
+  "periods": {
+    "morning": "morning",
+    "afternoon": "afternoon",
+    "evening": "evening",
+    "night": "night"
+  },
+  "selectPrompt": "Pick your mood",
+  "continue": "Continue",
+  "saving": "E dey save...",
+  "skip": "Skip am for now →",
+  "toast": {
+    "selectError": "Abeg pick one mood",
+    "saved": "Mood don save!",
+    "savedDescription": "You dey feel {mood} today",
+    "storageFull": "Storage don full",
+    "storageFullDescription": "Abeg clear small browser data make you try again",
+    "saveError": "We no fit save the mood",
+    "saveErrorDescription": "No worry, you fit still continue"
+  },
+  "moods": {
+    "energized": {
+      "label": "Charged Up",
+      "description": "Nothing fit stop me"
+    },
+    "good": {
+      "label": "Good",
+      "description": "I dey flow well"
+    },
+    "okay": {
+      "label": "Okay",
+      "description": "Normal energy"
+    },
+    "tired": {
+      "label": "Tired",
+      "description": "Energy don low"
+    }
+  }
+}

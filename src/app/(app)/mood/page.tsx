@@ -2,23 +2,25 @@
 
 import { useState, useEffect } from "react";
 import { BrandLogo } from "@/components/ui";
-import { cn, getTimeBasedQuestion } from "@/lib/utils";
+import { cn, getTimeBasedGreeting } from "@/lib/utils";
 import { moodDB } from "@/features/mood/lib/indexedDB";
 import { MOODS, Mood } from "@/features/mood/constants/moods";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export default function MoodCheckIn() {
+  const t = useTranslations("mood");
   const [selectedMood, setSelectedMood] = useState<Mood | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [greeting, setGreeting] = useState("How are you feeling today?");
+  const [greeting, setGreeting] = useState("");
 
   const router = useRouter();
 
   useEffect(() => {
-    const question = getTimeBasedQuestion();
-    setGreeting(question);
-  }, []);
+    const period = getTimeBasedGreeting();
+    setGreeting(t("question", { period: t(`periods.${period}`) }));
+  }, [t]);
 
   const handleMoodSelect = (mood: Mood) => {
     setSelectedMood(mood);
@@ -26,7 +28,7 @@ export default function MoodCheckIn() {
 
   const handleMoodSubmit = async () => {
     if (!selectedMood) {
-      toast.error("Please select a mood");
+      toast.error(t("toast.selectError"));
       return;
     }
 
@@ -39,8 +41,14 @@ export default function MoodCheckIn() {
         energyLevel: selectedMood.energyLevel,
       });
 
-      toast.success("Mood saved!", {
-        description: `You're feeling ${selectedMood?.label.toLowerCase()} today`,
+      const moodLabel = selectedMood.id
+        ? t(`moods.${selectedMood.id}.label`)
+        : selectedMood.label;
+
+      toast.success(t("toast.saved"), {
+        description: t("toast.savedDescription", {
+          mood: moodLabel.toLowerCase(),
+        }),
         duration: 2000,
       });
 
@@ -50,12 +58,12 @@ export default function MoodCheckIn() {
 
       if (error instanceof Error) {
         if (error.name === "QuotaExceededError") {
-          toast.error("Storage full", {
-            description: "Please clear some browser data and try again",
+          toast.error(t("toast.storageFull"), {
+            description: t("toast.storageFullDescription"),
           });
         } else {
-          toast.error("Couldn't save mood", {
-            description: "Don't worry, you can continue anyway",
+          toast.error(t("toast.saveError"), {
+            description: t("toast.saveErrorDescription"),
           });
         }
       }
@@ -87,11 +95,11 @@ export default function MoodCheckIn() {
 
           <div className="space-y-6 mt-9">
             <h1 className="font-sora text-3xl sm:text-4xl font-semibold text-center text-dark-accent/95">
-              Welcome to Focuspond!
+              {t("welcome")}
             </h1>
             <div className="text-center space-y-5">
               <p className="font-manrope text-sm sm:text-base text-dark-accent/70">
-                Let&apos;s start with a quick mood check-in
+                {t("intro")}
               </p>
 
               <p className="font-sora text-xl sm:text-2xl font-medium">
@@ -135,10 +143,12 @@ export default function MoodCheckIn() {
                       color: isSelected ? mood.colors.dark : "#8B5E3C",
                     }}
                   >
-                    {mood.label}
+                    {mood.id ? t(`moods.${mood.id}.label`) : mood.label}
                   </div>
                   <div className="font-manrope text-dark-accent/70 text-[13px]">
-                    {mood.description}
+                    {mood.id
+                      ? t(`moods.${mood.id}.description`)
+                      : mood.description}
                   </div>
                 </div>
                 {isSelected && (
@@ -170,7 +180,7 @@ export default function MoodCheckIn() {
             }}
           >
             <span className="relative z-10">
-              {isLoading ? "Saving..." : "Continue"}
+              {isLoading ? t("saving") : t("continue")}
             </span>
             <span className="absolute inset-0 animate-shimmer bg-linear-to-r from-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </button>
@@ -178,7 +188,7 @@ export default function MoodCheckIn() {
             onClick={handleSkip}
             className="bg-transparent text-dark-accent border-none font-medium text-[13px] cursor-pointer font-sora opacity-60 transition-opacity duration-300 ease-in-out hover:opacity-100"
           >
-            <span>Skip for now →</span>
+            <span>{t("skip")}</span>
           </button>
         </div>
       </div>
@@ -257,7 +267,9 @@ export default function MoodCheckIn() {
                     textShadow: "0 2px 8px rgba(255,255,255,0.8)",
                   }}
                 >
-                  {selectedMood.label}
+                  {selectedMood.id
+                    ? t(`moods.${selectedMood.id}.label`)
+                    : selectedMood.label}
                 </div>
                 <div
                   className="font-manrope"
@@ -267,14 +279,16 @@ export default function MoodCheckIn() {
                     opacity: 0.8,
                   }}
                 >
-                  {selectedMood.description}
+                  {selectedMood.id
+                    ? t(`moods.${selectedMood.id}.description`)
+                    : selectedMood.description}
                 </div>
               </div>
             </div>
           ) : (
             <div className="text-center text-dark-accent/40">
               <div className="text-6xl mb-4">🐸</div>
-              <p className="text-lg font-medium">Select your mood</p>
+              <p className="text-lg font-medium">{t("selectPrompt")}</p>
             </div>
           )}
         </div>

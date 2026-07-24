@@ -7,8 +7,11 @@ import { BrandLogo } from "@/components/ui";
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { navLinks } from "@/data/landing-page/navigation";
+import { useTranslations } from "next-intl";
+import LanguageSwitcher from "@/features/i18n/components/LanguageSwitcher";
 
 const NavBar = () => {
+  const t = useTranslations("marketing.nav");
   const [isVisible, setIsVisible] = useState<boolean>(true);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [activeSection, setActiveSection] = useState<string>("");
@@ -107,7 +110,7 @@ const NavBar = () => {
 
         {/* Navigation Links */}
         <div className="hidden space-x-4 lg:flex">
-          {navLinks.map(({ href, linkLabel, Icon }) => (
+          {navLinks.map(({ href, Icon }) => (
             <Link
               key={href}
               href={`/#${href}`}
@@ -120,20 +123,21 @@ const NavBar = () => {
                 "link-animation py-4 cursor-pointer",
                 activeSection === href ? activeLink : ""
               )}
-              aria-label={linkLabel}
+              aria-label={t(href)}
             >
               <div className="flex items-center">
                 <span className={clsx(iconStyles, "mr-1")}>
                   <Icon size={16} />
                 </span>
-                <span className={clsx(linkLabelStyles)}>{linkLabel}</span>
+                <span className={clsx(linkLabelStyles)}>{t(href)}</span>
               </div>
             </Link>
           ))}
         </div>
 
-        {/* Button */}
-        <div className="hidden lg:flex">
+        {/* Vibe Switcher + Button */}
+        <div className="hidden lg:flex items-center gap-3">
+          <LanguageSwitcher />
           <SignupButton />
         </div>
 
@@ -169,7 +173,7 @@ const NavBar = () => {
           )}
         >
           <div className="flex flex-col pb-7 pt-5 space-y-4.5">
-            {navLinks.map(({ href, linkLabel, Icon }) => (
+            {navLinks.map(({ href, Icon }) => (
               <Link
                 key={href}
                 href={`/#${href}`}
@@ -182,20 +186,21 @@ const NavBar = () => {
                   "link-animation py-2 rounded-md border border-dark-accent cursor-pointer",
                   activeSection === href ? activeLink : ""
                 )}
-                aria-label={linkLabel}
+                aria-label={t(href)}
               >
                 <div className="flex items-center">
                   <span className={clsx(iconStyles, "mr-2")}>
                     <Icon size={16} />
                   </span>
-                  <span className={clsx(linkLabelStyles)}>{linkLabel}</span>
+                  <span className={clsx(linkLabelStyles)}>{t(href)}</span>
                 </div>
               </Link>
             ))}
           </div>
 
-          {/* Button */}
-          <div className="pb-5">
+          {/* Vibe Switcher + Button */}
+          <div className="flex items-center justify-between gap-3 pb-5">
+            <LanguageSwitcher />
             <SignupButton />
           </div>
         </div>

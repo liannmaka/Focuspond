@@ -5,7 +5,14 @@ export const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs));
 };
 
-export const getTimeBasedGreeting = (): string => {
+export type DayPeriod = "morning" | "afternoon" | "evening" | "night";
+
+/**
+ * Returns the current day period as a translation-friendly key. The
+ * user-facing question is built in the component via the `mood` message
+ * catalog (`t("question", { period })`) so it localizes with the chosen vibe.
+ */
+export const getTimeBasedGreeting = (): DayPeriod => {
   const hour = new Date().getHours();
 
   if (hour >= 5 && hour < 12) {
@@ -17,9 +24,4 @@ export const getTimeBasedGreeting = (): string => {
   } else {
     return "night"; // 10pm - 5am
   }
-};
-
-export const getTimeBasedQuestion = (): string => {
-  const greeting = getTimeBasedGreeting();
-  return `How are you feeling this ${greeting}?`;
 };

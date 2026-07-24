@@ -1,0 +1,126 @@
+{
+  "nav": {
+    "benefits": "Kí ló dé FocusPond?",
+    "features": "Àwọn Ẹ̀yà",
+    "how-it-works": "Bí Ó Ṣe Ń Ṣiṣẹ́",
+    "faqs": "Àwọn Ìbéèrè"
+  },
+  "footer": {
+    "pricing": "Iye owó",
+    "contact": "Kàn sí Wa",
+    "getStarted": "Bẹ̀rẹ̀",
+    "copyright": "© {year} Focuspond - Gbogbo ẹ̀tọ́ ni a dáàbò bò."
+  },
+  "hero": {
+    "title": "Ṣàṣeyọrí àwọn àfojúsùn rẹ, kì í ṣe agbára rẹ.",
+    "subtitle": "Dojúkọ ọ̀rọ̀, sinmi pẹ̀lú ìmọ̀, kí o sì fi ìmọ́lẹ̀ orí parí ọjọ́ rẹ."
+  },
+  "benefits": {
+    "sectionTitle": "Ọ̀nà tí ó rọ̀ láti dojúkọ, ṣiṣẹ́ àti dàgbà.",
+    "items": {
+      "focus-first": {
+        "badge": "Ètò Àkọ́kọ́-Dojúkọ"
+      },
+      "pomodoro-rhythm": {
+        "badge": "Ìlù Pomodoro Tó Rọ̀"
+      },
+      "mood-aware": {
+        "badge": "Iṣẹ́ Tó Mọ Ìmọ̀lára"
+      },
+      "progress-tracking": {
+        "badge": "Ìtọpasẹ̀ Ìtẹ̀síwájú Tó Rọ̀"
+      }
+    }
+  },
+  "features": {
+    "badge": "Àwọn Ẹ̀yà",
+    "title": "Àwọn irinṣẹ́ tó rọ̀ láti ṣe àtìlẹ́yìn fún ìdojúkọ rẹ",
+    "subtitle": "A ṣe ẹ̀yà kọ̀ọ̀kan láti ràn ọ́ lọ́wọ́ láti gbé ètò kalẹ̀, ṣiṣẹ́, kí o sì ronú pẹ̀lú ète, láìsí ariwo tàbí àárẹ̀.",
+    "items": {
+      "daily-planner": {
+        "title": "Aṣètò Ojoojúmọ́"
+      },
+      "focus-timer": {
+        "title": "Aago Ìdojúkọ"
+      },
+      "quick-notes": {
+        "title": "Àkọsílẹ̀ Kíákíá"
+      },
+      "vibe-switcher": {
+        "title": "Yí Ìmọ̀lára Padà"
+      },
+      "mood-checkin": {
+        "title": "Àyẹ̀wò Ìmọ̀lára"
+      },
+      "frog-selection": {
+        "title": "Ìyàn Ọ̀pọ̀lọ́"
+      },
+      "mindful-breaks": {
+        "title": "Ìsinmi Onímọ̀"
+      },
+      "reflection": {
+        "title": "Ìronú Ìparí Ọjọ́"
+      }
+    }
+  },
+  "howItWorks": {
+    "badge": "Bí Ó Ṣe Ń Ṣiṣẹ́",
+    "title": "Rìn gba ọjọ́ rẹ kọjá pẹ̀lú ìrọ̀rùn.",
+    "subtitle": "Wá ìlù rẹ, gbé ètò kalẹ̀ pẹ̀lú ìmọ́lẹ̀, dojúkọ pẹ̀lú ìdẹ̀ra, kí o sì fi ète parí ọjọ́ rẹ.",
+    "items": {
+      "check-mood": {
+        "title": "1.  Yẹ Ìmọ̀lára Rẹ Wò"
+      },
+      "plan-day": {
+        "title": "2.  Gbé Ètò Ọjọ́ Rẹ Kalẹ̀"
+      },
+      "start-sprint": {
+        "title": "3.  Bẹ̀rẹ̀ Eré Kíákíá"
+      },
+      "reflect": {
+        "title": "4.  Ronú kí O sì Dàgbà"
+      }
+    }
+  },
+  "whoItsFor": {
+    "badge": "Ẹni tí ó jẹ́ fún",
+    "title": "Ìṣàn rẹ, ọ̀nà rẹ",
+    "subtitle": "Ọ̀nà ọ̀tọ̀ọ̀tọ̀, àfojúsùn kan náà: ìtẹ̀síwájú tó rọ̀ tó sì ní ìtumọ̀ láìsí àárẹ̀.",
+    "loading": "Ń gbé ìṣàn rẹ wọlé…",
+    "imageUnavailable": "Àwòrán kò sí",
+    "items": {
+      "student": {
+        "label": "Àwọn Akẹ́kọ̀ọ́",
+        "headline": "Kọ́ pẹ̀lú ìdojúkọ"
+      },
+      "professional": {
+        "label": "Òṣìṣẹ́ Amọ̀ọ́kọ́",
+        "headline": "Ṣiṣẹ́ pẹ̀lú ìmọ́lẹ̀"
+      },
+      "creator": {
+        "label": "Ẹlẹ́dàá",
+        "headline": "Ṣẹ̀dá pẹ̀lú ìṣàn"
+      },
+      "well": {
+        "label": "Aṣàwárí Ìlera",
+        "headline": "Gbé ìgbé pẹ̀lú ìwọ̀ntúnwọ̀nsì"
+      }
+    }
+  },
+  "testimonials": {
+    "badge": "Àwọn Ohùn Láti Adágún",
+    "title": "Ohun tí àwọn olùmúlò àkọ́kọ́ wa ń sọ",
+    "subtitle": "FocusPond ń fún àwọn olùmúlò ní àyè láti ronú, gbé ètò kalẹ̀, kí wọ́n sì dúró lójú ọ̀nà."
+  },
+  "faqs": {
+    "badge": "Àwọn Ìbéèrè",
+    "title": "Àwọn ìbéèrè tí a sábà máa ń béèrè",
+    "subtitle": "Ohun gbogbo tí o nílò láti mọ̀ láti bẹ̀rẹ̀ pẹ̀lú FocusPond.",
+    "stillHaveQuestions": "Ṣé o ṣì ní ìbéèrè?",
+    "contactUs": "Kàn sí Wa"
+  },
+  "cta": {
+    "title": "Bẹ̀rẹ̀ ọjọ́ rẹ pẹ̀lú ìmọ́lẹ̀",
+    "subtitle": "Kò sí àkàǹtì tó nílò. Ó ń ṣiṣẹ́ láìsí ayélujára. Kò sí ìdààmú."
+  }
+}

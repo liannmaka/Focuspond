@@ -5,9 +5,11 @@ import Link from "next/link";
 import { Badge } from "@/components/ui";
 import { faqs } from "@/data/landing-page/faq";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import Footer from "../Footer";
 
 const Faqs = () => {
+  const t = useTranslations("marketing.faqs");
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const handleToggle = (index: number) => {
@@ -26,7 +28,7 @@ const Faqs = () => {
       >
         <div className="content-center">
           <Badge
-            title="FAQs"
+            title={t("badge")}
             className="text-center"
           />
 
@@ -35,11 +37,9 @@ const Faqs = () => {
               className="text-2xl sm:text-3xl lg:text-4xl
             font-sora font-semibold leading-tight text-darker-accent"
             >
-              Frequently asked questions
+              {t("title")}
             </h2>
-            <p className="paragraph-for-gb max-w-md mx-auto">
-              Everything you need to know to get started with FocusPond.
-            </p>
+            <p className="paragraph-for-gb max-w-md mx-auto">{t("subtitle")}</p>
           </div>
 
           <div className="grid gap-9 sm:grid-cols-1 lg:grid-cols-2">
@@ -51,8 +51,8 @@ const Faqs = () => {
                   <FaqItem
                     key={actualIndex}
                     index={actualIndex}
-                    question={faq.question}
-                    answer={faq.answer}
+                    question={t(`items.${faq.key}.question`)}
+                    answer={t(`items.${faq.key}.answer`)}
                     isOpen={activeIndex === actualIndex}
                     onClick={() => handleToggle(actualIndex)}
                   />
@@ -68,8 +68,8 @@ const Faqs = () => {
                   <FaqItem
                     key={actualIndex}
                     index={actualIndex}
-                    question={faq.question}
-                    answer={faq.answer}
+                    question={t(`items.${faq.key}.question`)}
+                    answer={t(`items.${faq.key}.answer`)}
                     isOpen={activeIndex === actualIndex}
                     onClick={() => handleToggle(actualIndex)}
                   />
@@ -79,16 +79,16 @@ const Faqs = () => {
           </div>
 
           <div className="text-center mt-12 font-sora text-[#5a3a24]">
-            <p className="font-medium text-sm">Still have questions?</p>
+            <p className="font-medium text-sm">{t("stillHaveQuestions")}</p>
             <Link
               href="/contact"
               className="relative text-xs underline underline-offset-4 decoration-[#5a3a24]/50
-                after:absolute after:left-0 after:-bottom-0.5 
-                after:w-0 after:h-[1.5px] after:bg-[#5a3a24] 
-                after:transition-all after:duration-300 
+                after:absolute after:left-0 after:-bottom-0.5
+                after:w-0 after:h-[1.5px] after:bg-[#5a3a24]
+                after:transition-all after:duration-300
                 hover:after:w-full"
             >
-              Contact Us
+              {t("contactUs")}
             </Link>
           </div>
         </div>

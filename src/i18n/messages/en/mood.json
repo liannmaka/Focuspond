@@ -1,0 +1,42 @@
+{
+  "welcome": "Welcome to Focuspond!",
+  "intro": "Let's start with a quick mood check-in",
+  "question": "How are you feeling this {period}?",
+  "periods": {
+    "morning": "morning",
+    "afternoon": "afternoon",
+    "evening": "evening",
+    "night": "night"
+  },
+  "selectPrompt": "Select your mood",
+  "continue": "Continue",
+  "saving": "Saving...",
+  "skip": "Skip for now →",
+  "toast": {
+    "selectError": "Please select a mood",
+    "saved": "Mood saved!",
+    "savedDescription": "You're feeling {mood} today",
+    "storageFull": "Storage full",
+    "storageFullDescription": "Please clear some browser data and try again",
+    "saveError": "Couldn't save mood",
+    "saveErrorDescription": "Don't worry, you can continue anyway"
+  },
+  "moods": {
+    "energized": {
+      "label": "Energized",
+      "description": "Feeling unstoppable"
+    },
+    "good": {
+      "label": "Good",
+      "description": "In a good flow"
+    },
+    "okay": {
+      "label": "Okay",
+      "description": "Normal energy"
+    },
+    "tired": {
+      "label": "Tired",
+      "description": "Low on energy"
+    }
+  }
+}

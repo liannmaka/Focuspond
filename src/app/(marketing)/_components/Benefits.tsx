@@ -2,8 +2,11 @@ import Image from "next/image";
 import { SectionDivider } from "@/components/ui";
 import { Badge } from "@/components/ui";
 import { benefits } from "@/data/landing-page/benefits";
+import { useTranslations } from "next-intl";
 
 const StickyScrollBenefits = () => {
+  const t = useTranslations("marketing.benefits");
+
   return (
     <>
       <SectionDivider />
@@ -13,19 +16,19 @@ const StickyScrollBenefits = () => {
       >
         <div className="px-7 text-center">
           <h2 className="text-3xl md:text-4xl font-sora font-semibold leading-tight mb-10">
-            A calmer way to focus, work and grow.
+            {t("sectionTitle")}
           </h2>
           <div className="hidden lg:inline-flex space-x-4">
-            {benefits.map(({ badge }) => (
+            {benefits.map(({ key }) => (
               <Badge
-                key={badge}
-                title={badge}
+                key={key}
+                title={t(`items.${key}.badge`)}
               />
             ))}
           </div>
         </div>
 
-        {benefits.map(({ badge, title, paragraph, image }, idx) => (
+        {benefits.map(({ key, image }, idx) => (
           <div
             key={idx}
             className="relative w-full"
@@ -38,19 +41,19 @@ const StickyScrollBenefits = () => {
             <div className="content-center grid gap-y-5 lg:grid-cols-2  lg:gap-x-10 relative z-10 items-center">
               {/* Left: Text column*/}
               <div>
-                <Badge title={badge} />
+                <Badge title={t(`items.${key}.badge`)} />
                 <h3 className="text-2xl md:text-3xl font-sora font-semibold leading-tight">
-                  {title}
+                  {t(`items.${key}.title`)}
                 </h3>
                 <p className="mt-4 font-manrope text-base md:text-lg lg:text-balance">
-                  {paragraph}
+                  {t(`items.${key}.paragraph`)}
                 </p>
               </div>
               {/* Right: Image column*/}
               <div className="relative flex justify-center">
                 <Image
                   src={image}
-                  alt={title}
+                  alt={t(`items.${key}.title`)}
                   width={400}
                   height={400}
                 />

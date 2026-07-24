@@ -1,0 +1,22 @@
+{
+  "brand": {
+    "focus": "Focus",
+    "pond": "Pond"
+  },
+  "cta": {
+    "startForFree": "Bẹ̀rẹ̀ lọ́fẹ̀ẹ́",
+    "learnMore": "Kọ́ sí i",
+    "getStarted": "Bẹ̀rẹ̀"
+  },
+  "language": {
+    "label": "Èdè",
+    "vibeSwitcher": "Yí Ìmọ̀lára Padà",
+    "choosePrompt": "Yan ìmọ̀lára rẹ"
+  },
+  "app": {
+    "guestMode": "Ipò Àlejò",
+    "setMood": "Ṣàgbékalẹ̀ ìmọ̀lára rẹ",
+    "signIn": "Wọlé",
+    "searchTask": "Wá iṣẹ́"
+  }
+}

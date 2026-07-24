@@ -5,8 +5,12 @@ import WaveDivider from "./ui/WaveDivider";
 import { Badge, Button } from "@/components/ui";
 import { HowItWork } from "@/types/landing-page";
 import { steps } from "@/data/landing-page/howitworks";
+import { useTranslations } from "next-intl";
 
 const HowItWorks = () => {
+  const t = useTranslations("marketing.howItWorks");
+  const tc = useTranslations("common.cta");
+
   return (
     <section
       id="how-it-works"
@@ -14,40 +18,35 @@ const HowItWorks = () => {
     >
       <div className="content-center">
         <div className="text-center">
-          <Badge title="How It Works" />
+          <Badge title={t("badge")} />
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-sora font-semibold leading-tight text-darker-accent">
-            Flow through your day with ease.
+            {t("title")}
           </h2>
-          <p className="paragraph-for-gb max-w-xl mx-auto">
-            Find your rhythm, plan with clarity, focus with calm, and end your
-            day with intention.
-          </p>
+          <p className="paragraph-for-gb max-w-xl mx-auto">{t("subtitle")}</p>
         </div>
 
         {/* Steps grid */}
         <div className="relative my-20">
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-y-16 gap-x-10 text-center">
-            {steps.map(
-              ({ Icon, title, description }: HowItWork, idx: number) => (
-                <div
-                  key={idx}
-                  className="flex flex-col items-center px-2 text-[#5a3a24] transition-all duration-300 transform hover:-translate-y-1"
-                  aria-hidden={false}
-                >
-                  <div className="bg-white/90 p-4 rounded-full mb-8 shadow-sm z-10">
-                    <Icon className="w-6 h-6 text-[#ff9472]" />
-                  </div>
-
-                  <h3 className="text-base font-semibold font-sora mb-2">
-                    {title}
-                  </h3>
-
-                  <p className="font-manrope text-sm max-w-xs leading-relaxed">
-                    {description}
-                  </p>
+            {steps.map(({ Icon, key }: HowItWork, idx: number) => (
+              <div
+                key={idx}
+                className="flex flex-col items-center px-2 text-[#5a3a24] transition-all duration-300 transform hover:-translate-y-1"
+                aria-hidden={false}
+              >
+                <div className="bg-white/90 p-4 rounded-full mb-8 shadow-sm z-10">
+                  <Icon className="w-6 h-6 text-[#ff9472]" />
                 </div>
-              )
-            )}
+
+                <h3 className="text-base font-semibold font-sora mb-2">
+                  {t(`items.${key}.title`)}
+                </h3>
+
+                <p className="font-manrope text-sm max-w-xs leading-relaxed">
+                  {t(`items.${key}.description`)}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
 
@@ -59,7 +58,7 @@ const HowItWorks = () => {
             aria-label="Sign up for FocusPond"
             className="relative overflow-hidden font-semibold group"
           >
-            <span className="relative z-10">Start for free</span>
+            <span className="relative z-10">{tc("startForFree")}</span>
             <span className="absolute inset-0 animate-shimmer bg-linear-to-r from-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </Button>
         </div>

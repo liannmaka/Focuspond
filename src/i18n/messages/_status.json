@@ -1,0 +1,54 @@
+{
+  "_comment": "Review status of each locale's draft translations. English (en) is the source of truth. Any key missing from a locale falls back to English automatically (see src/i18n/request.ts). Update `reviewed` to true once a fluent speaker has checked a namespace.",
+  "locales": {
+    "en": {
+      "source": true,
+      "common": { "reviewed": true },
+      "nav": { "reviewed": true },
+      "mood": { "reviewed": true },
+      "marketing": { "reviewed": true }
+    },
+    "fr": {
+      "common": { "reviewed": false, "coverage": "full" },
+      "nav": { "reviewed": false, "coverage": "full" },
+      "mood": { "reviewed": false, "coverage": "full" },
+      "marketing": { "reviewed": false, "coverage": "full" }
+    },
+    "pcm": {
+      "common": { "reviewed": false, "coverage": "full" },
+      "nav": { "reviewed": false, "coverage": "full" },
+      "mood": { "reviewed": false, "coverage": "full" },
+      "marketing": { "reviewed": false, "coverage": "full" }
+    },
+    "ig": {
+      "common": { "reviewed": false, "coverage": "full" },
+      "nav": { "reviewed": false, "coverage": "full" },
+      "mood": { "reviewed": false, "coverage": "full" },
+      "marketing": {
+        "reviewed": false,
+        "coverage": "partial",
+        "note": "Chrome + headings + feature titles translated; long-form prose (benefit paragraphs, feature descriptions, FAQ answers, whoItsFor bullets, testimonial quotes) falls back to English pending fluent review."
+      }
+    },
+    "yo": {
+      "common": { "reviewed": false, "coverage": "full" },
+      "nav": { "reviewed": false, "coverage": "full" },
+      "mood": { "reviewed": false, "coverage": "full" },
+      "marketing": {
+        "reviewed": false,
+        "coverage": "partial",
+        "note": "Chrome + headings + feature titles translated; long-form prose falls back to English pending fluent review."
+      }
+    },
+    "ha": {
+      "common": { "reviewed": false, "coverage": "full" },
+      "nav": { "reviewed": false, "coverage": "full" },
+      "mood": { "reviewed": false, "coverage": "full" },
+      "marketing": {
+        "reviewed": false,
+        "coverage": "partial",
+        "note": "Chrome + headings + feature titles translated; long-form prose falls back to English pending fluent review."
+      }
+    }
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "nav": {
+    "benefits": "Gịnị mere FocusPond?",
+    "features": "Njirimara",
+    "how-it-works": "Ka Ọ Si Arụ Ọrụ",
+    "faqs": "Ajụjụ"
+  },
+  "footer": {
+    "pricing": "Ọnụahịa",
+    "contact": "Kpọtụrụ Anyị",
+    "getStarted": "Bido",
+    "copyright": "© {year} Focuspond - Ekpuchiri ikike niile."
+  },
+  "hero": {
+    "title": "Merie ihe mgbaru ọsọ gị, ọ bụghị ike gị.",
+    "subtitle": "Lekwasị anya, zuru ike nwayọọ, ma jiri nghọta mechie ụbọchị gị."
+  },
+  "benefits": {
+    "sectionTitle": "Ụzọ dị jụụ isi lekwasị anya, rụọ ọrụ ma too.",
+    "items": {
+      "focus-first": {
+        "badge": "Nhazi Lekwasị-Anya-Mbụ"
+      },
+      "pomodoro-rhythm": {
+        "badge": "Usoro Pomodoro Dị Nwayọọ"
+      },
+      "mood-aware": {
+        "badge": "Ọrụ Na-eche Mmetụta"
+      },
+      "progress-tracking": {
+        "badge": "Nsochi Ọganihu Dị Nwayọọ"
+      }
+    }
+  },
+  "features": {
+    "badge": "Njirimara",
+    "title": "Ngwaọrụ dị nwayọọ iji kwado nlekwasị anya gị",
+    "subtitle": "Emere njirimara ọ bụla iji nyere gị aka ịhazi, rụọ ọrụ, ma tụgharịa uche na ebumnuche, na-enweghị mkpọtụ maọbụ ike ọgwụgwụ.",
+    "items": {
+      "daily-planner": {
+        "title": "Onye Nhazi Kwa Ụbọchị"
+      },
+      "focus-timer": {
+        "title": "Oge Nlekwasị Anya"
+      },
+      "quick-notes": {
+        "title": "Ndetu Ngwa Ngwa"
+      },
+      "vibe-switcher": {
+        "title": "Gbanwee Vaịbụ"
+      },
+      "mood-checkin": {
+        "title": "Nlele Mmetụta"
+      },
+      "frog-selection": {
+        "title": "Nhọrọ Frog"
+      },
+      "mindful-breaks": {
+        "title": "Izu Ike Nwayọọ"
+      },
+      "reflection": {
+        "title": "Ntụgharị Uche Ngwụcha Ụbọchị"
+      }
+    }
+  },
+  "howItWorks": {
+    "badge": "Ka Ọ Si Arụ Ọrụ",
+    "title": "Jiri ụbọchị gị gafee n'enweghị nsogbu.",
+    "subtitle": "Chọta usoro gị, hazie n'ụzọ doro anya, lekwasị anya jụụ, ma jiri ebumnuche mechie ụbọchị gị.",
+    "items": {
+      "check-mood": {
+        "title": "1.  Lelee Mmetụta Gị"
+      },
+      "plan-day": {
+        "title": "2.  Hazie Ụbọchị Gị"
+      },
+      "start-sprint": {
+        "title": "3.  Malite Ọsọ"
+      },
+      "reflect": {
+        "title": "4.  Tụgharịa Uche ma Too"
+      }
+    }
+  },
+  "whoItsFor": {
+    "badge": "Onye ọ dịịrị",
+    "title": "Usoro gị, ụzọ gị",
+    "subtitle": "Ụzọ dị iche iche, otu ebumnuche: ọganihu dị jụụ ma bara uru na-enweghị ike ọgwụgwụ.",
+    "loading": "Na-ebu usoro gị…",
+    "imageUnavailable": "Onyonyo adịghị",
+    "items": {
+      "student": {
+        "label": "Ụmụ akwụkwọ na Ndị Na-amụ Ihe",
+        "headline": "Muta ihe na nlekwasị anya"
+      },
+      "professional": {
+        "label": "Ọkachamara",
+        "headline": "Rụọ ọrụ n'ụzọ doro anya"
+      },
+      "creator": {
+        "label": "Onye Okike",
+        "headline": "Kee ihe na usoro"
+      },
+      "well": {
+        "label": "Onye Na-achọ Ahụ Ike",
+        "headline": "Bie ndụ na nguzozi"
+      }
+    }
+  },
+  "testimonials": {
+    "badge": "Olu Sitere n'Ọdọ",
+    "title": "Ihe ndị ọrụ mbụ anyị na-ekwu",
+    "subtitle": "FocusPond na-enye ndị ọrụ ohere iche echiche, hazie, ma nọgide na-aga n'ihu."
+  },
+  "faqs": {
+    "badge": "Ajụjụ",
+    "title": "Ajụjụ ndị a na-ajụkarị",
+    "subtitle": "Ihe niile ị kwesịrị ịma iji bido na FocusPond.",
+    "stillHaveQuestions": "Ị ka nwere ajụjụ?",
+    "contactUs": "Kpọtụrụ Anyị"
+  },
+  "cta": {
+    "title": "Jiri nghọta bido ụbọchị gị",
+    "subtitle": "Ọ dịghị mkpa akaụntụ. Ọ na-arụ ọrụ na-enweghị ịntanetị. Ọ dịghị nrụgide."
+  }
+}

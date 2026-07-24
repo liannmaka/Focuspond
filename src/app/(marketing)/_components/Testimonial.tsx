@@ -6,8 +6,10 @@ import { useEffect, useState } from "react";
 
 import { Badge } from "@/components/ui";
 import { testimonials } from "@/data/landing-page/testimonial";
+import { useTranslations } from "next-intl";
 
 const Testimonial = () => {
+  const t = useTranslations("marketing.testimonials");
   const FAST_SPEED = 15;
   const SLOW_SPEED = 80;
 
@@ -78,13 +80,11 @@ const Testimonial = () => {
       <div className="content-center grid grid-cols-1 lg:grid-cols-2 gap-10">
         {/* Left Column: Title + Description */}
         <div>
-          <Badge title="Voices From The Pond" />
+          <Badge title={t("badge")} />
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-sora font-semibold leading-tight text-darker-accent">
-            What our early users are saying
+            {t("title")}
           </h2>
-          <p className="paragraph-for-gb max-w-md text-wrap">
-            FocusPond gives users space to think, plan, and stay on track.
-          </p>
+          <p className="paragraph-for-gb max-w-md text-wrap">{t("subtitle")}</p>
         </div>
         {/* Right Column: Sliding Testimonials */}
         <div className="relative overflow-hidden w-full">
@@ -116,7 +116,7 @@ const Testimonial = () => {
                 className="card"
               >
                 <p className="text-sm leading-relaxed text-darker-accent/90">
-                  “{testimonial.quote}”
+                  “{t(`items.${testimonial.key}.quote`)}”
                 </p>
 
                 <div className="flex items-center gap-3 mt-6">
@@ -124,10 +124,10 @@ const Testimonial = () => {
                   <div className="w-8 h-8 rounded-full bg-linear-to-br from-[#a8c686]/50 to-[#ff9472]/50" />
                   <div className="text-sm">
                     <div className="font-semibold text-darker-accent">
-                      {testimonial.name}
+                      {t(`items.${testimonial.key}.name`)}
                     </div>
                     <div className="text-xs text-darker-accent/70">
-                      {testimonial.role}
+                      {t(`items.${testimonial.key}.role`)}
                     </div>
                   </div>
                 </div>

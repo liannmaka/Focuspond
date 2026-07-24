@@ -3,11 +3,13 @@
 import { BrandLogo } from "@/components/ui";
 import { User, Bell, Search, MoreVertical, Smile } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
+import LanguageSwitcher from "@/features/i18n/components/LanguageSwitcher";
 
 export default function TopBar({ className }: { className?: string }) {
+  const t = useTranslations("common.app");
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
   const searchRef = useRef<HTMLDivElement>(null);
-  console.log("top", searchRef.current);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -45,7 +47,7 @@ export default function TopBar({ className }: { className?: string }) {
             <div className="flex items-center gap-1.5 px-2.5 py-1 bg-light-background/30 rounded-full border border-dark-accent/30">
               <div className="w-1.5 h-1.5 bg-secondary-accent rounded-full animate-pulse" />
               <span className="text-[11px] font-manrope font-medium text-dark-accent">
-                Guest Mode
+                {t("guestMode")}
               </span>
             </div>
 
@@ -59,7 +61,7 @@ export default function TopBar({ className }: { className?: string }) {
               className="text-dark-accent"
             />
             <span className="text-xs font-manrope font-medium text-dark-accent">
-              Set your mood
+              {t("setMood")}
             </span>
           </button>
         </div>
@@ -76,7 +78,7 @@ export default function TopBar({ className }: { className?: string }) {
             </div>
 
             <button className="px-3 py-1.5 bg-accent-button text-white rounded-lg font-sora text-xs font-medium active:scale-95 transition-transform cursor-pointer hover:-translate-y-0.5">
-              Sign In
+              {t("signIn")}
             </button>
           </div>
 
@@ -102,7 +104,7 @@ export default function TopBar({ className }: { className?: string }) {
                   <Search className="w-4 h-4 text-dark-accent" />
                   <input
                     type="text"
-                    placeholder="Search task"
+                    placeholder={t("searchTask")}
                     autoFocus
                     className="flex-1 outline-none text-dark-accent placeholder:text-dark-accent/40 text-[13px] placeholder:font-manrope placeholder:font-light"
                   />
@@ -114,6 +116,9 @@ export default function TopBar({ className }: { className?: string }) {
             <button className="topbar-icon-button tap-target">
               <Bell size={18} />
             </button>
+
+            {/* Vibe Switcher */}
+            <LanguageSwitcher className="hidden sm:block" />
 
             {/* More Menu */}
             <button className="topbar-icon-button tap-target">
@@ -131,7 +136,7 @@ export default function TopBar({ className }: { className?: string }) {
             className="text-dark-accent"
           />
           <span className="text-xs font-manrope font-medium text-dark-accent">
-            Set your mood
+            {t("setMood")}
           </span>
         </button>
       </div>

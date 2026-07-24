@@ -1,0 +1,22 @@
+{
+  "brand": {
+    "focus": "Focus",
+    "pond": "Pond"
+  },
+  "cta": {
+    "startForFree": "Start for free",
+    "learnMore": "Learn More",
+    "getStarted": "Get Started"
+  },
+  "language": {
+    "label": "Language",
+    "vibeSwitcher": "Vibe Switcher",
+    "choosePrompt": "Choose your vibe"
+  },
+  "app": {
+    "guestMode": "Guest Mode",
+    "setMood": "Set your mood",
+    "signIn": "Sign In",
+    "searchTask": "Search task"
+  }
+}

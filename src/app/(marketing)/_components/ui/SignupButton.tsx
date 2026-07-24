@@ -1,6 +1,9 @@
 import Button from "@/components/ui/Button";
+import { useTranslations } from "next-intl";
 
 const SignupButton = () => {
+  const t = useTranslations("common.cta");
+
   return (
     <Button
       href="/mood"
@@ -8,7 +11,7 @@ const SignupButton = () => {
       aria-label="Sign up for FocusPond"
       className="font-medium"
     >
-      Start for free
+      {t("startForFree")}
     </Button>
   );
 };

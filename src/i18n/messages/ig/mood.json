@@ -1,0 +1,42 @@
+{
+  "welcome": "Nnọọ na Focuspond!",
+  "intro": "Ka anyị jiri nlele mmetụta ngwa ngwa malite",
+  "question": "Kedu ka ị si adị n'{period} a?",
+  "periods": {
+    "morning": "ụtụtụ",
+    "afternoon": "ehihie",
+    "evening": "mgbede",
+    "night": "abalị"
+  },
+  "selectPrompt": "Họrọ mmetụta gị",
+  "continue": "Gaa n'ihu",
+  "saving": "Na-echekwa...",
+  "skip": "Wụfee ya ugbu a →",
+  "toast": {
+    "selectError": "Biko họrọ otu mmetụta",
+    "saved": "Echekwara mmetụta!",
+    "savedDescription": "Ị na-enwe mmetụta {mood} taa",
+    "storageFull": "Ebe nchekwa ejuola",
+    "storageFullDescription": "Biko hichapụ data ihe nchọgharị ma nwaa ọzọ",
+    "saveError": "Anyị enweghị ike ịchekwa mmetụta",
+    "saveErrorDescription": "Echegbula onwe gị, ị nwere ike ịga n'ihu"
+  },
+  "moods": {
+    "energized": {
+      "label": "Ike juputara",
+      "description": "Ọ dịghị ihe ga-egbochi m"
+    },
+    "good": {
+      "label": "Ọ dị mma",
+      "description": "Ana m aga nke ọma"
+    },
+    "okay": {
+      "label": "Ọ dị mma nta",
+      "description": "Ike nkịtị"
+    },
+    "tired": {
+      "label": "Ike gwụrụ",
+      "description": "Ike dị ala"
+    }
+  }
+}

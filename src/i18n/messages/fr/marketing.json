@@ -1,0 +1,218 @@
+{
+  "nav": {
+    "benefits": "Pourquoi FocusPond ?",
+    "features": "Fonctionnalités",
+    "how-it-works": "Comment ça marche",
+    "faqs": "FAQ"
+  },
+  "footer": {
+    "pricing": "Tarifs",
+    "contact": "Nous contacter",
+    "getStarted": "Commencer",
+    "copyright": "© {year} Focuspond - Tous droits réservés."
+  },
+  "hero": {
+    "title": "Atteignez vos objectifs, sans épuiser votre énergie.",
+    "subtitle": "Restez concentré, prenez des pauses conscientes et terminez votre journée avec clarté."
+  },
+  "benefits": {
+    "sectionTitle": "Une façon plus sereine de se concentrer, travailler et progresser.",
+    "items": {
+      "focus-first": {
+        "badge": "Planification centrée sur l'essentiel",
+        "title": "Planifiez votre journée avec intention",
+        "paragraph": "Commencez votre journée en choisissant votre Grenouille, la seule tâche qui compte vraiment. Pas d'encombrement, pas de surcharge. Juste une énergie calme et concentrée."
+      },
+      "pomodoro-rhythm": {
+        "badge": "Rythme Pomodoro en douceur",
+        "title": "Travaillez par sprints concentrés, reposez-vous avec soin",
+        "paragraph": "Trouvez votre rythme naturel. Concentrez-vous profondément, prenez des pauses conscientes et gardez votre énergie stable tout au long de la journée."
+      },
+      "mood-aware": {
+        "badge": "Productivité à l'écoute de l'humeur",
+        "title": "Restez connecté à ce que vous ressentez",
+        "paragraph": "Votre énergie façonne votre concentration. Utilisez les points d'humeur et les mini-Grenouilles pour rester aligné et bienveillant envers vous-même, même les jours difficiles."
+      },
+      "progress-tracking": {
+        "badge": "Suivi des progrès en douceur",
+        "title": "Réfléchissez, notez et développez votre concentration",
+        "paragraph": "Terminez votre journée sereinement en notant vos réussites et vos idées. Suivez vos séries et vos Grenouilles accomplies, car chaque petit pas compte."
+      }
+    }
+  },
+  "features": {
+    "badge": "Fonctionnalités",
+    "title": "Des outils tout en douceur pour soutenir votre concentration",
+    "subtitle": "Chaque fonctionnalité est conçue pour vous aider à planifier, travailler et réfléchir avec intention, sans bruit ni épuisement.",
+    "items": {
+      "daily-planner": {
+        "title": "Agenda quotidien",
+        "description": "Planifiez votre journée en toute sérénité ; les tâches inachevées sont reportées automatiquement."
+      },
+      "focus-timer": {
+        "title": "Minuteur de concentration",
+        "description": "Restez concentré avec des sessions Pomodoro et des pauses conscientes pour recharger vos batteries."
+      },
+      "quick-notes": {
+        "title": "Notes rapides",
+        "description": "Capturez vos pensées instantanément, libérez votre esprit sans perdre le fil."
+      },
+      "vibe-switcher": {
+        "title": "Changer d'ambiance",
+        "description": "Changez de langue et d'ambiance, de l'anglais posé au Naijá détendu, à l'igbo, au yoruba, au haoussa ou au français. Travaillez comme vous le sentez."
+      },
+      "mood-checkin": {
+        "title": "Point d'humeur",
+        "description": "Faites le point sur votre humeur, exprimez ce que vous ressentez en quelques secondes."
+      },
+      "frog-selection": {
+        "title": "Choix de la Grenouille",
+        "description": "Choisissez la « Grenouille » du jour, la tâche qui vous fait avancer."
+      },
+      "mindful-breaks": {
+        "title": "Pauses conscientes",
+        "description": "Faites une pause avec intention : étirez-vous, respirez ou hydratez-vous pendant vos pauses."
+      },
+      "reflection": {
+        "title": "Bilan de fin de journée",
+        "description": "Réfléchissez à vos réussites et à vos idées, terminez votre journée en vous sentant ancré."
+      }
+    }
+  },
+  "howItWorks": {
+    "badge": "Comment ça marche",
+    "title": "Traversez votre journée avec aisance.",
+    "subtitle": "Trouvez votre rythme, planifiez avec clarté, concentrez-vous avec calme et terminez votre journée avec intention.",
+    "items": {
+      "check-mood": {
+        "title": "1.  Vérifiez votre humeur",
+        "description": "Commencez votre journée par un point d'humeur rapide pour vous accorder à votre énergie."
+      },
+      "plan-day": {
+        "title": "2.  Planifiez votre journée",
+        "description": "Choisissez votre Grenouille, votre tâche la plus importante, et fixez votre focus pour la journée."
+      },
+      "start-sprint": {
+        "title": "3.  Lancez un sprint",
+        "description": "Travaillez par sprints calmes et concentrés, avec de douces pauses qui ressourcent votre esprit."
+      },
+      "reflect": {
+        "title": "4.  Réfléchissez et progressez",
+        "description": "Terminez votre journée par une réflexion sereine. Célébrez vos réussites et préparez demain."
+      }
+    }
+  },
+  "whoItsFor": {
+    "badge": "Pour qui",
+    "title": "Votre flow, à votre façon",
+    "subtitle": "Des chemins différents, un même but : des progrès sereins et significatifs, sans épuisement.",
+    "loading": "Chargement de votre flow…",
+    "imageUnavailable": "Image indisponible",
+    "items": {
+      "student": {
+        "label": "Étudiants et apprenants",
+        "headline": "Apprenez avec concentration",
+        "bullets": [
+          "Commencez chaque session avec la méthode de la Grenouille pour attaquer l'essentiel.",
+          "Étudiez ou pratiquez par sprints de 25 minutes, de courtes bouffées attentives qui bâtissent la constance.",
+          "Restez attentif à votre énergie pour mieux apprendre, pas seulement plus longtemps."
+        ]
+      },
+      "professional": {
+        "label": "Professionnels",
+        "headline": "Travaillez avec clarté",
+        "bullets": [
+          "Restez sans distraction grâce à des sprints concentrés et de douces pauses.",
+          "Capturez vos idées instantanément avec les Notes rapides avant qu'elles ne s'envolent.",
+          "Terminez votre journée par une réflexion sereine et des prochaines étapes claires."
+        ]
+      },
+      "creator": {
+        "label": "Créateurs",
+        "headline": "Créez dans le flow",
+        "bullets": [
+          "Utilisez les Mini-Grenouilles pour de courtes bouffées créatives et concentrées.",
+          "Bâtissez des progrès réguliers grâce aux séries et à un suivi attentif.",
+          "Gardez les grandes tâches pour les moments où votre énergie est au plus haut."
+        ]
+      },
+      "well": {
+        "label": "En quête de bien-être",
+        "headline": "Vivez en équilibre",
+        "bullets": [
+          "Accordez le ton de Focuspond à votre humeur avec le changement d'ambiance.",
+          "Commencez par une seule Grenouille pour rester ancré et éviter la surcharge.",
+          "Prenez des pauses conscientes pour retrouver concentration et calme."
+        ]
+      }
+    }
+  },
+  "testimonials": {
+    "badge": "Les voix de l'étang",
+    "title": "Ce que disent nos premiers utilisateurs",
+    "subtitle": "FocusPond offre un espace pour penser, planifier et rester sur la bonne voie.",
+    "items": {
+      "rita": {
+        "name": "Rita O.",
+        "role": "Étudiante",
+        "quote": "Focuspond m'a enfin aidée à arrêter de repousser mon projet de fin d'études. Le changement d'ambiance ? Une magie sous-estimée."
+      },
+      "james": {
+        "name": "James S.",
+        "role": "Ingénieur logiciel",
+        "quote": "J'ai utilisé tant d'outils de productivité, mais celui-ci me donne vraiment envie de travailler. Il est calme et intentionnel."
+      },
+      "chiamaka": {
+        "name": "Chiamaka O.",
+        "role": "Designer produit",
+        "quote": "Commencer par ma Grenouille du jour a tout changé. Maintenant j'arrête de trop réfléchir et je me lance."
+      },
+      "isabel": {
+        "name": "Isabel U.",
+        "role": "Chercheuse",
+        "quote": "Le mode hors ligne me permet de l'emporter partout. Il m'a aidée à rester régulière même en voyage."
+      }
+    }
+  },
+  "faqs": {
+    "badge": "FAQ",
+    "title": "Questions fréquentes",
+    "subtitle": "Tout ce que vous devez savoir pour bien démarrer avec FocusPond.",
+    "stillHaveQuestions": "Encore des questions ?",
+    "contactUs": "Nous contacter",
+    "items": {
+      "what-is": {
+        "question": "Qu'est-ce que FocusPond ?",
+        "answer": "FocusPond est votre coin tranquille d'Internet pour planifier, vous concentrer et vous sentir moins débordé. C'est un espace de productivité serein avec des outils comme un minuteur Pomodoro, des tâches quotidiennes, la Grenouille du jour et de doux points d'humeur, tous conçus pour vous aider à travailler avec aisance, sans pression."
+      },
+      "is-free": {
+        "question": "FocusPond est-il gratuit ?",
+        "answer": "Oui, FocusPond est entièrement gratuit pendant notre phase de démarrage. Vous aurez toujours accès à l'essentiel, même lorsque des fonctionnalités premium arriveront plus tard."
+      },
+      "offline": {
+        "question": "Fonctionne-t-il hors ligne ?",
+        "answer": "Oui, vous pouvez utiliser FocusPond même sans accès à Internet. Vos données sont stockées en toute sécurité sur votre appareil et se synchroniseront en ligne lorsque vous créerez un compte."
+      },
+      "frog-of-day": {
+        "question": "Qu'est-ce que la « Grenouille du jour » ?",
+        "answer": "Votre Grenouille du jour est la tâche la plus importante que vous choisissez d'attaquer en premier. Il ne s'agit pas d'urgence, mais de faire la seule chose qui rendra votre journée productive et sereine."
+      },
+      "identify-frog": {
+        "question": "Comment identifier une « tâche Grenouille » ?",
+        "answer": "Une tâche Grenouille est celle que vous repoussez, souvent parce qu'elle semble grande ou importante. Elle devrait prendre environ 1 à 4 heures. Si elle vous semble écrasante, décomposez-la en petites étapes et commencez par la première."
+      },
+      "no-account": {
+        "question": "Puis-je utiliser FocusPond sans créer de compte ?",
+        "answer": "Oui. Vous pouvez commencer à utiliser FocusPond tout de suite sans vous inscrire ; tout ce que vous faites est enregistré sur votre appareil. Créer un compte plus tard vous permet simplement de sauvegarder votre progression et de la synchroniser entre vos appareils."
+      },
+      "vibe-switcher": {
+        "question": "Qu'est-ce que le changement d'ambiance ?",
+        "answer": "Il vous permet de choisir comment l'application vous parle et dans quelle langue : posée et formelle en anglais, détendue en Naijá (pidgin), ou en igbo, yoruba, haoussa ou français. Choisissez l'ambiance qui correspond à votre humeur du jour."
+      }
+    }
+  },
+  "cta": {
+    "title": "Commencez votre journée avec clarté",
+    "subtitle": "Aucun compte requis. Fonctionne hors ligne. Zéro pression."
+  }
+}

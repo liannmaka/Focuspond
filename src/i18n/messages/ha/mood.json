@@ -1,0 +1,42 @@
+{
+  "welcome": "Barka da zuwa Focuspond!",
+  "intro": "Bari mu fara da duban yanayi cikin sauri",
+  "question": "Yaya kake ji da {period}?",
+  "periods": {
+    "morning": "safiya",
+    "afternoon": "rana",
+    "evening": "yamma",
+    "night": "dare"
+  },
+  "selectPrompt": "Zaɓi yanayin ka",
+  "continue": "Ci gaba",
+  "saving": "Ana ajiyewa...",
+  "skip": "Tsallake shi yanzu →",
+  "toast": {
+    "selectError": "Da fatan za a zaɓi yanayi",
+    "saved": "An ajiye yanayin!",
+    "savedDescription": "Kana jin {mood} yau",
+    "storageFull": "Wurin ajiya ya cika",
+    "storageFullDescription": "Da fatan za a share wasu bayanan burauza sannan a sake gwadawa",
+    "saveError": "Ba mu iya ajiye yanayin ba",
+    "saveErrorDescription": "Kada ka damu, kana iya ci gaba"
+  },
+  "moods": {
+    "energized": {
+      "label": "Cike da ƙarfi",
+      "description": "Babu abin da zai iya tsayar da ni"
+    },
+    "good": {
+      "label": "Da kyau",
+      "description": "Ina cikin kyakkyawan yanayi"
+    },
+    "okay": {
+      "label": "Yana da kyau",
+      "description": "Ƙarfi na yau da kullum"
+    },
+    "tired": {
+      "label": "Gajiya",
+      "description": "Ƙarfi ya ragu"
+    }
+  }
+}

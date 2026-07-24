@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 import withSerwistInit from "@serwist/next";
+import createNextIntlPlugin from "next-intl/plugin";
 import { execSync } from "child_process";
+
+const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 // Cache-busting revision for the service worker precache.
 // Prefer the platform-provided commit SHA (Vercel), fall back to a local git
@@ -36,4 +39,4 @@ const nextConfig: NextConfig = {
   // Your existing config here
 };
 
-export default withSerwist(nextConfig);
+export default withSerwist(withNextIntl(nextConfig));

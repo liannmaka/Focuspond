@@ -1,0 +1,218 @@
+{
+  "nav": {
+    "benefits": "Why FocusPond?",
+    "features": "Features",
+    "how-it-works": "How It Works",
+    "faqs": "FAQs"
+  },
+  "footer": {
+    "pricing": "Pricing",
+    "contact": "Contact Us",
+    "getStarted": "Get Started",
+    "copyright": "© {year} Focuspond - All rights reserved."
+  },
+  "hero": {
+    "title": "Crush your goals, not your energy.",
+    "subtitle": "Stay focused, take mindful breaks, and end your day with clarity."
+  },
+  "benefits": {
+    "sectionTitle": "A calmer way to focus, work and grow.",
+    "items": {
+      "focus-first": {
+        "badge": "Focus-First Planning",
+        "title": "Plan your day with intention",
+        "paragraph": "Start your day by choosing your Frog, the one task that truly matters. No clutter, no overwhelm. Just calm, focused energy."
+      },
+      "pomodoro-rhythm": {
+        "badge": "Gentle Pomodoro Rhythm",
+        "title": "Work in focused sprints, rest with care",
+        "paragraph": "Find your natural rhythm. Focus deeply, take mindful breaks, and keep your energy steady throughout the day."
+      },
+      "mood-aware": {
+        "badge": "Mood-Aware Productivity",
+        "title": "Stay connected to how you feel",
+        "paragraph": "Your energy shapes your focus. Use mood check-ins and mini-Frogs to stay aligned and kind to yourself, even on tough days."
+      },
+      "progress-tracking": {
+        "badge": "Gentle Progress Tracking",
+        "title": "Reflect, log, and grow your focus",
+        "paragraph": "End your day calmly by noting your wins and insights. See your streaks and completed Frogs, because every small step forward counts."
+      }
+    }
+  },
+  "features": {
+    "badge": "Features",
+    "title": "Gentle tools to support your focus",
+    "subtitle": "Each feature is designed to help you plan, work, and reflect with intention, without the noise or burnout.",
+    "items": {
+      "daily-planner": {
+        "title": "Daily Planner",
+        "description": "Plan your day with calm clarity, unfinished tasks roll over automatically."
+      },
+      "focus-timer": {
+        "title": "Focus Timer",
+        "description": "Stay focused with Pomodoro sessions and mindful breaks to recharge."
+      },
+      "quick-notes": {
+        "title": "Quick Notes",
+        "description": "Capture thoughts instantly, clear your mind without losing flow."
+      },
+      "vibe-switcher": {
+        "title": "Vibe Switcher",
+        "description": "Switch your language and vibe, from calm English to relaxed Naijá, Igbo, Yorùbá, Hausa, or French. Work the way you feel."
+      },
+      "mood-checkin": {
+        "title": "Mood Check-In",
+        "description": "Check in on your mood, express how you feel in seconds."
+      },
+      "frog-selection": {
+        "title": "Frog Selection",
+        "description": "Choose your day's “Frog”, the one task that moves you forward."
+      },
+      "mindful-breaks": {
+        "title": "Mindful Breaks",
+        "description": "Pause with intention, stretch, breathe, or hydrate during breaks."
+      },
+      "reflection": {
+        "title": "End-of-Day Reflection",
+        "description": "Reflect on your wins and insights, end your day feeling grounded."
+      }
+    }
+  },
+  "howItWorks": {
+    "badge": "How It Works",
+    "title": "Flow through your day with ease.",
+    "subtitle": "Find your rhythm, plan with clarity, focus with calm, and end your day with intention.",
+    "items": {
+      "check-mood": {
+        "title": "1.  Check Your Mood",
+        "description": "Start your day with a quick mood check-in to tune into your energy."
+      },
+      "plan-day": {
+        "title": "2.  Plan Your Day",
+        "description": "Choose your Frog, your most important task and set your focus for the day."
+      },
+      "start-sprint": {
+        "title": "3.  Start a Sprint",
+        "description": "Work in calm, focused sprints with gentle breaks that recharge your mind."
+      },
+      "reflect": {
+        "title": "4.  Reflect & Grow",
+        "description": "End your day with calm reflection. Celebrate your wins and reset for tomorrow."
+      }
+    }
+  },
+  "whoItsFor": {
+    "badge": "Who it's for",
+    "title": "Your flow, your way",
+    "subtitle": "Different paths, same goal: calm, meaningful progress without the burnout.",
+    "loading": "Loading your flow…",
+    "imageUnavailable": "Image unavailable",
+    "items": {
+      "student": {
+        "label": "Students & Learners",
+        "headline": "Learn with focus",
+        "bullets": [
+          "Start each session with the Frog method to tackle what matters most.",
+          "Study or practice in 25-minute sprints, short, mindful bursts that build consistency.",
+          "Stay aware of your energy to learn better, not just longer."
+        ]
+      },
+      "professional": {
+        "label": "Professional",
+        "headline": "Work with clarity",
+        "bullets": [
+          "Stay distraction-free with focused sprints and gentle breaks.",
+          "Capture ideas instantly with Quick Notes before they fade.",
+          "End your day with calm reflection and clear next steps."
+        ]
+      },
+      "creator": {
+        "label": "Creator",
+        "headline": "Create with flow",
+        "bullets": [
+          "Use Mini-Frogs for short, focused creative bursts.",
+          "Build steady progress with streaks and mindful tracking.",
+          "Save big tasks for when your energy is highest."
+        ]
+      },
+      "well": {
+        "label": "Wellness seeker",
+        "headline": "Live with balance",
+        "bullets": [
+          "Match Focuspond's tone to your mood with the Vibe Switcher.",
+          "Start with one Frog to stay grounded and avoid overwhelm.",
+          "Take mindful breaks to restore focus and calm."
+        ]
+      }
+    }
+  },
+  "testimonials": {
+    "badge": "Voices From The Pond",
+    "title": "What our early users are saying",
+    "subtitle": "FocusPond gives users space to think, plan, and stay on track.",
+    "items": {
+      "rita": {
+        "name": "Rita O.",
+        "role": "Student",
+        "quote": "Focuspond helped me finally stop procrastinating my final year project. The vibe switcher? Underrated magic."
+      },
+      "james": {
+        "name": "James S.",
+        "role": "Software Engineer",
+        "quote": "I've used so many Productivity tools, but this one actually makes me want to work. It's calm and intentional."
+      },
+      "chiamaka": {
+        "name": "Chiamaka O.",
+        "role": "Product Designer",
+        "quote": "Starting with my Frog of the Day changed everything. Now I stop overthinking and just start."
+      },
+      "isabel": {
+        "name": "Isabel U.",
+        "role": "Researcher",
+        "quote": "Offline support means I can take this anywhere. It's helped me stay consistent even during travel."
+      }
+    }
+  },
+  "faqs": {
+    "badge": "FAQs",
+    "title": "Frequently asked questions",
+    "subtitle": "Everything you need to know to get started with FocusPond.",
+    "stillHaveQuestions": "Still have questions?",
+    "contactUs": "Contact Us",
+    "items": {
+      "what-is": {
+        "question": "What is FocusPond?",
+        "answer": "FocusPond is your quiet corner of the internet to plan, focus, and feel less overwhelmed. It's a calm productivity space with tools like a Pomodoro timer, daily tasks, Frog of the Day, and gentle mood check-ins, all designed to help you work with ease, not pressure."
+      },
+      "is-free": {
+        "question": "Is FocusPond free?",
+        "answer": "Yes, FocusPond is completely free while we're in our early stage. You'll always have access to the essentials, even when premium features arrive later."
+      },
+      "offline": {
+        "question": "Does it work offline?",
+        "answer": "Yes, you can use FocusPond even without internet access. Your data is safely stored on your device and will sync online when you create an account."
+      },
+      "frog-of-day": {
+        "question": "What is the 'Frog of the Day'?",
+        "answer": "Your Frog of the Day is the most important task you choose to tackle first. It's not about urgency, it's about doing the one thing that'll make your day feel productive and calm."
+      },
+      "identify-frog": {
+        "question": "How do I identify a 'Frog task'?",
+        "answer": "A Frog task is the one you've been putting off, usually because it feels big or important. It should take around 1 to 4 hours. If it feels overwhelming, break it into smaller steps and start with the first one."
+      },
+      "no-account": {
+        "question": "Can I use FocusPond without creating an account?",
+        "answer": "Yes. You can start using FocusPond right away without signing up, everything you do is saved on your device. Creating an account later just lets you back up your progress and sync across devices."
+      },
+      "vibe-switcher": {
+        "question": "What is the vibe switcher?",
+        "answer": "It lets you choose how the app talks to you and in which language, calm and formal in English, relaxed in Naijá (Pidgin), or in Igbo, Yorùbá, Hausa, or French. Pick the vibe that matches your mood for the day."
+      }
+    }
+  },
+  "cta": {
+    "title": "Start your day with clarity",
+    "subtitle": "No account needed. Works offline. Zero pressure."
+  }
+}

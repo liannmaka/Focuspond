@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { cn, getTimeBasedGreeting, getTimeBasedQuestion } from "@/lib/utils";
+import { cn, getTimeBasedGreeting } from "@/lib/utils";
 
 describe("cn", () => {
   it("merges conditional classes and dedupes conflicting Tailwind utilities", () => {
@@ -42,14 +42,5 @@ describe("getTimeBasedGreeting", () => {
     expect(at(22)).toBe("night");
     expect(at(0)).toBe("night");
     expect(at(4)).toBe("night");
-  });
-});
-
-describe("getTimeBasedQuestion", () => {
-  it("embeds the current greeting", () => {
-    vi.useFakeTimers();
-    vi.setSystemTime(new Date(2026, 0, 1, 9, 0, 0));
-    expect(getTimeBasedQuestion()).toBe("How are you feeling this morning?");
-    vi.useRealTimers();
   });
 });

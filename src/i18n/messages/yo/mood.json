@@ -1,0 +1,42 @@
+{
+  "welcome": "Káàbọ̀ sí Focuspond!",
+  "intro": "Ẹ jẹ́ ká bẹ̀rẹ̀ pẹ̀lú àyẹ̀wò ìmọ̀lára kíákíá",
+  "question": "Báwo ni o ṣe rí lára ní {period} yìí?",
+  "periods": {
+    "morning": "àárọ̀",
+    "afternoon": "ọ̀sán",
+    "evening": "ìrọ̀lẹ́",
+    "night": "alẹ́"
+  },
+  "selectPrompt": "Yan ìmọ̀lára rẹ",
+  "continue": "Tẹ̀síwájú",
+  "saving": "Ń fipamọ́...",
+  "skip": "Fò ó fún ìsinsìnyí →",
+  "toast": {
+    "selectError": "Jọ̀wọ́ yan ìmọ̀lára kan",
+    "saved": "Ìmọ̀lára tí fi pamọ́!",
+    "savedDescription": "O ní ìmọ̀lára {mood} lónìí",
+    "storageFull": "Ibi ìpamọ́ ti kún",
+    "storageFullDescription": "Jọ̀wọ́ pa díẹ̀ nínú dátà ẹ̀rọ aṣàwákiri rẹ kí o sì tún gbìyànjú",
+    "saveError": "A kò lè fi ìmọ̀lára pamọ́",
+    "saveErrorDescription": "Má ṣe àníyàn, o lè tẹ̀síwájú"
+  },
+  "moods": {
+    "energized": {
+      "label": "Kún fún agbára",
+      "description": "Kò sí ohun tí ó lè dá mi dúró"
+    },
+    "good": {
+      "label": "Dáadáa",
+      "description": "Mo wà nínú ìṣàn tó dára"
+    },
+    "okay": {
+      "label": "Ó dára",
+      "description": "Agbára tó ṣe déédéé"
+    },
+    "tired": {
+      "label": "Àárẹ̀",
+      "description": "Agbára ti dín kù"
+    }
+  }
+}

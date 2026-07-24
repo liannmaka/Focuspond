@@ -6,8 +6,11 @@ import { Button } from "@/components/ui";
 import { useLottie } from "lottie-react";
 import { ChevronsRight } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 
 const Hero = () => {
+  const t = useTranslations("marketing.hero");
+  const tc = useTranslations("common.cta");
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
   const options = { animationData: heroImage, loop: true, autoplay: true };
@@ -22,9 +25,9 @@ const Hero = () => {
       <div className="grid lg:grid-cols-2 lg:gap-12 gap-4 items-center">
         {/* Text Section */}
         <div>
-          <h1>Crush your goals, not your energy.</h1>
+          <h1>{t("title")}</h1>
           <p className="font-manrope mt-6 text-base sm:text-lg max-w-md">
-            Stay focused, take mindful breaks, and end your day with clarity.
+            {t("subtitle")}
           </p>
           <div className="mt-8 flex sm:space-x-4">
             <Button
@@ -33,7 +36,7 @@ const Hero = () => {
               aria-label="Sign up for FocusPond"
               className="relative overflow-hidden font-semibold group"
             >
-              <span className="relative z-10">Start for free</span>
+              <span className="relative z-10">{tc("startForFree")}</span>
               <span className="absolute inset-0 animate-shimmer bg-linear-to-r from-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </Button>
 
@@ -44,7 +47,7 @@ const Hero = () => {
                 size="sm"
               >
                 <div className="inline-flex group font-medium hover:underline tracking-wide">
-                  <span>Learn More</span>
+                  <span>{tc("learnMore")}</span>
                   <ChevronsRight
                     aria-hidden="true"
                     className="size-4 self-center group-hover:translate-x-0.5 will-change-transform transition-transform duration-300"

@@ -4,9 +4,12 @@ import Link from "next/link";
 import { BrandLogo, SectionDivider } from "@/components/ui";
 import { footerNavLinks } from "@/data/landing-page/navigation";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
+import LanguageSwitcher from "@/features/i18n/components/LanguageSwitcher";
 
 const Footer = () => {
   const pathName = usePathname();
+  const t = useTranslations("marketing.footer");
 
   return (
     <footer className="py-10 px-10">
@@ -28,25 +31,29 @@ const Footer = () => {
             </Link>
           </div>
 
-          {/* language change: this will come later*/}
-          <nav className="flex flex-wrap justify-center gap-6 text-sm font-sora">
-            {footerNavLinks.map(({ href, linkLabel }, idx: number) => (
-              <Link
-                key={idx}
-                href={href}
-                className={`link-animation ${pathName === href ? "text-accent-button font-medium" : "text-dark-accent"}`}
-              >
-                {linkLabel}
-              </Link>
-            ))}
-          </nav>
+          <div className="flex flex-col items-center gap-5 md:flex-row md:gap-8">
+            <nav className="flex flex-wrap justify-center gap-6 text-sm font-sora">
+              {footerNavLinks.map(({ href, key }, idx: number) => (
+                <Link
+                  key={idx}
+                  href={href}
+                  className={`link-animation ${pathName === href ? "text-accent-button font-medium" : "text-dark-accent"}`}
+                >
+                  {t(key)}
+                </Link>
+              ))}
+            </nav>
+
+            {/* Vibe Switcher: choose the language/tone FocusPond speaks in. */}
+            <LanguageSwitcher align="up" />
+          </div>
         </div>
         <div className="px-4">
           <SectionDivider />
         </div>
         <div className="px-8 pb-7">
           <p className="text-xs text-[#5a3a24] text-center font-sora py-1">
-            &copy; {new Date().getFullYear()} Focuspond - All rights reserved.
+            {t("copyright", { year: new Date().getFullYear() })}
           </p>
         </div>
       </div>

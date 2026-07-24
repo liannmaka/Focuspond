@@ -1,0 +1,22 @@
+{
+  "brand": {
+    "focus": "Focus",
+    "pond": "Pond"
+  },
+  "cta": {
+    "startForFree": "Commencer gratuitement",
+    "learnMore": "En savoir plus",
+    "getStarted": "Commencer"
+  },
+  "language": {
+    "label": "Langue",
+    "vibeSwitcher": "Changer d'ambiance",
+    "choosePrompt": "Choisissez votre ambiance"
+  },
+  "app": {
+    "guestMode": "Mode invité",
+    "setMood": "Définir votre humeur",
+    "signIn": "Se connecter",
+    "searchTask": "Rechercher une tâche"
+  }
+}

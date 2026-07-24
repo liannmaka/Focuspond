@@ -6,10 +6,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Badge } from "@/components/ui";
 import { whoitsfor } from "@/data/landing-page/whoitsfor";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 const WhoitsFor = () => {
+  const t = useTranslations("marketing.whoItsFor");
   const [selected, setSelected] = useState<string>(whoitsfor[0].id);
   const person = whoitsfor.find((x) => x.id === selected)!;
+  const headline = t(`items.${person.id}.headline`);
+  const bullets = t.raw(`items.${person.id}.bullets`) as string[];
 
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
@@ -18,13 +22,12 @@ const WhoitsFor = () => {
     <section className="pt-8 pb-20">
       <div className="content-center">
         <div className="text-center mb-14">
-          <Badge title="Who it's for" />
+          <Badge title={t("badge")} />
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold font-sora leading-tight">
-            Your flow, your way
+            {t("title")}
           </h2>
           <p className="mt-4 max-w-md mx-auto text-base font-manrope sm:text-lg">
-            Different paths, same goal: calm, meaningful progress without the
-            burnout.
+            {t("subtitle")}
           </p>
         </div>
 
@@ -46,18 +49,16 @@ const WhoitsFor = () => {
                         : "bg-white/80 border border-white/80 hover:shadow-sm"
                     )}
                   >
-                    {persona.label}
+                    {t(`items.${persona.id}.label`)}
                   </button>
                 );
               })}
             </div>
 
-            <h3 className="text-xl font-semibold mb-4 font-sora">
-              {person.headline}
-            </h3>
+            <h3 className="text-xl font-semibold mb-4 font-sora">{headline}</h3>
 
             <ul className="space-y-3 mb-6">
-              {person.bullets.map((b, i) => (
+              {bullets.map((b, i) => (
                 <motion.li
                   key={i}
                   initial={{ opacity: 0, y: 6 }}
@@ -86,7 +87,7 @@ const WhoitsFor = () => {
                   {person.image && !isError ? (
                     <Image
                       src={person.image}
-                      alt={person.headline}
+                      alt={headline}
                       fill
                       className={`object-contain p-6 transition-opacity duration-500 ${
                         isLoading ? "opacity-0" : "opacity-100"
@@ -108,7 +109,7 @@ const WhoitsFor = () => {
                         <span className="text-gray-700 text-sm">👤</span>
                       </div>
                       <p className="text-sm text-gray-700 font-manrope">
-                        {isError ? "Image unavailable" : "Loading your flow…"}
+                        {isError ? t("imageUnavailable") : t("loading")}
                       </p>
                     </motion.div>
                   )}

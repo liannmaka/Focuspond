@@ -1,0 +1,126 @@
+{
+  "nav": {
+    "benefits": "Me ya sa FocusPond?",
+    "features": "Fasaloli",
+    "how-it-works": "Yadda Yake Aiki",
+    "faqs": "Tambayoyi"
+  },
+  "footer": {
+    "pricing": "Farashi",
+    "contact": "Tuntuɓe Mu",
+    "getStarted": "Fara",
+    "copyright": "© {year} Focuspond - An kiyaye dukkan haƙƙoƙi."
+  },
+  "hero": {
+    "title": "Cimma burin ka, ba ƙarfin ka ba.",
+    "subtitle": "Ka mai da hankali, ka huta cikin natsuwa, ka kuma kammala ranar ka da fahimta."
+  },
+  "benefits": {
+    "sectionTitle": "Hanya mafi natsuwa ta mai da hankali, yin aiki da girma.",
+    "items": {
+      "focus-first": {
+        "badge": "Tsari Mai Mai da Hankali Tukuna"
+      },
+      "pomodoro-rhythm": {
+        "badge": "Salon Pomodoro Mai Sauƙi"
+      },
+      "mood-aware": {
+        "badge": "Aiki Mai Fahimtar Yanayi"
+      },
+      "progress-tracking": {
+        "badge": "Bin Ci Gaba Cikin Sauƙi"
+      }
+    }
+  },
+  "features": {
+    "badge": "Fasaloli",
+    "title": "Kayan aiki masu sauƙi don tallafawa maida hankalin ka",
+    "subtitle": "An ƙera kowane fasali don taimaka maka ka tsara, ka yi aiki, ka kuma yi tunani da manufa, ba tare da hayaniya ko gajiya ba.",
+    "items": {
+      "daily-planner": {
+        "title": "Mai Tsara Kullum"
+      },
+      "focus-timer": {
+        "title": "Agogon Mai da Hankali"
+      },
+      "quick-notes": {
+        "title": "Bayanan Gaggawa"
+      },
+      "vibe-switcher": {
+        "title": "Canza Yanayi"
+      },
+      "mood-checkin": {
+        "title": "Duban Yanayi"
+      },
+      "frog-selection": {
+        "title": "Zaɓen Kwaɗo"
+      },
+      "mindful-breaks": {
+        "title": "Hutu Mai Tunani"
+      },
+      "reflection": {
+        "title": "Tunanin Ƙarshen Rana"
+      }
+    }
+  },
+  "howItWorks": {
+    "badge": "Yadda Yake Aiki",
+    "title": "Ka bi ranar ka cikin sauƙi.",
+    "subtitle": "Ka nemo salon ka, ka tsara da fahimta, ka mai da hankali cikin natsuwa, ka kuma kammala ranar ka da manufa.",
+    "items": {
+      "check-mood": {
+        "title": "1.  Duba Yanayin Ka"
+      },
+      "plan-day": {
+        "title": "2.  Tsara Ranar Ka"
+      },
+      "start-sprint": {
+        "title": "3.  Fara Zango"
+      },
+      "reflect": {
+        "title": "4.  Yi Tunani ka Girma"
+      }
+    }
+  },
+  "whoItsFor": {
+    "badge": "Ga wa yake",
+    "title": "Salon ka, hanyar ka",
+    "subtitle": "Hanyoyi daban-daban, manufa ɗaya: ci gaba mai natsuwa da ma'ana ba tare da gajiya ba.",
+    "loading": "Ana loda salon ka…",
+    "imageUnavailable": "Hoto ba ya samuwa",
+    "items": {
+      "student": {
+        "label": "Ɗalibai da Masu Koyo",
+        "headline": "Koya da maida hankali"
+      },
+      "professional": {
+        "label": "Ƙwararru",
+        "headline": "Yi aiki da fahimta"
+      },
+      "creator": {
+        "label": "Mai Ƙira",
+        "headline": "Ƙirƙira da salo"
+      },
+      "well": {
+        "label": "Mai Neman Lafiya",
+        "headline": "Rayu da daidaito"
+      }
+    }
+  },
+  "testimonials": {
+    "badge": "Muryoyi Daga Tafki",
+    "title": "Abin da masu amfani na farko ke faɗa",
+    "subtitle": "FocusPond na ba masu amfani sarari don tunani, tsarawa, da ci gaba a kan turba."
+  },
+  "faqs": {
+    "badge": "Tambayoyi",
+    "title": "Tambayoyin da ake yawan yi",
+    "subtitle": "Duk abin da kake buƙatar sani don farawa da FocusPond.",
+    "stillHaveQuestions": "Har yanzu kana da tambayoyi?",
+    "contactUs": "Tuntuɓe Mu"
+  },
+  "cta": {
+    "title": "Fara ranar ka da fahimta",
+    "subtitle": "Ba a buƙatar asusu. Yana aiki ba tare da intanet ba. Babu matsi."
+  }
+}

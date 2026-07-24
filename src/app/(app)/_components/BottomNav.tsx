@@ -2,15 +2,17 @@
 
 import { tabs } from "@/data/web-app/navigation";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import BottomNavItem from "./BottomNavItem";
 
 export default function BottomNav() {
   const pathname = usePathname();
+  const t = useTranslations("nav.tabs");
 
   return (
     <nav className="bg-white border-t border-dark-accent/15 h-16">
       <div className="flex items-center justify-between px-4">
-        {tabs.map(({ icon, href, label }) => {
+        {tabs.map(({ icon, href, key }) => {
           const Icon = icon;
           const isActiveRoute =
             pathname === href || pathname.startsWith(`$${href}/`);
@@ -19,7 +21,7 @@ export default function BottomNav() {
             <BottomNavItem
               key={href}
               isActiveRoute={isActiveRoute}
-              label={label}
+              label={t(key)}
               Icon={Icon}
               href={href}
             />

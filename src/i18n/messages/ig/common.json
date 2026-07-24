@@ -1,0 +1,22 @@
+{
+  "brand": {
+    "focus": "Focus",
+    "pond": "Pond"
+  },
+  "cta": {
+    "startForFree": "Malite n'efu",
+    "learnMore": "Mụtakwuo",
+    "getStarted": "Bido"
+  },
+  "language": {
+    "label": "Asụsụ",
+    "vibeSwitcher": "Gbanwee Vaịbụ",
+    "choosePrompt": "Họrọ vaịbụ gị"
+  },
+  "app": {
+    "guestMode": "Ọnọdụ Ọbịa",
+    "setMood": "Debe mmetụta gị",
+    "signIn": "Banye",
+    "searchTask": "Chọọ ọrụ"
+  }
+}

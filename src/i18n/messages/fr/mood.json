@@ -1,0 +1,42 @@
+{
+  "welcome": "Bienvenue sur Focuspond !",
+  "intro": "Commençons par un petit point sur votre humeur",
+  "question": "Comment vous sentez-vous ce {period} ?",
+  "periods": {
+    "morning": "matin",
+    "afternoon": "après-midi",
+    "evening": "soir",
+    "night": "nuit"
+  },
+  "selectPrompt": "Choisissez votre humeur",
+  "continue": "Continuer",
+  "saving": "Enregistrement...",
+  "skip": "Passer pour l'instant →",
+  "toast": {
+    "selectError": "Veuillez choisir une humeur",
+    "saved": "Humeur enregistrée !",
+    "savedDescription": "Vous vous sentez {mood} aujourd'hui",
+    "storageFull": "Stockage plein",
+    "storageFullDescription": "Veuillez libérer de l'espace dans votre navigateur et réessayer",
+    "saveError": "Impossible d'enregistrer l'humeur",
+    "saveErrorDescription": "Pas d'inquiétude, vous pouvez continuer quand même"
+  },
+  "moods": {
+    "energized": {
+      "label": "Plein d'énergie",
+      "description": "Prêt à tout"
+    },
+    "good": {
+      "label": "Bien",
+      "description": "Dans un bon rythme"
+    },
+    "okay": {
+      "label": "Correct",
+      "description": "Énergie normale"
+    },
+    "tired": {
+      "label": "Fatigué",
+      "description": "Peu d'énergie"
+    }
+  }
+}

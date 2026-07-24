@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { Toaster } from "sonner";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
 import { MoodSyncListener } from "@/features/mood/components/MoodSyncListener";
 import "@/styles/globals.css";
 
@@ -94,24 +96,34 @@ export const viewport: Viewport = {
   themeColor: "#ff9472",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Locale is resolved server-side from the cookie (see src/i18n/request.ts), so
+  // the first paint already renders in the reader's chosen language — no flash.
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body
         className={`${manrope.variable} ${sora.variable} antialiased`}
         suppressHydrationWarning
       >
-        {children}
-        <MoodSyncListener />
-        <Toaster
-          position="top-center"
-          closeButton
-          richColors
-        />
+        <NextIntlClientProvider
+          locale={locale}
+          messages={messages}
+        >
+          {children}
+          <MoodSyncListener />
+          <Toaster
+            position="top-center"
+            closeButton
+            richColors
+          />
+        </NextIntlClientProvider>
       </body>
     </html>
   );

@@ -1,0 +1,22 @@
+{
+  "brand": {
+    "focus": "Focus",
+    "pond": "Pond"
+  },
+  "cta": {
+    "startForFree": "Fara kyauta",
+    "learnMore": "Ƙara koyo",
+    "getStarted": "Fara"
+  },
+  "language": {
+    "label": "Harshe",
+    "vibeSwitcher": "Canza Yanayi",
+    "choosePrompt": "Zaɓi yanayin ka"
+  },
+  "app": {
+    "guestMode": "Yanayin Baƙo",
+    "setMood": "Saita yanayin ka",
+    "signIn": "Shiga",
+    "searchTask": "Nemo aiki"
+  }
+}

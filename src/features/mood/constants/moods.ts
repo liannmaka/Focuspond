@@ -2,6 +2,9 @@ export type MoodLevel = "very-high" | "high" | "medium" | "low";
 
 export type EnergyLevel = "high" | "medium" | "low";
 
+/** Stable mood ids; also the translation keys under `mood.moods`. */
+export type MoodId = "energized" | "good" | "okay" | "tired";
+
 interface MoodColors {
   light: string;
   dark: string;
@@ -9,7 +12,7 @@ interface MoodColors {
 }
 
 export interface Mood {
-  id?: string;
+  id?: MoodId;
   level: MoodLevel;
   emoji?: string;
   label: string;

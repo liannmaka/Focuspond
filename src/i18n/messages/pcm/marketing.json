@@ -1,0 +1,218 @@
+{
+  "nav": {
+    "benefits": "Why FocusPond?",
+    "features": "Features",
+    "how-it-works": "How E Dey Work",
+    "faqs": "FAQs"
+  },
+  "footer": {
+    "pricing": "Price",
+    "contact": "Contact Us",
+    "getStarted": "Make we start",
+    "copyright": "© {year} Focuspond - All rights reserved."
+  },
+  "hero": {
+    "title": "Crush your goals, no be your energy.",
+    "subtitle": "Stay focus, take mindful breaks, and end your day with clear head."
+  },
+  "benefits": {
+    "sectionTitle": "A calmer way to focus, work and grow.",
+    "items": {
+      "focus-first": {
+        "badge": "Focus-First Planning",
+        "title": "Plan your day with intention",
+        "paragraph": "Start your day by picking your Frog, the one task wey really matter. No clutter, no wahala. Just calm, focus energy."
+      },
+      "pomodoro-rhythm": {
+        "badge": "Gentle Pomodoro Rhythm",
+        "title": "Work for focus sprints, rest with care",
+        "paragraph": "Find your natural rhythm. Focus deep, take mindful breaks, and keep your energy steady the whole day."
+      },
+      "mood-aware": {
+        "badge": "Mood-Aware Productivity",
+        "title": "Stay connected to how you dey feel",
+        "paragraph": "Your energy dey shape your focus. Use mood check-ins and mini-Frogs to stay aligned and dey kind to yourself, even for hard days."
+      },
+      "progress-tracking": {
+        "badge": "Gentle Progress Tracking",
+        "title": "Reflect, log, and grow your focus",
+        "paragraph": "End your day calm by noting your wins and insights. See your streaks and the Frogs wey you don finish, because every small step forward dey count."
+      }
+    }
+  },
+  "features": {
+    "badge": "Features",
+    "title": "Gentle tools to support your focus",
+    "subtitle": "Every feature na to help you plan, work, and reflect with intention, without noise or burnout.",
+    "items": {
+      "daily-planner": {
+        "title": "Daily Planner",
+        "description": "Plan your day with calm and clarity; task wey you no finish go roll over by itself."
+      },
+      "focus-timer": {
+        "title": "Focus Timer",
+        "description": "Stay focus with Pomodoro sessions and mindful breaks to recharge."
+      },
+      "quick-notes": {
+        "title": "Quick Notes",
+        "description": "Catch your thoughts sharp-sharp, clear your mind without losing flow."
+      },
+      "vibe-switcher": {
+        "title": "Vibe Switcher",
+        "description": "Switch your language and vibe, from calm English to relaxed Naijá, Igbo, Yorùbá, Hausa, or French. Work the way you feel."
+      },
+      "mood-checkin": {
+        "title": "Mood Check-In",
+        "description": "Check your mood, talk how you dey feel for seconds."
+      },
+      "frog-selection": {
+        "title": "Frog Selection",
+        "description": "Pick your day's “Frog”, the one task wey dey move you forward."
+      },
+      "mindful-breaks": {
+        "title": "Mindful Breaks",
+        "description": "Rest with intention; stretch, breathe, or drink water during breaks."
+      },
+      "reflection": {
+        "title": "End-of-Day Reflection",
+        "description": "Reflect on your wins and insights, end your day feeling grounded."
+      }
+    }
+  },
+  "howItWorks": {
+    "badge": "How E Dey Work",
+    "title": "Flow through your day with ease.",
+    "subtitle": "Find your rhythm, plan with clarity, focus with calm, and end your day with intention.",
+    "items": {
+      "check-mood": {
+        "title": "1.  Check Your Mood",
+        "description": "Start your day with quick mood check-in to tune into your energy."
+      },
+      "plan-day": {
+        "title": "2.  Plan Your Day",
+        "description": "Pick your Frog, your most important task, and set your focus for the day."
+      },
+      "start-sprint": {
+        "title": "3.  Start a Sprint",
+        "description": "Work for calm, focus sprints with gentle breaks wey go recharge your mind."
+      },
+      "reflect": {
+        "title": "4.  Reflect & Grow",
+        "description": "End your day with calm reflection. Celebrate your wins and reset for tomorrow."
+      }
+    }
+  },
+  "whoItsFor": {
+    "badge": "Who e dey for",
+    "title": "Your flow, your way",
+    "subtitle": "Different paths, same goal: calm, meaningful progress without burnout.",
+    "loading": "Your flow dey load…",
+    "imageUnavailable": "Image no dey available",
+    "items": {
+      "student": {
+        "label": "Students & Learners",
+        "headline": "Learn with focus",
+        "bullets": [
+          "Start every session with the Frog method to tackle wetin matter most.",
+          "Study or practice for 25-minute sprints, short mindful bursts wey dey build consistency.",
+          "Stay aware of your energy to learn better, no be just longer."
+        ]
+      },
+      "professional": {
+        "label": "Professional",
+        "headline": "Work with clarity",
+        "bullets": [
+          "Stay away from distraction with focus sprints and gentle breaks.",
+          "Catch ideas sharp-sharp with Quick Notes before dem fade.",
+          "End your day with calm reflection and clear next steps."
+        ]
+      },
+      "creator": {
+        "label": "Creator",
+        "headline": "Create with flow",
+        "bullets": [
+          "Use Mini-Frogs for short, focus creative bursts.",
+          "Build steady progress with streaks and mindful tracking.",
+          "Keep big tasks for when your energy dey highest."
+        ]
+      },
+      "well": {
+        "label": "Wellness seeker",
+        "headline": "Live with balance",
+        "bullets": [
+          "Match Focuspond tone to your mood with the Vibe Switcher.",
+          "Start with one Frog to stay grounded and avoid wahala.",
+          "Take mindful breaks to bring back focus and calm."
+        ]
+      }
+    }
+  },
+  "testimonials": {
+    "badge": "Voices From The Pond",
+    "title": "Wetin our early users dey talk",
+    "subtitle": "FocusPond dey give users space to think, plan, and stay on track.",
+    "items": {
+      "rita": {
+        "name": "Rita O.",
+        "role": "Student",
+        "quote": "Focuspond helep me finally stop to dey procrastinate my final year project. The vibe switcher? Na underrated magic."
+      },
+      "james": {
+        "name": "James S.",
+        "role": "Software Engineer",
+        "quote": "I don use plenty productivity tools, but na this one dey really make me wan work. E calm and intentional."
+      },
+      "chiamaka": {
+        "name": "Chiamaka O.",
+        "role": "Product Designer",
+        "quote": "Starting with my Frog of the Day change everything. Now I stop to dey overthink and just start."
+      },
+      "isabel": {
+        "name": "Isabel U.",
+        "role": "Researcher",
+        "quote": "Offline support mean say I fit carry am anywhere. E helep me stay consistent even during travel."
+      }
+    }
+  },
+  "faqs": {
+    "badge": "FAQs",
+    "title": "Questions wey people dey always ask",
+    "subtitle": "Everything wey you need to know to start with FocusPond.",
+    "stillHaveQuestions": "You still get questions?",
+    "contactUs": "Contact Us",
+    "items": {
+      "what-is": {
+        "question": "Wetin be FocusPond?",
+        "answer": "FocusPond na your quiet corner of the internet to plan, focus, and feel less overwhelmed. Na calm productivity space with tools like Pomodoro timer, daily tasks, Frog of the Day, and gentle mood check-ins, all to helep you work with ease, no be pressure."
+      },
+      "is-free": {
+        "question": "FocusPond free?",
+        "answer": "Yes, FocusPond free completely as we still dey our early stage. You go always get access to the essentials, even when premium features come later."
+      },
+      "offline": {
+        "question": "E dey work offline?",
+        "answer": "Yes, you fit use FocusPond even without internet. Your data dey safe for your device and e go sync online when you create account."
+      },
+      "frog-of-day": {
+        "question": "Wetin be the 'Frog of the Day'?",
+        "answer": "Your Frog of the Day na the most important task wey you choose to tackle first. E no be about urgency, na about doing the one thing wey go make your day feel productive and calm."
+      },
+      "identify-frog": {
+        "question": "How I go take identify 'Frog task'?",
+        "answer": "Frog task na the one wey you don dey postpone, usually because e feel big or important. E suppose take around 1 to 4 hours. If e feel too much, break am into small steps and start with the first one."
+      },
+      "no-account": {
+        "question": "I fit use FocusPond without creating account?",
+        "answer": "Yes. You fit start to use FocusPond straight away without signing up; everything wey you do dey save for your device. Creating account later just dey helep you back up your progress and sync am across devices."
+      },
+      "vibe-switcher": {
+        "question": "Wetin be the vibe switcher?",
+        "answer": "E dey let you choose how the app dey talk to you and for which language, calm and formal for English, relaxed for Naijá (Pidgin), or for Igbo, Yorùbá, Hausa, or French. Pick the vibe wey match your mood for the day."
+      }
+    }
+  },
+  "cta": {
+    "title": "Start your day with clarity",
+    "subtitle": "No account needed. E dey work offline. Zero pressure."
+  }
+}

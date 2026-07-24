@@ -1,0 +1,9 @@
+{
+  "tabs": {
+    "all": "Tout",
+    "today": "Aujourd'hui",
+    "week": "Semaine",
+    "backlog": "En attente",
+    "completed": "Terminé"
+  }
+}
