@@ -1,42 +1,36 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { TaskAccordion } from "@/features/tasks/components/TaskAccordion";
+import PageHeader from "@/features/tasks/components/PageHeader";
+import type { Task } from "@/features/tasks/types/task";
 
 export default function AllPage() {
-  // const todayTasks = [
-  //   { id: "1", title: "Check in with mood", completed: false },
-  //   { id: "2", title: "Use mood suggestion to work or not", completed: false },
-  //   { id: "3", title: "Explore pomodoro timer", completed: true },
-  // ];
+  const t = useTranslations("tasks.page");
+
+  // See TodayPage — no task store yet, so every group renders empty.
+  const tasks: Task[] = [];
 
   return (
-    <div className="max-w-4xl mx-auto space-y-0 md:mx-0">
-      <TaskAccordion
-        title="Today"
-        taskCount={0}
-        totalTasks={0}
-        tasks={[]}
-        defaultOpen={true}
-        onAddTask={() => console.log("Add today task")}
-      />
+    <div className="mx-auto w-full max-w-4xl">
+      <PageHeader title={t("all")} />
 
-      <TaskAccordion
-        title="This week"
-        taskCount={0}
-        totalTasks={0}
-        tasks={[]}
-        defaultOpen={false}
-        onAddTask={() => console.log("Add week task")}
-      />
-
-      <TaskAccordion
-        title="Backlog"
-        taskCount={0}
-        totalTasks={0}
-        tasks={[]}
-        defaultOpen={false}
-        onAddTask={() => console.log("Add backlog task")}
-      />
+      <div className="space-y-8">
+        <TaskAccordion
+          group="today"
+          tasks={tasks}
+        />
+        <TaskAccordion
+          group="week"
+          tasks={tasks}
+          defaultOpen={false}
+        />
+        <TaskAccordion
+          group="backlog"
+          tasks={tasks}
+          defaultOpen={false}
+        />
+      </div>
     </div>
   );
 }

@@ -27,27 +27,21 @@ const Features = () => {
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
             {features.map(
               ({ Icon, iconColor, key }: Feature, index: number) => {
-                const bgColor =
-                  index % 2 === 0
-                    ? "bg-light-background/10"
-                    : "bg-secondary-accent/10";
                 return (
                   <Card
                     key={index}
                     rounded="2xl"
-                    shadow="md"
-                    className={clsx(
-                      "px-6 py-8 border border-light-background/40 relative hover:shadow-lg hover:-translate-y-1 transition-transform duration-200",
-                      bgColor
-                    )}
+                    elevation="e2"
+                    padding="none"
+                    className="relative px-6 py-8 transition-transform duration-200 hover:-translate-y-1 hover:shadow-e3"
                   >
-                    <div className={`${iconColor}/20 absolute -top-4`}>
+                    <div className="absolute -top-4">
                       <Icon className={clsx("w-8 h-8", iconColor)} />
                     </div>
-                    <h3 className="text-lg font-semibold text-center mb-3 font-sora tracking-tight text-[#5a3a24]">
+                    <h3 className="text-lg font-semibold text-center mb-3 font-sora tracking-tight text-ink">
                       {t(`items.${key}.title`)}
                     </h3>
-                    <p className="text-sm font-manrope leading-relaxed text-center text-[#5a3a24]">
+                    <p className="text-sm font-manrope leading-relaxed text-center text-ink-muted">
                       {t(`items.${key}.description`)}
                     </p>
                   </Card>

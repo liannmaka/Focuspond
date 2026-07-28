@@ -1,40 +1,44 @@
 "use client";
 
 import clsx from "clsx";
-import { useEffect, useRef, useState, useTransition } from "react";
-import { useLocale, useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
-import { Check, ChevronDown, Globe } from "lucide-react";
-import { SUPPORTED_LANGUAGES, type Locale } from "@/i18n/config";
-import { setLocaleCookie } from "../lib/locale-cookie";
+import { useEffect, useRef, useState } from "react";
+import { useTheme } from "next-themes";
+import { useTranslations } from "next-intl";
+import { Check, ChevronDown, Monitor, Moon, Sun } from "lucide-react";
 
-type LanguageSwitcherProps = {
+type ThemeOption = "light" | "dark" | "system";
+
+const OPTIONS: { value: ThemeOption; Icon: typeof Sun }[] = [
+  { value: "light", Icon: Sun },
+  { value: "dark", Icon: Moon },
+  { value: "system", Icon: Monitor },
+];
+
+type ThemeToggleProps = {
   /** Vertical direction the menu opens. Defaults to "down". */
   align?: "up" | "down";
   className?: string;
 };
 
 /**
- * The "Vibe Switcher": lets the reader pick the language/tone FocusPond speaks
- * in. Writes the locale cookie and refreshes so server components re-render with
- * the new messages.
+ * Light / dark / system picker. Deliberately shaped like the Vibe Switcher
+ * (`src/features/i18n/components/LanguageSwitcher.tsx`) so the two controls
+ * read as a pair wherever they sit together.
  */
-export default function LanguageSwitcher({
+export default function ThemeToggle({
   align = "down",
   className,
-}: LanguageSwitcherProps) {
-  const t = useTranslations("common.language");
-  const activeLocale = useLocale();
-  const router = useRouter();
-  const [isPending, startTransition] = useTransition();
+}: ThemeToggleProps) {
+  const t = useTranslations("common.theme");
+  const { theme, resolvedTheme, setTheme } = useTheme();
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const active =
-    SUPPORTED_LANGUAGES.find((l) => l.code === activeLocale) ??
-    SUPPORTED_LANGUAGES[0];
+  // The server has no way to know the stored theme, so the trigger icon can
+  // only be resolved after hydration.
+  useEffect(() => setMounted(true), []);
 
-  // Close on outside click / Escape.
   useEffect(() => {
     if (!open) return;
 
@@ -53,12 +57,7 @@ export default function LanguageSwitcher({
     };
   }, [open]);
 
-  const selectLocale = (locale: Locale) => {
-    setOpen(false);
-    if (locale === activeLocale) return;
-    setLocaleCookie(locale);
-    startTransition(() => router.refresh());
-  };
+  const TriggerIcon = !mounted || resolvedTheme !== "dark" ? Sun : Moon;
 
   return (
     <div
@@ -71,14 +70,9 @@ export default function LanguageSwitcher({
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-label={t("choosePrompt")}
-        disabled={isPending}
-        className={clsx(
-          "inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-line bg-surface-raised px-3 py-1.5 text-sm text-ink transition-colors hover:border-accent/50 hover:text-accent-text",
-          isPending && "opacity-70"
-        )}
+        className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-line bg-surface-raised px-3 py-1.5 text-sm text-ink transition-colors hover:border-accent/50 hover:text-accent-text"
       >
-        <Globe className="size-4" />
-        <span className="font-medium">{active.nativeName}</span>
+        <TriggerIcon className="size-4" />
         <ChevronDown
           className={clsx(
             "size-3.5 transition-transform duration-200",
@@ -94,37 +88,40 @@ export default function LanguageSwitcher({
           "absolute right-0 z-50 min-w-52 origin-top rounded-xl border border-line bg-surface-raised p-1.5 shadow-e3 transition-all duration-150",
           align === "up" ? "bottom-full mb-2" : "top-full mt-2",
           open
-            ? "opacity-100 scale-100 pointer-events-auto"
-            : "opacity-0 scale-95 pointer-events-none"
+            ? "pointer-events-auto scale-100 opacity-100"
+            : "pointer-events-none scale-95 opacity-0"
         )}
       >
         <li className="px-2.5 pt-1 pb-1.5 text-[11px] font-medium tracking-wide text-ink-subtle uppercase">
           {t("choosePrompt")}
         </li>
-        {SUPPORTED_LANGUAGES.map((lang) => {
-          const isActive = lang.code === activeLocale;
+        {OPTIONS.map(({ value, Icon }) => {
+          const isActive = mounted && theme === value;
           return (
-            <li key={lang.code}>
+            <li key={value}>
               <button
                 type="button"
                 role="option"
                 aria-selected={isActive}
-                onClick={() => selectLocale(lang.code)}
+                onClick={() => {
+                  setTheme(value);
+                  setOpen(false);
+                }}
                 className={clsx(
-                  "flex w-full cursor-pointer items-center justify-between gap-3 rounded-lg px-2.5 py-2 text-left text-sm transition-colors",
+                  "flex w-full cursor-pointer items-center gap-3 rounded-lg px-2.5 py-2 text-left text-sm transition-colors",
                   isActive
                     ? "bg-accent-soft text-accent-text"
                     : "text-ink hover:bg-ambient-soft"
                 )}
               >
+                <Icon className="size-4 shrink-0" />
                 <span className="flex flex-col">
-                  <span className="font-medium">{lang.nativeName}</span>
+                  <span className="font-medium">{t(`${value}.label`)}</span>
                   <span className="text-xs text-ink-subtle">
-                    {lang.name}
-                    {lang.vibeLabel ? ` · ${lang.vibeLabel}` : ""}
+                    {t(`${value}.hint`)}
                   </span>
                 </span>
-                {isActive && <Check className="size-4 shrink-0" />}
+                {isActive && <Check className="ml-auto size-4 shrink-0" />}
               </button>
             </li>
           );

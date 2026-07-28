@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { FieldError } from "@/components/ui";
 
 const WaitForm = z.object({
   email: z.email({ message: "Please enter a valid email address" }),
@@ -23,7 +24,7 @@ const SubmitButton = ({ isSubmitting, isValid }: SubmitButtonProps) => {
       type="submit"
       aria-label="Submit waitlist"
       disabled={isSubmitting || !isValid}
-      className="font-sora cursor-pointer bg-accent-button px-4 py-2.5 rounded-full m-2 text-white relative overflow-hidden font-medium group ring-4 ring-base-background shadow disabled:bg-accent-button/70 disabled:cursor-not-allowed min-w-28"
+      className="font-sora cursor-pointer bg-accent hover:bg-accent-hover px-4 py-2.5 rounded-full m-2 text-accent-ink relative overflow-hidden font-medium group ring-4 ring-surface shadow-e1 disabled:opacity-50 disabled:cursor-not-allowed min-w-28"
     >
       <span className="relative z-10">
         {isSubmitting ? "Joining…" : "Join waitlist"}
@@ -76,14 +77,16 @@ const WaitlistForm = () => {
       className="max-w-xs mx-auto"
     >
       <div className="block mb-2">
-        <div className="text-xs flex w-full rounded-full overflow-hidden border border-light-background/40 bg-white/80 font-manrope">
+        <div className="text-xs flex w-full rounded-full overflow-hidden border border-line bg-surface-raised font-manrope focus-within:border-accent">
           <input
             {...register("email")}
             type="email"
             name="email"
             placeholder="Your email"
             required
-            className="flex-1 px-4 py-3 bg-transparent text-gray-700 focus:outline-none placeholder:text-xs"
+            aria-invalid={!!errors.email}
+            aria-describedby={errors.email ? "waitlist-email-error" : undefined}
+            className="flex-1 px-4 py-3 bg-transparent text-ink placeholder:text-ink-subtle focus:outline-none placeholder:text-xs"
           />
           <SubmitButton
             isSubmitting={isSubmitting}
@@ -91,9 +94,9 @@ const WaitlistForm = () => {
           />
         </div>
         {errors.email && (
-          <p className="text-red-600 text-[10px] mt-1">
+          <FieldError id="waitlist-email-error">
             {errors.email.message}
-          </p>
+          </FieldError>
         )}
       </div>
 

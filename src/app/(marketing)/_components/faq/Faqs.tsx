@@ -21,7 +21,7 @@ const Faqs = () => {
   const rightFaqs = faqs.filter((_, idx) => idx % 2 === 1);
 
   return (
-    <div className="bg-secondary-accent/10">
+    <div className="bg-ambient/8">
       <section
         className="relative pt-8 pb-16"
         id="faqs"
@@ -78,13 +78,13 @@ const Faqs = () => {
             </div>
           </div>
 
-          <div className="text-center mt-12 font-sora text-[#5a3a24]">
+          <div className="text-center mt-12 font-sora text-ink">
             <p className="font-medium text-sm">{t("stillHaveQuestions")}</p>
             <Link
               href="/contact"
-              className="relative text-xs underline underline-offset-4 decoration-[#5a3a24]/50
+              className="relative text-xs text-ink-muted underline underline-offset-4 decoration-line-strong
                 after:absolute after:left-0 after:-bottom-0.5
-                after:w-0 after:h-[1.5px] after:bg-[#5a3a24]
+                after:w-0 after:h-[1.5px] after:bg-accent
                 after:transition-all after:duration-300
                 hover:after:w-full"
             >

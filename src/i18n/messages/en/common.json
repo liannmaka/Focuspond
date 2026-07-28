@@ -13,6 +13,52 @@
     "vibeSwitcher": "Vibe Switcher",
     "choosePrompt": "Choose your vibe"
   },
+  "theme": {
+    "label": "Theme",
+    "choosePrompt": "Choose your light",
+    "light": {
+      "label": "Light",
+      "hint": "Morning on the water"
+    },
+    "dark": {
+      "label": "Dark",
+      "hint": "Deep water"
+    },
+    "system": {
+      "label": "System",
+      "hint": "Follows your device"
+    }
+  },
+  "auth": {
+    "backHome": "Back to home",
+    "notWired": "Accounts aren't connected yet — this form doesn't submit anywhere.",
+    "fields": {
+      "name": "Name",
+      "namePlaceholder": "Your name",
+      "email": "Email",
+      "emailPlaceholder": "you@example.com",
+      "password": "Password",
+      "passwordPlaceholder": "At least 8 characters"
+    },
+    "login": {
+      "title": "Welcome back",
+      "subtitle": "Pick up where the pond left off.",
+      "submit": "Sign in",
+      "altPrompt": "New to FocusPond?",
+      "altLink": "Create an account"
+    },
+    "signup": {
+      "title": "Start your pond",
+      "subtitle": "One task a day, chosen with intention.",
+      "submit": "Create account",
+      "altPrompt": "Already have an account?",
+      "altLink": "Sign in"
+    },
+    "guest": {
+      "prompt": "Or skip it for now",
+      "link": "Continue as guest"
+    }
+  },
   "app": {
     "guestMode": "Guest Mode",
     "setMood": "Set your mood",

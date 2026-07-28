@@ -17,7 +17,13 @@ export const defaultLocale: Locale = "en";
  * (`src/i18n/messages/{locale}/{namespace}.json`). Add new surfaces here as the
  * app grows; the loader merges them into one message tree per request.
  */
-export const namespaces = ["common", "nav", "marketing", "mood"] as const;
+export const namespaces = [
+  "common",
+  "nav",
+  "marketing",
+  "mood",
+  "tasks",
+] as const;
 
 export type Namespace = (typeof namespaces)[number];
 

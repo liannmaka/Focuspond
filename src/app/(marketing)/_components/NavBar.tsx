@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { navLinks } from "@/data/landing-page/navigation";
 import { useTranslations } from "next-intl";
 import LanguageSwitcher from "@/features/i18n/components/LanguageSwitcher";
+import ThemeToggle from "@/features/theme/components/ThemeToggle";
 
 const NavBar = () => {
   const t = useTranslations("marketing.nav");
@@ -23,7 +24,7 @@ const NavBar = () => {
 
   const linkLabelStyles = "font-sora text-sm tracking-wide";
 
-  const activeLink = "font-medium text-accent-button";
+  const activeLink = "font-medium text-accent-text";
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -85,9 +86,9 @@ const NavBar = () => {
   return (
     <header
       className={clsx(
-        "bg-base-background/80 fixed top-4 left-4 right-4 z-50 rounded-xl backdrop-blur-md px-6 transition-transform duration-300 ease-in-out",
+        "bg-surface/80 fixed top-4 left-4 right-4 z-50 rounded-xl backdrop-blur-md px-6 transition-transform duration-300 ease-in-out",
         isVisible
-          ? "translate-y-0 shadow-md"
+          ? "translate-y-0 shadow-e2"
           : "-translate-y-[calc(100%+1rem)] shadow-none"
       )}
     >
@@ -104,7 +105,7 @@ const NavBar = () => {
             aria-label="Go to the homepage"
           >
             <span>Focus</span>
-            <span className="text-accent-button">Pond</span>
+            <span className="text-accent-text">Pond</span>
           </Link>
         </div>
 
@@ -137,6 +138,7 @@ const NavBar = () => {
 
         {/* Vibe Switcher + Button */}
         <div className="hidden lg:flex items-center gap-3">
+          <ThemeToggle />
           <LanguageSwitcher />
           <SignupButton />
         </div>
@@ -148,7 +150,7 @@ const NavBar = () => {
             aria-expanded={isOpen}
             aria-controls="mobile-menu"
             aria-label="Toggle navigation menu"
-            className="cursor-pointer bg-light-background text-dark-accent p-1 rounded-md hover:scale-[1.04]"
+            className="cursor-pointer bg-ambient-soft text-ink p-1 rounded-md hover:scale-[1.04]"
           >
             {isOpen ? <X /> : <Menu />}
           </button>
@@ -183,7 +185,7 @@ const NavBar = () => {
                 }}
                 className={clsx(
                   linkStyles,
-                  "link-animation py-2 rounded-md border border-dark-accent cursor-pointer",
+                  "link-animation py-2 rounded-md border border-line-strong cursor-pointer",
                   activeSection === href ? activeLink : ""
                 )}
                 aria-label={t(href)}
@@ -200,6 +202,7 @@ const NavBar = () => {
 
           {/* Vibe Switcher + Button */}
           <div className="flex items-center justify-between gap-3 pb-5">
+            <ThemeToggle />
             <LanguageSwitcher />
             <SignupButton />
           </div>

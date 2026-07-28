@@ -6,7 +6,7 @@ export default function LandingPageLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="bg-base-background text-dark-accent">
+    <div className="bg-surface text-ink">
       <NavBar />
       <main className="pt-(--header-height)">
         <div>{children}</div>

@@ -13,6 +13,52 @@
     "vibeSwitcher": "Changer d'ambiance",
     "choosePrompt": "Choisissez votre ambiance"
   },
+  "theme": {
+    "label": "Thème",
+    "choosePrompt": "Choisissez votre lumière",
+    "light": {
+      "label": "Clair",
+      "hint": "Le matin sur l'eau"
+    },
+    "dark": {
+      "label": "Sombre",
+      "hint": "Eau profonde"
+    },
+    "system": {
+      "label": "Système",
+      "hint": "Suit votre appareil"
+    }
+  },
+  "auth": {
+    "backHome": "Retour à l'accueil",
+    "notWired": "Les comptes ne sont pas encore connectés — ce formulaire n'envoie rien.",
+    "fields": {
+      "name": "Nom",
+      "namePlaceholder": "Votre nom",
+      "email": "E-mail",
+      "emailPlaceholder": "vous@exemple.com",
+      "password": "Mot de passe",
+      "passwordPlaceholder": "Au moins 8 caractères"
+    },
+    "login": {
+      "title": "Bon retour",
+      "subtitle": "Reprenez là où l'étang s'était arrêté.",
+      "submit": "Se connecter",
+      "altPrompt": "Nouveau sur FocusPond ?",
+      "altLink": "Créer un compte"
+    },
+    "signup": {
+      "title": "Créez votre étang",
+      "subtitle": "Une tâche par jour, choisie avec intention.",
+      "submit": "Créer un compte",
+      "altPrompt": "Vous avez déjà un compte ?",
+      "altLink": "Se connecter"
+    },
+    "guest": {
+      "prompt": "Ou passez pour l'instant",
+      "link": "Continuer en tant qu'invité"
+    }
+  },
   "app": {
     "guestMode": "Mode invité",
     "setMood": "Définir votre humeur",

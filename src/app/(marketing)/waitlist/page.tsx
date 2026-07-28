@@ -14,8 +14,7 @@ export default function WaitlistPage() {
             <h1 className="text-3xl font-sora lg:text-4xl">
               Focus deeply. Rest intentionally.
             </h1>
-            {/* my-5 font-manrope text-[15px] text-dark-accent/90 */}
-            <p className="my-5 font-manrope text-[15px] text-dark-accent/90">
+            <p className="my-5 font-manrope text-[15px] text-ink-muted">
               Be the first to experience FocusPond when we launch.
             </p>
           </div>
@@ -27,19 +26,13 @@ export default function WaitlistPage() {
               <Card
                 key={index}
                 rounded="2xl"
-                shadow="md"
-                className={clsx(
-                  "border border-light-background/40 relative hover:shadow-lg bg-white/80"
-                )}
+                elevation="e2"
+                className="relative hover:shadow-e3"
               >
-                <div
-                  className={
-                    "absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-accent-button p-3 ring-4 ring-base-background shadow"
-                  }
-                >
-                  <Icon className={clsx("w-3 h-3 text-white")} />
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-accent p-3 ring-4 ring-surface shadow-e1">
+                  <Icon className={clsx("w-3 h-3 text-accent-ink")} />
                 </div>
-                <p className="mt-3 px-3 font-bold text-sm font-manrope leading-relaxed text-center">
+                <p className="mt-3 px-3 font-bold text-sm font-manrope leading-relaxed text-center text-ink">
                   {benefit}
                 </p>
               </Card>

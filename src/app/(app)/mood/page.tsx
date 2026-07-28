@@ -78,7 +78,7 @@ export default function MoodCheckIn() {
 
   return (
     // container for mood check-in component
-    <div className="bg-base-background text-dark-accent grid grid-cols-1 lg:grid-cols-[55%_45%] min-h-screen w-full overflow-hidden">
+    <div className="bg-surface text-ink grid grid-cols-1 lg:grid-cols-[55%_45%] min-h-screen w-full overflow-hidden">
       {/* left column */}
       <div className="flex flex-col items-center pb-12 pt-8 md:pt-14 px-8 overflow-y-auto max-h-screen hide-scrollbar">
         <div>
@@ -89,16 +89,16 @@ export default function MoodCheckIn() {
             </div>
             <div className="font-sora text-2xl font-semibold tracking-tight -ml-2 pt-1">
               <span>Focus</span>
-              <span className="text-accent-button">Pond</span>
+              <span className="text-accent-text">Pond</span>
             </div>
           </div>
 
           <div className="space-y-6 mt-9">
-            <h1 className="font-sora text-3xl sm:text-4xl font-semibold text-center text-dark-accent/95">
+            <h1 className="font-sora text-3xl sm:text-4xl font-semibold text-center text-ink">
               {t("welcome")}
             </h1>
             <div className="text-center space-y-5">
-              <p className="font-manrope text-sm sm:text-base text-dark-accent/70">
+              <p className="font-manrope text-sm sm:text-base text-ink-muted">
                 {t("intro")}
               </p>
 
@@ -116,36 +116,33 @@ export default function MoodCheckIn() {
               <button
                 key={mood.id}
                 onClick={() => handleMoodSelect(mood)}
+                aria-pressed={isSelected}
                 className={cn(
                   "w-full p-4 md:p-5 rounded-2xl cursor-pointer text-left items-center md:flex",
-                  !isSelected && ["hover:translate-x-1"],
-                  isSelected ? "scale-[1.02]" : "scale-100"
+                  "border-2 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]",
+                  isSelected
+                    ? "scale-[1.02] shadow-e2"
+                    : "scale-100 border-line bg-surface-raised shadow-e1 hover:translate-x-1"
                 )}
-                style={{
-                  border: isSelected
-                    ? `2.5px solid ${mood.colors.dark}`
-                    : "2px solid rgba(255, 229, 180, 0.4)",
-                  backgroundColor: isSelected
-                    ? `${mood.colors.light}40`
-                    : "white",
-                  transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                  transform:
-                    selectedMood?.id === mood.id ? "scale(1.02)" : "scale(1)",
-                  boxShadow: isSelected
-                    ? `0 8px 24px ${mood.colors.dark}30`
-                    : "0 2px 8px rgba(0,0,0,0.04)",
-                }}
+                style={
+                  isSelected
+                    ? {
+                        borderColor: mood.colors.accent,
+                        backgroundColor: mood.colors.soft,
+                      }
+                    : undefined
+                }
               >
                 <div className="md:flex-1 md:text-left text-center">
                   <div
                     className="font-sora text-base font-semibold mb-2"
-                    style={{
-                      color: isSelected ? mood.colors.dark : "#8B5E3C",
-                    }}
+                    style={
+                      isSelected ? { color: mood.colors.accent } : undefined
+                    }
                   >
                     {mood.id ? t(`moods.${mood.id}.label`) : mood.label}
                   </div>
-                  <div className="font-manrope text-dark-accent/70 text-[13px]">
+                  <div className="font-manrope text-ink-muted text-[13px]">
                     {mood.id
                       ? t(`moods.${mood.id}.description`)
                       : mood.description}
@@ -153,10 +150,9 @@ export default function MoodCheckIn() {
                 </div>
                 {isSelected && (
                   <div
-                    className="w-6 h-6 rounded-full hidden md:flex justify-center items-center text-white text-[13px] font-semibold"
-                    style={{
-                      backgroundColor: mood.colors.dark,
-                    }}
+                    className="w-6 h-6 shrink-0 rounded-full hidden md:flex justify-center items-center text-[13px] font-semibold text-surface-raised"
+                    style={{ backgroundColor: mood.colors.accent }}
+                    aria-hidden
                   >
                     ✓
                   </div>
@@ -171,13 +167,9 @@ export default function MoodCheckIn() {
             onClick={handleMoodSubmit}
             disabled={!selectedMood || isLoading}
             className={cn(
-              "relative overflow-hidden font-medium group w-full max-w-sm mx-auto mb-6 p-4 transition-all duration-300 ease-in-out font-sora bg-accent-button border-none rounded-lg text-base text-white cursor-pointer hover:-translate-y-0.5 hover:shadow-lg focus:outline-none",
-              (!selectedMood || isLoading) &&
-                "bg-accent-button/70 cursor-not-allowed"
+              "relative overflow-hidden font-medium group w-full max-w-sm mx-auto mb-6 p-4 transition-all duration-300 ease-in-out font-sora bg-accent border-none rounded-lg text-base text-accent-ink shadow-e2 cursor-pointer hover:bg-accent-hover hover:-translate-y-0.5 hover:shadow-e3",
+              (!selectedMood || isLoading) && "opacity-50 pointer-events-none"
             )}
-            style={{
-              boxShadow: "0 4px 16px rgba(255, 148, 114, 0.3)",
-            }}
           >
             <span className="relative z-10">
               {isLoading ? t("saving") : t("continue")}
@@ -186,7 +178,7 @@ export default function MoodCheckIn() {
           </button>
           <button
             onClick={handleSkip}
-            className="bg-transparent text-dark-accent border-none font-medium text-[13px] cursor-pointer font-sora opacity-60 transition-opacity duration-300 ease-in-out hover:opacity-100"
+            className="bg-transparent text-ink-muted border-none font-medium text-[13px] cursor-pointer font-sora transition-colors duration-300 ease-in-out hover:text-ink"
           >
             <span>{t("skip")}</span>
           </button>
@@ -196,99 +188,64 @@ export default function MoodCheckIn() {
       {/* right column */}
       <div className="hidden lg:block sticky top-0 h-screen">
         <div
-          className="h-full rounded-l-[60px] flex items-center justify-center relative overflow-hidden"
-          style={{
-            backgroundColor: selectedMood
-              ? selectedMood.colors.light
-              : "#F5F5F0",
-            transition: "background 0.6s cubic-bezier(0.4, 0, 0.2, 1)",
-          }}
+          className="h-full rounded-l-[60px] flex items-center justify-center relative overflow-hidden bg-surface-sunken transition-colors duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]"
+          style={
+            selectedMood
+              ? { backgroundColor: selectedMood.colors.soft }
+              : undefined
+          }
         >
-          {selectedMood ? (
-            <div>
-              {/* Decorative gradient overlay */}
-              <div
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  background: `radial-gradient(circle at 50% 50%, ${selectedMood.colors.dark}20 0%, transparent 70%)`,
-                  transition: "background 0.6s ease",
-                }}
-              />
+          {/* The drop lands where the mood does — ripples read out from centre. */}
+          <div
+            className="ripple-field pointer-events-none absolute inset-0 [--ripple-origin:50%_50%]"
+            aria-hidden
+          />
 
-              {/* Lottie Animation */}
+          {selectedMood ? (
+            <div className="relative z-10 flex flex-col items-center">
               <div
+                className="mood-float grid size-70 place-items-center rounded-full"
                 style={{
-                  width: "400px",
-                  height: "400px",
-                  position: "relative",
-                  zIndex: 1,
-                  transition: "transform 0.3s ease",
-                  animation: "float 3s ease-in-out infinite",
+                  backgroundColor: `color-mix(in oklch, ${selectedMood.colors.accent} 12%, transparent)`,
                 }}
               >
-                <style>
-                  {`
-              @keyframes float {
-                0%, 100% { transform: translateY(0px); }
-                50% { transform: translateY(-20px); }
-              }
-            `}
-                </style>
-                {/* In production, use actual Lottie component:
-          <Lottie 
-            animationData={selectedMood.animation}
-            loop={true}
-            autoplay={true}
-          /> */}
-
-                {/* Fallback large emoji for demo */}
-                <div
-                  style={{
-                    fontSize: "240px",
-                    textAlign: "center",
-                    lineHeight: "400px",
-                    filter: "drop-shadow(0 10px 40px rgba(0,0,0,0.1))",
-                  }}
+                {/* Placeholder until the mood Lotties exist — see
+                    public/lotties/ and the `animation` field on each MOOD. */}
+                <span
+                  className="text-[7rem] leading-none"
+                  aria-hidden
                 >
                   {selectedMood.emoji}
-                </div>
+                </span>
               </div>
 
-              {/* Mood label */}
-              <div className="text-center">
-                <div
-                  className="font-sora"
-                  style={{
-                    fontSize: "28px",
-                    fontWeight: "600",
-                    color: selectedMood.colors.dark,
-                    marginBottom: "8px",
-                    textShadow: "0 2px 8px rgba(255,255,255,0.8)",
-                  }}
+              <div className="mt-10 text-center">
+                <p
+                  className="font-sora text-2xl font-semibold"
+                  style={{ color: selectedMood.colors.accent }}
                 >
                   {selectedMood.id
                     ? t(`moods.${selectedMood.id}.label`)
                     : selectedMood.label}
-                </div>
-                <div
-                  className="font-manrope"
-                  style={{
-                    fontSize: "16px",
-                    color: selectedMood.colors.emoji,
-                    opacity: 0.8,
-                  }}
-                >
+                </p>
+                <p className="mt-1.5 font-manrope text-sm text-ink-muted">
                   {selectedMood.id
                     ? t(`moods.${selectedMood.id}.description`)
                     : selectedMood.description}
-                </div>
+                </p>
               </div>
             </div>
           ) : (
-            <div className="text-center text-dark-accent/40">
-              <div className="text-6xl mb-4">🐸</div>
-              <p className="text-lg font-medium">{t("selectPrompt")}</p>
+            <div className="relative z-10 flex flex-col items-center text-center">
+              <span
+                className="mood-float grid size-70 place-items-center rounded-full bg-ambient-soft text-[7rem] leading-none"
+                aria-hidden
+              >
+                🐸
+              </span>
+              <p className="mt-10 font-sora text-lg font-medium text-ink-muted">
+                {t("selectPrompt")}
+              </p>
             </div>
           )}
         </div>

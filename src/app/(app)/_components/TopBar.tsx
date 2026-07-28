@@ -5,6 +5,7 @@ import { User, Bell, Search, MoreVertical, Smile } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import LanguageSwitcher from "@/features/i18n/components/LanguageSwitcher";
+import ThemeToggle from "@/features/theme/components/ThemeToggle";
 
 export default function TopBar({ className }: { className?: string }) {
   const t = useTranslations("common.app");
@@ -29,7 +30,7 @@ export default function TopBar({ className }: { className?: string }) {
 
   return (
     <header
-      className={`bg-white/95 border-b border-dark-accent/15 pt-[env(safe-area-inset-top)] ${className}`}
+      className={`bg-surface-overlay border-b border-line pt-[env(safe-area-inset-top)] ${className}`}
     >
       <div className="px-4 flex items-center md:justify-between">
         {/* left column */}
@@ -77,7 +78,7 @@ export default function TopBar({ className }: { className?: string }) {
               />
             </div>
 
-            <button className="px-3 py-1.5 bg-accent-button text-white rounded-lg font-sora text-xs font-medium active:scale-95 transition-transform cursor-pointer hover:-translate-y-0.5">
+            <button className="px-3 py-1.5 bg-accent-button text-accent-ink rounded-lg font-sora text-xs font-medium active:scale-95 transition-transform cursor-pointer hover:-translate-y-0.5">
               {t("signIn")}
             </button>
           </div>
@@ -99,7 +100,7 @@ export default function TopBar({ className }: { className?: string }) {
             {/* Search Dropdown */}
 
             {isSearchOpen && (
-              <div className="absolute top-14 right-0 w-[calc(100vw-2rem)] max-w-md bg-white rounded-xl shadow-xl border border-dark-accent/15 p-4 animate-in slide-in-from-top-2 duration-200">
+              <div className="absolute top-14 right-0 w-[calc(100vw-2rem)] max-w-md bg-surface-raised rounded-xl shadow-e3 border border-line p-4 animate-in slide-in-from-top-2 duration-200">
                 <div className="flex items-center gap-2 my-1">
                   <Search className="w-4 h-4 text-dark-accent" />
                   <input
@@ -117,7 +118,8 @@ export default function TopBar({ className }: { className?: string }) {
               <Bell size={18} />
             </button>
 
-            {/* Vibe Switcher */}
+            {/* Vibe Switcher + light/dark */}
+            <ThemeToggle />
             <LanguageSwitcher className="hidden sm:block" />
 
             {/* More Menu */}

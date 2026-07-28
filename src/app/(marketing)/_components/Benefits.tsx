@@ -34,7 +34,7 @@ const StickyScrollBenefits = () => {
             className="relative w-full"
           >
             <div
-              className="hidden md:block absolute inset-y-0 right-0 w-[50%] bg-[#fff0e8]
+              className="hidden md:block absolute inset-y-0 right-0 w-[50%] bg-accent-soft
                          rounded-tl-full rounded-bl-full z-0"
               aria-hidden="true"
             />
@@ -45,7 +45,7 @@ const StickyScrollBenefits = () => {
                 <h3 className="text-2xl md:text-3xl font-sora font-semibold leading-tight">
                   {t(`items.${key}.title`)}
                 </h3>
-                <p className="mt-4 font-manrope text-base md:text-lg lg:text-balance">
+                <p className="mt-4 font-manrope text-base text-ink-muted md:text-lg lg:text-balance">
                   {t(`items.${key}.paragraph`)}
                 </p>
               </div>

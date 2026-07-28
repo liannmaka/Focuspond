@@ -76,7 +76,7 @@ const Testimonial = () => {
   const scrollingTestimonials = [...testimonials, ...testimonials];
 
   return (
-    <section className="relative py-24 bg-secondary-accent/10 overflow-hidden">
+    <section className="relative py-24 bg-ambient/8 overflow-hidden">
       <div className="content-center grid grid-cols-1 lg:grid-cols-2 gap-10">
         {/* Left Column: Title + Description */}
         <div>
@@ -121,7 +121,7 @@ const Testimonial = () => {
 
                 <div className="flex items-center gap-3 mt-6">
                   {/* Placeholder Avatar */}
-                  <div className="w-8 h-8 rounded-full bg-linear-to-br from-[#a8c686]/50 to-[#ff9472]/50" />
+                  <div className="w-8 h-8 rounded-full bg-linear-to-br from-ambient/45 to-accent/45" />
                   <div className="text-sm">
                     <div className="font-semibold text-darker-accent">
                       {t(`items.${testimonial.key}.name`)}

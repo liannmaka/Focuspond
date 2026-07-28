@@ -5,10 +5,17 @@ export type EnergyLevel = "high" | "medium" | "low";
 /** Stable mood ids; also the translation keys under `mood.moods`. */
 export type MoodId = "energized" | "good" | "okay" | "tired";
 
+/**
+ * Colours are CSS variable references, not hex — they resolve per theme from
+ * the `--mood-*` tokens in src/styles/globals.css. The previous literals were
+ * light-mode pastels and turned the whole /mood screen into a white slab in
+ * dark mode.
+ */
 interface MoodColors {
-  light: string;
-  dark: string;
-  emoji: string;
+  /** Saturated mood colour: borders, label, check badge, glow. */
+  accent: string;
+  /** Tinted fill behind the selected card and the illustration panel. */
+  soft: string;
 }
 
 export interface Mood {
@@ -32,9 +39,8 @@ export const MOODS: Mood[] = [
     description: "Feeling unstoppable",
     energyLevel: "high",
     colors: {
-      light: "#FFF4E6", // Light peach (your brand)
-      dark: "#FF9472", // Coral (your brand)
-      emoji: "#FF9472",
+      accent: "var(--mood-energized)",
+      soft: "var(--mood-energized-soft)",
     },
     animation: "bounce",
   },
@@ -46,9 +52,8 @@ export const MOODS: Mood[] = [
     description: "In a good flow",
     energyLevel: "high",
     colors: {
-      light: "#F0F7ED", // Light sage (expanded from your #A8C686)
-      dark: "#A8C686", // Sage green (your brand)
-      emoji: "#6B8E4E",
+      accent: "var(--mood-good)",
+      soft: "var(--mood-good-soft)",
     },
     animation: "pulse",
   },
@@ -60,9 +65,8 @@ export const MOODS: Mood[] = [
     description: "Normal energy",
     energyLevel: "medium",
     colors: {
-      light: "#F5F5F0", // Light gray (neutral)
-      dark: "#B5A896", // Medium gray
-      emoji: "#8B8174",
+      accent: "var(--mood-okay)",
+      soft: "var(--mood-okay-soft)",
     },
     animation: "okay",
   },
@@ -74,9 +78,8 @@ export const MOODS: Mood[] = [
     description: "Low on energy",
     energyLevel: "low",
     colors: {
-      light: "#F2F4F7", // Light blue (cool tone)
-      dark: "#B5C4D6", // Soft blue
-      emoji: "#8096AD",
+      accent: "var(--mood-tired)",
+      soft: "var(--mood-tired-soft)",
     },
     animation: "slow-bounce",
   },

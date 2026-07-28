@@ -1,122 +1,145 @@
-import { Plus, ChevronRight } from "lucide-react";
-import { useState } from "react";
+"use client";
 
-interface Task {
-  id: string;
-  title: string;
-  completed: boolean;
-}
+import { Plus, ChevronRight } from "lucide-react";
+import { useId, useState } from "react";
+import { useTranslations } from "next-intl";
+// Direct paths, not the `@/components/ui` barrel — the barrel drags Card,
+// Input and next/link into every app route that renders a task row.
+import Checkbox from "@/components/ui/Checkbox";
+import Button from "@/components/ui/Button";
+import type { Task, TaskGroup } from "../types/task";
 
 type TaskAccordionProps = {
-  title: string;
-  taskCount: number;
-  totalTasks: number;
+  /** Translation key for the group heading — copy lives in `tasks.groups`. */
+  group: TaskGroup;
   tasks: Task[];
   defaultOpen?: boolean;
   onAddTask?: () => void;
+  onToggleTask?: (id: string, completed: boolean) => void;
 };
 
 export function TaskAccordion({
-  title,
-  taskCount,
-  totalTasks,
+  group,
   tasks,
   defaultOpen = true,
   onAddTask,
+  onToggleTask,
 }: TaskAccordionProps) {
+  const t = useTranslations("tasks");
   const [isOpen, setIsOpen] = useState(defaultOpen);
+  const panelId = useId();
+
+  const label = t(`groups.${group}`);
+  const done = tasks.filter((task) => task.completed).length;
   const isEmpty = tasks.length === 0;
 
   return (
-    <div>
-      {/* Header */}
-      <div className="flex items-center justify-between pt-4 pb-2 border-b border-dark-accent/10">
-        <div className="flex items-center gap-3 flex-1">
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="p-2 transition-transform duration-200 hover:bg-light-background/20 rounded-lg cursor-pointer"
-          >
-            <ChevronRight
-              className={`w-5 h-5 text-dark-accent/80 transition-transform duration-200 ${
-                isOpen ? "rotate-90" : ""
-              }`}
-            />
-          </button>
-
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="font-medium font-sora text-sm text-darker-accent"
-          >
-            {title} {tasks.length ? `(${taskCount} / ${totalTasks})` : ""}
-          </button>
-        </div>
-
+    <section aria-label={label}>
+      <div className="flex items-center gap-2.5 border-b border-line pb-3">
         <button
-          onClick={onAddTask}
-          className="p-2 hover:bg-light-background/20 rounded-lg transition-colors flex items-center gap-2 text-dark-accent cursor-pointer"
+          type="button"
+          onClick={() => setIsOpen((v) => !v)}
+          aria-expanded={isOpen}
+          aria-controls={panelId}
+          className="-ml-1.5 flex cursor-pointer items-center gap-2.5 rounded-lg px-1.5 py-1 transition-colors hover:bg-ambient-soft"
         >
-          <span className="font-sora text-[11px]">Add Task</span>
-          <Plus className="w-4 h-4" />
+          <ChevronRight
+            className={`size-4 shrink-0 text-ink-subtle transition-transform duration-200 ${
+              isOpen ? "rotate-90" : ""
+            }`}
+            aria-hidden
+          />
+          <span className="font-sora text-sm font-semibold text-ink">
+            {label}
+          </span>
+          <span className="sr-only">
+            {t("list.toggleGroup", { group: label })}
+          </span>
         </button>
+
+        {!isEmpty && (
+          <span className="rounded-full bg-ambient-soft px-2 py-0.5 font-sora text-[11px] font-semibold tabular-nums text-ink-muted">
+            {done}/{tasks.length}
+          </span>
+        )}
+
+        <Button
+          variant="ghost"
+          size="xs"
+          onClick={onAddTask}
+          className="ml-auto"
+          rightIcon={
+            <Plus
+              className="size-3.5"
+              aria-hidden
+            />
+          }
+        >
+          {t("list.addTask")}
+        </Button>
       </div>
 
-      {/* Content */}
       <div
-        className={`overflow-hidden transition-all duration-300 ease-in-out ${
-          isOpen ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0"
-        }`}
+        id={panelId}
+        hidden={!isOpen}
+        className="pt-1"
       >
         {isEmpty ? (
-          // Empty State
-          <div className="text-dark-accent/70 py-6 text-center">
-            <p className="text-[13px] font-manrope">No task here</p>
+          <div className="flex flex-col items-center gap-1 px-6 py-10 text-center">
+            {/* A still pond: concentric rings with nothing dropped in yet. */}
+            <span
+              className="mb-2 block size-10 rounded-full border border-line ring-6 ring-ambient-soft"
+              aria-hidden
+            />
+            <p className="font-sora text-sm font-semibold text-ink">
+              {t("list.empty.title")}
+            </p>
+            <p className="text-sm text-ink-subtle">{t("list.empty.body")}</p>
+            <Button
+              variant="ghost"
+              size="xs"
+              onClick={onAddTask}
+              className="mt-2"
+            >
+              {t("list.empty.action")}
+            </Button>
           </div>
         ) : (
-          // Task List
-          <div className="pb-4 pt-4 space-y-2">
+          <ul className="py-1">
             {tasks.map((task) => (
-              <div
+              <li
                 key={task.id}
-                className="flex items-center gap-3 py-3 px-2 hover:bg-light-background/15 rounded-lg transition-colors group cursor-pointer"
+                className="group -mx-2.5 flex items-center gap-3.5 rounded-lg px-2.5 py-2.5 transition-colors not-first:shadow-[inset_0_1px_0_var(--line-soft)] hover:bg-ambient-soft"
               >
-                <button
-                  className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all shrink-0 ${
-                    task.completed
-                      ? "bg-accent-button border-accent-button"
-                      : "border-dark-accent/30 group-hover:border-dark-accent/50"
-                  }`}
-                >
-                  {task.completed && (
-                    <svg
-                      className="w-3 h-3 text-white"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={3}
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
-                  )}
-                </button>
+                <Checkbox
+                  checked={task.completed}
+                  label={task.title}
+                  onChange={(next) => onToggleTask?.(task.id, next)}
+                />
 
                 <span
-                  className={`flex-1 text-[13px] font-manrope ${
-                    task.completed
-                      ? "text-dark-accent/40 line-through"
-                      : "text-dark-accent"
+                  className={`flex-1 text-sm ${
+                    task.completed ? "text-ink-subtle line-through" : "text-ink"
                   }`}
                 >
                   {task.title}
                 </span>
-              </div>
+
+                {task.tag && (
+                  <span className="hidden font-sora text-[10.5px] font-semibold tracking-[0.04em] text-ink-subtle uppercase sm:inline">
+                    {task.tag}
+                  </span>
+                )}
+                {task.estimateMinutes && (
+                  <span className="text-xs tabular-nums text-ink-subtle">
+                    {task.estimateMinutes}m
+                  </span>
+                )}
+              </li>
             ))}
-          </div>
+          </ul>
         )}
       </div>
-    </div>
+    </section>
   );
 }

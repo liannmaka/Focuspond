@@ -43,10 +43,10 @@ const WhoitsFor = () => {
                     onClick={() => setSelected(persona.id)}
                     aria-pressed={active}
                     className={clsx(
-                      "px-3 py-1.5 font-sora rounded-full text-xs font-medium transition-all duration-200 focus:outline-none cursor-pointer",
+                      "px-3 py-1.5 font-sora rounded-full text-xs font-medium transition-all duration-200 cursor-pointer",
                       active
-                        ? "bg-accent-button ring-2 ring-accent-button/40 text-white shadow-sm"
-                        : "bg-white/80 border border-white/80 hover:shadow-sm"
+                        ? "bg-accent ring-2 ring-accent/40 text-accent-ink shadow-e1"
+                        : "bg-surface-raised border border-line text-ink-muted hover:text-ink hover:shadow-e1"
                     )}
                   >
                     {t(`items.${persona.id}.label`)}
@@ -74,7 +74,7 @@ const WhoitsFor = () => {
 
           {/* RIGHT: crossfade */}
           <div className="flex items-center justify-center">
-            <div className="w-full max-w-md h-64 bg-white/80 backdrop-blur-lg rounded-2xl shadow-lg flex items-center justify-center overflow-hidden relative">
+            <div className="w-full max-w-md h-64 bg-surface-raised border border-line rounded-2xl shadow-e2 flex items-center justify-center overflow-hidden relative">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={person.id}
@@ -105,10 +105,10 @@ const WhoitsFor = () => {
                       exit={{ opacity: 0 }}
                       className="flex flex-col items-center justify-center space-y-2"
                     >
-                      <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center">
-                        <span className="text-gray-700 text-sm">👤</span>
+                      <div className="w-16 h-16 bg-surface-sunken rounded-full flex items-center justify-center">
+                        <span className="text-ink-muted text-sm">👤</span>
                       </div>
-                      <p className="text-sm text-gray-700 font-manrope">
+                      <p className="text-sm text-ink-muted font-manrope">
                         {isError ? t("imageUnavailable") : t("loading")}
                       </p>
                     </motion.div>

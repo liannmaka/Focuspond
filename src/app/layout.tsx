@@ -1,9 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
-import { Toaster } from "sonner";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import { MoodSyncListener } from "@/features/mood/components/MoodSyncListener";
+import { ThemeProvider } from "@/features/theme/components/ThemeProvider";
+import { ThemedToaster } from "@/features/theme/components/ThemedToaster";
 import "@/styles/globals.css";
 
 const manrope = localFont({
@@ -92,8 +93,13 @@ export const metadata: Metadata = {
   },
 };
 
+// Matches --surface in src/styles/globals.css for each theme, so the browser
+// chrome blends into the page instead of announcing the accent colour.
 export const viewport: Viewport = {
-  themeColor: "#ff9472",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f1f4f3" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a1211" },
+  ],
 };
 
 export default async function RootLayout({
@@ -107,23 +113,29 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
+    // suppressHydrationWarning is required on <html>: next-themes stamps the
+    // theme class here before React hydrates, so server and client markup
+    // legitimately differ on first paint.
+    <html
+      lang={locale}
+      suppressHydrationWarning
+    >
+      {/* Separately suppressed from <html>: the flag only covers the element it
+          sits on, and browser extensions routinely inject attributes here. */}
       <body
         className={`${manrope.variable} ${sora.variable} antialiased`}
         suppressHydrationWarning
       >
-        <NextIntlClientProvider
-          locale={locale}
-          messages={messages}
-        >
-          {children}
-          <MoodSyncListener />
-          <Toaster
-            position="top-center"
-            closeButton
-            richColors
-          />
-        </NextIntlClientProvider>
+        <ThemeProvider>
+          <NextIntlClientProvider
+            locale={locale}
+            messages={messages}
+          >
+            {children}
+            <MoodSyncListener />
+            <ThemedToaster />
+          </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

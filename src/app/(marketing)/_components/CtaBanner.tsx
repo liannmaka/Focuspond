@@ -12,7 +12,7 @@ const CtaBanner = () => {
         <h2 className="text-2xl sm:text-3xl lg:text-4xl font-sora font-semibold">
           {t("title")}
         </h2>
-        <p className="mt-4 font-manrope text-base sm:text-lg container">
+        <p className="mt-4 font-manrope text-base text-ink-muted sm:text-lg container">
           {t("subtitle")}
         </p>
         <Button
@@ -28,7 +28,7 @@ const CtaBanner = () => {
 
       {/* SVG Curve at Bottom */}
       <div className="absolute bottom-0 left-0 w-full leading-none">
-        <WaveDivider fill="#a8c6861a" />
+        <WaveDivider fillClassName="fill-ambient/8" />
       </div>
     </section>
   );

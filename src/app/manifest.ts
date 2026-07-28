@@ -7,8 +7,10 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "Stay focused and productive with mood-based task suggestions",
     start_url: "/",
     display: "standalone",
-    background_color: "#ffffff",
-    theme_color: "#ff9472",
+    // Both match --surface (light) in src/styles/globals.css so the splash and
+    // browser chrome are continuous with the app's ground.
+    background_color: "#f1f4f3",
+    theme_color: "#f1f4f3",
     icons: [
       {
         src: "/icons/icon-192x192.png",

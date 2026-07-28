@@ -10,7 +10,7 @@ export default function BottomNav() {
   const t = useTranslations("nav.tabs");
 
   return (
-    <nav className="bg-white border-t border-dark-accent/15 h-16">
+    <nav className="bg-surface-overlay border-t border-line h-16">
       <div className="flex items-center justify-between px-4">
         {tabs.map(({ icon, href, key }) => {
           const Icon = icon;

@@ -1,0 +1,38 @@
+{
+  "page": {
+    "today": "Today",
+    "week": "This Week",
+    "all": "All Tasks",
+    "progress": "{done} of {total} done"
+  },
+  "frog": {
+    "eyebrow": "Frog of the day",
+    "start": "Start focus",
+    "swap": "Pick another",
+    "blocks": "{count, plural, =1 {# focus block} other {# focus blocks}}",
+    "estimate": "~{minutes} min",
+    "energyMatch": "Matches your energy",
+    "energyMismatch": "Heavier than today's energy",
+    "empty": {
+      "title": "Pick your frog",
+      "body": "One task that would make today count, even if nothing else gets done. Choose it now and the rest gets quieter.",
+      "action": "Choose your frog"
+    }
+  },
+  "groups": {
+    "today": "Today",
+    "week": "This week",
+    "backlog": "Backlog",
+    "completed": "Completed",
+    "other": "Everything else"
+  },
+  "list": {
+    "addTask": "Add task",
+    "toggleGroup": "Toggle {group}",
+    "empty": {
+      "title": "Still water",
+      "body": "Nothing here yet.",
+      "action": "Add your first task"
+    }
+  }
+}

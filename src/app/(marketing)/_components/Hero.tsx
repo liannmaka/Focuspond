@@ -62,7 +62,7 @@ const Hero = () => {
         <div
           className={clsx(
             "md:mb-14 lg:mb-16 relative aspect-146/101 overflow-hidden",
-            !isLoaded && "bg-gray-300/30 rounded-xl mt-8 lg:mt-0"
+            !isLoaded && "bg-surface-sunken rounded-xl mt-8 lg:mt-0"
           )}
         >
           {!isLoaded && <span className="absolute inset-0 animate-shimmer" />}

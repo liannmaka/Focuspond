@@ -29,7 +29,7 @@ const ErrorFallback: React.FC<ErrorFallbackProps> = ({
   return (
     <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 px-6 text-center">
       <h1 className="font-sora text-2xl font-semibold">{title}</h1>
-      <p className="max-w-md text-sm text-neutral-500">{description}</p>
+      <p className="max-w-md text-sm text-ink-muted">{description}</p>
       <div className="mt-2 flex items-center gap-3">
         <Button
           onClick={reset}

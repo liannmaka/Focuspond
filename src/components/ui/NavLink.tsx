@@ -2,6 +2,7 @@ import Link from "next/link";
 import { cva, type VariantProps } from "class-variance-authority";
 import { ComponentProps, forwardRef } from "react";
 import { cn } from "@/lib/utils";
+import { buttonVariants } from "./Button";
 
 type NavLinkProps = Omit<ComponentProps<typeof Link>, "className"> &
   VariantProps<typeof linkVariants> & {
@@ -9,11 +10,15 @@ type NavLinkProps = Omit<ComponentProps<typeof Link>, "className"> &
     activeLink?: boolean;
   };
 
+/**
+ * `default` delegates to `buttonVariants` so the nav CTA and <Button> can't
+ * drift apart — they used to be two hand-maintained copies of the same recipe.
+ * `link` is the bare inline-nav treatment.
+ */
 const linkVariants = cva("font-sora inline-flex items-center", {
   variants: {
     variant: {
-      default:
-        "bg-accent-button text-white shadow-md transition-transform duration-300 hover:-translate-y-0.5 tracking-wider justify-center rounded-lg",
+      default: cn(buttonVariants({ variant: "primary" }), "tracking-wider"),
       link: "group",
     },
     size: {
@@ -29,11 +34,12 @@ const linkVariants = cva("font-sora inline-flex items-center", {
 });
 
 const NavLink = forwardRef<HTMLAnchorElement, NavLinkProps>(
-  ({ variant, size, className, children, href, ...rest }, ref) => {
+  ({ variant, size, className, children, href, activeLink, ...rest }, ref) => {
     return (
       <Link
         ref={ref}
         href={href}
+        aria-current={activeLink ? "page" : undefined}
         className={cn(linkVariants({ variant, size }), className)}
         {...rest}
       >

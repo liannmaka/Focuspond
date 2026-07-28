@@ -14,7 +14,7 @@ const HowItWorks = () => {
   return (
     <section
       id="how-it-works"
-      className="pt-20 pb-28 bg-secondary-accent/10 relative overflow-hidden"
+      className="pt-20 pb-28 bg-ambient/8 relative overflow-hidden"
     >
       <div className="content-center">
         <div className="text-center">
@@ -31,18 +31,18 @@ const HowItWorks = () => {
             {steps.map(({ Icon, key }: HowItWork, idx: number) => (
               <div
                 key={idx}
-                className="flex flex-col items-center px-2 text-[#5a3a24] transition-all duration-300 transform hover:-translate-y-1"
+                className="flex flex-col items-center px-2 text-ink transition-all duration-300 transform hover:-translate-y-1"
                 aria-hidden={false}
               >
-                <div className="bg-white/90 p-4 rounded-full mb-8 shadow-sm z-10">
-                  <Icon className="w-6 h-6 text-[#ff9472]" />
+                <div className="bg-surface-raised border border-line p-4 rounded-full mb-8 shadow-e1 z-10">
+                  <Icon className="w-6 h-6 text-accent-text" />
                 </div>
 
                 <h3 className="text-base font-semibold font-sora mb-2">
                   {t(`items.${key}.title`)}
                 </h3>
 
-                <p className="font-manrope text-sm max-w-xs leading-relaxed">
+                <p className="font-manrope text-sm max-w-xs leading-relaxed text-ink-muted">
                   {t(`items.${key}.description`)}
                 </p>
               </div>
