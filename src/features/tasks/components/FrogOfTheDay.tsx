@@ -67,8 +67,8 @@ export default function FrogOfTheDay({
                     aria-hidden
                   />
                   {t("blocks", { count: frog.focusBlocks })}
-                  {frog.estimateMinutes
-                    ? ` · ${t("estimate", { minutes: frog.estimateMinutes })}`
+                  {frog.estimatedMinutes
+                    ? ` · ${t("estimate", { minutes: frog.estimatedMinutes })}`
                     : ""}
                 </span>
               ) : null}

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { BrandLogo } from "@/components/ui";
 import { cn, getTimeBasedGreeting } from "@/lib/utils";
-import { moodDB } from "@/features/mood/lib/indexedDB";
+import { moodDB } from "@/lib/db/indexedDB";
 import { MOODS, Mood } from "@/features/mood/constants/moods";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";

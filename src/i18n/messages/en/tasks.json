@@ -3,7 +3,14 @@
     "today": "Today",
     "week": "This Week",
     "all": "All Tasks",
+    "backlog": "Backlog",
+    "completed": "Completed",
     "progress": "{done} of {total} done"
+  },
+  "energy": {
+    "high": "Deep work",
+    "medium": "Steady",
+    "low": "Light"
   },
   "frog": {
     "eyebrow": "Frog of the day",
@@ -29,10 +36,22 @@
   "list": {
     "addTask": "Add task",
     "toggleGroup": "Toggle {group}",
+    "completeTask": "Mark {title} as done",
     "empty": {
       "title": "Still water",
       "body": "Nothing here yet.",
       "action": "Add your first task"
+    },
+    "emptyCompleted": {
+      "title": "Nothing finished yet",
+      "body": "Tasks you check off will collect here."
     }
+  },
+  "add": {
+    "placeholder": "What needs doing?",
+    "energyLabel": "Energy this needs",
+    "minutes": "Rough estimate",
+    "save": "Add",
+    "cancel": "Cancel"
   }
 }

@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
-import { MoodSyncListener } from "@/features/mood/components/MoodSyncListener";
 import { ThemeProvider } from "@/features/theme/components/ThemeProvider";
 import { ThemedToaster } from "@/features/theme/components/ThemedToaster";
 import "@/styles/globals.css";
@@ -132,7 +131,6 @@ export default async function RootLayout({
             messages={messages}
           >
             {children}
-            <MoodSyncListener />
             <ThemedToaster />
           </NextIntlClientProvider>
         </ThemeProvider>

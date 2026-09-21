@@ -7,7 +7,9 @@ task (your "Frog of the Day"), take mindful breaks, and check in on your mood.
 
 - **Next.js 15** (App Router) · **React 19** · **TypeScript** (strict)
 - **Tailwind CSS 4** · CVA + `clsx` + `tailwind-merge` for component variants
-- **Zustand** (state) · **Dexie** / IndexedDB (offline persistence) · **Supabase** (backend/auth)
+- **Dexie** / IndexedDB (local-first persistence, the source of truth) · **Supabase**
+  (marketing forms only — no app-data sync or auth yet) · **Zustand** (installed for
+  the focus timer's tick state; not used for task/mood data — see below)
 - **react-hook-form** + **Zod** (forms/validation) · **framer-motion** · **sonner** (toasts)
 - **next-intl** (i18n) · **Serwist** (PWA/service worker)
 - Package manager: **pnpm** (`pnpm@9.1.1`)
@@ -47,7 +49,17 @@ pnpm format         # prettier --write
 - **i18n:** copy is not hardcoded in most marketing/mood/nav surfaces — it lives in
   `src/i18n/messages/{locale}/`. English is the source of truth; other locales fall
   back to it. See **`docs/features/i18n.md`** before touching translations.
+- **Data:** IndexedDB (`src/lib/db/indexedDB.ts`) is the source of truth. Read it
+  through `useLiveQuery` (`dexie-react-hooks`) — see `src/features/tasks/hooks/useTasks.ts`
+  for the pattern. **Do not add a Zustand store mirroring stored data**: it would be
+  a second copy needing manual invalidation, and `useLiveQuery` already updates across
+  tabs. Pages import the hooks, never `taskDB`/`moodDB` directly.
+  Gotcha: IndexedDB keys can't be booleans, so `completed`/`isFrog` are filtered,
+  never indexed or queried with `.where()`.
 - **Testing:** Vitest + Testing Library; tests live beside code as `*.test.ts(x)`.
+  Components need the intl provider — render them with `renderWithIntl` from
+  `@/test/renderWithIntl` (it loads the real English catalog). DB tests import
+  `fake-indexeddb/auto`, since jsdom ships no IndexedDB.
 - **Commits:** conventional-commit house style (`type(scope): subject`, ≤60 chars,
   imperative). **Never** add a `Co-Authored-By` or other trailer. Main branch is
   `development`. Don't bypass hooks (lint-staged runs Prettier/ESLint on commit).
@@ -59,3 +71,5 @@ extending a feature:
 
 - [`docs/features/i18n.md`](docs/features/i18n.md) — multi-language "Vibe Switcher"
   (6 locales, next-intl, cookie-based, English fallback).
+- [`docs/features/sync.md`](docs/features/sync.md) — why there's no backend sync or
+  auth yet, what the `synced` flags are for, and the prerequisites before building it.

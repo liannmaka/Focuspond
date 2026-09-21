@@ -1,18 +1,25 @@
 "use client";
 
-// import { TaskAccordion } from "@/features/tasks/components/TaskAccordion";
+import { useTranslations } from "next-intl";
+import { TaskAccordion } from "@/features/tasks/components/TaskAccordion";
+import PageHeader from "@/features/tasks/components/PageHeader";
+import { useTasks, toggleTask } from "@/features/tasks/hooks/useTasks";
 
 export default function BacklogPage() {
+  const t = useTranslations("tasks.page");
+
+  const tasks = useTasks("backlog") ?? [];
+
   return (
-    // <div className="max-w-4xl mx-auto md:mx-0">
-    //   <TaskAccordion
-    //     title="Backlog"
-    //     taskCount={0}
-    //     totalTasks={0}
-    //     tasks={[]}
-    //     onAddTask={() => console.log("Add task")}
-    //   />
-    // </div>
-    <div>Hello Backlog</div>
+    <div className="mx-auto w-full max-w-4xl">
+      <PageHeader title={t("backlog")} />
+
+      <TaskAccordion
+        group="backlog"
+        tasks={tasks}
+        addToGroup="backlog"
+        onToggleTask={toggleTask}
+      />
+    </div>
   );
 }

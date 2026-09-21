@@ -1,44 +1,40 @@
+"use client";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  Calendar,
-  CalendarDays,
-  Inbox,
-  CheckCircle,
-  LayoutGrid,
-} from "lucide-react";
+import { useTranslations } from "next-intl";
+
+import { tabs } from "@/data/web-app/navigation";
+import { useTaskCounts } from "@/features/tasks/hooks/useTasks";
 
 export default function TaskNav() {
   const pathname = usePathname();
-  const mainNavItems = [
-    { href: "/home/all", label: "All Tasks", icon: LayoutGrid },
-    { href: "/home/today", label: "Today", icon: Calendar },
-    { href: "/home/week", label: "This Week", icon: CalendarDays },
-    { href: "/home/backlog", label: "Backlog", icon: Inbox },
-    { href: "/home/completed", label: "Completed", icon: CheckCircle },
-  ];
+  const t = useTranslations("nav");
+  const counts = useTaskCounts();
+
   return (
     <div>
-      {mainNavItems.map((item) => {
-        const Icon = item.icon;
-        const isActive = pathname === item.href;
+      {tabs.map(({ href, key, icon: Icon }) => {
+        const isActive = pathname === href;
+        const count = counts?.[key];
 
         return (
           <Link
-            key={item.href}
-            href={item.href}
+            key={href}
+            href={href}
+            aria-current={isActive ? "page" : undefined}
             className={`my-2
     flex items-center gap-3.5 py-3.5 px-6 relative
     transition-colors duration-150
     ${
       isActive
-        ? "bg-dark-accent/5 text-dark-accent"
-        : "text-dark-accent/80 hover:bg-dark-accent/5 hover:text-dark-accent"
+        ? "bg-ink/5 text-ink"
+        : "text-ink/80 hover:bg-ink/5 hover:text-ink"
     }
   `}
           >
             {isActive && (
-              <span className="absolute left-0 top-1/2 h-6 w-1 -translate-y-1/2 rounded-r-full bg-linear-to-b from-accent-button to-accent-button/80 shadow-sm" />
+              <span className="absolute left-0 top-1/2 h-6 w-1 -translate-y-1/2 rounded-r-full bg-linear-to-b from-accent to-accent/80 shadow-sm" />
             )}
             <Icon
               className="w-4 h-4"
@@ -47,12 +43,18 @@ export default function TaskNav() {
             <span
               className={`text-sm font-manrope ${isActive ? "font-semibold" : "font-medium"}`}
             >
-              {item.label}
+              {t(`tabs.${key}`)}
             </span>
+
+            {/* Zero is not worth the ink — an empty group reads as calm. */}
+            {count !== undefined && count > 0 && (
+              <span className="ml-auto font-sora text-[11px] font-semibold tabular-nums text-ink-subtle">
+                {count}
+              </span>
+            )}
           </Link>
         );
       })}
     </div>
   );
 }
-

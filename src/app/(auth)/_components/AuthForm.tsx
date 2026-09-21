@@ -30,10 +30,13 @@ type Values = z.infer<typeof SignupSchema>;
 /**
  * Sign-in / sign-up UI.
  *
- * Validation is real; submission is not. `src/lib/auth/nextauth.ts` is still an
- * empty stub, so there is deliberately no submit handler and no network call —
- * the form says so plainly rather than pretending to sign anyone in. Wire the
- * provider first, then replace `onSubmit`.
+ * Validation is real; submission is not. FocusPond runs local-first in guest
+ * mode — there is deliberately no submit handler and no network call, and the
+ * form says so plainly rather than pretending to sign anyone in.
+ *
+ * Auth is Supabase, not NextAuth (an empty `nextauth.ts` stub used to sit here
+ * and mislead on that point). See docs/features/sync.md for the prerequisites
+ * before replacing `onSubmit`.
  */
 export default function AuthForm({ mode }: { mode: Mode }) {
   const t = useTranslations("common.auth");
