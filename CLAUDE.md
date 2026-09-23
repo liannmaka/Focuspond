@@ -64,7 +64,13 @@ pnpm format         # prettier --write
   imperative). **Never** add a `Co-Authored-By` or other trailer. Main branch is
   `development`. Don't bypass hooks (lint-staged runs Prettier/ESLint on commit).
 
-## Feature docs
+## Docs
+
+**[`docs/roadmap.md`](docs/roadmap.md) is the plan of record** — MVP scope, what is
+deliberately cut, milestones M2→M9 with hour estimates, and the copy commitments the
+marketing site has already made. Read it before proposing new features or "finishing"
+an existing stub; several stubs are cut on purpose, and one promised feature
+(auto-rollover) is already satisfied by the data model.
 
 Per-feature references live in **`docs/features/`** — read the relevant one before
 extending a feature:
