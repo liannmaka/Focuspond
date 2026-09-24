@@ -1,11 +1,44 @@
 "use client";
 
+import Link from "next/link";
 import { BrandLogo } from "@/components/ui";
 import { User, Bell, Search, MoreVertical, Smile } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import LanguageSwitcher from "@/features/i18n/components/LanguageSwitcher";
 import ThemeToggle from "@/features/theme/components/ThemeToggle";
+import { moodIdForLevel } from "@/features/mood/constants/moods";
+import { useTodayMood } from "@/features/mood/hooks/useMood";
+
+/**
+ * Today's mood, or an invitation to record one. The single place in the app
+ * chrome that reflects how the reader said they feel.
+ *
+ * The label is resolved from the mood's *level* through the catalog, never from
+ * the stored `MoodEntry.label` — that field is written once in English at
+ * check-in and would show English in every locale.
+ */
+function MoodPill({ className = "" }: { className?: string }) {
+  const t = useTranslations("common.app");
+  const tMood = useTranslations("mood");
+  const mood = useTodayMood();
+  const moodId = mood ? moodIdForLevel(mood.level) : undefined;
+
+  return (
+    <Link
+      href="/mood"
+      className={`mood-button rounded-full px-3 transition-all hover:bg-light-background/20 ${className}`}
+    >
+      <Smile
+        size={14}
+        className="text-dark-accent"
+      />
+      <span className="font-manrope text-xs font-medium text-dark-accent">
+        {moodId ? tMood(`moods.${moodId}.label`) : t("setMood")}
+      </span>
+    </Link>
+  );
+}
 
 export default function TopBar({ className }: { className?: string }) {
   const t = useTranslations("common.app");
@@ -56,15 +89,7 @@ export default function TopBar({ className }: { className?: string }) {
             <div className="h-4 w-px bg-dark-accent/50 rotate-20 mx-4" />
           </div>
 
-          <button className="mood-button hidden px-3 rounded-full transition-all hover:bg-light-background/20 md:flex">
-            <Smile
-              size={14}
-              className="text-dark-accent"
-            />
-            <span className="text-xs font-manrope font-medium text-dark-accent">
-              {t("setMood")}
-            </span>
-          </button>
+          <MoodPill className="hidden md:flex" />
         </div>
 
         {/* right column */}
@@ -132,15 +157,7 @@ export default function TopBar({ className }: { className?: string }) {
 
       {/* Mobile: Mood Indicator Bar */}
       <div className="md:hidden border-t border-dark-accent/10 px-4 py-2">
-        <button className="mood-button flex w-full justify-center rounded-lg">
-          <Smile
-            size={14}
-            className="text-dark-accent"
-          />
-          <span className="text-xs font-manrope font-medium text-dark-accent">
-            {t("setMood")}
-          </span>
-        </button>
+        <MoodPill className="flex w-full justify-center" />
       </div>
     </header>
   );

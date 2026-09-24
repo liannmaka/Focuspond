@@ -1,5 +1,5 @@
 import TaskNav from "../_components/TaskNav";
-// import EnergyOverview from "../_components/EnergyOverview";
+import EnergyOverview from "../_components/EnergyOverview";
 // import FrogsSummary from "../_components/FrogsSummary";
 
 export default function DashboardPanel() {
@@ -14,9 +14,9 @@ export default function DashboardPanel() {
         <TaskNav />
 
         {/* Row 3 */}
-        {/* <EnergyOverview /> */}
+        <EnergyOverview />
 
-        {/* Row 4 */}
+        {/* Row 4 — FrogsSummary lands with streaks in M6 */}
         {/* <FrogsSummary /> */}
       </div>
     </div>

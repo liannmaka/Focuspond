@@ -26,6 +26,13 @@ type TaskAccordionProps = {
    * rather than create a finished one.
    */
   addToGroup?: TaskGroup;
+  /**
+   * Done-vs-total for the group, from `useGroupProgress`. Required to show a
+   * truthful badge, because `tasks` holds only the *open* items on every screen
+   * except Completed — counting completions from it is always zero. Omit it and
+   * the badge falls back to counting what is actually rendered.
+   */
+  progress?: { done: number; total: number };
   onToggleTask?: (id: number, completed: boolean) => void;
 };
 
@@ -34,6 +41,7 @@ export function TaskAccordion({
   tasks,
   defaultOpen = true,
   addToGroup,
+  progress,
   onToggleTask,
 }: TaskAccordionProps) {
   const t = useTranslations("tasks");
@@ -42,7 +50,8 @@ export function TaskAccordion({
   const panelId = useId();
 
   const label = t(`groups.${group}`);
-  const done = tasks.filter((task) => task.completed).length;
+  const done = progress?.done ?? tasks.filter((task) => task.completed).length;
+  const total = progress?.total ?? tasks.length;
   const isEmpty = tasks.length === 0;
   const canAdd = addToGroup !== undefined;
 
@@ -76,9 +85,9 @@ export function TaskAccordion({
           </span>
         </button>
 
-        {!isEmpty && (
+        {total > 0 && (
           <span className="rounded-full bg-ambient-soft px-2 py-0.5 font-sora text-[11px] font-semibold tabular-nums text-ink-muted">
-            {done}/{tasks.length}
+            {done}/{total}
           </span>
         )}
 

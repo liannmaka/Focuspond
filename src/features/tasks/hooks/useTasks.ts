@@ -35,6 +35,27 @@ export function useCompletedTasks(): Task[] | undefined {
   return useLiveQuery(() => taskDB.getCompleted(), []);
 }
 
+export type GroupProgress = { done: number; total: number };
+
+/**
+ * Done-vs-total for one group, counting across both states.
+ *
+ * `useTasks()` deliberately returns only *incomplete* tasks, so counting
+ * completions from its result is structurally always zero — which is what made
+ * every progress bar read `0 / N`. Progress has to be its own query.
+ */
+export function useGroupProgress(group: TaskGroup): GroupProgress | undefined {
+  return useLiveQuery(async () => {
+    const tasks = await taskDB.getAll();
+    const inGroup = tasks.filter((task) => task.group === group);
+
+    return {
+      done: inGroup.filter((task) => task.completed).length,
+      total: inGroup.length,
+    };
+  }, [group]);
+}
+
 export type TaskCounts = Record<TaskGroup | "all" | "completed", number>;
 
 /**

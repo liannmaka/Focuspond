@@ -90,3 +90,14 @@ export const getEnergyLevel = (moodlevel: MoodLevel): EnergyLevel => {
   const mood = MOODS.find((m) => m.level === moodlevel);
   return mood?.energyLevel || "medium";
 };
+
+/**
+ * The stable mood id for a stored level, which is also the translation key
+ * under `mood.moods.<id>`.
+ *
+ * Stored `MoodEntry.label` is the hardcoded English from `MOODS` — it is written
+ * once at check-in and never re-translated. Any surface displaying a past mood
+ * must resolve the label through this instead, or every locale shows English.
+ */
+export const moodIdForLevel = (level: MoodLevel): MoodId | undefined =>
+  MOODS.find((mood) => mood.level === level)?.id;

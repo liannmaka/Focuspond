@@ -12,6 +12,13 @@
     "medium": "Steady",
     "low": "Light"
   },
+  "energyPanel": {
+    "heading": "Today's energy",
+    "noMood": "You haven't checked in yet today.",
+    "checkIn": "Check in →",
+    "noTasks": "Nothing planned for today yet.",
+    "fits": "{count} of {total} today {count, plural, =1 {task suits} other {tasks suit}} it"
+  },
   "frog": {
     "eyebrow": "Frog of the day",
     "start": "Start focus",
