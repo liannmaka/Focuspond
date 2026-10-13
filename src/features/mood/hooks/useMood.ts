@@ -19,7 +19,11 @@ import type { MoodEntry } from "@/features/mood/types/mood";
  * another tab.
  */
 
-/** The day's first check-in, or `undefined` if they haven't checked in today. */
+/**
+ * The day's most recent check-in, or `undefined` if they haven't checked in
+ * today. Checking in again replaces what every surface shows — energy changes
+ * through a day, and saying so is the whole point of the control.
+ */
 export function useTodayMood(): MoodEntry | undefined {
   return useLiveQuery(() => moodDB.getToday(), []);
 }

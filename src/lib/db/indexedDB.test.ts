@@ -140,4 +140,31 @@ describe("moodDB", () => {
   it("returns undefined when nothing was recorded today", async () => {
     expect(await moodDB.getToday()).toBeUndefined();
   });
+
+  /**
+   * Regression: this previously used `.first()`, so a second check-in was
+   * silently ignored and the app reported the morning's mood all day. Every
+   * other mood test writes a single row, where first and last are identical —
+   * which is exactly why nothing caught it.
+   */
+  it("reflects the most recent check-in, not the first", async () => {
+    await moodDB.add({ level: "low", label: "Tired", energyLevel: "low" });
+    await moodDB.add({
+      level: "very-high",
+      label: "Energized",
+      energyLevel: "high",
+    });
+
+    const today = await moodDB.getToday();
+    expect(today?.label).toBe("Energized");
+    expect(today?.energyLevel).toBe("high");
+  });
+
+  it("keeps every check-in, so the day's history survives", async () => {
+    await moodDB.add({ level: "low", label: "Tired", energyLevel: "low" });
+    await moodDB.add({ level: "high", label: "Good", energyLevel: "high" });
+    await moodDB.add({ level: "medium", label: "Okay", energyLevel: "medium" });
+
+    expect(await moodDB.getTodayMoods()).toHaveLength(3);
+  });
 });

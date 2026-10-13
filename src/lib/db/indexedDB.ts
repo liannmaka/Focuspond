@@ -110,12 +110,20 @@ export const moodDB = {
     return await db.moods.orderBy("createdAt").reverse().first();
   },
 
-  /** The day's first check-in, or undefined if they haven't checked in today. */
+  /**
+   * The day's *most recent* check-in, or undefined if they haven't checked in
+   * today.
+   *
+   * Latest, not first: energy changes through a day, and re-checking in is the
+   * reader telling us it has. Every check-in is still stored — the history is
+   * what streaks and mood trends will read — but only the newest one describes
+   * how they feel now.
+   */
   async getToday(): Promise<MoodEntry | undefined> {
     return await db.moods
       .where("createdAt")
       .between(startOfToday(), startOfTomorrow(), true, false)
-      .first();
+      .last();
   },
 
   async getTodayMoods(): Promise<MoodEntry[]> {
