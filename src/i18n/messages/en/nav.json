@@ -5,5 +5,12 @@
     "week": "Week",
     "backlog": "Backlog",
     "completed": "Done"
+  },
+  "rail": {
+    "tasks": "Tasks",
+    "progress": "Progress",
+    "mood": "Mood check-in",
+    "settings": "Settings",
+    "profile": "Profile"
   }
 }

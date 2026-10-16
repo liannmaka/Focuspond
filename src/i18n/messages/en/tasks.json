@@ -44,6 +44,7 @@
     "addTask": "Add task",
     "toggleGroup": "Toggle {group}",
     "completeTask": "Mark {title} as done",
+    "cleared": "{count, plural, =1 {That's the one task done} other {All # done}}",
     "empty": {
       "title": "Still water",
       "body": "Nothing here yet.",

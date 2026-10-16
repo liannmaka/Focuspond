@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { BrandLogo } from "@/components/ui";
-import { User, Bell, Search, MoreVertical, Smile } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { Smile } from "lucide-react";
+// Non-MVP imports, restored alongside their controls below:
+// import { User, Bell, Search, MoreVertical } from "lucide-react";
+// import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import LanguageSwitcher from "@/features/i18n/components/LanguageSwitcher";
 import ThemeToggle from "@/features/theme/components/ThemeToggle";
@@ -40,26 +42,38 @@ function MoodPill({ className = "" }: { className?: string }) {
   );
 }
 
+/**
+ * Controls commented out below are deliberate, not forgotten — each is outside
+ * the MVP (see docs/roadmap.md) and was showing as a button that did nothing.
+ * Every block names the milestone that brings it back.
+ *
+ * They are commented rather than deleted because they are all returning. Keep
+ * the milestone tags: this codebase has already had 34 lines of commented-out
+ * sync code rot for six months (docs/features/sync.md), and an untagged comment
+ * is how that happens.
+ */
 export default function TopBar({ className }: { className?: string }) {
   const t = useTranslations("common.app");
-  const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
-  const searchRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        searchRef.current &&
-        !searchRef.current.contains(event.target as Node)
-      ) {
-        setIsSearchOpen(false);
-      }
-    };
-
-    if (isSearchOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [isSearchOpen]);
+  // --- Search state — returns in M7 as a ⌘K command palette ---
+  // const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
+  // const searchRef = useRef<HTMLDivElement>(null);
+  //
+  // useEffect(() => {
+  //   const handleClickOutside = (event: MouseEvent) => {
+  //     if (
+  //       searchRef.current &&
+  //       !searchRef.current.contains(event.target as Node)
+  //     ) {
+  //       setIsSearchOpen(false);
+  //     }
+  //   };
+  //
+  //   if (isSearchOpen) {
+  //     document.addEventListener("mousedown", handleClickOutside);
+  //   }
+  //   return () => document.removeEventListener("mousedown", handleClickOutside);
+  // }, [isSearchOpen]);
 
   return (
     <header
@@ -94,35 +108,29 @@ export default function TopBar({ className }: { className?: string }) {
 
         {/* right column */}
         <div className="flex justify-between w-full md:flex-row-reverse md:justify-end md:gap-4 md:w-auto">
-          {/* Mobile: Profile + Sign In */}
+          {/* Profile + Sign In — both return with Supabase auth in M8.
+              Until accounts exist these are buttons that do nothing.
           <div className="flex items-center gap-3 p-2 md:p-0">
-            <div className="w-8.5 h-8.5 bg-linear-to-br from-accent-button/20 to-secondary-accent/20 rounded-full flex justify-center items-center ring-2 ring-dark-accent/20 active:scale-95 transition-transform cursor-pointer">
-              <User
-                size={18}
-                className="text-dark-accent"
-              />
+            <div className="w-8.5 h-8.5 bg-linear-to-br from-accent-button/20 to-secondary-accent/20 rounded-full flex justify-center items-center ring-2 ring-dark-accent/20 active:scale-95 transition-transform cursor-pointer lg:hidden">
+              <User size={18} className="text-dark-accent" />
             </div>
 
             <button className="px-3 py-1.5 bg-accent-button text-accent-ink rounded-lg font-sora text-xs font-medium active:scale-95 transition-transform cursor-pointer hover:-translate-y-0.5">
               {t("signIn")}
             </button>
           </div>
+          */}
 
           {/* Right Actions */}
-          <div
-            className="flex items-center gap-1 md:gap-3 relative"
-            ref={searchRef}
-          >
-            {/* Search */}
-
+          <div className="relative flex items-center gap-1 md:gap-3">
+            {/* Search — returns in M7 as a ⌘K command palette. Uncomment the
+                state and effect at the top of this file alongside it.
             <button
               onClick={() => setIsSearchOpen(!isSearchOpen)}
               className="topbar-icon-button tap-target"
             >
               <Search size={18} />
             </button>
-
-            {/* Search Dropdown */}
 
             {isSearchOpen && (
               <div className="absolute top-14 right-0 w-[calc(100vw-2rem)] max-w-md bg-surface-raised rounded-xl shadow-e3 border border-line p-4 animate-in slide-in-from-top-2 duration-200">
@@ -137,20 +145,27 @@ export default function TopBar({ className }: { className?: string }) {
                 </div>
               </div>
             )}
+            */}
 
-            {/* Notifications */}
+            {/* Notifications — nothing in the product generates one yet, and
+                none are promised anywhere in the marketing copy. No milestone
+                owns this; it needs a reason to exist before it returns.
             <button className="topbar-icon-button tap-target">
               <Bell size={18} />
             </button>
+            */}
 
-            {/* Vibe Switcher + light/dark */}
-            <ThemeToggle />
-            <LanguageSwitcher className="hidden sm:block" />
+            {/* Vibe Switcher + light/dark — below lg only; the side rail owns
+                them on desktop. */}
+            <ThemeToggle className="lg:hidden" />
+            <LanguageSwitcher className="hidden sm:block lg:hidden" />
 
-            {/* More Menu */}
+            {/* More Menu — no menu was ever specified for this, in the roadmap
+                or the marketing copy. It needs contents before it returns.
             <button className="topbar-icon-button tap-target">
               <MoreVertical size={18} />
             </button>
+            */}
           </div>
         </div>
       </div>

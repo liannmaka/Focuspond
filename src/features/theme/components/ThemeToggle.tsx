@@ -17,6 +17,12 @@ const OPTIONS: { value: ThemeOption; Icon: typeof Sun }[] = [
 type ThemeToggleProps = {
   /** Vertical direction the menu opens. Defaults to "down". */
   align?: "up" | "down";
+  /**
+   * Square icon-button trigger for the 56px side rail: no chevron, and the menu
+   * flies out to the right rather than hanging below. Mirrors the same prop on
+   * the Vibe Switcher so the pair stays interchangeable.
+   */
+  compact?: boolean;
   className?: string;
 };
 
@@ -27,6 +33,7 @@ type ThemeToggleProps = {
  */
 export default function ThemeToggle({
   align = "down",
+  compact = false,
   className,
 }: ThemeToggleProps) {
   const t = useTranslations("common.theme");
@@ -70,23 +77,35 @@ export default function ThemeToggle({
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-label={t("choosePrompt")}
-        className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-line bg-surface-raised px-3 py-1.5 text-sm text-ink transition-colors hover:border-accent/50 hover:text-accent-text"
+        className={clsx(
+          "cursor-pointer text-ink transition-colors",
+          compact
+            ? "flex size-10 items-center justify-center rounded-lg text-ink-muted hover:bg-ambient-soft hover:text-ink"
+            : "inline-flex items-center gap-1.5 rounded-full border border-line bg-surface-raised px-3 py-1.5 text-sm hover:border-accent/50 hover:text-accent-text"
+        )}
       >
-        <TriggerIcon className="size-4" />
-        <ChevronDown
-          className={clsx(
-            "size-3.5 transition-transform duration-200",
-            open && "rotate-180"
-          )}
-        />
+        <TriggerIcon className={compact ? "size-[18px]" : "size-4"} />
+        {!compact && (
+          <ChevronDown
+            className={clsx(
+              "size-3.5 transition-transform duration-200",
+              open && "rotate-180"
+            )}
+          />
+        )}
       </button>
 
       <ul
         role="listbox"
         aria-label={t("label")}
         className={clsx(
-          "absolute right-0 z-50 min-w-52 origin-top rounded-xl border border-line bg-surface-raised p-1.5 shadow-e3 transition-all duration-150",
-          align === "up" ? "bottom-full mb-2" : "top-full mt-2",
+          "absolute z-50 min-w-52 rounded-xl border border-line bg-surface-raised p-1.5 shadow-e3 transition-all duration-150",
+          compact
+            ? "bottom-0 left-full ml-2 origin-bottom-left"
+            : clsx(
+                "right-0 origin-top",
+                align === "up" ? "bottom-full mb-2" : "top-full mt-2"
+              ),
           open
             ? "pointer-events-auto scale-100 opacity-100"
             : "pointer-events-none scale-95 opacity-0"

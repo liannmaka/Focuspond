@@ -11,6 +11,15 @@ import { setLocaleCookie } from "../lib/locale-cookie";
 type LanguageSwitcherProps = {
   /** Vertical direction the menu opens. Defaults to "down". */
   align?: "up" | "down";
+  /**
+   * Square icon-button trigger for the 56px side rail: no label, no chevron,
+   * and the menu flies out to the right rather than hanging below — a
+   * right-aligned menu opened from a 56px column runs off the screen.
+   *
+   * Shows the locale code rather than a bare globe, so the current language is
+   * legible without opening anything.
+   */
+  compact?: boolean;
   className?: string;
 };
 
@@ -21,6 +30,7 @@ type LanguageSwitcherProps = {
  */
 export default function LanguageSwitcher({
   align = "down",
+  compact = false,
   className,
 }: LanguageSwitcherProps) {
   const t = useTranslations("common.language");
@@ -73,26 +83,42 @@ export default function LanguageSwitcher({
         aria-label={t("choosePrompt")}
         disabled={isPending}
         className={clsx(
-          "inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-line bg-surface-raised px-3 py-1.5 text-sm text-ink transition-colors hover:border-accent/50 hover:text-accent-text",
+          "cursor-pointer text-ink transition-colors",
+          compact
+            ? "flex size-10 items-center justify-center rounded-lg text-ink-muted hover:bg-ambient-soft hover:text-ink"
+            : "inline-flex items-center gap-1.5 rounded-full border border-line bg-surface-raised px-3 py-1.5 text-sm hover:border-accent/50 hover:text-accent-text",
           isPending && "opacity-70"
         )}
       >
-        <Globe className="size-4" />
-        <span className="font-medium">{active.nativeName}</span>
-        <ChevronDown
-          className={clsx(
-            "size-3.5 transition-transform duration-200",
-            open && "rotate-180"
-          )}
-        />
+        {compact ? (
+          <span className="font-sora text-[11px] font-bold tracking-wide uppercase">
+            {active.code}
+          </span>
+        ) : (
+          <>
+            <Globe className="size-4" />
+            <span className="font-medium">{active.nativeName}</span>
+            <ChevronDown
+              className={clsx(
+                "size-3.5 transition-transform duration-200",
+                open && "rotate-180"
+              )}
+            />
+          </>
+        )}
       </button>
 
       <ul
         role="listbox"
         aria-label={t("label")}
         className={clsx(
-          "absolute right-0 z-50 min-w-52 origin-top rounded-xl border border-line bg-surface-raised p-1.5 shadow-e3 transition-all duration-150",
-          align === "up" ? "bottom-full mb-2" : "top-full mt-2",
+          "absolute z-50 min-w-52 rounded-xl border border-line bg-surface-raised p-1.5 shadow-e3 transition-all duration-150",
+          compact
+            ? "bottom-0 left-full ml-2 origin-bottom-left"
+            : clsx(
+                "right-0 origin-top",
+                align === "up" ? "bottom-full mb-2" : "top-full mt-2"
+              ),
           open
             ? "opacity-100 scale-100 pointer-events-auto"
             : "opacity-0 scale-95 pointer-events-none"

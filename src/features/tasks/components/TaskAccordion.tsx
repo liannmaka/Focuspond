@@ -1,6 +1,6 @@
 "use client";
 
-import { Plus, ChevronRight } from "lucide-react";
+import { Plus, ChevronRight, Check } from "lucide-react";
 import { useId, useState } from "react";
 import { useTranslations } from "next-intl";
 // Direct paths, not the `@/components/ui` barrel — the barrel drags Card,
@@ -52,8 +52,17 @@ export function TaskAccordion({
   const label = t(`groups.${group}`);
   const done = progress?.done ?? tasks.filter((task) => task.completed).length;
   const total = progress?.total ?? tasks.length;
-  const isEmpty = tasks.length === 0;
   const canAdd = addToGroup !== undefined;
+
+  /**
+   * Nothing to show splits into two very different states, because `tasks`
+   * holds only the *open* items: a group nobody has filled in yet, and a group
+   * that has been finished. Treating them the same told a reader who had just
+   * completed four tasks that there was "nothing here yet" and invited them to
+   * add their first one.
+   */
+  const isCleared = tasks.length === 0 && total > 0 && done === total;
+  const isEmpty = tasks.length === 0 && !isCleared;
 
   /** Adding into a collapsed group would write into something unseen. */
   function startAdding() {
@@ -114,6 +123,21 @@ export function TaskAccordion({
         hidden={!isOpen}
         className="pt-1"
       >
+        {/* Finished, not empty. Deliberately compact — a cleared group is a
+            small reward, not a call to action, and it should not push the
+            groups below it off the screen. */}
+        {isCleared && !isAdding && (
+          <div className="flex items-center justify-center gap-2 px-6 py-5 text-center">
+            <Check
+              className="size-3.5 shrink-0 text-success"
+              aria-hidden
+            />
+            <p className="text-sm text-ink-muted">
+              {t("list.cleared", { count: total })}
+            </p>
+          </div>
+        )}
+
         {isEmpty && !isAdding && (
           <div className="flex flex-col items-center gap-1 px-6 py-10 text-center">
             {/* A still pond: concentric rings with nothing dropped in yet. */}

@@ -33,6 +33,42 @@ describe("TaskAccordion", () => {
     expect(screen.getByText("Still water")).toBeInTheDocument();
   });
 
+  /**
+   * `tasks` holds only the open items, so a finished group and a never-used one
+   * both arrive here as an empty array. They must not look the same: before
+   * this, clearing four tasks told the reader "Nothing here yet" and offered to
+   * add their first.
+   */
+  it("celebrates a cleared group instead of calling it empty", () => {
+    renderWithIntl(
+      <TaskAccordion
+        group="today"
+        tasks={[]}
+        progress={{ done: 4, total: 4 }}
+        addToGroup="today"
+      />
+    );
+
+    expect(screen.getByText("All 4 done")).toBeInTheDocument();
+    expect(screen.queryByText("Still water")).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: /add your first task/i })
+    ).not.toBeInTheDocument();
+  });
+
+  it("still shows the empty state for a group that never had tasks", () => {
+    renderWithIntl(
+      <TaskAccordion
+        group="today"
+        tasks={[]}
+        progress={{ done: 0, total: 0 }}
+        addToGroup="today"
+      />
+    );
+
+    expect(screen.getByText("Still water")).toBeInTheDocument();
+  });
+
   it("reports the id and the new checked state when a task is toggled", async () => {
     const onToggleTask = vi.fn();
     renderWithIntl(
