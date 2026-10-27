@@ -2,12 +2,13 @@
 
 import { Plus, ChevronRight, Check } from "lucide-react";
 import { useId, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useFormatter } from "next-intl";
 // Direct paths, not the `@/components/ui` barrel — the barrel drags Card,
 // Input and next/link into every app route that renders a task row.
 import Checkbox from "@/components/ui/Checkbox";
 import Button from "@/components/ui/Button";
 import AddTaskRow from "./AddTaskRow";
+import { carriedLabel } from "../lib/planning";
 import { energyTagKey } from "../lib/taskDisplay";
 import type { Task, TaskGroup } from "../types/task";
 
@@ -27,42 +28,89 @@ type TaskAccordionProps = {
    */
   addToGroup?: TaskGroup;
   /**
-   * Done-vs-total for the group, from `useGroupProgress`. Required to show a
-   * truthful badge, because `tasks` holds only the *open* items on every screen
-   * except Completed — counting completions from it is always zero. Omit it and
-   * the badge falls back to counting what is actually rendered.
+   * Tasks finished today that belong to this group, from `useDoneToday`. They
+   * render behind a collapsed disclosure rather than vanishing to another tab:
+   * the marketing promises "note your wins" and "see your completed Frogs", and
+   * a different tab does not deliver that. Collapsed by default keeps the list
+   * itself clean.
    */
-  progress?: { done: number; total: number };
+  doneToday?: Task[];
   onToggleTask?: (id: number, completed: boolean) => void;
 };
+
+/**
+ * The day a carried-over task was meant for.
+ *
+ * A weekday is calmer than a day count: "5d" is a score going up, which reads
+ * more like an accusation each day, while "Friday" is a fact that does not
+ * grow. Deliberately styled as quiet metadata rather than a warning — nothing
+ * has gone wrong, and an app whose pitch is "no pressure, no hustle" states
+ * this rather than scolds. It never escalates with age for the same reason.
+ *
+ * Weekday and date names come from the formatter, so they are correct in every
+ * locale rather than hardcoded English.
+ */
+function CarriedPill({ task }: { task: Task }) {
+  const t = useTranslations("tasks");
+  const format = useFormatter();
+  const label = carriedLabel(task);
+
+  if (label.kind === "none") return null;
+
+  const text =
+    label.kind === "yesterday"
+      ? t("list.carriedYesterday")
+      : label.kind === "weekday"
+        ? format.dateTime(label.date, { weekday: "short" })
+        : format.dateTime(label.date, { day: "numeric", month: "short" });
+
+  // The pill says *when*; the tooltip says *how long*. Complementary, so
+  // hovering adds something rather than repeating the visible text.
+  const full = t("list.carriedFor", { count: label.days });
+
+  return (
+    <span
+      title={full}
+      aria-label={full}
+      className="shrink-0 rounded-full bg-surface-sunken px-1.5 py-0.5 font-sora text-[10px] font-semibold text-ink-subtle"
+    >
+      {text}
+    </span>
+  );
+}
 
 export function TaskAccordion({
   group,
   tasks,
   defaultOpen = true,
   addToGroup,
-  progress,
+  doneToday = [],
   onToggleTask,
 }: TaskAccordionProps) {
   const t = useTranslations("tasks");
   const [isOpen, setIsOpen] = useState(defaultOpen);
   const [isAdding, setIsAdding] = useState(false);
+  const [showDone, setShowDone] = useState(false);
   const panelId = useId();
+  const donePanelId = useId();
 
   const label = t(`groups.${group}`);
-  const done = progress?.done ?? tasks.filter((task) => task.completed).length;
-  const total = progress?.total ?? tasks.length;
   const canAdd = addToGroup !== undefined;
 
   /**
-   * Nothing to show splits into two very different states, because `tasks`
-   * holds only the *open* items: a group nobody has filled in yet, and a group
-   * that has been finished. Treating them the same told a reader who had just
-   * completed four tasks that there was "nothing here yet" and invited them to
-   * add their first one.
+   * The header counts what the list actually shows. A ratio against a different
+   * number is how "4/4" ended up above an apparently empty group — the four
+   * were real, but three of them were elsewhere.
    */
-  const isCleared = tasks.length === 0 && total > 0 && done === total;
-  const isEmpty = tasks.length === 0 && !isCleared;
+  const openCount = tasks.length;
+
+  /**
+   * Nothing open splits into two very different states: a group nobody has
+   * filled in, and one that has been finished today. Treating them alike told a
+   * reader who had just completed four tasks that there was "nothing here yet".
+   */
+  const isCleared = openCount === 0 && doneToday.length > 0;
+  const isEmpty = openCount === 0 && !isCleared;
 
   /** Adding into a collapsed group would write into something unseen. */
   function startAdding() {
@@ -94,9 +142,9 @@ export function TaskAccordion({
           </span>
         </button>
 
-        {total > 0 && (
+        {openCount > 0 && (
           <span className="rounded-full bg-ambient-soft px-2 py-0.5 font-sora text-[11px] font-semibold tabular-nums text-ink-muted">
-            {done}/{total}
+            {t("list.left", { count: openCount })}
           </span>
         )}
 
@@ -133,7 +181,7 @@ export function TaskAccordion({
               aria-hidden
             />
             <p className="text-sm text-ink-muted">
-              {t("list.cleared", { count: total })}
+              {t("list.cleared", { count: doneToday.length })}
             </p>
           </div>
         )}
@@ -185,6 +233,16 @@ export function TaskAccordion({
                   {task.title}
                 </span>
 
+                {/*
+                  Carrying over has to be visible — silently blending
+                  yesterday's leftovers into today is how a Today list stops
+                  meaning anything. But it sits with the other metadata, not
+                  against the title, and it is deliberately *not* `warning`:
+                  nothing has gone wrong, and an app whose pitch is "no
+                  pressure, no hustle" should state this rather than scold.
+                */}
+                <CarriedPill task={task} />
+
                 {/* Energy read as a tag, so the day's fit is legible per row. */}
                 <span className="hidden font-sora text-[10.5px] font-semibold tracking-[0.04em] text-ink-subtle uppercase sm:inline">
                   {t(energyTagKey(task.energyRequired))}
@@ -205,6 +263,54 @@ export function TaskAccordion({
               group={addToGroup}
               onDone={() => setIsAdding(false)}
             />
+          </div>
+        )}
+
+        {/* Today's wins, kept but folded away. Visible in one click, absent
+            from the working list. */}
+        {doneToday.length > 0 && !isCleared && (
+          <div className="pt-1">
+            <button
+              type="button"
+              onClick={() => setShowDone((v) => !v)}
+              aria-expanded={showDone}
+              aria-controls={donePanelId}
+              className="-ml-1.5 flex cursor-pointer items-center gap-2 rounded-lg px-1.5 py-1 transition-colors hover:bg-ambient-soft"
+            >
+              <ChevronRight
+                className={`size-3.5 shrink-0 text-ink-subtle transition-transform duration-200 ${
+                  showDone ? "rotate-90" : ""
+                }`}
+                aria-hidden
+              />
+              <span className="font-sora text-xs font-semibold text-ink-subtle">
+                {t("list.doneToday", { count: doneToday.length })}
+              </span>
+            </button>
+
+            <ul
+              id={donePanelId}
+              hidden={!showDone}
+              className="py-1"
+            >
+              {doneToday.map((task) => (
+                <li
+                  key={task.id}
+                  className="-mx-2.5 flex items-center gap-3.5 rounded-lg px-2.5 py-2 transition-colors hover:bg-ambient-soft"
+                >
+                  <Checkbox
+                    checked
+                    label={task.title}
+                    onChange={() =>
+                      task.id !== undefined && onToggleTask?.(task.id, false)
+                    }
+                  />
+                  <span className="flex-1 text-sm text-ink-subtle line-through">
+                    {task.title}
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
         )}
       </div>

@@ -1,8 +1,15 @@
 import type { EnergyLevel } from "@/features/mood/constants/moods";
 
 /**
- * A task group. This is a *planning horizon*, not a status — completion is the
- * `completed` boolean, which is why there is no "completed" member here.
+ * Which list a task appears in.
+ *
+ * **Derived, never stored.** It is computed from `plannedFor` by `viewFor()` in
+ * `../lib/planning`, so the passage of time moves tasks between lists on its
+ * own. Storing it as a string is what made "today" permanent — a task filed
+ * under Today in March was still under Today in October.
+ *
+ * Still a planning horizon rather than a status: completion is the `completed`
+ * boolean, which is why there is no "completed" member here.
  */
 export type TaskGroup = "today" | "week" | "backlog";
 
@@ -18,7 +25,15 @@ export interface Task {
   id?: number;
   title: string;
   notes?: string;
-  group: TaskGroup;
+  /**
+   * The day this is meant for, at local midnight. `null` means the backlog —
+   * wanted, but not committed to a day.
+   *
+   * A past date on an unfinished task is not an error: it has carried over, and
+   * still shows in Today (flagged as carried). This single field is what the
+   * three lists are derived from.
+   */
+  plannedFor: Date | null;
   /** How much energy this demands. Matched against the day's mood check-in. */
   energyRequired: EnergyLevel;
   estimatedMinutes: number;
@@ -49,7 +64,8 @@ export interface Frog extends Task {
 /** The fields a reader actually supplies when adding a task. */
 export type NewTaskInput = {
   title: string;
-  group: TaskGroup;
+  /** Local midnight of the intended day, or null for the backlog. */
+  plannedFor: Date | null;
   energyRequired: EnergyLevel;
   estimatedMinutes: number;
   notes?: string;

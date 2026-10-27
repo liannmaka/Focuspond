@@ -5,7 +5,7 @@ import { TaskAccordion } from "@/features/tasks/components/TaskAccordion";
 import PageHeader from "@/features/tasks/components/PageHeader";
 import {
   useTasks,
-  useGroupProgress,
+  useDoneToday,
   toggleTask,
 } from "@/features/tasks/hooks/useTasks";
 
@@ -18,9 +18,9 @@ export default function AllPage() {
   const week = useTasks("week");
   const backlog = useTasks("backlog");
 
-  const todayProgress = useGroupProgress("today");
-  const weekProgress = useGroupProgress("week");
-  const backlogProgress = useGroupProgress("backlog");
+  const todayDone = useDoneToday("today");
+  const weekDone = useDoneToday("week");
+  const backlogDone = useDoneToday("backlog");
 
   return (
     <div className="mx-auto w-full max-w-4xl">
@@ -31,14 +31,14 @@ export default function AllPage() {
           group="today"
           tasks={today ?? []}
           addToGroup="today"
-          progress={todayProgress}
+          doneToday={todayDone}
           onToggleTask={toggleTask}
         />
         <TaskAccordion
           group="week"
           tasks={week ?? []}
           addToGroup="week"
-          progress={weekProgress}
+          doneToday={weekDone}
           defaultOpen={false}
           onToggleTask={toggleTask}
         />
@@ -46,7 +46,7 @@ export default function AllPage() {
           group="backlog"
           tasks={backlog ?? []}
           addToGroup="backlog"
-          progress={backlogProgress}
+          doneToday={backlogDone}
           defaultOpen={false}
           onToggleTask={toggleTask}
         />

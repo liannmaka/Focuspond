@@ -8,7 +8,7 @@ import PageHeader from "@/features/tasks/components/PageHeader";
 import { useTodayEnergy } from "@/features/mood/hooks/useMood";
 import {
   useTasks,
-  useGroupProgress,
+  useDoneToday,
   toggleTask,
 } from "@/features/tasks/hooks/useTasks";
 import { energyFits, suggestFrog } from "@/features/tasks/lib/taskDisplay";
@@ -19,7 +19,7 @@ export default function TodayPage() {
   const router = useRouter();
 
   const tasks = useTasks("today") ?? [];
-  const progress = useGroupProgress("today");
+  const doneToday = useDoneToday("today");
   const energy = useTodayEnergy();
 
   const suggested = suggestFrog(tasks, energy);
@@ -39,11 +39,7 @@ export default function TodayPage() {
 
   return (
     <div className="mx-auto w-full max-w-4xl">
-      <PageHeader
-        title={t("today")}
-        done={progress?.done}
-        total={progress?.total}
-      />
+      <PageHeader title={t("today")} />
 
       <FrogOfTheDay
         frog={frog}
@@ -55,7 +51,7 @@ export default function TodayPage() {
           group="today"
           tasks={tasks}
           addToGroup="today"
-          progress={progress}
+          doneToday={doneToday}
           onToggleTask={toggleTask}
         />
       </div>

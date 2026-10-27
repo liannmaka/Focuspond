@@ -60,17 +60,17 @@ worth more then — an account containing one mood row is not worth creating.
 
 ### Out
 
-| Capability                                   | Disposition                                                                                                                                                                                                    |
-| -------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Analytics dashboard**                      | **Killed.** Nothing ever promised "analytics" — the promise was _"see your streaks and completed Frogs."_ `/analytics` becomes the Progress page. Saves ~20 hrs.                                               |
-| **Cross-device sync**                        | M9, post-MVP. Needs tombstones + conflict resolution (~14 hrs on top of auth). Requires a two-string copy edit — see below.                                                                                    |
-| **Quick Notes** (own surface)                | Downscoped to a note field on a task.                                                                                                                                                                          |
-| **End-of-Day Reflection** (ritual flow)      | Downscoped to one field on the Progress page.                                                                                                                                                                  |
-| **Mini-Frogs** (feature)                     | Shipped as a label + sort order.                                                                                                                                                                               |
-| Auto-rollover                                | **Already true — zero hours.** `TaskGroup` is a planning horizon with no date, so nothing rolls _off_ "today". The data model already satisfies _"unfinished tasks roll over automatically."_ Do not build it. |
-| Search box, Bell icon in `TopBar`            | **Delete.** Never promised anywhere, and they are dead controls.                                                                                                                                               |
-| Pricing / billing                            | Stub stays a stub. The FAQ says "completely free while we're in our early stage". Nothing is owed.                                                                                                             |
-| Collaboration, teams, sharing, notifications | Never promised anywhere. Never build.                                                                                                                                                                          |
+| Capability                                   | Disposition                                                                                                                                                                                                                                                                          |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Analytics dashboard**                      | **Killed.** Nothing ever promised "analytics" — the promise was _"see your streaks and completed Frogs."_ `/analytics` becomes the Progress page. Saves ~20 hrs.                                                                                                                     |
+| **Cross-device sync**                        | M9, post-MVP. Needs tombstones + conflict resolution (~14 hrs on top of auth). Requires a two-string copy edit — see below.                                                                                                                                                          |
+| **Quick Notes** (own surface)                | Downscoped to a note field on a task.                                                                                                                                                                                                                                                |
+| **End-of-Day Reflection** (ritual flow)      | Downscoped to one field on the Progress page.                                                                                                                                                                                                                                        |
+| **Mini-Frogs** (feature)                     | Shipped as a label + sort order.                                                                                                                                                                                                                                                     |
+| Auto-rollover                                | **Now M2.5 — this entry was wrong.** It claimed the promise was already met because `TaskGroup` has no date, so nothing rolls _off_ "today". True only in the degenerate sense that nothing ever moves: a task filed under Today in March is still under Today in October. See M2.5. |
+| Search box, Bell icon in `TopBar`            | **Delete.** Never promised anywhere, and they are dead controls.                                                                                                                                                                                                                     |
+| Pricing / billing                            | Stub stays a stub. The FAQ says "completely free while we're in our early stage". Nothing is owed.                                                                                                                                                                                   |
+| Collaboration, teams, sharing, notifications | Never promised anywhere. Never build.                                                                                                                                                                                                                                                |
 
 ### Standing decisions
 
@@ -127,7 +127,85 @@ Add a `useGroupProgress(group)` that counts across both states.
 TopBar shows Tired, the sidebar says how many tasks fit. Re-check in as Energized
 → every surface updates live, no reload.
 
-### M3 — Choosing a frog · 6 hrs · weeks 3–4
+### M2.5 — "Today" becomes a date · 5 hrs · weeks 3–4
+
+**Why this exists.** `TaskGroup` is a string, so "today" never changes meaning: a
+task filed under Today last month is still under Today now, and the promised
+_"unfinished tasks roll over automatically"_ has never been true. The count badge
+compounds it — `useTasks()` returns only open tasks while `useGroupProgress()`
+counts all of them, so Today can read `4/4` above an apparently empty list.
+
+**Do this before M3.** The frog picker ranks "today's tasks". Building it on a
+definition that is about to change means building it twice.
+
+#### The model: one date replaces the label
+
+```ts
+plannedFor: Date | null; // replaces `group: TaskGroup`
+```
+
+| View          | Rule                                                     |
+| ------------- | -------------------------------------------------------- |
+| **Backlog**   | `plannedFor === null` — someday, no commitment           |
+| **Today**     | `plannedFor <= startOfTomorrow()` — today + carried over |
+| **This week** | `plannedFor` after today, within the week                |
+
+This is the near-universal definition. Zenkit: _"all tasks … due on or before the
+current date and have not yet been marked as completed."_ 2Do carries past-due
+tasks forward to Today until completed. Microsoft To Do is the counter-example —
+overdue tasks vanish from Today, and users complain about exactly that.
+
+Three things fall out for free:
+
+- **Rollover becomes real _and visible_.** A task planned for Friday still matches
+  `<= today` on Saturday, so it appears in Today — and because the date is known,
+  it can be marked _"carried from Friday"_ rather than blending in silently. Silent
+  accumulation is the actual complaint; excluding old tasks is not the fix.
+- **Week flows into Today by itself.** Plan something for Thursday and on Thursday
+  it is simply in Today. Nothing to move by hand.
+- **Done becomes an archive**, not the place today's completions go to hide.
+
+#### Completed tasks: collapsed, not banished
+
+Keep them in the group, behind a disclosure, collapsed by default:
+
+```
+▾ Today                        1 left     Add task +
+  ○ Write the proposal          DEEP WORK  50m
+  ▸ Done today (3)
+```
+
+The majority pattern (Todoist, Zenkit, 2Do) hides completed items from Today
+entirely. That is rejected here for one product-specific reason: the marketing
+promises _"End your day calmly by noting your wins"_ and _"See your streaks and
+completed Frogs."_ Making today's wins reachable only from another tab throws that
+away. A disclosure keeps the list clean and the wins one click away.
+
+It also fixes the badge. The header shows **"1 left"** — what is actually in the
+list — and `3/4` moves onto the disclosure, where it is self-explanatory.
+
+#### Work
+
+- `src/features/tasks/types/task.ts` — `plannedFor: Date | null` replaces `group`.
+  Keep `TaskGroup` as a **derived view name**, not a stored field.
+- `src/lib/db/indexedDB.ts` — **Dexie v3**: index `plannedFor`; `.upgrade()` maps
+  `group` → a date (`today` → today, `week` → end of this week, `backlog` → null).
+  Rewrite `getByGroup` as date-range queries. Add `carriedFrom` as a derived value,
+  not a column.
+- `src/features/tasks/hooks/useTasks.ts` — queries by date range; `useGroupProgress`
+  returns `{ open, done, total }` so callers stop recomputing from a filtered list.
+- `src/features/tasks/components/TaskAccordion.tsx` — the disclosure, the carried-over
+  marker, header count becomes "N left".
+- `AddTaskRow.tsx` — Today / This week / Someday maps to a date instead of a label.
+- `src/i18n/messages/en/tasks.json` — `list.left`, `list.doneToday`, `list.carriedFrom`.
+- Tests: date arithmetic is the risk. Cover midnight boundaries, a task planned 3
+  days ago appearing in Today, and the v2→v3 upgrade.
+
+**Done:** create a task for today, complete it, and it drops into "Done today (1)"
+while the header reads "0 left". Change the device clock to tomorrow: the unfinished
+task is in Today marked _carried from yesterday_, and the completed one is not.
+
+### M3 — Choosing a frog · 8 hrs · weeks 3–5
 
 - `src/features/tasks/components/FrogPicker.tsx` _(new)_ — a sheet listing
   incomplete tasks, energy-fitting ones first via `suggestFrog`, calling
@@ -136,6 +214,33 @@ TopBar shows Tired, the sidebar says how many tasks fit. Re-check in as Energize
   exported from `useTasks.ts` and has no caller).
 - `AddTaskRow.tsx` — the optional note field. This is the whole Quick Notes downscope.
 - `home/today/page.tsx` — wire `onSwap` / `onChoose`.
+
+#### Also in M3: the reschedule control (~1.5 hrs)
+
+**The gap M2.5 left.** `plannedFor` is written in exactly one place —
+`AddTaskRow`, at creation — and never changed afterwards. So a task that lands in
+Today stays there forever with its carried count climbing, and a backlog item can
+never be promoted. `updateTask` is exported from `useTasks.ts` and has no caller.
+
+M2.5 made stale accumulation _visible_; this is the escape hatch. Add
+**Today / Upcoming / Someday** to the same per-row menu as "make this the frog" —
+it is one `updateTask({ plannedFor })` call per option, using `plannedForView()`.
+
+No app in this space expires or moves stale tasks for you; they all just let you
+re-date. Things 3: _"change a to-do's start date by simply dragging and dropping
+it on another day."_ Remember The Milk is the neat one — clearing the due date
+drops a task into Someday/Maybe automatically, and adding one promotes it back.
+That is exactly `plannedFor = null` here, so "Move to Someday" needs no new
+concept.
+
+#### Also in M3: rename "This week" → "Upcoming" (~15 min)
+
+The view holds everything dated in the future, unbounded — a task three months out
+appears there. "This week" is therefore a lie for anything past the next seven
+days. The _rule_ is fine; it is what Things 3 calls Upcoming: _"all the to-dos you
+can't work on now but have planned for the future."_
+
+One message key in `src/i18n/messages/en/{nav,tasks}.json`. No logic change.
 
 **Mini-Frogs, ~1 hr of the above:** when `useTodayEnergy() === "low"`, the picker
 headline and the `FrogOfTheDay` eyebrow read "Mini-frog", and `suggestFrog`
@@ -274,6 +379,28 @@ lands mid-refactor:
 Supabase under your uid → log in on a different browser → tasks, moods and streak
 are there.
 
+### Later refinement: group Upcoming by day — not scheduled
+
+Build it when the flat list starts to hurt, not before.
+
+Upcoming holds every future-dated task in one flat list, so tomorrow's work sits
+directly beside something planned for January. Renaming the view in M3 stops it
+_claiming_ to be this week, but the flatness is the real defect.
+
+Things 3 solves this without a fourth list: _"at the top of Upcoming, you'll see
+the next seven days listed separately, starting with tomorrow."_ Tomorrow and
+15 January land under different date headings, so they never sit side by side.
+A "Later" **section inside the view**, not another nav item.
+
+What makes it worth doing here is Cultured Code's own rationale: seeing the week
+laid out _"helps to prevent overloading a single day."_ Noticing that Thursday
+already holds three deep-work tasks is what stops a fourth being added. FocusPond
+already matches work to the energy available **today** — capacity planning across
+days is that same idea extended forward, which fits this app better than it would
+a generic task manager.
+
+Premature while Upcoming holds one or two items. Revisit when it is hard to read.
+
 ### M9 — Cross-device sync · 14 hrs · weeks 23–27 · post-MVP
 
 `updatedAt` on every row. `deletedAt` tombstones — `taskDB.delete()` is currently
@@ -303,13 +430,17 @@ locale, never missing ones. Six locales therefore cost nothing per feature.
 
 ## The real timeline (4 hrs/week)
 
-| Reached                         | Hours     | Calendar      |
-| ------------------------------- | --------- | ------------- |
-| Core loop complete (M2–M5)      | 29        | ~10 weeks     |
-| Progress + streaks (M6)         | 37        | ~13 weeks     |
-| **Shippable to strangers (M7)** | **45–48** | **~4 months** |
-| Accounts + backup (M8)          | 64–67     | ~5.5 months   |
-| Cross-device (M9)               | 78–81     | ~7 months     |
+| Reached                         | Hours     | Calendar        |
+| ------------------------------- | --------- | --------------- |
+| Core loop complete (M2–M5)      | 36        | ~12 weeks       |
+| Progress + streaks (M6)         | 44        | ~15 weeks       |
+| **Shippable to strangers (M7)** | **52–55** | **~4.5 months** |
+| Accounts + backup (M8)          | 71–74     | ~6 months       |
+| Cross-device (M9)               | 85–88     | ~7.5 months     |
+
+M2.5 adds 5 hrs to every row below it. It buys back more than that at M6 —
+streaks need to know which day a task belonged to, and without a date on the row
+that query has nothing to group by.
 
 That gap — 4 months to shippable versus 7 to cross-device — **is** the argument
 for this ordering. Three extra months before anyone can use anything is not a
@@ -348,7 +479,8 @@ The end-to-end acceptance test for M7, on a device that has never run it:
    strings. Best promise-per-hour in the product, by a wide margin.
 3. **Streaks (~3 of M6's 8 hrs)** — a pure function over rows already stored. The
    analytics dashboard it replaces would be ~20 hrs and was never promised.
-4. **Auto-rollover (0 hrs)** — already satisfied by the data model. Just know it,
+4. ~~**Auto-rollover (0 hrs)** — already satisfied by the data model.~~ **Wrong —
+   see M2.5.** Nothing rolls over because nothing has a date. Just know it,
    so it doesn't get built by accident.
 5. **Mini-Frogs as a label (~1 hr inside M3)** — discharges a paragraph on the
    defining benefit card without building a feature.

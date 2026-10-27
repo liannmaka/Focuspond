@@ -4,6 +4,7 @@ import "fake-indexeddb/auto";
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { renderWithIntl, screen, waitFor } from "@/test/renderWithIntl";
+import { startOfToday } from "@/features/tasks/lib/planning";
 import { db, moodDB, taskDB } from "@/lib/db/indexedDB";
 import EnergyOverview from "./EnergyOverview";
 
@@ -15,7 +16,7 @@ beforeEach(async () => {
 const addTask = (title: string, energyRequired: "high" | "medium" | "low") =>
   taskDB.add({
     title,
-    group: "today",
+    plannedFor: startOfToday(),
     energyRequired,
     estimatedMinutes: 25,
   });

@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import Button from "@/components/ui/Button";
 import type { EnergyLevel } from "@/features/mood/constants/moods";
 import { addTask } from "../hooks/useTasks";
+import { plannedForView } from "../lib/planning";
 import {
   ENERGY_LEVELS,
   MINUTE_PRESETS,
@@ -44,7 +45,9 @@ export default function AddTaskRow({ group, onDone }: AddTaskRowProps) {
     try {
       await addTask({
         title: title.trim(),
-        group,
+        // The view the reader is adding into becomes a date; which list it
+        // then appears in is derived from that date, not stored.
+        plannedFor: plannedForView(group),
         energyRequired: energy,
         estimatedMinutes: minutes,
       });

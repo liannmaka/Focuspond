@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 import userEvent from "@testing-library/user-event";
 
 import { renderWithIntl, screen } from "@/test/renderWithIntl";
+import { startOfToday } from "../lib/planning";
 import { TaskAccordion } from "./TaskAccordion";
 import type { Task } from "../types/task";
 
@@ -9,7 +10,7 @@ function makeTask(overrides: Partial<Task> = {}): Task {
   return {
     id: 1,
     title: "Ship the plan",
-    group: "today",
+    plannedFor: startOfToday(),
     energyRequired: "high",
     estimatedMinutes: 50,
     focusBlocks: 2,
@@ -20,6 +21,10 @@ function makeTask(overrides: Partial<Task> = {}): Task {
     ...overrides,
   };
 }
+
+/** A task finished today, for the "Done today" disclosure. */
+const makeDone = (title: string, id: number): Task =>
+  makeTask({ id, title, completed: true, completedAt: new Date() });
 
 describe("TaskAccordion", () => {
   it("renders the empty state when there are no tasks", () => {
@@ -44,12 +49,12 @@ describe("TaskAccordion", () => {
       <TaskAccordion
         group="today"
         tasks={[]}
-        progress={{ done: 4, total: 4 }}
+        doneToday={[makeDone("a", 1), makeDone("b", 2), makeDone("c", 3)]}
         addToGroup="today"
       />
     );
 
-    expect(screen.getByText("All 4 done")).toBeInTheDocument();
+    expect(screen.getByText("All 3 done")).toBeInTheDocument();
     expect(screen.queryByText("Still water")).not.toBeInTheDocument();
     expect(
       screen.queryByRole("button", { name: /add your first task/i })
@@ -61,12 +66,101 @@ describe("TaskAccordion", () => {
       <TaskAccordion
         group="today"
         tasks={[]}
-        progress={{ done: 0, total: 0 }}
+        doneToday={[]}
         addToGroup="today"
       />
     );
 
     expect(screen.getByText("Still water")).toBeInTheDocument();
+  });
+
+  /** The header counts the list, not a ratio against rows that are elsewhere. */
+  it("counts only what is open in the header", () => {
+    renderWithIntl(
+      <TaskAccordion
+        group="today"
+        tasks={[makeTask({ id: 1 }), makeTask({ id: 2 })]}
+        doneToday={[makeDone("finished", 3)]}
+      />
+    );
+
+    expect(screen.getByText("2 left")).toBeInTheDocument();
+    expect(screen.queryByText("2/3")).not.toBeInTheDocument();
+  });
+
+  it("folds today's wins away, and opens them on request", async () => {
+    renderWithIntl(
+      <TaskAccordion
+        group="today"
+        tasks={[makeTask({ id: 1 })]}
+        doneToday={[makeDone("Finished thing", 2)]}
+      />
+    );
+
+    const disclosure = screen.getByRole("button", { name: /done today/i });
+    expect(disclosure).toHaveAttribute("aria-expanded", "false");
+
+    await userEvent.click(disclosure);
+
+    expect(disclosure).toHaveAttribute("aria-expanded", "true");
+    expect(screen.getByText("Finished thing")).toBeVisible();
+  });
+
+  /** Carrying over must be visible, or Today quietly stops meaning anything. */
+  it("flags a task carried over from an earlier day", () => {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    yesterday.setHours(0, 0, 0, 0);
+
+    renderWithIntl(
+      <TaskAccordion
+        group="today"
+        tasks={[makeTask({ plannedFor: yesterday })]}
+      />
+    );
+
+    expect(screen.getByText("Yesterday")).toBeInTheDocument();
+    expect(
+      screen.getByLabelText("Carried over since yesterday")
+    ).toBeInTheDocument();
+  });
+
+  /**
+   * Each task names its own day. Computed against the real clock rather than
+   * hardcoded, so this keeps passing on whatever weekday it runs.
+   */
+  it("names the weekday for a task carried several days", () => {
+    const threeDaysAgo = new Date();
+    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
+    threeDaysAgo.setHours(0, 0, 0, 0);
+
+    const expected = new Intl.DateTimeFormat("en", {
+      weekday: "short",
+    }).format(threeDaysAgo);
+
+    renderWithIntl(
+      <TaskAccordion
+        group="today"
+        tasks={[makeTask({ plannedFor: threeDaysAgo })]}
+      />
+    );
+
+    expect(screen.getByText(expected)).toBeInTheDocument();
+    // The pill says when; the tooltip says how long.
+    expect(
+      screen.getByLabelText("Carried over for 3 days")
+    ).toBeInTheDocument();
+  });
+
+  it("does not flag today's own work as carried over", () => {
+    renderWithIntl(
+      <TaskAccordion
+        group="today"
+        tasks={[makeTask()]}
+      />
+    );
+
+    expect(screen.queryByText(/^d+d$/)).not.toBeInTheDocument();
   });
 
   it("reports the id and the new checked state when a task is toggled", async () => {
@@ -108,21 +202,6 @@ describe("TaskAccordion", () => {
     );
 
     expect(screen.getByText("Light")).toBeInTheDocument();
-  });
-
-  it("counts done against total in the group header", () => {
-    renderWithIntl(
-      <TaskAccordion
-        group="today"
-        tasks={[
-          makeTask({ id: 1, completed: true }),
-          makeTask({ id: 2 }),
-          makeTask({ id: 3 }),
-        ]}
-      />
-    );
-
-    expect(screen.getByText("1/3")).toBeInTheDocument();
   });
 
   /**

@@ -44,6 +44,9 @@
     "addTask": "Add task",
     "toggleGroup": "Toggle {group}",
     "completeTask": "Mark {title} as done",
+    "left": "{count} left",
+    "carriedFor": "Carried over {count, plural, =1 {since yesterday} other {for # days}}",
+    "doneToday": "{count, plural, =1 {Done today (1)} other {Done today (#)}}",
     "cleared": "{count, plural, =1 {That's the one task done} other {All # done}}",
     "empty": {
       "title": "Still water",
@@ -53,7 +56,8 @@
     "emptyCompleted": {
       "title": "Nothing finished yet",
       "body": "Tasks you check off will collect here."
-    }
+    },
+    "carriedYesterday": "Yesterday"
   },
   "add": {
     "placeholder": "What needs doing?",

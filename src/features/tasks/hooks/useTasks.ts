@@ -3,6 +3,7 @@
 import { useLiveQuery } from "dexie-react-hooks";
 
 import { taskDB } from "@/lib/db/indexedDB";
+import { viewFor } from "../lib/planning";
 import type { NewTaskInput, Task, TaskGroup } from "../types/task";
 
 /**
@@ -20,9 +21,14 @@ import type { NewTaskInput, Task, TaskGroup } from "../types/task";
  * flashing.
  */
 
-/** Incomplete tasks in one group, oldest first. Live. */
+/** Open tasks in one view, carried-over first. Live. */
 export function useTasks(group: TaskGroup): Task[] | undefined {
   return useLiveQuery(() => taskDB.getByGroup(group), [group]);
+}
+
+/** Tasks finished today that belong to this view — the disclosure. Live. */
+export function useDoneToday(group: TaskGroup): Task[] | undefined {
+  return useLiveQuery(() => taskDB.getDoneToday(group), [group]);
 }
 
 /** Every incomplete task, across all groups. Live. */
@@ -35,23 +41,29 @@ export function useCompletedTasks(): Task[] | undefined {
   return useLiveQuery(() => taskDB.getCompleted(), []);
 }
 
-export type GroupProgress = { done: number; total: number };
+export type GroupProgress = { open: number; done: number; total: number };
 
 /**
- * Done-vs-total for one group, counting across both states.
+ * What a view's header can truthfully say.
  *
- * `useTasks()` deliberately returns only *incomplete* tasks, so counting
- * completions from its result is structurally always zero — which is what made
- * every progress bar read `0 / N`. Progress has to be its own query.
+ * `open` is what the list actually shows, which is why the header reads
+ * "N left" rather than a fraction — a ratio next to a list of a different
+ * length is how `4/4` ended up above an apparently empty group.
+ *
+ * `done` counts only today's completions, matching the disclosure beneath, so
+ * `done`/`total` describes exactly the rows on screen and nothing else.
  */
 export function useGroupProgress(group: TaskGroup): GroupProgress | undefined {
   return useLiveQuery(async () => {
-    const tasks = await taskDB.getAll();
-    const inGroup = tasks.filter((task) => task.group === group);
+    const [open, done] = await Promise.all([
+      taskDB.getByGroup(group),
+      taskDB.getDoneToday(group),
+    ]);
 
     return {
-      done: inGroup.filter((task) => task.completed).length,
-      total: inGroup.length,
+      open: open.length,
+      done: done.length,
+      total: open.length + done.length,
     };
   }, [group]);
 }
@@ -67,11 +79,15 @@ export function useTaskCounts(): TaskCounts | undefined {
     const tasks = await taskDB.getAll();
     const open = tasks.filter((task) => !task.completed);
 
+    const now = new Date();
+    const inView = (group: TaskGroup) =>
+      open.filter((task) => viewFor(task.plannedFor, now) === group).length;
+
     return {
       all: open.length,
-      today: open.filter((task) => task.group === "today").length,
-      week: open.filter((task) => task.group === "week").length,
-      backlog: open.filter((task) => task.group === "backlog").length,
+      today: inView("today"),
+      week: inView("week"),
+      backlog: inView("backlog"),
       completed: tasks.length - open.length,
     };
   }, []);
