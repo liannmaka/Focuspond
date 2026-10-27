@@ -1,6 +1,11 @@
 # FocusPond roadmap — MVP and beyond
 
-Status: **M0–M1 complete** (`374011f`). Next up: **M2**.
+Status: **M0 – M2.5 complete** (`087e7f3`). Next up: **M3a**.
+
+What exists today is **create, read, and tick off** — not full CRUD. A task's
+title, effort, estimate and date are fixed at creation, and nothing can be
+deleted. `taskDB.delete`, `taskDB.update` and `taskDB.setFrog` all work and are
+tested; they simply have no UI. M3a is where that closes.
 
 This is the plan of record. It supersedes any earlier milestone numbering.
 
@@ -91,9 +96,10 @@ worth more then — an account containing one mood row is not worth creating.
 ## Milestones
 
 Hours assume ~4 hrs/week solo and include a re-entry tax (~30 min) for any
-milestone resumed after a gap.
+milestone resumed after a gap. Week numbers count from the next unstarted
+milestone, not from the start of the plan.
 
-### M2 — Mood becomes real · 5 hrs · weeks 1–2
+### M2 — Mood becomes real · ✅ done (cd0d5cb)
 
 The highest ratio of visible change to hours in the plan, because most of it is
 connecting things that already exist: `energyRank()`, `energyTagKey()`,
@@ -127,7 +133,7 @@ Add a `useGroupProgress(group)` that counts across both states.
 TopBar shows Tired, the sidebar says how many tasks fit. Re-check in as Energized
 → every surface updates live, no reload.
 
-### M2.5 — "Today" becomes a date · 5 hrs · weeks 3–4
+### M2.5 — "Today" becomes a date · ✅ done (087e7f3)
 
 **Why this exists.** `TaskGroup` is a string, so "today" never changes meaning: a
 task filed under Today last month is still under Today now, and the promised
@@ -205,42 +211,54 @@ list — and `3/4` moves onto the disclosure, where it is self-explanatory.
 while the header reads "0 left". Change the device clock to tomorrow: the unfinished
 task is in Today marked _carried from yesterday_, and the completed one is not.
 
-### M3 — Choosing a frog · 8 hrs · weeks 3–5
+### M3a — Tasks become editable · 5 hrs · weeks 1–2
+
+**Why this comes before the frog picker.** A task's title, effort, estimate and
+date are all fixed at the moment it is created. Mistype a title and your only
+recourse is to complete it and add another; there is no delete at all. That
+blocks daily use in a way choosing a frog does not.
+
+It also makes M3b cheaper: the per-row menu built here is the same affordance
+"make this the frog" needs, so the picker arrives into a menu that already exists.
+
+- **`AddTaskRow.tsx` → a dual-mode composer.** It already collects exactly what
+  editing needs — title input, effort control, minutes chips. Give it an optional
+  `task` prop: present means edit, absent means create. One component for both,
+  so the two can never drift apart, and the keyboard model (Enter saves, Escape
+  dismisses) is learned once. A separate edit form would be more code and a second
+  thing to keep in sync.
+- **Edit in place, not in a modal** — the row becomes the composer. Same reasoning
+  as the original decision not to use a modal for adding: less code, less a11y
+  surface, and it keeps the list as the thing you are working in.
+- **`TaskAccordion.tsx` — a per-row menu** holding Edit, Delete, and the
+  reschedule options. `deleteTask` and `updateTask` are exported from
+  `useTasks.ts` and have never had a caller.
+- **Reschedule: Today / Upcoming / Someday.** One `updateTask({ plannedFor })`
+  via `plannedForView()`. This is the escape hatch M2.5 left open — a task that
+  lands in Today otherwise stays there forever with its carried count climbing.
+  No app in this space expires stale tasks; they all just let you re-date. Things 3:
+  _"change a to-do's start date by simply dragging and dropping it on another day."_
+  Remember The Milk is the neat one — clearing the date drops a task into
+  Someday/Maybe automatically, which here is exactly `plannedFor = null`.
+- **Rename "This week" → "Upcoming"** (~15 min). The view holds everything dated
+  in the future, unbounded, so "This week" is a lie past the next seven days. The
+  rule is fine — it is what Things 3 calls Upcoming. One message key in
+  `src/i18n/messages/en/{nav,tasks}.json`, no logic change.
+- **Tests:** editing preserves `createdAt`, `focusBlocksDone` and `isFrog`;
+  changing the estimate recomputes `focusBlocks`; rescheduling moves the task
+  between views; delete removes it from every view.
+
+**Done:** mistype a task, fix the title in place, change its effort from Deep work
+to Light, push it to Upcoming, then delete it — without reloading.
+
+### M3b — Choosing a frog · 6 hrs · weeks 3–4
 
 - `src/features/tasks/components/FrogPicker.tsx` _(new)_ — a sheet listing
   incomplete tasks, energy-fitting ones first via `suggestFrog`, calling
   `setFrog(id)`. One component serves both `onSwap` and `onChoose`.
-- `TaskAccordion.tsx` — per-row "make this the frog", plus delete (`deleteTask` is
-  exported from `useTasks.ts` and has no caller).
+- `TaskAccordion.tsx` — "make this the frog" joins the row menu built in M3a.
 - `AddTaskRow.tsx` — the optional note field. This is the whole Quick Notes downscope.
 - `home/today/page.tsx` — wire `onSwap` / `onChoose`.
-
-#### Also in M3: the reschedule control (~1.5 hrs)
-
-**The gap M2.5 left.** `plannedFor` is written in exactly one place —
-`AddTaskRow`, at creation — and never changed afterwards. So a task that lands in
-Today stays there forever with its carried count climbing, and a backlog item can
-never be promoted. `updateTask` is exported from `useTasks.ts` and has no caller.
-
-M2.5 made stale accumulation _visible_; this is the escape hatch. Add
-**Today / Upcoming / Someday** to the same per-row menu as "make this the frog" —
-it is one `updateTask({ plannedFor })` call per option, using `plannedForView()`.
-
-No app in this space expires or moves stale tasks for you; they all just let you
-re-date. Things 3: _"change a to-do's start date by simply dragging and dropping
-it on another day."_ Remember The Milk is the neat one — clearing the due date
-drops a task into Someday/Maybe automatically, and adding one promotes it back.
-That is exactly `plannedFor = null` here, so "Move to Someday" needs no new
-concept.
-
-#### Also in M3: rename "This week" → "Upcoming" (~15 min)
-
-The view holds everything dated in the future, unbounded — a task three months out
-appears there. "This week" is therefore a lie for anything past the next seven
-days. The _rule_ is fine; it is what Things 3 calls Upcoming: _"all the to-dos you
-can't work on now but have planned for the future."_
-
-One message key in `src/i18n/messages/en/{nav,tasks}.json`. No logic change.
 
 **Mini-Frogs, ~1 hr of the above:** when `useTodayEnergy() === "low"`, the picker
 headline and the `FrogOfTheDay` eyebrow read "Mini-frog", and `suggestFrog`
@@ -251,7 +269,7 @@ even on tough days"_ paragraph on the Mood-Aware Productivity card with no copy 
 on a tired day → pick one → card shows it with the verdict → "Pick another" swaps
 it and the previous frog loses its badge.
 
-### M4 — The focus session · 12 hrs · weeks 5–8
+### M4 — The focus session · 12 hrs · weeks 5–7
 
 The only milestone too big for one evening, so it is **pre-split at a demoable
 seam**: **M4a** a countdown that runs and writes a session (no ring art); **M4b**
@@ -277,7 +295,7 @@ the ring, task binding, resume-after-reload. Both end shippable.
 and the clock is still correct** → finish → the task goes 0/2 → 1/2 focus blocks
 and a row lands in `pomodoros`.
 
-### M5 — Mindful breaks · 6 hrs · weeks 9–10
+### M5 — Mindful breaks · 6 hrs · weeks 8–9
 
 Six hours discharges six promises: the hero subtitle, the Focus Timer card, the
 Mindful Breaks card, the pomodoro-rhythm benefit, How It Works step 3, and the
@@ -293,7 +311,7 @@ Mindful Breaks card, the pomodoro-rhythm benefit, How It Works step 3, and the
 **Done:** finish a session (temporarily set the duration to 1 min) → break screen
 with a prompt → countdown → "Back to focus" returns with block 2 queued.
 
-### M6 — Progress: streaks + day's end · 8 hrs · weeks 11–13
+### M6 — Progress: streaks + day's end · 8 hrs · weeks 10–12
 
 - `src/features/progress/lib/streak.ts` _(new)_ — `currentStreak(days)`; a day
   counts if ≥1 focus session completed **or** the frog was completed. **Pure, no
@@ -313,7 +331,7 @@ with a prompt → countdown → "Back to focus" returns with block 2 queued.
 **Done:** complete a session → `/analytics` shows "1 day streak", one completed
 frog, and accepts a reflection note that survives reload.
 
-### M7 — Ship it · 8 hrs (11 with export/import) · weeks 14–16
+### M7 — Ship it · 8 hrs (11 with export/import) · weeks 13–15
 
 **This is the finish line.** After this, post the link.
 
@@ -347,7 +365,7 @@ frog, and accepts a reflection note that survives reload.
 airplane mode, check in, pick a frog, run a session, take a break, see the streak.
 Every visible control does something.
 
-### M8 — Accounts + backup · 19 hrs · weeks 17–22
+### M8 — Accounts + backup · 19 hrs · weeks 16–21
 
 Makes the FAQ's _"back up your progress"_ true. Read
 [`docs/features/sync.md`](features/sync.md) first — it is the spec, including the
@@ -401,7 +419,7 @@ a generic task manager.
 
 Premature while Upcoming holds one or two items. Revisit when it is hard to read.
 
-### M9 — Cross-device sync · 14 hrs · weeks 23–27 · post-MVP
+### M9 — Cross-device sync · 14 hrs · weeks 22–26 · post-MVP
 
 `updatedAt` on every row. `deletedAt` tombstones — `taskDB.delete()` is currently
 a hard delete, so a second device will resurrect it. Debounced push-on-write,
@@ -430,19 +448,18 @@ locale, never missing ones. Six locales therefore cost nothing per feature.
 
 ## The real timeline (4 hrs/week)
 
-| Reached                         | Hours     | Calendar        |
-| ------------------------------- | --------- | --------------- |
-| Core loop complete (M2–M5)      | 36        | ~12 weeks       |
-| Progress + streaks (M6)         | 44        | ~15 weeks       |
-| **Shippable to strangers (M7)** | **52–55** | **~4.5 months** |
-| Accounts + backup (M8)          | 71–74     | ~6 months       |
-| Cross-device (M9)               | 85–88     | ~7.5 months     |
+| Reached                         | Hours left          | Calendar        |
+| ------------------------------- | ------------------- | --------------- |
+| Core loop complete (through M5) | 29 remaining        | ~8 weeks        |
+| Progress + streaks (M6)         | 37 remaining        | ~10 weeks       |
+| **Shippable to strangers (M7)** | **45–48 remaining** | **~3.5 months** |
+| Accounts + backup (M8)          | 64–67 remaining     | ~5 months       |
+| Cross-device (M9)               | 78–81 remaining     | ~6.5 months     |
 
-M2.5 adds 5 hrs to every row below it. It buys back more than that at M6 —
-streaks need to know which day a task belonged to, and without a date on the row
-that query has nothing to group by.
+Counted from here — M0 through M2.5 are already done. Hours left include M3a
+(5) and M3b (6).
 
-That gap — 4 months to shippable versus 7 to cross-device — **is** the argument
+That gap — 3.5 months to shippable versus 6.5 to cross-device — **is** the argument
 for this ordering. Three extra months before anyone can use anything is not a
 trade worth making for a feature promised in one collapsed accordion item.
 
