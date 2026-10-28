@@ -1,7 +1,7 @@
 {
   "page": {
     "today": "Today",
-    "week": "This Week",
+    "week": "Upcoming",
     "all": "All Tasks",
     "backlog": "Backlog",
     "completed": "Completed",
@@ -35,7 +35,7 @@
   },
   "groups": {
     "today": "Today",
-    "week": "This week",
+    "week": "Upcoming",
     "backlog": "Backlog",
     "completed": "Completed",
     "other": "Everything else"
@@ -64,6 +64,14 @@
     "energyLabel": "Energy this needs",
     "minutes": "Rough estimate",
     "save": "Add",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "update": "Save"
+  },
+  "row": {
+    "actions": "Actions for {title}",
+    "edit": "Edit",
+    "moveTo": "Move to",
+    "current": "Current",
+    "delete": "Delete"
   }
 }

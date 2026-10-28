@@ -7,7 +7,8 @@ import { useTranslations, useFormatter } from "next-intl";
 // Input and next/link into every app route that renders a task row.
 import Checkbox from "@/components/ui/Checkbox";
 import Button from "@/components/ui/Button";
-import AddTaskRow from "./AddTaskRow";
+import TaskComposer from "./TaskComposer";
+import TaskRowMenu from "./TaskRowMenu";
 import { carriedLabel } from "../lib/planning";
 import { energyTagKey } from "../lib/taskDisplay";
 import type { Task, TaskGroup } from "../types/task";
@@ -90,6 +91,7 @@ export function TaskAccordion({
   const t = useTranslations("tasks");
   const [isOpen, setIsOpen] = useState(defaultOpen);
   const [isAdding, setIsAdding] = useState(false);
+  const [editingId, setEditingId] = useState<number | undefined>(undefined);
   const [showDone, setShowDone] = useState(false);
   const panelId = useId();
   const donePanelId = useId();
@@ -212,28 +214,44 @@ export function TaskAccordion({
 
         {!isEmpty && (
           <ul className="py-1">
-            {tasks.map((task) => (
-              <li
-                key={task.id}
-                className="group -mx-2.5 flex items-center gap-3.5 rounded-lg px-2.5 py-2.5 transition-colors not-first:shadow-[inset_0_1px_0_var(--line-soft)] hover:bg-ambient-soft"
-              >
-                <Checkbox
-                  checked={task.completed}
-                  label={task.title}
-                  onChange={(next) =>
-                    task.id !== undefined && onToggleTask?.(task.id, next)
-                  }
-                />
-
-                <span
-                  className={`flex-1 text-sm ${
-                    task.completed ? "text-ink-subtle line-through" : "text-ink"
-                  }`}
+            {tasks.map((task) =>
+              /* Editing replaces the row in place rather than opening a modal,
+                 so the list stays the thing you are working in. */
+              editingId !== undefined && task.id === editingId ? (
+                <li
+                  key={task.id}
+                  className="py-1"
                 >
-                  {task.title}
-                </span>
+                  <TaskComposer
+                    group={addToGroup ?? "today"}
+                    task={task}
+                    onDone={() => setEditingId(undefined)}
+                  />
+                </li>
+              ) : (
+                <li
+                  key={task.id}
+                  className="group -mx-2.5 flex items-center gap-3.5 rounded-lg px-2.5 py-2.5 transition-colors not-first:shadow-[inset_0_1px_0_var(--line-soft)] hover:bg-ambient-soft"
+                >
+                  <Checkbox
+                    checked={task.completed}
+                    label={task.title}
+                    onChange={(next) =>
+                      task.id !== undefined && onToggleTask?.(task.id, next)
+                    }
+                  />
 
-                {/*
+                  <span
+                    className={`flex-1 text-sm ${
+                      task.completed
+                        ? "text-ink-subtle line-through"
+                        : "text-ink"
+                    }`}
+                  >
+                    {task.title}
+                  </span>
+
+                  {/*
                   Carrying over has to be visible — silently blending
                   yesterday's leftovers into today is how a Today list stops
                   meaning anything. But it sits with the other metadata, not
@@ -241,25 +259,31 @@ export function TaskAccordion({
                   nothing has gone wrong, and an app whose pitch is "no
                   pressure, no hustle" should state this rather than scold.
                 */}
-                <CarriedPill task={task} />
+                  <CarriedPill task={task} />
 
-                {/* Energy read as a tag, so the day's fit is legible per row. */}
-                <span className="hidden font-sora text-[10.5px] font-semibold tracking-[0.04em] text-ink-subtle uppercase sm:inline">
-                  {t(energyTagKey(task.energyRequired))}
-                </span>
-                {task.estimatedMinutes > 0 && (
-                  <span className="text-xs tabular-nums text-ink-subtle">
-                    {task.estimatedMinutes}m
+                  {/* Energy read as a tag, so the day's fit is legible per row. */}
+                  <span className="hidden font-sora text-[10.5px] font-semibold tracking-[0.04em] text-ink-subtle uppercase sm:inline">
+                    {t(energyTagKey(task.energyRequired))}
                   </span>
-                )}
-              </li>
-            ))}
+                  {task.estimatedMinutes > 0 && (
+                    <span className="text-xs tabular-nums text-ink-subtle">
+                      {task.estimatedMinutes}m
+                    </span>
+                  )}
+
+                  <TaskRowMenu
+                    task={task}
+                    onEdit={() => setEditingId(task.id)}
+                  />
+                </li>
+              )
+            )}
           </ul>
         )}
 
         {isAdding && addToGroup && (
           <div className="pt-1 pb-2">
-            <AddTaskRow
+            <TaskComposer
               group={addToGroup}
               onDone={() => setIsAdding(false)}
             />
