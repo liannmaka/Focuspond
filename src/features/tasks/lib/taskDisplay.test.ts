@@ -93,7 +93,7 @@ describe("rankCandidates", () => {
     ]);
   });
 
-  it("prefers shorter tasks on a low-energy day — the mini-frog rule", () => {
+  it("prefers shorter tasks on a low-energy day", () => {
     const tasks = [
       task("long errand", "low", 50, 1),
       task("quick errand", "low", 15, 2),

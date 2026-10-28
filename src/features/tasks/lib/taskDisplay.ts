@@ -51,8 +51,8 @@ export const energyFits = (
  *
  * The rules, in order of precedence:
  *   1. tasks that fit today's energy come before tasks that don't
- *   2. on a low-energy day, shorter tasks first — the "mini-frog" idea, which
- *      is a sort order rather than a feature
+ *   2. on a low-energy day, shorter tasks first — lighter work when there is
+ *      less to spend, which is a sort order rather than a feature
  *   3. otherwise heavier work first, since a good day is for the hard thing
  *   4. oldest first, so nothing rots at the bottom forever
  *

@@ -31,7 +31,7 @@
       "mood-aware": {
         "badge": "Productivité à l'écoute de l'humeur",
         "title": "Restez connecté à ce que vous ressentez",
-        "paragraph": "Votre énergie façonne votre concentration. Utilisez les points d'humeur et les mini-Grenouilles pour rester aligné et bienveillant envers vous-même, même les jours difficiles."
+        "paragraph": "Votre énergie façonne votre concentration. Indiquez votre humeur, et la tâche du jour s'y adapte, même les jours difficiles."
       },
       "progress-tracking": {
         "badge": "Suivi des progrès en douceur",
@@ -131,7 +131,7 @@
         "label": "Créateurs",
         "headline": "Créez dans le flow",
         "bullets": [
-          "Utilisez les Mini-Grenouilles pour de courtes bouffées créatives et concentrées.",
+          "Les jours sans énergie, laissez FocusPond mettre en avant les tâches légères.",
           "Bâtissez des progrès réguliers grâce aux séries et à un suivi attentif.",
           "Gardez les grandes tâches pour les moments où votre énergie est au plus haut."
         ]

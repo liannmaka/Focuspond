@@ -71,7 +71,7 @@ worth more then — an account containing one mood row is not worth creating.
 | **Cross-device sync**                        | M9, post-MVP. Needs tombstones + conflict resolution (~14 hrs on top of auth). Requires a two-string copy edit — see below.                                                                                                                                                          |
 | **Quick Notes** (own surface)                | Downscoped to a note field on a task.                                                                                                                                                                                                                                                |
 | **End-of-Day Reflection** (ritual flow)      | Downscoped to one field on the Progress page.                                                                                                                                                                                                                                        |
-| **Mini-Frogs** (feature)                     | Shipped as a label + sort order.                                                                                                                                                                                                                                                     |
+| **Mini-Frogs**                               | **Cut.** Copy rewritten in en/pcm/fr — the term was used twice and defined nowhere, for behaviour the app already does silently.                                                                                                                                                     |
 | Auto-rollover                                | **Now M2.5 — this entry was wrong.** It claimed the promise was already met because `TaskGroup` has no date, so nothing rolls _off_ "today". True only in the degenerate sense that nothing ever moves: a task filed under Today in March is still under Today in October. See M2.5. |
 | Search box, Bell icon in `TopBar`            | **Delete.** Never promised anywhere, and they are dead controls.                                                                                                                                                                                                                     |
 | Pricing / billing                            | Stub stays a stub. The FAQ says "completely free while we're in our early stage". Nothing is owed.                                                                                                                                                                                   |
@@ -259,11 +259,6 @@ to Light, push it to Upcoming, then delete it — without reloading.
 - `TaskAccordion.tsx` — "make this the frog" joins the row menu built in M3a.
 - `AddTaskRow.tsx` — the optional note field. This is the whole Quick Notes downscope.
 - `home/today/page.tsx` — wire `onSwap` / `onChoose`.
-
-**Mini-Frogs, ~1 hr of the above:** when `useTodayEnergy() === "low"`, the picker
-headline and the `FrogOfTheDay` eyebrow read "Mini-frog", and `suggestFrog`
-prefers short low-energy tasks. That honours the _"mood check-ins and mini-Frogs…
-even on tough days"_ paragraph on the Mood-Aware Productivity card with no copy change.
 
 **Done:** no frog → "Choose your frog" → picker opens with low-energy tasks on top
 on a tired day → pick one → card shows it with the verdict → "Pick another" swaps
@@ -499,10 +494,7 @@ The end-to-end acceptance test for M7, on a device that has never run it:
 4. ~~**Auto-rollover (0 hrs)** — already satisfied by the data model.~~ **Wrong —
    see M2.5.** Nothing rolls over because nothing has a date. Just know it,
    so it doesn't get built by accident.
-5. **Mini-Frogs as a label (~1 hr inside M3)** — discharges a paragraph on the
-   defining benefit card without building a feature.
-6. **The four aria-labels (15 min)** — delete one attribute in four files. Fixes
    screen readers and voice control together.
-7. **Waitlist repurpose (~1 hr)** — turns a contradictory indexable page into the
+5. **Waitlist repurpose (~1 hr)** — turns a contradictory indexable page into the
    M8 mailing list, reusing an API route that already works.
-8. **The always-zero progress bar (30 min)** — currently broken on every page.
+6. **The always-zero progress bar (30 min)** — currently broken on every page.

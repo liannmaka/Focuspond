@@ -31,7 +31,7 @@
       "mood-aware": {
         "badge": "Mood-Aware Productivity",
         "title": "Stay connected to how you feel",
-        "paragraph": "Your energy shapes your focus. Use mood check-ins and mini-Frogs to stay aligned and kind to yourself, even on tough days."
+        "paragraph": "Your energy shapes your focus. Check in with how you feel, and the day's task is chosen to match, even on tough days."
       },
       "progress-tracking": {
         "badge": "Gentle Progress Tracking",
@@ -131,7 +131,7 @@
         "label": "Creator",
         "headline": "Create with flow",
         "bullets": [
-          "Use Mini-Frogs for short, focused creative bursts.",
+          "On low-energy days, let FocusPond surface the lighter work.",
           "Build steady progress with streaks and mindful tracking.",
           "Save big tasks for when your energy is highest."
         ]
