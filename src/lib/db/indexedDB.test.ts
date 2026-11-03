@@ -8,7 +8,14 @@ import {
   startOfToday,
   viewFor,
 } from "@/features/tasks/lib/planning";
-import { db, taskDB, moodDB, migrateToPlannedFor } from "./indexedDB";
+import type { StoredTask } from "./indexedDB";
+import {
+  db,
+  taskDB,
+  moodDB,
+  migrateToPlannedFor,
+  staleFrogIds,
+} from "./indexedDB";
 
 /** Fixed clock — midday, so no assertion sits on a midnight boundary. */
 const NOW = new Date(2026, 9, 20, 12, 0);
@@ -94,6 +101,105 @@ describe("migrateToPlannedFor (v2 → v3)", () => {
   });
 });
 
+describe("staleFrogIds (v3 → v4)", () => {
+  const row = (over: Partial<StoredTask> = {}): StoredTask =>
+    ({
+      id: 1,
+      title: "Task",
+      completed: false,
+      isFrog: false,
+      plannedFor: startOfToday(NOW),
+      createdAt: NOW,
+      ...over,
+    }) as StoredTask;
+
+  it("leaves a day with one eaten frog alone", () => {
+    const eaten = row({
+      id: 1,
+      isFrog: true,
+      completed: true,
+      completedAt: NOW,
+    });
+
+    expect(staleFrogIds([eaten, row({ id: 2 })], NOW)).toEqual([]);
+  });
+
+  it("leaves a frog that is still in play alone", () => {
+    expect(staleFrogIds([row({ id: 1, isFrog: true })], NOW)).toEqual([]);
+  });
+
+  /** The state the row-menu bug wrote: eaten and open, same day. */
+  it("demotes the open pretender when a frog was already eaten", () => {
+    const eaten = row({
+      id: 1,
+      isFrog: true,
+      completed: true,
+      completedAt: NOW,
+    });
+    const open = row({ id: 2, isFrog: true });
+
+    expect(staleFrogIds([eaten, open], NOW)).toEqual([2]);
+  });
+
+  /** A win is never rewritten — only the badge that was not earned. */
+  it("never demotes the eaten frog itself", () => {
+    const eaten = row({
+      id: 1,
+      isFrog: true,
+      completed: true,
+      completedAt: NOW,
+    });
+
+    expect(
+      staleFrogIds([eaten, row({ id: 2, isFrog: true })], NOW)
+    ).not.toContain(1);
+  });
+
+  /** Yesterday's win does not settle today. */
+  it("ignores a frog eaten on an earlier day", () => {
+    const yesterday = row({
+      id: 1,
+      isFrog: true,
+      completed: true,
+      completedAt: new Date(2026, 9, 19, 12, 0),
+    });
+
+    expect(
+      staleFrogIds([yesterday, row({ id: 2, isFrog: true })], NOW)
+    ).toEqual([]);
+  });
+
+  it("runs on real rows and clears the flag", async () => {
+    const eatenId = await taskDB.add({
+      title: "Ate this",
+      plannedFor: startOfToday(),
+      energyRequired: "high",
+      estimatedMinutes: 50,
+    });
+    await taskDB.setFrog(eatenId);
+    await taskDB.setCompleted(eatenId, true);
+
+    // Written directly: the guarded UI can no longer reach this state.
+    const staleId = await taskDB.add({
+      title: "Stale pick",
+      plannedFor: startOfToday(),
+      energyRequired: "medium",
+      estimatedMinutes: 25,
+    });
+    await db.tasks.update(staleId, { isFrog: true });
+
+    const stale = staleFrogIds(await db.tasks.toArray());
+    expect(stale).toEqual([staleId]);
+
+    await Promise.all(
+      stale.map((id) => db.tasks.update(id, { isFrog: false }))
+    );
+
+    expect((await db.tasks.get(staleId))!.isFrog).toBe(false);
+    expect((await db.tasks.get(eatenId))!.isFrog).toBe(true);
+  });
+});
+
 describe("taskDB — planning by date", () => {
   /**
    * The point of M2.5. A stored `group` string never changed, so an unfinished
@@ -166,6 +272,177 @@ describe("taskDB — planning by date", () => {
     expect(doneToday).toHaveLength(1);
     expect(doneToday[0].title).toBe("Yesterday's leftover");
     expect(await taskDB.getByGroup("today")).toHaveLength(0);
+  });
+
+  /**
+   * Regression. Promoting a task from Backlog or Upcoming used to set `isFrog`
+   * on a row the Today card queries past — so the flag was written, the real
+   * frog was demoted, and the card silently showed something else instead.
+   */
+  it("brings a backlog task into Today when it becomes the frog", async () => {
+    const id = await taskDB.add({
+      title: "Someday thing",
+      plannedFor: null,
+      energyRequired: "high",
+      estimatedMinutes: 50,
+    });
+    expect(await taskDB.getByGroup("backlog")).toHaveLength(1);
+
+    await taskDB.setFrog(id);
+
+    const today = await taskDB.getByGroup("today");
+    expect(today).toHaveLength(1);
+    expect(today[0].title).toBe("Someday thing");
+    expect(today[0].isFrog).toBe(true);
+    expect(await taskDB.getByGroup("backlog")).toHaveLength(0);
+  });
+
+  it("brings an upcoming task into Today when it becomes the frog", async () => {
+    const id = await taskDB.add({
+      title: "Next week thing",
+      plannedFor: plannedForView("week"),
+      energyRequired: "high",
+      estimatedMinutes: 50,
+    });
+
+    await taskDB.setFrog(id);
+
+    expect(await taskDB.getByGroup("week")).toHaveLength(0);
+    expect(await taskDB.getByGroup("today")).toHaveLength(1);
+  });
+
+  /** The frog the card shows must be the frog the database holds. */
+  it("leaves exactly one frog, and it is always in Today", async () => {
+    const todayTask = await taskDB.add({
+      title: "Planned today",
+      plannedFor: startOfToday(),
+      energyRequired: "high",
+      estimatedMinutes: 50,
+    });
+    const backlogTask = await taskDB.add({
+      title: "From the backlog",
+      plannedFor: null,
+      energyRequired: "high",
+      estimatedMinutes: 50,
+    });
+
+    await taskDB.setFrog(todayTask);
+    await taskDB.setFrog(backlogTask);
+
+    const frogs = await taskDB.getFrogTasks();
+    expect(frogs).toHaveLength(1);
+    expect(frogs[0].title).toBe("From the backlog");
+    expect(await taskDB.getByGroup("today")).toHaveLength(2);
+  });
+
+  /**
+   * A completed frog keeps its badge. It *was* the frog and it got eaten —
+   * that record is what the card's "Frog eaten" state reads, and what M6's
+   * streaks will count.
+   */
+  it("does not demote a frog that has already been eaten", async () => {
+    const eaten = await taskDB.add({
+      title: "Ate this",
+      plannedFor: startOfToday(),
+      energyRequired: "high",
+      estimatedMinutes: 50,
+    });
+    await taskDB.setFrog(eaten);
+    await taskDB.setCompleted(eaten, true);
+
+    const next = await taskDB.add({
+      title: "Picked after",
+      plannedFor: startOfToday(),
+      energyRequired: "low",
+      estimatedMinutes: 15,
+    });
+    await taskDB.setFrog(next);
+
+    expect((await db.tasks.get(eaten))!.isFrog).toBe(true);
+    expect((await db.tasks.get(next))!.isFrog).toBe(true);
+    // getFrogTasks only reports frogs still in play.
+    expect(await taskDB.getFrogTasks()).toHaveLength(1);
+  });
+
+  /**
+   * The invariant from the other direction. `setFrog` pulls a task into Today;
+   * rescheduling could push it back out while leaving `isFrog` set, and the
+   * card would then promote an unrelated task — the same failure as promoting
+   * from Backlog, mirrored.
+   */
+  it("demotes the frog when it is moved off today", async () => {
+    const id = await taskDB.add({
+      title: "My frog",
+      plannedFor: startOfToday(),
+      energyRequired: "high",
+      estimatedMinutes: 50,
+    });
+    await taskDB.setFrog(id);
+
+    await taskDB.update(id, { plannedFor: plannedForView("week") });
+
+    expect((await db.tasks.get(id))!.isFrog).toBe(false);
+    expect(await taskDB.getFrogTasks()).toHaveLength(0);
+  });
+
+  it("demotes the frog when it is sent to the backlog", async () => {
+    const id = await taskDB.add({
+      title: "My frog",
+      plannedFor: startOfToday(),
+      energyRequired: "high",
+      estimatedMinutes: 50,
+    });
+    await taskDB.setFrog(id);
+
+    await taskDB.update(id, { plannedFor: null });
+
+    expect((await db.tasks.get(id))!.isFrog).toBe(false);
+  });
+
+  /** Editing a title must not quietly un-frog the task. */
+  it("leaves the frog alone when the patch does not touch the date", async () => {
+    const id = await taskDB.add({
+      title: "My frog",
+      plannedFor: startOfToday(),
+      energyRequired: "high",
+      estimatedMinutes: 50,
+    });
+    await taskDB.setFrog(id);
+
+    await taskDB.update(id, { title: "Renamed", estimatedMinutes: 15 });
+
+    expect((await db.tasks.get(id))!.isFrog).toBe(true);
+  });
+
+  /** "Twice": moving it away and back must not silently restore the badge. */
+  it("does not restore the frog badge on the way back to today", async () => {
+    const id = await taskDB.add({
+      title: "My frog",
+      plannedFor: startOfToday(),
+      energyRequired: "high",
+      estimatedMinutes: 50,
+    });
+    await taskDB.setFrog(id);
+
+    await taskDB.update(id, { plannedFor: plannedForView("week") });
+    await taskDB.update(id, { plannedFor: startOfToday() });
+
+    // Back in Today, but no longer the frog — the reader has to pick it again.
+    expect((await db.tasks.get(id))!.isFrog).toBe(false);
+    expect(await taskDB.getByGroup("today")).toHaveLength(1);
+  });
+
+  it("does not move a task already dated today", async () => {
+    const id = await taskDB.add({
+      title: "Planned today",
+      plannedFor: startOfToday(),
+      energyRequired: "low",
+      estimatedMinutes: 15,
+    });
+
+    await taskDB.setFrog(id);
+
+    expect((await db.tasks.get(id))!.plannedFor).toEqual(startOfToday());
   });
 
   it("keeps an undated task in the backlog, never in Today", async () => {

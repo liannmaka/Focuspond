@@ -60,6 +60,20 @@ pnpm format         # prettier --write
   Components need the intl provider — render them with `renderWithIntl` from
   `@/test/renderWithIntl` (it loads the real English catalog). DB tests import
   `fake-indexeddb/auto`, since jsdom ships no IndexedDB.
+- **Testing the second action, not just the first.** Every bug that reached the
+  browser in this project passed through code with green tests, because the
+  tests only ever walked the first action from the obvious starting state. None
+  involved invalid input. So for each user action, also test:
+  1. **Twice** — a second mood check-in was ignored for a day (`.first()` vs
+     `.last()`); every test wrote exactly one row, where the two are identical.
+  2. **Elsewhere** — promoting a task to frog worked from Today and silently
+     destroyed the current frog from Backlog or Upcoming.
+  3. **After** — once the frog was completed the card promoted an unchosen task
+     as though the reader had picked it.
+  4. **Undo** — unchecking has to restore the prior state, not a near-miss of it.
+- **Prove a regression test bites.** After fixing a bug, revert the fix and
+  confirm the new test _fails_, then restore it. A regression test that passes
+  against the bug is worse than none: it reports coverage that does not exist.
 - **Commits:** conventional-commit house style (`type(scope): subject`, ≤60 chars,
   imperative). **Never** add a `Co-Authored-By` or other trailer. Main branch is
   `development`. Don't bypass hooks (lint-staged runs Prettier/ESLint on commit).

@@ -31,7 +31,19 @@
       "title": "Pick your frog",
       "body": "One task that would make today count, even if nothing else gets done. Choose it now and the rest gets quieter.",
       "action": "Choose your frog"
-    }
+    },
+    "picker": {
+      "heading": "Which one would make today count?",
+      "ranked": "Ordered by what suits your energy today.",
+      "noMood": "Check in on /mood and these get ordered by how you feel.",
+      "empty": "Nothing planned for today yet.",
+      "current": "Current",
+      "close": "Close"
+    },
+    "suggestedEyebrow": "Suggested for today",
+    "eatenEyebrow": "Frog eaten",
+    "eatenBody": "That was the one that mattered. The rest of the day is yours.",
+    "accept": "Make this my frog"
   },
   "groups": {
     "today": "Today",
@@ -65,13 +77,15 @@
     "minutes": "Rough estimate",
     "save": "Add",
     "cancel": "Cancel",
-    "update": "Save"
+    "update": "Save",
+    "notesPlaceholder": "Add a note (optional)"
   },
   "row": {
     "actions": "Actions for {title}",
     "edit": "Edit",
     "moveTo": "Move to",
     "current": "Current",
-    "delete": "Delete"
+    "delete": "Delete",
+    "makeFrog": "Make this the frog"
   }
 }

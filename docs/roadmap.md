@@ -1,11 +1,15 @@
 # FocusPond roadmap — MVP and beyond
 
-Status: **M0 – M2.5 complete** (`087e7f3`). Next up: **M3a**.
+Status: **M0 – M3a complete** (`3fa1c18`). Next up: **M3b**.
 
-What exists today is **create, read, and tick off** — not full CRUD. A task's
-title, effort, estimate and date are fixed at creation, and nothing can be
-deleted. `taskDB.delete`, `taskDB.update` and `taskDB.setFrog` all work and are
-tested; they simply have no UI. M3a is where that closes.
+Tasks are fully editable as of M3a — title, effort, estimate, date and delete.
+`taskDB.setFrog` is the last database function still without a caller; M3b gives
+it one.
+
+> **Translations needing a native check.** The "Upcoming" rename (`3fa1c18`) was
+> written without a fluent speaker: `pcm` "Dey Come", `ig` "Na-abịa",
+> `yo` "Tí ń bọ̀", `ha` "Mai zuwa". French "À venir" is sound. One nav label
+> each, in `src/i18n/messages/<locale>/nav.json` → `tabs.week`.
 
 This is the plan of record. It supersedes any earlier milestone numbering.
 
@@ -211,7 +215,7 @@ list — and `3/4` moves onto the disclosure, where it is self-explanatory.
 while the header reads "0 left". Change the device clock to tomorrow: the unfinished
 task is in Today marked _carried from yesterday_, and the completed one is not.
 
-### M3a — Tasks become editable · 5 hrs · weeks 1–2
+### M3a — Tasks become editable · ✅ done (3fa1c18)
 
 **Why this comes before the frog picker.** A task's title, effort, estimate and
 date are all fixed at the moment it is created. Mistype a title and your only
@@ -251,7 +255,7 @@ It also makes M3b cheaper: the per-row menu built here is the same affordance
 **Done:** mistype a task, fix the title in place, change its effort from Deep work
 to Light, push it to Upcoming, then delete it — without reloading.
 
-### M3b — Choosing a frog · 6 hrs · weeks 3–4
+### M3b — Choosing a frog · 6 hrs · weeks 1–2
 
 - `src/features/tasks/components/FrogPicker.tsx` _(new)_ — a sheet listing
   incomplete tasks, energy-fitting ones first via `suggestFrog`, calling
@@ -264,7 +268,7 @@ to Light, push it to Upcoming, then delete it — without reloading.
 on a tired day → pick one → card shows it with the verdict → "Pick another" swaps
 it and the previous frog loses its badge.
 
-### M4 — The focus session · 12 hrs · weeks 5–7
+### M4 — The focus session · 12 hrs · weeks 3–5
 
 The only milestone too big for one evening, so it is **pre-split at a demoable
 seam**: **M4a** a countdown that runs and writes a session (no ring art); **M4b**
@@ -290,7 +294,7 @@ the ring, task binding, resume-after-reload. Both end shippable.
 and the clock is still correct** → finish → the task goes 0/2 → 1/2 focus blocks
 and a row lands in `pomodoros`.
 
-### M5 — Mindful breaks · 6 hrs · weeks 8–9
+### M5 — Mindful breaks · 6 hrs · weeks 6–7
 
 Six hours discharges six promises: the hero subtitle, the Focus Timer card, the
 Mindful Breaks card, the pomodoro-rhythm benefit, How It Works step 3, and the
@@ -306,7 +310,7 @@ Mindful Breaks card, the pomodoro-rhythm benefit, How It Works step 3, and the
 **Done:** finish a session (temporarily set the duration to 1 min) → break screen
 with a prompt → countdown → "Back to focus" returns with block 2 queued.
 
-### M6 — Progress: streaks + day's end · 8 hrs · weeks 10–12
+### M6 — Progress: streaks + day's end · 8 hrs · weeks 8–10
 
 - `src/features/progress/lib/streak.ts` _(new)_ — `currentStreak(days)`; a day
   counts if ≥1 focus session completed **or** the frog was completed. **Pure, no
@@ -326,7 +330,7 @@ with a prompt → countdown → "Back to focus" returns with block 2 queued.
 **Done:** complete a session → `/analytics` shows "1 day streak", one completed
 frog, and accepts a reflection note that survives reload.
 
-### M7 — Ship it · 8 hrs (11 with export/import) · weeks 13–15
+### M7 — Ship it · 8 hrs (11 with export/import) · weeks 11–13
 
 **This is the finish line.** After this, post the link.
 
@@ -360,7 +364,7 @@ frog, and accepts a reflection note that survives reload.
 airplane mode, check in, pick a frog, run a session, take a break, see the streak.
 Every visible control does something.
 
-### M8 — Accounts + backup · 19 hrs · weeks 16–21
+### M8 — Accounts + backup · 19 hrs · weeks 14–19
 
 Makes the FAQ's _"back up your progress"_ true. Read
 [`docs/features/sync.md`](features/sync.md) first — it is the spec, including the
@@ -414,7 +418,7 @@ a generic task manager.
 
 Premature while Upcoming holds one or two items. Revisit when it is hard to read.
 
-### M9 — Cross-device sync · 14 hrs · weeks 22–26 · post-MVP
+### M9 — Cross-device sync · 14 hrs · weeks 20–24 · post-MVP
 
 `updatedAt` on every row. `deletedAt` tombstones — `taskDB.delete()` is currently
 a hard delete, so a second device will resurrect it. Debounced push-on-write,

@@ -50,6 +50,7 @@ export default function TaskComposer({
     task?.energyRequired ?? "medium"
   );
   const [minutes, setMinutes] = useState<number>(task?.estimatedMinutes ?? 25);
+  const [notes, setNotes] = useState(task?.notes ?? "");
   const [saving, setSaving] = useState(false);
 
   const canSave = title.trim().length > 0 && !saving;
@@ -72,6 +73,7 @@ export default function TaskComposer({
          */
         await updateTask(task.id, {
           title: title.trim(),
+          notes: notes.trim() || undefined,
           energyRequired: energy,
           estimatedMinutes: minutes,
           focusBlocks: focusBlocksFor(minutes),
@@ -82,6 +84,7 @@ export default function TaskComposer({
           // The view the reader is adding into becomes a date; which list it
           // then appears in is derived from that date, not stored.
           plannedFor: plannedForView(group),
+          notes: notes.trim() || undefined,
           energyRequired: energy,
           estimatedMinutes: minutes,
         });
@@ -112,6 +115,17 @@ export default function TaskComposer({
         placeholder={t("add.placeholder")}
         aria-label={t("add.placeholder")}
         className="w-full bg-transparent px-1 font-manrope text-sm text-ink placeholder:text-ink-subtle focus:outline-none"
+      />
+
+      {/* The whole Quick Notes downscope: a line on the task, not a second
+          surface. `Task.notes` has existed in the type since M0 with nothing
+          writing it. */}
+      <input
+        value={notes}
+        onChange={(event) => setNotes(event.target.value)}
+        placeholder={t("add.notesPlaceholder")}
+        aria-label={t("add.notesPlaceholder")}
+        className="mt-1 w-full bg-transparent px-1 font-manrope text-xs text-ink-muted placeholder:text-ink-subtle focus:outline-none"
       />
 
       <div className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-2 px-1">

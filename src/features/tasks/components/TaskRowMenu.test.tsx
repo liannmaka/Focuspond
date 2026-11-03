@@ -111,6 +111,76 @@ describe("TaskRowMenu", () => {
     expect(screen.getByRole("menuitem", { name: "Upcoming" })).toBeEnabled();
   });
 
+  describe("one frog per day", () => {
+    /** The entry point left open after "Pick another" was removed from the card. */
+    it("stops offering to promote once today's frog has been eaten", async () => {
+      const eaten = await seed();
+      await taskDB.setFrog(eaten.id!);
+      await taskDB.setCompleted(eaten.id!, true);
+
+      const other = await seed(null); // a backlog task
+      renderWithIntl(
+        <TaskRowMenu
+          task={other}
+          onEdit={() => {}}
+        />
+      );
+
+      await openMenu();
+      await waitFor(() =>
+        expect(
+          screen.queryByRole("menuitem", { name: /make this the frog/i })
+        ).not.toBeInTheDocument()
+      );
+      // The rest of the menu still works.
+      expect(
+        screen.getByRole("menuitem", { name: "Edit" })
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("menuitem", { name: "Delete" })
+      ).toBeInTheDocument();
+    });
+
+    it("offers it while today's frog is still unfinished", async () => {
+      const chosen = await seed();
+      await taskDB.setFrog(chosen.id!);
+
+      const other = await seed(null);
+      renderWithIntl(
+        <TaskRowMenu
+          task={other}
+          onEdit={() => {}}
+        />
+      );
+
+      await openMenu();
+      expect(
+        await screen.findByRole("menuitem", { name: /make this the frog/i })
+      ).toBeInTheDocument();
+    });
+
+    /** "Undo": unchecking the eaten frog means the day is open again. */
+    it("offers it again once the eaten frog is unchecked", async () => {
+      const eaten = await seed();
+      await taskDB.setFrog(eaten.id!);
+      await taskDB.setCompleted(eaten.id!, true);
+      await taskDB.setCompleted(eaten.id!, false);
+
+      const other = await seed(null);
+      renderWithIntl(
+        <TaskRowMenu
+          task={other}
+          onEdit={() => {}}
+        />
+      );
+
+      await openMenu();
+      expect(
+        await screen.findByRole("menuitem", { name: /make this the frog/i })
+      ).toBeInTheDocument();
+    });
+  });
+
   it("deletes the task", async () => {
     const task = await seed();
     renderWithIntl(

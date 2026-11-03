@@ -49,6 +49,39 @@ export function migrateToPlannedFor(
 }
 
 /**
+ * The v3 → v4 repair: **one frog per day**, applied to rows already written.
+ *
+ * Two entry points could promote a task, and only one of them checked whether
+ * today's frog had already been eaten. `setFrog` also spares completed frogs on
+ * purpose — a past win keeps its badge, which M6's streaks will read — so a
+ * single day could end up holding two: the eaten one and a fresh open one. Both
+ * buttons are guarded now, and `frogState` settles the tie, but the rows that
+ * bug wrote are still on disk and nothing else will clear them.
+ *
+ * The eaten frog wins, because it is the day's record and a win is not
+ * something to rewrite. The open pretender is demoted to an ordinary task,
+ * keeping its date, notes and place in the list — it is only the badge that was
+ * never really earned.
+ *
+ * Returns the ids to demote rather than writing, so the decision can be tested
+ * without a database. Scoped to today: that is the only day on which "a frog
+ * was eaten" and "a frog is still in play" are claims about the same day.
+ */
+export function staleFrogIds(
+  tasks: readonly StoredTask[],
+  now: Date = new Date()
+): number[] {
+  const eatenToday = tasks.some(
+    (task) => task.isFrog && wasCompletedToday(task, now)
+  );
+  if (!eatenToday) return [];
+
+  return tasks
+    .filter((task) => task.isFrog && !task.completed && task.id !== undefined)
+    .map((task) => task.id!);
+}
+
+/**
  * FocusPond's local-first store. IndexedDB is the source of truth for tasks,
  * moods and focus sessions; the `synced` flags exist so a future backend can
  * pick up where the device left off, and nothing reads them yet.
@@ -132,6 +165,29 @@ export class FocusPondDB extends Dexie {
           .modify((task: Record<string, unknown>) =>
             migrateToPlannedFor(task, now)
           );
+      });
+
+    /**
+     * v4 — no schema change; a data repair. Days holding two frogs (one eaten,
+     * one still open) are a leftover of promoting from the row menu after the
+     * frog had been eaten. See `staleFrogIds` for why the eaten one wins.
+     *
+     * The stores string is unchanged from v3 and repeated deliberately: Dexie
+     * diffs it, so saying it again documents that no index moved.
+     */
+    this.version(4)
+      .stores({
+        moods: "++id, level, createdAt",
+        tasks: "++id, plannedFor, energyRequired, createdAt",
+        pomodoros: "++id, taskId, startTime",
+      })
+      .upgrade(async (tx) => {
+        const tasks = tx.table<StoredTask, number>("tasks");
+        const stale = staleFrogIds(await tasks.toArray());
+
+        await Promise.all(
+          stale.map((id) => tasks.update(id, { isFrog: false, synced: false }))
+        );
       });
   }
 }
@@ -307,22 +363,71 @@ export const taskDB = {
   },
 
   /** Promotes one task to frog and demotes any other, in a single transaction. */
-  async setFrog(id: number): Promise<void> {
+  /**
+   * Promotes one task to today's frog and demotes any other, in a single
+   * transaction.
+   *
+   * It also dates the task to today, because **the frog is by definition a
+   * today task** — "the one task that would make today count". Choosing
+   * something as your frog *is* saying it is for today.
+   *
+   * Enforced here rather than at the call site so the invariant holds for every
+   * caller. Promoting from Backlog or Upcoming used to set `isFrog` on a task
+   * the Today card could not see: the flag was written, the previous frog was
+   * demoted, and the card silently fell back to a different task. Destructive
+   * and invisible.
+   *
+   * No-op for a task already dated today, which is every task the picker offers.
+   */
+  async setFrog(id: number, now: Date = new Date()): Promise<void> {
     await db.transaction("rw", db.tasks, async () => {
       const current = await db.tasks.toArray();
       await Promise.all(
         current
-          .filter((task) => task.isFrog && task.id !== id)
+          // Only demote frogs still in play. A completed frog keeps its badge:
+          // it *was* the frog, it got eaten, and that record is what the card's
+          // "Frog eaten" state and M6's streaks both read.
+          .filter((task) => task.isFrog && !task.completed && task.id !== id)
           .map((task) =>
             db.tasks.update(task.id!, { isFrog: false, synced: false })
           )
       );
-      await db.tasks.update(id, { isFrog: true, synced: false });
+      await db.tasks.update(id, {
+        isFrog: true,
+        plannedFor: startOfToday(now),
+        synced: false,
+      });
     });
   },
 
-  async update(id: number, updates: Partial<Task>): Promise<number> {
-    return await db.tasks.update(id, { ...updates, synced: false });
+  /**
+   * General-purpose patch, with one invariant enforced: **a frog is always a
+   * today task.**
+   *
+   * `setFrog` guarantees that going in, but rescheduling could break it coming
+   * out — moving the frog to Upcoming left `isFrog` set on a row the Today card
+   * queries past, so the card fell back to promoting an unrelated task. Exactly
+   * the failure that promoting *from* Backlog used to cause, from the other
+   * direction.
+   *
+   * Enforced here rather than in the row menu so no future caller can
+   * reintroduce it. Moving work off today is itself a statement that it is not
+   * today's one task.
+   */
+  async update(
+    id: number,
+    updates: Partial<Task>,
+    now: Date = new Date()
+  ): Promise<number> {
+    const leavesToday =
+      "plannedFor" in updates &&
+      viewFor(updates.plannedFor ?? null, now) !== "today";
+
+    return await db.tasks.update(id, {
+      ...updates,
+      ...(leavesToday ? { isFrog: false } : {}),
+      synced: false,
+    });
   },
 
   async getUnsynced(): Promise<Task[]> {

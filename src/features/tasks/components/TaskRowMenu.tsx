@@ -2,9 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
+import { Flame, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 
-import { deleteTask, updateTask } from "../hooks/useTasks";
+import {
+  deleteTask,
+  setFrog,
+  updateTask,
+  useFrogEatenToday,
+} from "../hooks/useTasks";
 import { plannedForView, viewFor } from "../lib/planning";
 import type { Task, TaskGroup } from "../types/task";
 
@@ -30,6 +35,7 @@ export default function TaskRowMenu({
 }) {
   const t = useTranslations("tasks");
   const [open, setOpen] = useState(false);
+  const frogEaten = useFrogEatenToday();
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -95,6 +101,35 @@ export default function TaskRowMenu({
           />
           {t("row.edit")}
         </button>
+
+        {/*
+          Promoting here saves opening the picker just to pick the row you are
+          already looking at. setFrog demotes any previous frog in the same
+          transaction, so there can only ever be one.
+
+          Hidden once today's frog has been eaten. One frog per day is the
+          method, and this is the second entry point to promoting — removing
+          "Pick another" from the eaten card while leaving this open enforced
+          the rule in one place only, and a second frog could still relabel the
+          card "Frog of the day" over a win already crossed out.
+        */}
+        {!task.isFrog && frogEaten !== true && (
+          <button
+            type="button"
+            role="menuitem"
+            onClick={async () => {
+              setOpen(false);
+              await setFrog(id);
+            }}
+            className="flex w-full cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-sm text-ink transition-colors hover:bg-ambient-soft"
+          >
+            <Flame
+              className="size-3.5 shrink-0"
+              aria-hidden
+            />
+            {t("row.makeFrog")}
+          </button>
+        )}
 
         <p className="px-2.5 pt-2 pb-1 font-sora text-[10px] font-bold tracking-[0.1em] text-ink-subtle uppercase">
           {t("row.moveTo")}

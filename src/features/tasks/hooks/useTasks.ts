@@ -3,6 +3,7 @@
 import { useLiveQuery } from "dexie-react-hooks";
 
 import { taskDB } from "@/lib/db/indexedDB";
+import { eatenFrog } from "../lib/taskDisplay";
 import { viewFor } from "../lib/planning";
 import type { NewTaskInput, Task, TaskGroup } from "../types/task";
 
@@ -39,6 +40,30 @@ export function useAllTasks(): Task[] | undefined {
 /** Completed tasks, most recently finished first. Live. */
 export function useCompletedTasks(): Task[] | undefined {
   return useLiveQuery(() => taskDB.getCompleted(), []);
+}
+
+/**
+ * Whether today's frog has already been eaten.
+ *
+ * One frog per day is the method, so every surface that can promote a task has
+ * to respect it — not just the card. Removing "Pick another" from the eaten
+ * card while the row menu still offered "Make this the frog" enforced the rule
+ * in one place and left the other open, which is how a second frog could still
+ * appear and relabel the card "Frog of the day".
+ *
+ * Answered by `eatenFrog`, the same function the card's state machine calls, so
+ * the two cannot disagree about whether the day is settled. They did: asked
+ * separately, the card said "a frog is still in play" and this said "a frog was
+ * eaten", both truthfully, on a day that held one of each.
+ *
+ * `undefined` while the query resolves. Callers hide the affordance only on a
+ * definite `true`, so it does not flicker into view on first paint.
+ */
+export function useFrogEatenToday(): boolean | undefined {
+  return useLiveQuery(async () => {
+    const done = await taskDB.getDoneToday("today");
+    return eatenFrog(done) !== undefined;
+  }, []);
 }
 
 export type GroupProgress = { open: number; done: number; total: number };

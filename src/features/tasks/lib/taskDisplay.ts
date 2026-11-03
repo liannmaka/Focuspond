@@ -100,6 +100,61 @@ export function suggestFrog<T extends RankableTask>(
 }
 
 /**
+ * What the Frog card should be saying right now.
+ *
+ * The card used to render a *suggestion* exactly like a *decision*, which made
+ * two different bugs look the same: promoting a task the card could not see,
+ * and — after finishing your frog — the next-ranked task silently appearing as
+ * though you had picked it. Naming the states separately is what stops a
+ * suggestion wearing the costume of a choice.
+ *
+ * Precedence is deliberate: **an eaten frog is terminal.** One frog per day is
+ * the method, so finishing it settles the day rather than reopening it.
+ *
+ * This used to be the other way round — an open pick outranked a finished one —
+ * and that is how the card and the row menu came to contradict each other. The
+ * card asked "is a frog still in play?" first; every other surface asked "was a
+ * frog eaten today?". On a day holding both, the card offered a swap while no
+ * list would offer to promote anything. Same rule, two readings, two answers.
+ */
+export type FrogState<T> =
+  | { kind: "none" }
+  | { kind: "suggested"; frog: T }
+  | { kind: "chosen"; frog: T }
+  | { kind: "eaten"; frog: T };
+
+/**
+ * Today's frog, if it has already been eaten.
+ *
+ * Both the card and every promote affordance turn on this one question, so it
+ * is one function rather than the same `find` written twice. Writing it twice
+ * is how they drifted: the card checked the open list first and the row menu
+ * checked this, and on a day holding both they gave opposite answers.
+ */
+export function eatenFrog<T extends { isFrog: boolean }>(
+  doneToday: readonly T[]
+): T | undefined {
+  return doneToday.find((task) => task.isFrog);
+}
+
+export function frogState<T extends RankableTask & { completed: boolean }>(
+  open: readonly T[],
+  doneToday: readonly T[],
+  energy?: EnergyLevel
+): FrogState<T> {
+  const eaten = eatenFrog(doneToday);
+  if (eaten) return { kind: "eaten", frog: eaten };
+
+  const chosen = open.find((task) => task.isFrog);
+  if (chosen) return { kind: "chosen", frog: chosen };
+
+  const suggestion = rankCandidates(open, energy)[0];
+  return suggestion
+    ? { kind: "suggested", frog: suggestion }
+    : { kind: "none" };
+}
+
+/**
  * The shape the ranking rules actually need. Kept structural rather than
  * importing `Task` so these stay trivially testable with literals.
  */
