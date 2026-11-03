@@ -5,6 +5,7 @@ import type { MoodEntry } from "@/features/mood/types/mood";
 import type { PomodoroSession } from "@/features/pomodoro/types/pomodoro";
 import {
   plannedForView,
+  startOfDay,
   startOfToday,
   startOfTomorrow,
   viewFor,
@@ -64,20 +65,31 @@ export function migrateToPlannedFor(
  * never really earned.
  *
  * Returns the ids to demote rather than writing, so the decision can be tested
- * without a database. Scoped to today: that is the only day on which "a frog
- * was eaten" and "a frog is still in play" are claims about the same day.
+ * without a database.
+ *
+ * Keyed on **the day each frog belongs to, not on today.** Scoping it to today
+ * read well for about a day: an upgrade that runs the morning after the
+ * conflict finds a win dated yesterday, calls the day unsettled, and leaves the
+ * open pretender to surface as a frog nobody picked this morning. A migration
+ * runs once, at a time nobody chooses, so it cannot depend on when.
  */
-export function staleFrogIds(
-  tasks: readonly StoredTask[],
-  now: Date = new Date()
-): number[] {
-  const eatenToday = tasks.some(
-    (task) => task.isFrog && wasCompletedToday(task, now)
+export function staleFrogIds(tasks: readonly StoredTask[]): number[] {
+  const settled = new Set(
+    tasks
+      .filter((task) => task.isFrog && task.completed && task.completedAt)
+      .map((task) => startOfDay(task.completedAt!).getTime())
   );
-  if (!eatenToday) return [];
+  if (settled.size === 0) return [];
 
   return tasks
-    .filter((task) => task.isFrog && !task.completed && task.id !== undefined)
+    .filter(
+      (task) =>
+        task.isFrog &&
+        !task.completed &&
+        task.id !== undefined &&
+        task.plannedFor &&
+        settled.has(startOfDay(task.plannedFor).getTime())
+    )
     .map((task) => task.id!);
 }
 

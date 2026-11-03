@@ -5,6 +5,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 
 import {
   plannedForView,
+  startOfDay,
   startOfToday,
   viewFor,
 } from "@/features/tasks/lib/planning";
@@ -19,6 +20,7 @@ import {
 
 /** Fixed clock — midday, so no assertion sits on a midnight boundary. */
 const NOW = new Date(2026, 9, 20, 12, 0);
+const YESTERDAY = new Date(2026, 9, 19, 12, 0);
 
 beforeEach(async () => {
   await db.tasks.clear();
@@ -121,11 +123,11 @@ describe("staleFrogIds (v3 → v4)", () => {
       completedAt: NOW,
     });
 
-    expect(staleFrogIds([eaten, row({ id: 2 })], NOW)).toEqual([]);
+    expect(staleFrogIds([eaten, row({ id: 2 })])).toEqual([]);
   });
 
   it("leaves a frog that is still in play alone", () => {
-    expect(staleFrogIds([row({ id: 1, isFrog: true })], NOW)).toEqual([]);
+    expect(staleFrogIds([row({ id: 1, isFrog: true })])).toEqual([]);
   });
 
   /** The state the row-menu bug wrote: eaten and open, same day. */
@@ -138,7 +140,7 @@ describe("staleFrogIds (v3 → v4)", () => {
     });
     const open = row({ id: 2, isFrog: true });
 
-    expect(staleFrogIds([eaten, open], NOW)).toEqual([2]);
+    expect(staleFrogIds([eaten, open])).toEqual([2]);
   });
 
   /** A win is never rewritten — only the badge that was not earned. */
@@ -150,23 +152,47 @@ describe("staleFrogIds (v3 → v4)", () => {
       completedAt: NOW,
     });
 
-    expect(
-      staleFrogIds([eaten, row({ id: 2, isFrog: true })], NOW)
-    ).not.toContain(1);
+    expect(staleFrogIds([eaten, row({ id: 2, isFrog: true })])).not.toContain(
+      1
+    );
   });
 
-  /** Yesterday's win does not settle today. */
-  it("ignores a frog eaten on an earlier day", () => {
-    const yesterday = row({
+  /** Each day is settled separately: yesterday's win says nothing about today. */
+  it("leaves today's frog alone when the win was yesterday", () => {
+    const yesterdaysWin = row({
       id: 1,
       isFrog: true,
       completed: true,
-      completedAt: new Date(2026, 9, 19, 12, 0),
+      completedAt: YESTERDAY,
+      plannedFor: startOfDay(YESTERDAY),
     });
 
-    expect(
-      staleFrogIds([yesterday, row({ id: 2, isFrog: true })], NOW)
-    ).toEqual([]);
+    expect(staleFrogIds([yesterdaysWin, row({ id: 2, isFrog: true })])).toEqual(
+      []
+    );
+  });
+
+  /**
+   * The hole in scoping this to "today". A migration runs once, whenever the
+   * app next opens — which may be the morning after the conflict. Keyed on
+   * today, this returned nothing and left the pretender to show up as a frog
+   * nobody picked that morning.
+   */
+  it("settles a conflict left over from an earlier day", () => {
+    const yesterdaysWin = row({
+      id: 1,
+      isFrog: true,
+      completed: true,
+      completedAt: YESTERDAY,
+      plannedFor: startOfDay(YESTERDAY),
+    });
+    const pretender = row({
+      id: 2,
+      isFrog: true,
+      plannedFor: startOfDay(YESTERDAY),
+    });
+
+    expect(staleFrogIds([yesterdaysWin, pretender])).toEqual([2]);
   });
 
   it("runs on real rows and clears the flag", async () => {
