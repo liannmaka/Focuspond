@@ -26,6 +26,108 @@ function makeTask(overrides: Partial<Task> = {}): Task {
 const makeDone = (title: string, id: number): Task =>
   makeTask({ id, title, completed: true, completedAt: new Date() });
 
+describe("TaskAccordion — start focus", () => {
+  const focusLink = (title = "Ship the plan") =>
+    screen.queryByRole("link", { name: `Start focus on ${title}` });
+
+  /**
+   * The timer was never frog-specific, but the frog card was once the only way
+   * in — a general tool reachable from one surface. It lives on the row rather
+   * than in the ⋯ menu because it is the row's primary action, and two clicks
+   * behind a generic icon is one too many to reach what the product is for.
+   */
+  it("offers focus on an open row, pointing at that task's timer", () => {
+    renderWithIntl(
+      <TaskAccordion
+        group="today"
+        tasks={[makeTask({ id: 42 })]}
+      />
+    );
+
+    expect(focusLink()).toHaveAttribute("href", "/home/timer/42");
+  });
+
+  /** "Elsewhere": focus is not a Today-only affordance. */
+  it("offers focus in Upcoming and the Backlog too", () => {
+    for (const group of ["week", "backlog"] as const) {
+      const { unmount } = renderWithIntl(
+        <TaskAccordion
+          group={group}
+          tasks={[makeTask({ id: 7 })]}
+        />
+      );
+
+      expect(focusLink()).toHaveAttribute("href", "/home/timer/7");
+      unmount();
+    }
+  });
+
+  /**
+   * "After": focusing on something already crossed out is nonsense — the same
+   * family as offering a second frog once today's has been eaten. Completed
+   * rows reach this list from the Completed page.
+   */
+  it("does not offer focus on a completed row", () => {
+    renderWithIntl(
+      <TaskAccordion
+        group="completed"
+        tasks={[makeTask({ completed: true, completedAt: new Date() })]}
+      />
+    );
+
+    expect(focusLink()).not.toBeInTheDocument();
+  });
+
+  /** "Undo": reopening the task brings the affordance back. */
+  it("offers focus again once a task is reopened", () => {
+    renderWithIntl(
+      <TaskAccordion
+        group="today"
+        tasks={[makeTask({ completed: false })]}
+      />
+    );
+
+    expect(focusLink()).toBeInTheDocument();
+  });
+
+  /**
+   * Starting focus is not a claim that the task is today's work — that claim is
+   * what making it the frog is for. So this navigates and does nothing else:
+   * no reschedule, no completion, no promotion.
+   */
+  it("only navigates, and touches nothing on the task", async () => {
+    const onToggleTask = vi.fn();
+    const task = makeTask({ id: 9, plannedFor: null });
+    renderWithIntl(
+      <TaskAccordion
+        group="backlog"
+        tasks={[task]}
+        onToggleTask={onToggleTask}
+      />
+    );
+
+    const link = focusLink()!;
+    expect(link.tagName).toBe("A");
+    await userEvent.click(link);
+
+    expect(onToggleTask).not.toHaveBeenCalled();
+    expect(task.plannedFor).toBeNull();
+    expect(task.isFrog).toBe(false);
+  });
+
+  /** It is the frog's row too — the card's button is not the only way in. */
+  it("offers focus on the frog's own row", () => {
+    renderWithIntl(
+      <TaskAccordion
+        group="today"
+        tasks={[makeTask({ id: 3, isFrog: true })]}
+      />
+    );
+
+    expect(focusLink()).toHaveAttribute("href", "/home/timer/3");
+  });
+});
+
 describe("TaskAccordion", () => {
   it("renders the empty state when there are no tasks", () => {
     renderWithIntl(

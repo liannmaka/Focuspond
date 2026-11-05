@@ -9,11 +9,13 @@ import {
   startOfToday,
   viewFor,
 } from "@/features/tasks/lib/planning";
+import { plannedEnd } from "@/features/pomodoro/lib/timer";
 import type { StoredTask } from "./indexedDB";
 import {
   db,
   taskDB,
   moodDB,
+  pomodoroDB,
   migrateToPlannedFor,
   staleFrogIds,
 } from "./indexedDB";
@@ -688,5 +690,123 @@ describe("moodDB", () => {
     await moodDB.add({ level: "medium", label: "Okay", energyLevel: "medium" });
 
     expect(await moodDB.getTodayMoods()).toHaveLength(3);
+  });
+});
+
+describe("pomodoroDB", () => {
+  const seedTask = () =>
+    taskDB.add({
+      title: "Ship the plan",
+      plannedFor: startOfToday(),
+      energyRequired: "high",
+      estimatedMinutes: 50,
+    });
+
+  /** What a reload resumes from: there is no session id kept anywhere else. */
+  it("finds the open session and stops finding it once closed", async () => {
+    const taskId = await seedTask();
+    const id = await pomodoroDB.start(taskId);
+
+    expect((await pomodoroDB.getRunning())?.id).toBe(id);
+
+    await pomodoroDB.complete(id);
+    expect(await pomodoroDB.getRunning()).toBeUndefined();
+  });
+
+  it("takes the most recent when several are somehow open", async () => {
+    const first = await pomodoroDB.start(undefined);
+    await db.pomodoros.update(first, {
+      startTime: new Date(Date.now() - 3 * 60 * 60 * 1000),
+    });
+    const second = await pomodoroDB.start(undefined);
+
+    expect((await pomodoroDB.getRunning())?.id).toBe(second);
+  });
+
+  it("credits a focus block to the task when a session completes", async () => {
+    const taskId = await seedTask();
+    const id = await pomodoroDB.start(taskId);
+
+    await pomodoroDB.complete(id);
+
+    expect((await taskDB.get(taskId))!.focusBlocksDone).toBe(1);
+    expect((await db.pomodoros.get(id))!.completed).toBe(true);
+  });
+
+  /**
+   * The session ended when its time ran out, not when the tab noticed. A
+   * 25-minute block started 30 minutes ago ended five minutes *ago*, even
+   * though it is being closed now.
+   */
+  it("records the planned end rather than the moment it was closed", async () => {
+    const id = await pomodoroDB.start(undefined, 25);
+    const startTime = new Date(Date.now() - 30 * 60 * 1000);
+    await db.pomodoros.update(id, { startTime });
+
+    await pomodoroDB.complete(id);
+
+    const session = (await db.pomodoros.get(id))!;
+    expect(session.endTime).toEqual(plannedEnd(session));
+    expect(session.endTime!.getTime()).toBeLessThan(Date.now());
+    expect(session.endTime!.getTime()).toBe(startTime.getTime() + 25 * 60_000);
+  });
+
+  /**
+   * "Twice". The focus screen reconsiders an elapsed session on every tick, so
+   * a second call must not buy a second focus block with the same 25 minutes.
+   */
+  it("credits one focus block however many times complete is called", async () => {
+    const taskId = await seedTask();
+    const id = await pomodoroDB.start(taskId);
+
+    await pomodoroDB.complete(id);
+    await pomodoroDB.complete(id);
+    await Promise.all([pomodoroDB.complete(id), pomodoroDB.complete(id)]);
+
+    expect((await taskDB.get(taskId))!.focusBlocksDone).toBe(1);
+  });
+
+  /** "Undo": ending early leaves a record of the attempt, but no credit. */
+  it("closes an abandoned session without crediting it", async () => {
+    const taskId = await seedTask();
+    const id = await pomodoroDB.start(taskId);
+
+    await pomodoroDB.abandon(id);
+
+    const session = (await db.pomodoros.get(id))!;
+    expect(session.endTime).toBeInstanceOf(Date);
+    expect(session.completed).toBe(false);
+    expect((await taskDB.get(taskId))!.focusBlocksDone).toBe(0);
+    expect(await pomodoroDB.getRunning()).toBeUndefined();
+  });
+
+  /** A win is never rewritten into a non-event. */
+  it("refuses to abandon a session that already completed", async () => {
+    const taskId = await seedTask();
+    const id = await pomodoroDB.start(taskId);
+    await pomodoroDB.complete(id);
+
+    await pomodoroDB.abandon(id);
+
+    expect((await db.pomodoros.get(id))!.completed).toBe(true);
+    expect((await taskDB.get(taskId))!.focusBlocksDone).toBe(1);
+  });
+
+  /** A free session is a session: it just has no task to credit. */
+  it("runs and completes a session with no task attached", async () => {
+    const id = await pomodoroDB.start(undefined);
+
+    expect((await pomodoroDB.getRunning())?.taskId).toBeUndefined();
+    await expect(pomodoroDB.complete(id)).resolves.not.toThrow();
+    expect((await db.pomodoros.get(id))!.completed).toBe(true);
+  });
+
+  it("survives a session whose task was deleted mid-flight", async () => {
+    const taskId = await seedTask();
+    const id = await pomodoroDB.start(taskId);
+    await taskDB.delete(taskId);
+
+    await expect(pomodoroDB.complete(id)).resolves.not.toThrow();
+    expect((await db.pomodoros.get(id))!.completed).toBe(true);
   });
 });

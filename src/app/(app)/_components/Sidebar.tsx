@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { House, Smile, ChartNoAxesCombined } from "lucide-react";
+import { House, Smile, ChartNoAxesCombined, Timer } from "lucide-react";
 // Restored with the Settings and Profile buttons at the foot of the rail:
 // import { Settings, User } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -14,6 +14,9 @@ import DashboardPanel from "../_layouts/DashboardPanel";
 import IconButton from "./IconButton";
 
 const getCurrentSection = (pathname: string) => {
+  // Most specific first: the focus screen lives under /home but is its own
+  // place in the rail, and the general test would swallow it.
+  if (pathname.startsWith("/home/timer")) return "focus";
   if (pathname.startsWith("/home")) return "home";
   if (pathname.startsWith("/analytics")) return "analytics";
   if (pathname.startsWith("/mood")) return "mood";
@@ -34,6 +37,14 @@ const PRIMARY_NAV_ITEMS = [
   // the foot of this rail, and two identical icons in one 56px column meaning
   // different things is a coin toss. It also matches the TopBar's mood pill.
   { icon: Smile, href: "/mood", tab: "mood", labelKey: "mood" },
+  /*
+    A session tied to no task. `/home/timer/[taskId]` has always accepted the
+    literal `free` and `pomodoroDB.start` an undefined task id, but nothing
+    linked to it — it was reachable only by typing the URL. It belongs in the
+    rail rather than on a task row, because the whole point of it is that it
+    has no task.
+  */
+  { icon: Timer, href: "/home/timer/free", tab: "focus", labelKey: "focus" },
 ] as const;
 
 export default function SideBar() {
@@ -44,7 +55,16 @@ export default function SideBar() {
   return (
     <>
       <IconRail currentSection={currentSection} />
-      {currentSection === "home" && <DetailPanel />}
+      {/*
+        The focus screen keeps the task panel. Not for its own sake — the
+        dashboard grid reserves a fixed 235px column for this panel and places
+        children in order, so dropping it slides `main` into that column and
+        renders the page 235px wide. Until that layout is fixed (it already
+        does this on /analytics), a section inside /home has to keep the panel.
+      */}
+      {(currentSection === "home" || currentSection === "focus") && (
+        <DetailPanel />
+      )}
     </>
   );
 }

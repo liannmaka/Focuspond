@@ -1,0 +1,29 @@
+{
+  "eyebrow": "Focus session",
+  "freeTitle": "Free focus",
+  "blocks": "{done} of {total} focus blocks done",
+  "back": "Back to today",
+  "idle": {
+    "body": "{minutes} minutes on this one thing. The clock runs on its own — close the tab, reload, come back; it keeps the time for you.",
+    "action": "Start {minutes} minutes"
+  },
+  "running": {
+    "label": "Time remaining",
+    "hint": "Nothing else needs you right now.",
+    "abandon": "End session"
+  },
+  "finished": {
+    "title": "Session complete",
+    "body": "That's one focus block done.",
+    "again": "Start another"
+  },
+  "busy": {
+    "title": "A session is already running",
+    "body": "One at a time. End it, or go back and finish it.",
+    "abandon": "End that session"
+  },
+  "missing": {
+    "title": "That task isn't on this device",
+    "body": "It may have been deleted, or created in another browser — tasks live on the device that made them."
+  }
+}

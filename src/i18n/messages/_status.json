@@ -1,12 +1,15 @@
 {
   "_comment": "Review status of each locale's draft translations. English (en) is the source of truth. Any key missing from a locale falls back to English automatically (see src/i18n/request.ts). Update `reviewed` to true once a fluent speaker has checked a namespace.",
   "locales": {
+    "_note": "The app-side namespaces (`tasks`, `focus`) exist in English only and fall back to English everywhere else. They are translated once the product surfaces they describe stop changing shape — translating a screen that is still being built means retranslating it.",
     "en": {
       "source": true,
       "common": { "reviewed": true },
       "nav": { "reviewed": true },
       "mood": { "reviewed": true },
-      "marketing": { "reviewed": true }
+      "marketing": { "reviewed": true },
+      "tasks": { "reviewed": true },
+      "focus": { "reviewed": true }
     },
     "fr": {
       "common": { "reviewed": false, "coverage": "full" },

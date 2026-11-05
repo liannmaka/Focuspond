@@ -86,6 +86,7 @@
     "moveTo": "Move to",
     "current": "Current",
     "delete": "Delete",
+    "focusOn": "Start focus on {title}",
     "makeFrog": "Make this the frog"
   }
 }

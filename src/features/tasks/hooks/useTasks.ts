@@ -32,6 +32,22 @@ export function useDoneToday(group: TaskGroup): Task[] | undefined {
   return useLiveQuery(() => taskDB.getDoneToday(group), [group]);
 }
 
+/**
+ * One task by id. Live.
+ *
+ * Three states, kept apart on purpose: `undefined` while the query resolves,
+ * `null` for a task that is not on this device, and the task itself. A screen
+ * routed to by id has to tell "still loading" from "deleted" — collapsing them
+ * either flashes a not-found message over a task that exists, or leaves a
+ * spinner up forever for one that does not.
+ */
+export function useTask(id: number | undefined): Task | null | undefined {
+  return useLiveQuery(
+    async () => (id === undefined ? null : ((await taskDB.get(id)) ?? null)),
+    [id]
+  );
+}
+
 /** Every incomplete task, across all groups. Live. */
 export function useAllTasks(): Task[] | undefined {
   return useLiveQuery(() => taskDB.getIncomplete(), []);

@@ -3,6 +3,7 @@ import Dexie, { Table } from "dexie";
 import type { EnergyLevel } from "@/features/mood/constants/moods";
 import type { MoodEntry } from "@/features/mood/types/mood";
 import type { PomodoroSession } from "@/features/pomodoro/types/pomodoro";
+import { plannedEnd } from "@/features/pomodoro/lib/timer";
 import {
   plannedForView,
   startOfDay,
@@ -454,6 +455,11 @@ export const taskDB = {
     return await db.tasks.toArray();
   },
 
+  /** One task, or undefined if it is not on this device. */
+  async get(id: number): Promise<Task | undefined> {
+    return await db.tasks.get(id);
+  },
+
   async delete(id: number): Promise<void> {
     await db.tasks.delete(id);
   },
@@ -477,24 +483,87 @@ export const pomodoroDB = {
     });
   },
 
-  /** Closes the session and advances the linked task's focus-block count. */
+  /**
+   * The session still open, if there is one — what a reload resumes from.
+   *
+   * `endTime` being undefined *is* "still running"; there is no separate flag
+   * to keep in step with it, and nothing persists a session id outside this
+   * table, so a reload, a second tab and a cold start all read the same row.
+   *
+   * Takes the most recent if several are somehow open, so a stray row can never
+   * pin the screen to an ancient session.
+   */
+  async getRunning(): Promise<PomodoroSession | undefined> {
+    const open = await db.pomodoros
+      .filter((session) => session.endTime === undefined)
+      .toArray();
+
+    return open.sort(
+      (a, b) => b.startTime.getTime() - a.startTime.getTime()
+    )[0];
+  },
+
+  /**
+   * Closes the session and advances the linked task's focus-block count.
+   *
+   * **Closing a session is once-only**, enforced here rather than at the call
+   * site. Two writes happen together — the session row and the task's block
+   * count — and the screen reconsiders an elapsed session on every tick, so a
+   * second call landing before the first finished would credit two focus blocks
+   * for one 25 minutes. The screen guards its own re-entry too; this is the
+   * guard that holds for callers that do not exist yet.
+   *
+   * Returns 0 for a session that was already closed, which is Dexie's own
+   * "nothing was updated".
+   */
   async complete(id: number): Promise<number> {
-    const session = await db.pomodoros.get(id);
+    return await db.transaction("rw", db.pomodoros, db.tasks, async () => {
+      const session = await db.pomodoros.get(id);
+      if (!session || session.endTime) return 0;
 
-    if (session?.taskId) {
-      const task = await db.tasks.get(session.taskId);
-      if (task) {
-        await db.tasks.update(session.taskId, {
-          focusBlocksDone: (task.focusBlocksDone || 0) + 1,
-          synced: false,
-        });
+      if (session.taskId) {
+        const task = await db.tasks.get(session.taskId);
+        if (task) {
+          await db.tasks.update(session.taskId, {
+            focusBlocksDone: (task.focusBlocksDone || 0) + 1,
+            synced: false,
+          });
+        }
       }
-    }
 
-    return await db.pomodoros.update(id, {
-      endTime: new Date(),
-      completed: true,
-      synced: false,
+      return await db.pomodoros.update(id, {
+        // When the session actually ended, which is not necessarily when anyone
+        // noticed. A block that ran out at 12:25 behind a closed tab is a 12:25
+        // block, and M6's day's-end summary reads these back.
+        endTime: plannedEnd(session),
+        completed: true,
+        synced: false,
+      });
+    });
+  },
+
+  /**
+   * Closes a session without crediting it: ended early, or left open so long
+   * that it no longer evidences anything.
+   *
+   * `completed` stays false and no focus block is awarded. The row is written
+   * rather than deleted — an abandoned session is a true fact about the day,
+   * and deleting it would leave `getRunning` an orphan to trip over.
+   *
+   * A session already closed is left exactly as it was: abandoning a completed
+   * one would rewrite a win as a non-event, and its focus block has already
+   * been credited.
+   */
+  async abandon(id: number): Promise<number> {
+    return await db.transaction("rw", db.pomodoros, async () => {
+      const session = await db.pomodoros.get(id);
+      if (!session || session.endTime) return 0;
+
+      return await db.pomodoros.update(id, {
+        endTime: new Date(),
+        completed: false,
+        synced: false,
+      });
     });
   },
 

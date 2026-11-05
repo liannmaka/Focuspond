@@ -1,7 +1,8 @@
 "use client";
 
-import { Plus, ChevronRight, Check } from "lucide-react";
+import { Plus, ChevronRight, Check, Play } from "lucide-react";
 import { useId, useState } from "react";
+import Link from "next/link";
 import { useTranslations, useFormatter } from "next-intl";
 // Direct paths, not the `@/components/ui` barrel — the barrel drags Card,
 // Input and next/link into every app route that renders a task row.
@@ -269,6 +270,38 @@ export function TaskAccordion({
                     <span className="text-xs tabular-nums text-ink-subtle">
                       {task.estimatedMinutes}m
                     </span>
+                  )}
+
+                  {/*
+                    Focus is the row's primary action, so it sits on the row
+                    rather than inside the ⋯ menu: two clicks and a generic
+                    icon to reach the thing the product is actually for is one
+                    click too many. It is deliberately *not* also in the menu —
+                    one action, one door.
+
+                    Same reveal as the menu trigger, so a list at rest stays
+                    calm — but only where there is a pointer to hover with. On
+                    a touch device there is no hover, so hiding it until then
+                    would mean a phone had no way to start focus at all. Gated
+                    on pointer capability rather than screen width, because a
+                    narrow laptop window still has a mouse and a large tablet
+                    does not.
+
+                    A real link, so it middle-clicks like any other navigation,
+                    and it only ever navigates — nothing here reschedules the
+                    task.
+                  */}
+                  {!task.completed && task.id !== undefined && (
+                    <Link
+                      href={`/home/timer/${task.id}`}
+                      aria-label={t("row.focusOn", { title: task.title })}
+                      className="flex size-7 shrink-0 cursor-pointer items-center justify-center rounded-md text-ink-subtle opacity-100 transition-opacity hover:bg-ambient-soft hover:text-ink focus-visible:opacity-100 pointer-fine:opacity-0 pointer-fine:group-hover:opacity-100"
+                    >
+                      <Play
+                        className="size-3.5 fill-current"
+                        aria-hidden
+                      />
+                    </Link>
                   )}
 
                   <TaskRowMenu

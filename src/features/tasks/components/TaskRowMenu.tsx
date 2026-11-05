@@ -73,7 +73,12 @@ export default function TaskRowMenu({
         aria-label={t("row.actions", { title: task.title })}
         // Hidden until the row is hovered or this button has focus, so a list
         // at rest stays calm. `focus-visible:` keeps it reachable by keyboard.
-        className="flex size-7 cursor-pointer items-center justify-center rounded-md text-ink-subtle opacity-0 transition-opacity group-hover:opacity-100 hover:bg-ambient-soft hover:text-ink focus-visible:opacity-100 aria-expanded:opacity-100"
+        //
+        // On a touch device it stays visible: there is no hover there, so the
+        // calm version of this row would be one with no way to edit, move or
+        // delete anything. Gated on pointer capability rather than screen
+        // width — a narrow laptop window still has a mouse, a tablet does not.
+        className="flex size-7 cursor-pointer items-center justify-center rounded-md text-ink-subtle opacity-100 transition-opacity hover:bg-ambient-soft hover:text-ink focus-visible:opacity-100 aria-expanded:opacity-100 pointer-fine:opacity-0 pointer-fine:group-hover:opacity-100"
       >
         <MoreHorizontal
           className="size-4"

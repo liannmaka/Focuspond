@@ -21,6 +21,10 @@ export default function IconButton({
       onClick={onClick}
       title={label}
       aria-label={label}
+      // The active state was a background colour and a stroke width — nothing a
+      // screen reader could read, so the rail announced four identical buttons
+      // with no sense of which one you were on.
+      aria-current={isActive ? "page" : undefined}
       className={`
         flex items-center justify-center w-10 h-10 cursor-pointer rounded-lg transition-all
         ${isActive ? "bg-dark-accent/10 text-dark-accent" : "text-dark-accent/80 hover:bg-dark-accent/5"}

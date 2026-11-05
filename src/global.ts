@@ -3,6 +3,7 @@ import type nav from "@/i18n/messages/en/nav.json";
 import type marketing from "@/i18n/messages/en/marketing.json";
 import type mood from "@/i18n/messages/en/mood.json";
 import type tasks from "@/i18n/messages/en/tasks.json";
+import type focus from "@/i18n/messages/en/focus.json";
 import type { Locale } from "@/i18n/config";
 
 /**
@@ -16,6 +17,7 @@ type Messages = {
   marketing: typeof marketing;
   mood: typeof mood;
   tasks: typeof tasks;
+  focus: typeof focus;
 };
 
 declare module "next-intl" {

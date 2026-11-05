@@ -274,25 +274,96 @@ The only milestone too big for one evening, so it is **pre-split at a demoable
 seam**: **M4a** a countdown that runs and writes a session (no ring art); **M4b**
 the ring, task binding, resume-after-reload. Both end shippable.
 
-- `src/features/pomodoro/hooks/usePomodoro.ts` — replace the stub. **Derive
-  remaining time from `startTime + duration`, never an in-memory counter** — the
-  `PomodoroSession` doc comment already mandates this, and it is what makes a
-  backgrounded tab, a throttled interval or a reload safe. Persist the running
-  session id to resume.
-- `src/features/pomodoro/components/FocusTimer.tsx`, `TimerRing.tsx` _(new)_.
-- `home/timer/[taskId]/page.tsx` — actually read the param (it currently does
-  not), load the task, render the timer. Support `taskId === "free"`;
-  `pomodoroDB.start` already accepts `undefined`.
-- `src/features/tasks/hooks/useTasks.ts` — add `useTask(id)`.
-- `src/lib/db/indexedDB.ts` — add `pomodoroDB.abandon(id)` (sets `endTime`, leaves
-  `completed: false`) so a cancelled session is not an orphan. No schema change.
-- `src/i18n/config.ts` — add `"focus"` to `namespaces`; new `en/focus.json`.
+#### M4a — the clock · ✅ done
 
-`FrogOfTheDay.tsx` needs **zero changes** — `onStart` is already a prop.
+- `src/features/pomodoro/lib/timer.ts` _(new)_ — the arithmetic, pure and
+  `now`-as-an-argument. **Remaining time is `startTime + duration` minus now,
+  never an in-memory counter.** Resume-after-reload landed here rather than in
+  M4b: with the clock derived, it is not a feature to build but a consequence —
+  there is no counter that a reload could lose.
+- `src/features/pomodoro/hooks/usePomodoro.ts` — replaced the stub. The running
+  session is read from the `pomodoros` table (`endTime === undefined` _is_
+  "running"), so nothing persists a session id outside it and a second tab sees
+  the same clock. `now` is the only state the hook owns — the one value that
+  _should_ be lost on reload.
+- `src/features/pomodoro/components/FocusTimer.tsx` _(new)_ — idle, running,
+  finished, busy and not-found. `TimerRing.tsx` is M4b.
+- `home/timer/[taskId]/page.tsx` — awaits the param and hands the raw segment
+  down. Nothing resolves server-side: tasks live in IndexedDB, so the server
+  cannot know whether an id exists and `notFound()` would be a guess.
+- `src/features/tasks/hooks/useTasks.ts` — `useTask(id)`, three states (loading
+  / absent / found), because a screen routed to by id must tell "still loading"
+  from "deleted".
+- `src/lib/db/indexedDB.ts` — `pomodoroDB.getRunning()`, `abandon(id)`, and
+  `complete(id)` made **once-only and transactional**: it writes two rows (the
+  session and the task's block count) and the screen reconsiders an elapsed
+  session on every tick, so an unguarded second call bought a second focus block
+  with the same 25 minutes. It also records `endTime` as the _planned_ end — a
+  block that ran out at 12:25 behind a closed tab is a 12:25 block.
+- `src/i18n/config.ts` + `src/global.ts` — `"focus"` namespace, `en/focus.json`.
+
+Two decisions worth keeping:
+
+- **No auto-start.** Arriving on the screen does not begin a session; one
+  deliberate click does. Auto-starting means a reload after finishing quietly
+  begins another 25 minutes, and any re-opened link starts a session nobody
+  asked for.
+- **A grace window on unwatched sessions** (`COMPLETION_GRACE_MINUTES`, 60). A
+  session that ran out behind a closed tab still counts — the time passed. One
+  reopened two days later is closed as abandoned with no credit, because it is
+  not evidence of anything and a focus block nobody did is worse than none.
+- **No pause**, and not from laziness: pause means storing accumulated paused
+  time, which `PomodoroSession` has no field for. It is a schema change, so it
+  belongs in M4b or later, deliberately. Ending early and restarting covers it.
+
+`FrogOfTheDay.tsx` needed **zero changes** — `onStart` was already a prop.
+
+- `TaskAccordion.tsx` — **a focus button on every open row** (added right after
+  M4a). The spec above named one entry point, so a timer that was never
+  frog-specific shipped reachable from a single card. The copy lists "a Pomodoro
+  timer, daily tasks, Frog of the Day" as three separate things, so a frog-only
+  timer under-delivers on a promise already live.
+
+  It lives **on the row, not in the ⋯ menu**: focus is the row's primary action,
+  and two clicks behind a generic icon is one too many to reach the thing the
+  product is for. Revealed on hover or keyboard focus, like the menu trigger, so
+  a list at rest stays calm. Deliberately not in both places — one action, one
+  door. A real `<Link>` (middle-clickable), hidden on completed rows, and it
+  **only navigates**: focusing on a Backlog item is not a claim that it is
+  today's work, and that claim is what making it the frog is for.
+
+- `Sidebar.tsx` — **free focus in the icon rail**, a fourth destination beside
+  Tasks, Progress and Mood. `/home/timer/free` worked from day one of M4a but
+  nothing linked to it, so it was reachable only by typing the URL. The rail is
+  its home rather than a task row, because the point of it is that it has no
+  task. `IconButton` also gained `aria-current` — the active state was a
+  background colour and a stroke width, so the rail announced four identical
+  buttons with no sense of which one you were on.
+
+  **Known layout bug it had to work around:** the dashboard grid reserves a
+  fixed `235px` column for the detail panel and places children in order, so a
+  section that drops the panel slides `main` into that column and renders the
+  page 235px wide. `/analytics` does this today. The focus screen therefore
+  keeps the panel, with a test guarding it. Fixing the grid is its own job.
+
+  **Still only on desktop.** The rail is `hidden lg:grid`, so below `lg` there
+  is no rail at all — free focus, like Progress, has no mobile entry point
+  (`BottomNav` carries the five task filters and nothing else). That is M7's
+  decision, not a focus-specific gap.
 
 **Done:** start focus on the frog → counts down from 25:00 → **reload mid-session
 and the clock is still correct** → finish → the task goes 0/2 → 1/2 focus blocks
 and a row lands in `pomodoros`.
+
+#### M4b — the ring and the rest
+
+- `TimerRing.tsx` — `elapsedFraction()` already returns the 0 → 1 it needs.
+- A running session visible outside this screen (a topbar mini-clock). **This is
+  where Zustand finally earns its store**: a tick shared by two surfaces is
+  genuinely ephemeral state with two readers, which is the one thing IndexedDB
+  and `useLiveQuery` do not already do better. Until then the tick stays local
+  to `usePomodoro` — a store with one reader would be ceremony.
+- Pause, if it is wanted, with the schema field it needs.
 
 ### M5 — Mindful breaks · 6 hrs · weeks 6–7
 
