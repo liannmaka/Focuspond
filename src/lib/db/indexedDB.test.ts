@@ -9,7 +9,10 @@ import {
   startOfToday,
   viewFor,
 } from "@/features/tasks/lib/planning";
-import { plannedEnd } from "@/features/pomodoro/lib/timer";
+import {
+  DEFAULT_DURATION_MINUTES,
+  plannedEnd,
+} from "@/features/pomodoro/lib/timer";
 import type { StoredTask } from "./indexedDB";
 import {
   db,
@@ -808,5 +811,90 @@ describe("pomodoroDB", () => {
 
     await expect(pomodoroDB.complete(id)).resolves.not.toThrow();
     expect((await db.pomodoros.get(id))!.completed).toBe(true);
+  });
+});
+
+/**
+ * One focus block has one length. `pomodoroDB.start` used to carry its own
+ * `duration = 25` alongside `DEFAULT_DURATION_MINUTES`, which is how a session
+ * gets created at the old length after the block length changes, with nothing
+ * to catch it. This test fails the moment the two disagree.
+ */
+describe("pomodoroDB — the default session length", () => {
+  it("opens a session one focus block long", async () => {
+    const id = await pomodoroDB.start(undefined);
+
+    expect((await db.pomodoros.get(id))!.duration).toBe(
+      DEFAULT_DURATION_MINUTES
+    );
+  });
+
+  it("still honours a length asked for explicitly", async () => {
+    const id = await pomodoroDB.start(undefined, 50);
+
+    expect((await db.pomodoros.get(id))!.duration).toBe(50);
+  });
+});
+
+describe("pomodoroDB — breaks", () => {
+  /** A break hangs off this row; there is no break row of its own. */
+  it("finds the session that finished most recently", async () => {
+    const first = await pomodoroDB.start(undefined);
+    await pomodoroDB.complete(first);
+    const second = await pomodoroDB.start(undefined);
+    await pomodoroDB.complete(second);
+
+    expect((await pomodoroDB.getLastCompleted())?.id).toBe(second);
+  });
+
+  it("ignores a session that is still running", async () => {
+    const done = await pomodoroDB.start(undefined);
+    await pomodoroDB.complete(done);
+    await pomodoroDB.start(undefined);
+
+    expect((await pomodoroDB.getLastCompleted())?.id).toBe(done);
+  });
+
+  /** An abandoned session ended early — there is nothing to recover from. */
+  it("ignores an abandoned session", async () => {
+    const id = await pomodoroDB.start(undefined);
+    await pomodoroDB.abandon(id);
+
+    expect(await pomodoroDB.getLastCompleted()).toBeUndefined();
+  });
+
+  it("marks a break as ended", async () => {
+    const id = await pomodoroDB.start(undefined);
+    await pomodoroDB.complete(id);
+
+    await pomodoroDB.endBreak(id);
+
+    expect((await db.pomodoros.get(id))!.breakEndedAt).toBeInstanceOf(Date);
+  });
+
+  /**
+   * "Twice". The screen reconsiders an elapsed break on every tick, and the
+   * first write is what makes the break stop being owed — re-stamping it later
+   * would move the record of when it ended.
+   */
+  it("keeps the first ending when called again", async () => {
+    const id = await pomodoroDB.start(undefined);
+    await pomodoroDB.complete(id);
+
+    const first = new Date(2026, 0, 1, 9, 0);
+    await pomodoroDB.endBreak(id, first);
+    await pomodoroDB.endBreak(id, new Date(2026, 0, 1, 10, 0));
+
+    expect((await db.pomodoros.get(id))!.breakEndedAt).toEqual(first);
+  });
+
+  it("does not invent a break ending for a session still running", async () => {
+    const id = await pomodoroDB.start(undefined);
+
+    await pomodoroDB.endBreak(id);
+
+    // Nothing stops this: the break is derived, so an unfinished session simply
+    // has no break for `breakStatus` to report.
+    expect((await db.pomodoros.get(id))!.completed).toBe(false);
   });
 });

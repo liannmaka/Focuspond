@@ -357,29 +357,89 @@ and a row lands in `pomodoros`.
 
 #### M4b — the ring and the rest
 
+- ~~A running session visible outside this screen~~ — ✅ **done**, and wider
+  than this entry imagined. The gap was not only that the top bar was silent:
+  the frog card still said **"Start focus"** while that very session counted
+  down, which is not silence but a false statement. One fact, surfaces that did
+  not know it — the same family as the frog bugs.
+
+  Three surfaces now: a top-bar pill (focus _or_ break, linking back to the
+  session), the frog card reading "Resume · 18:42" when the session is that
+  frog's, and the task row showing its clock in place of the start button.
+
+  - `store/tick.ts` _(new)_ — **the Zustand store, and the reason is agreement,
+    not performance.** Four surfaces can show one session at once; with an
+    interval each they would hold four `now`s set milliseconds apart and read
+    18:42 beside 18:41. It holds the instant and nothing else — no session, no
+    task, nothing durable. The interval runs only while something counts.
+  - `hooks/useSessionClock.ts` _(new)_ — the rows, the clock, and the settling
+    of elapsed sessions and breaks, extracted from `usePomodoro` so both it and
+    the chrome share one copy. The settling had to move: a session that runs
+    out while the reader is on another page must be closed by whatever is
+    watching, or the clock sits at 00:00 until someone opens the focus screen.
+    Several components may settle the same session at once — safe by
+    construction, because `complete`, `abandon` and `endBreak` are each
+    once-only in the database.
+  - `hooks/useRunningSession.ts` _(new)_ — read-only, task-agnostic. The chrome
+    asks "is something running, how long left"; `usePomodoro` keeps the state
+    machine and the task-relative answers.
+
+  Found while building it: the shared instant is up to a second old, so a
+  surface appearing between ticks measured its first frame against the previous
+  tick and read a second high — 15:01 left on a session with 15:00 to go.
+  `subscribe()` now refreshes the instant, not just the interval.
+
 - `TimerRing.tsx` — `elapsedFraction()` already returns the 0 → 1 it needs.
-- A running session visible outside this screen (a topbar mini-clock). **This is
-  where Zustand finally earns its store**: a tick shared by two surfaces is
-  genuinely ephemeral state with two readers, which is the one thing IndexedDB
-  and `useLiveQuery` do not already do better. Until then the tick stays local
-  to `usePomodoro` — a store with one reader would be ceremony.
 - Pause, if it is wanted, with the schema field it needs.
 
-### M5 — Mindful breaks · 6 hrs · weeks 6–7
+### M5 — Mindful breaks · ✅ done
 
 Six hours discharges six promises: the hero subtitle, the Focus Timer card, the
 Mindful Breaks card, the pomodoro-rhythm benefit, How It Works step 3, and the
 25-minute persona claim. Nothing else in this plan comes close to that ratio.
 
-- `src/features/pomodoro/constants/breakPrompts.ts` — replace the stub. ~12 prompts
-  as `{ id, minutes, category }`. Keep the file data-only and put the strings in
-  `focus.json` — the same split `src/data/landing-page/features.ts` already uses.
-- `src/features/pomodoro/components/BreakScreen.tsx` _(new)_ — a 5-minute break
-  after a completed session, with the prompt chosen by today's energy.
-- `usePomodoro.ts` — break ends → offer the next block on the same task.
+- `src/features/pomodoro/constants/breakPrompts.ts` — 12 prompts as
+  `{ id, minutes, category }`, data only; every string lives in
+  `focus.break.prompts.<id>`. `id` is a **literal union**, not `string`, so a
+  prompt added without its copy is a build error rather than a blank break
+  screen — the convention `docs/features/i18n.md` sets for data-driven lists.
+- `src/features/pomodoro/lib/breaks.ts` _(new)_ — the break clock, pure.
+- `src/features/pomodoro/components/BreakScreen.tsx` _(new)_ — the whole surface
+  for five minutes: the win, one prompt, a clock, one way back.
+- `usePomodoro.ts` — the break is a state, and `finished` is gone with it.
+- `useMood.ts` — `useTodayEnergyState()`, which tells "still loading" from
+  "never checked in". The simpler hooks cannot, and a prompt picked from the
+  unknown-energy pool and swapped a tick later changes the suggestion under
+  someone already following it.
 
-**Done:** finish a session (temporarily set the duration to 1 min) → break screen
-with a prompt → countdown → "Back to focus" returns with block 2 queued.
+**A break is not a row.** It is the five minutes after a completed session's
+`endTime`, so its clock is a subtraction over a date already on disk —
+reload-safe for the same reason the session clock is, with no table, no row and
+no migration. The one thing a clock cannot say is that a break is _over_, so
+`breakEndedAt` records that and nothing else. Skipping sticks across a reload;
+without it, leaving a break early and reloading dropped you back into it.
+
+Three decisions worth keeping:
+
+- **Only a completed session earns a break.** An abandoned one ended early and
+  has nothing to recover from.
+- **No break is owed hours later.** A session that finished while the tab was
+  closed still credits its block, but its break is long gone — coming back to a
+  rest counting down for work finished before lunch is the clock inventing a
+  state nobody was in.
+- **Energy chooses the prompt** (low → breathe/rest, high → stretch/move), which
+  is the second place the mood check-in pays for itself after task ranking.
+  Unknown energy means unknown: the whole pool stays eligible rather than
+  defaulting to low and offering a brisk walk to someone who never checked in.
+
+Found while building it: the session clock could read **25:01** on a 25-minute
+block. `now` is captured before the row is stamped, and the display rounds up,
+so being one millisecond early added a second. `remainingMs` is now capped at
+the session's own length — which also covers a second tab or a corrected system
+clock, not just this one path.
+
+**Done:** finish a session → break screen with a prompt → countdown →
+"Back to focus" returns with block 2 queued.
 
 ### M6 — Progress: streaks + day's end · 8 hrs · weeks 8–10
 
@@ -405,22 +465,52 @@ frog, and accepts a reflection note that survives reload.
 
 **This is the finish line.** After this, post the link.
 
-- `src/app/offline/page.tsx` — a real offline screen. It is already precached in
-  `next.config.ts` and is the service worker's navigation fallback, but currently
-  renders `<div>offline page</div>` from a function misnamed `LoginPage`.
-- `src/hooks/useOnlineStatus.ts` — implement the stub; drive a small offline pill.
+- ~~`src/app/offline/page.tsx`~~ — ✅ **done.** A real offline screen. It was
+  already precached in `next.config.ts` and already the service worker's
+  document fallback, so it had been live the whole time as
+  `<div>offline page</div>`, exported from a function misnamed `LoginPage`. It
+  now says the true thing — the data is in IndexedDB on the device, so almost
+  everything still works — and watches the connection, so when it returns the
+  page offers a way on instead of leaving the reader poking a reload button.
+- ~~`src/hooks/useOnlineStatus.ts`~~ — ✅ **done.** Starts `true` and corrects
+  after mount (there is no `navigator` on the server, and flashing "offline" at
+  someone who isn't is the worse failure), reads the state once on mount
+  because the events only fire on _changes_, and removes its listeners.
+  Documented as answering a narrower question than it appears to: `onLine`
+  means an interface is up, not that anything is reachable.
+- ~~`TopBar.tsx` — the offline pill~~ — ✅ **done.** Deliberately quiet: muted
+  ink, no red, no pulsing dot, and a tooltip that says where the work is rather
+  than what has failed. Being offline is not an error in a local-first app, and
+  the pill is there to explain why a _page_ might not load. `role="status"`, so
+  a screen reader hears about it politely instead of not at all.
+
+  It sits in the right-hand actions, not beside the Guest Mode pill: that block
+  is `hidden md:flex`, so a connection notice placed there would have been
+  missing from the device most likely to lose one. There is a test that walks
+  the pill's ancestors and fails if any of them is hidden.
+
 - `TopBar.tsx` — **delete the Bell and the Search box.** Neither is promised
   anywhere, and dead controls are the fastest way to lose a stranger's trust.
 - `Sidebar.tsx` — the two bottom `IconButton`s (Sun, Settings) have no `onClick`.
   Give them destinations or remove them.
 - First run: a stranger lands on an empty `/home/all`. Seed 2–3 example tasks on
   an empty DB, or add an inline hint. `tasks.list.empty` copy already exists.
-- **Four aria-labels** — `Hero.tsx:36`, `HowItWorks.tsx:58`, `CtaBanner.tsx:21`
-  and `_components/ui/SignupButton.tsx:11` all carry
-  `aria-label="Sign up for FocusPond"` over a visible "Start for free" that points
-  at `/mood`. **Delete the attribute**, do not rewrite it — the visible text is
-  already a correct accessible name, and a mismatched aria-label also breaks voice
-  control ("click Start for free" will not match the element).
+- ~~**Four aria-labels**~~ — ✅ **done, and this entry was wrong about why.**
+  `Hero.tsx`, `HowItWorks.tsx`, `CtaBanner.tsx` and `ui/SignupButton.tsx` each
+  carried `aria-label="Sign up for FocusPond"` over a visible "Start for free".
+  Deleting them was right; the stated reason was not. They were passed to
+  `<Button>`, which takes an explicit prop list and does not spread the rest, so
+  **the attribute never reached the DOM** — zero occurrences in the rendered
+  HTML. TypeScript did not object because JSX skips type checking on hyphenated
+  attribute names, which is the trap worth remembering: a misspelled
+  `aria-label` on any of our own components compiles, renders nothing, and reads
+  like working code. `Button.ariaLabel` now documents it.
+
+  The live instance was somewhere else entirely: `ui/WaitlistForm.tsx` put
+  `aria-label="Submit waitlist"` on a real `<button>` whose visible text is
+  "Join waitlist" — exactly the voice-control mismatch described above, on a
+  control nobody had flagged. Also removed.
+
 - **`/waitlist`** — repurpose, do not delete. It says _"Be the first to experience
   FocusPond when we launch"_ on a site that says "Start for free", and it is
   publicly reachable and indexable. Rewrite as _"Get notified when accounts and

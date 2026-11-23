@@ -8,6 +8,7 @@ import FrogOfTheDay from "@/features/tasks/components/FrogOfTheDay";
 import FrogPicker from "@/features/tasks/components/FrogPicker";
 import PageHeader from "@/features/tasks/components/PageHeader";
 import { useTodayEnergy } from "@/features/mood/hooks/useMood";
+import { useRunningSession } from "@/features/pomodoro/hooks/useRunningSession";
 import {
   useTasks,
   useDoneToday,
@@ -26,6 +27,7 @@ export default function TodayPage() {
   const tasks = useTasks("today") ?? [];
   const doneToday = useDoneToday("today");
   const energy = useTodayEnergy();
+  const session = useRunningSession();
 
   const state = frogState(tasks, doneToday ?? [], energy);
 
@@ -57,6 +59,14 @@ export default function TodayPage() {
           same question asked twice. */}
       <FrogOfTheDay
         state={cardState}
+        // Only when the running session is this frog's: a session on another
+        // task is that task's business, and the card saying "Resume" would
+        // send the reader somewhere they did not mean to go.
+        runningTime={
+          session?.kind === "focus" && session.taskId === frogId
+            ? session.display
+            : undefined
+        }
         onStart={() => frogId && router.push(`/home/timer/${frogId}`)}
         onAccept={() => frogId && setFrog(frogId)}
         onChoose={() => setPicking(true)}

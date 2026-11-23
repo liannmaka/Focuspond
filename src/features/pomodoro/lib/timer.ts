@@ -33,12 +33,22 @@ export function plannedEnd(session: PomodoroSession): Date {
   return new Date(session.startTime.getTime() + session.duration * MINUTE_MS);
 }
 
-/** Milliseconds left, floored at zero — a finished session is never negative. */
+/**
+ * Milliseconds left, floored at zero and **capped at the session's length**.
+ *
+ * A finished session is never negative, and a 25-minute session never has more
+ * than 25 minutes left. The cap is not hypothetical: `now` can sit a hair
+ * *before* `startTime` — the instant a session is created, or when a second tab
+ * or a corrected system clock is involved — and because the display rounds up,
+ * being one millisecond early showed `25:01` on a 25-minute block.
+ */
 export function remainingMs(
   session: PomodoroSession,
   now: Date = new Date()
 ): number {
-  return Math.max(0, plannedEnd(session).getTime() - now.getTime());
+  const left = plannedEnd(session).getTime() - now.getTime();
+
+  return Math.min(session.duration * MINUTE_MS, Math.max(0, left));
 }
 
 /**

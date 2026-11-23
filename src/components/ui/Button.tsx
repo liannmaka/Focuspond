@@ -46,6 +46,21 @@ type ButtonProps = VariantProps<typeof buttonVariants> & {
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
   type?: "button" | "submit" | "reset";
+  /**
+   * Accessible name, for a button whose visible text is not one.
+   *
+   * Spelled `ariaLabel`, not `aria-label`, and that matters: this component
+   * takes an explicit prop list and does not spread the rest, so anything it
+   * does not name is dropped. TypeScript will not catch it either — JSX
+   * deliberately skips type checking on **hyphenated** attribute names, so
+   * `aria-label="…"` compiles, renders nothing, and reads like working code.
+   * Four marketing buttons carried one that way, labelling nothing at all.
+   *
+   * Prefer visible text as the accessible name and leave this unset. Where it
+   * is set, it must *contain* the visible text — voice control matches on what
+   * is on screen, so "click Start for free" misses a button renamed to
+   * something else.
+   */
   ariaLabel?: string;
   onClick?: () => void;
 };

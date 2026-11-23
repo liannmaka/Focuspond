@@ -56,15 +56,13 @@ export default function SideBar() {
     <>
       <IconRail currentSection={currentSection} />
       {/*
-        The focus screen keeps the task panel. Not for its own sake — the
-        dashboard grid reserves a fixed 235px column for this panel and places
-        children in order, so dropping it slides `main` into that column and
-        renders the page 235px wide. Until that layout is fixed (it already
-        does this on /analytics), a section inside /home has to keep the panel.
+        The focus screen drops the panel: a screen whose whole job is one task
+        and a clock should not sit beside a list of everything else you could
+        be doing. It briefly kept the panel because the grid rendered a
+        panel-less page 235px wide — that is fixed in the layout now, so this
+        can be what it should have been.
       */}
-      {(currentSection === "home" || currentSection === "focus") && (
-        <DetailPanel />
-      )}
+      {currentSection === "home" && <DetailPanel />}
     </>
   );
 }
@@ -121,7 +119,9 @@ IconRail.displayName = "IconRail";
 
 const DetailPanel = () => {
   return (
-    <div className="h-full border-r border-dark-accent/15">
+    // Carries its own 235px rather than inheriting it from a fixed grid column.
+    // The column is `auto` so it collapses when this is not rendered.
+    <div className="h-full w-[235px] border-r border-dark-accent/15">
       <DashboardPanel />
     </div>
   );

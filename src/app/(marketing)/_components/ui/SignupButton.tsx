@@ -8,7 +8,6 @@ const SignupButton = () => {
     <Button
       href="/mood"
       size="sm"
-      aria-label="Sign up for FocusPond"
       className="font-medium"
     >
       {t("startForFree")}

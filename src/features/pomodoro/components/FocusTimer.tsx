@@ -1,10 +1,11 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { ArrowLeft, Check, Play, Square } from "lucide-react";
+import { ArrowLeft, Play, Square } from "lucide-react";
 
 import Button from "@/components/ui/Button";
 import { useTask } from "@/features/tasks/hooks/useTasks";
+import BreakScreen from "./BreakScreen";
 import { usePomodoro } from "../hooks/usePomodoro";
 import {
   DEFAULT_DURATION_MINUTES,
@@ -37,7 +38,7 @@ export default function FocusTimer({ taskId }: { taskId: string }) {
   const unusable = taskId !== "free" && id === undefined;
 
   const task = useTask(id);
-  const { state, start, abandon } = usePomodoro(id);
+  const { state, start, abandon, endBreak } = usePomodoro(id);
 
   // `task === null` only means "not here" when an id was actually asked for —
   // a free session has no task to find, and `useTask(undefined)` answers null.
@@ -56,6 +57,27 @@ export default function FocusTimer({ taskId }: { taskId: string }) {
   }
 
   const title = id === undefined ? t("freeTitle") : (task?.title ?? "");
+
+  /*
+    The break takes the whole surface rather than appearing as a panel under
+    the session header. Finishing a session is a change of mode, not a status
+    line: the clock now counts a rest rather than work, and the thing on screen
+    to do is a break prompt. Showing it beneath "Focus session" and a start
+    button would be two modes arguing.
+  */
+  if (state.kind === "break") {
+    return (
+      <Shell>
+        <BreakScreen
+          session={state.session}
+          display={state.display}
+          taskTitle={id === undefined ? undefined : task?.title}
+          onBackToFocus={() => void endBreak()}
+        />
+        <BackLink label={t("back")} />
+      </Shell>
+    );
+  }
 
   return (
     <Shell>
@@ -145,43 +167,6 @@ export default function FocusTimer({ taskId }: { taskId: string }) {
           </>
         )}
 
-        {state.kind === "finished" && (
-          <>
-            <h2 className="flex items-center gap-2.5 font-sora text-xl font-semibold tracking-[-0.02em] text-ink">
-              <Check
-                className="size-5 shrink-0 text-success"
-                aria-hidden
-              />
-              {t("finished.title")}
-            </h2>
-            <p className="mt-2.5 text-sm text-ink-muted">
-              {t("finished.body")}
-            </p>
-
-            <div className="mt-6 flex flex-wrap items-center gap-2.5">
-              <Button
-                size="sm"
-                onClick={() => void start()}
-                leftIcon={
-                  <Play
-                    className="size-3.5 fill-current"
-                    aria-hidden
-                  />
-                }
-              >
-                {t("finished.again")}
-              </Button>
-              <Button
-                size="sm"
-                variant="outline"
-                href="/home/today"
-              >
-                {t("back")}
-              </Button>
-            </div>
-          </>
-        )}
-
         {state.kind === "busy" && (
           <>
             <h2 className="font-sora text-xl font-semibold tracking-[-0.02em] text-ink">
@@ -214,7 +199,7 @@ export default function FocusTimer({ taskId }: { taskId: string }) {
         )}
       </div>
 
-      {state.kind !== "finished" && <BackLink label={t("back")} />}
+      <BackLink label={t("back")} />
     </Shell>
   );
 }

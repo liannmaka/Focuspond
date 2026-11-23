@@ -64,5 +64,19 @@
     "setMood": "Set your mood",
     "signIn": "Sign In",
     "searchTask": "Search task"
+  },
+  "offline": {
+    "title": "You're offline",
+    "body": "FocusPond keeps your tasks, your frog and your focus sessions on this device, so most of it still works without a connection.",
+    "retry": "Try again",
+    "restored": "You're back online.",
+    "continue": "Continue to today",
+    "pill": "Offline",
+    "pillHint": "No connection. Your work is saved on this device."
+  },
+  "session": {
+    "focus": "Focusing · {time}",
+    "break": "On a break · {time}",
+    "resume": "Back to the session"
   }
 }

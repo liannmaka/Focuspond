@@ -43,7 +43,8 @@
     "suggestedEyebrow": "Suggested for today",
     "eatenEyebrow": "Frog eaten",
     "eatenBody": "That was the one that mattered. The rest of the day is yours.",
-    "accept": "Make this my frog"
+    "accept": "Make this my frog",
+    "resume": "Resume · {time}"
   },
   "groups": {
     "today": "Today",

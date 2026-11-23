@@ -123,3 +123,30 @@ describe("resolveSession", () => {
     );
   });
 });
+
+describe("a clock that is a hair early", () => {
+  /**
+   * `now` can sit just before `startTime`: the instant a session is created,
+   * or when a second tab or a corrected system clock is involved. Because the
+   * display rounds up, one millisecond early used to read 25:01 on a
+   * 25-minute block — a clock claiming more time than the session has.
+   */
+  it("never reports more time left than the session is long", () => {
+    const early = new Date(START.getTime() - 1);
+
+    expect(remainingMs(session(), early)).toBe(25 * MINUTE_MS);
+    expect(formatRemaining(remainingMs(session(), early))).toBe("25:00");
+  });
+
+  it("holds even for a clock badly out of step", () => {
+    const wayEarly = new Date(START.getTime() - 60 * MINUTE_MS);
+
+    expect(formatRemaining(remainingMs(session(), wayEarly))).toBe("25:00");
+  });
+
+  it("reports nothing elapsed rather than negative progress", () => {
+    const early = new Date(START.getTime() - 5 * MINUTE_MS);
+
+    expect(elapsedFraction(session(), early)).toBe(0);
+  });
+});

@@ -1,6 +1,6 @@
 "use client";
 
-import { Plus, ChevronRight, Check, Play } from "lucide-react";
+import { Plus, ChevronRight, Check, Play, Timer } from "lucide-react";
 import { useId, useState } from "react";
 import Link from "next/link";
 import { useTranslations, useFormatter } from "next-intl";
@@ -10,6 +10,7 @@ import Checkbox from "@/components/ui/Checkbox";
 import Button from "@/components/ui/Button";
 import TaskComposer from "./TaskComposer";
 import TaskRowMenu from "./TaskRowMenu";
+import { useRunningSession } from "@/features/pomodoro/hooks/useRunningSession";
 import { carriedLabel } from "../lib/planning";
 import { energyTagKey } from "../lib/taskDisplay";
 import type { Task, TaskGroup } from "../types/task";
@@ -90,6 +91,10 @@ export function TaskAccordion({
   onToggleTask,
 }: TaskAccordionProps) {
   const t = useTranslations("tasks");
+  // Read here rather than threaded down from each page: every list that
+  // renders a row wants the same answer, and a prop would mean five pages
+  // remembering to pass it.
+  const session = useRunningSession();
   const [isOpen, setIsOpen] = useState(defaultOpen);
   const [isAdding, setIsAdding] = useState(false);
   const [editingId, setEditingId] = useState<number | undefined>(undefined);
@@ -291,18 +296,41 @@ export function TaskAccordion({
                     and it only ever navigates — nothing here reschedules the
                     task.
                   */}
-                  {!task.completed && task.id !== undefined && (
-                    <Link
-                      href={`/home/timer/${task.id}`}
-                      aria-label={t("row.focusOn", { title: task.title })}
-                      className="flex size-7 shrink-0 cursor-pointer items-center justify-center rounded-md text-ink-subtle opacity-100 transition-opacity hover:bg-ambient-soft hover:text-ink focus-visible:opacity-100 pointer-fine:opacity-0 pointer-fine:group-hover:opacity-100"
-                    >
-                      <Play
-                        className="size-3.5 fill-current"
-                        aria-hidden
-                      />
-                    </Link>
-                  )}
+                  {/*
+                    A session already running on this row shows its clock
+                    instead of an invitation to start one — and stays visible
+                    rather than waiting for a hover, because it is information
+                    now, not an affordance. Finding out that a task is being
+                    worked on should not require pointing at it.
+                  */}
+                  {!task.completed &&
+                    task.id !== undefined &&
+                    (session?.kind === "focus" && session.taskId === task.id ? (
+                      <Link
+                        href={session.href}
+                        aria-label={t("row.focusOn", { title: task.title })}
+                        className="flex shrink-0 items-center gap-1.5 rounded-full border border-accent/40 bg-accent/10 px-2 py-0.5 text-accent-text transition-colors hover:bg-accent/20"
+                      >
+                        <Timer
+                          className="size-3 shrink-0"
+                          aria-hidden
+                        />
+                        <span className="font-sora text-[11px] font-semibold tabular-nums">
+                          {session.display}
+                        </span>
+                      </Link>
+                    ) : (
+                      <Link
+                        href={`/home/timer/${task.id}`}
+                        aria-label={t("row.focusOn", { title: task.title })}
+                        className="flex size-7 shrink-0 cursor-pointer items-center justify-center rounded-md text-ink-subtle opacity-100 transition-opacity hover:bg-ambient-soft hover:text-ink focus-visible:opacity-100 pointer-fine:opacity-0 pointer-fine:group-hover:opacity-100"
+                      >
+                        <Play
+                          className="size-3.5 fill-current"
+                          aria-hidden
+                        />
+                      </Link>
+                    ))}
 
                   <TaskRowMenu
                     task={task}

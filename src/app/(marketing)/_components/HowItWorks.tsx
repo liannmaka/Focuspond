@@ -55,7 +55,6 @@ const HowItWorks = () => {
           <Button
             href="/mood"
             size="lg"
-            aria-label="Sign up for FocusPond"
             className="relative overflow-hidden font-semibold group"
           >
             <span className="relative z-10">{tc("startForFree")}</span>

@@ -8,6 +8,15 @@ import type { Frog } from "../types/task";
 
 type FrogOfTheDayProps = {
   state: FrogState<Frog>;
+  /**
+   * `mm:ss` when a session is already running on *this* frog.
+   *
+   * Without it the card offered "Start focus" while that very session counted
+   * down on another screen — not merely silent about it, but saying something
+   * untrue. The same family as the frog bugs: one fact, and surfaces that do
+   * not know it.
+   */
+  runningTime?: string;
   onStart?: () => void;
   onSwap?: () => void;
   onChoose?: () => void;
@@ -33,6 +42,7 @@ type FrogOfTheDayProps = {
  */
 export default function FrogOfTheDay({
   state,
+  runningTime,
   onStart,
   onSwap,
   onChoose,
@@ -176,6 +186,12 @@ export default function FrogOfTheDay({
                     <Button
                       size="sm"
                       onClick={onStart}
+                      // Tabular figures: the label carries a clock, and
+                      // proportional digits are different widths, so the button
+                      // resized every second and shoved "Pick another" sideways
+                      // with it. `formatRemaining` already pads to mm:ss, so
+                      // with equal-width digits the label cannot change width.
+                      className="tabular-nums"
                       leftIcon={
                         <Play
                           className="size-3.5 fill-current"
@@ -183,7 +199,9 @@ export default function FrogOfTheDay({
                         />
                       }
                     >
-                      {t("start")}
+                      {runningTime
+                        ? t("resume", { time: runningTime })
+                        : t("start")}
                     </Button>
                   )}
 

@@ -20,6 +20,20 @@ export interface PomodoroSession {
   completed: boolean;
   /** Optional snapshot of how they felt during this session. */
   mood?: MoodLevel;
+  /**
+   * When the break that follows this session ended — skipped early, or run to
+   * its full length.
+   *
+   * The break itself is not a row: it is the five minutes after `endTime`, so
+   * its clock derives from a date already stored and survives a reload for the
+   * same reason the session's does. This field exists only to record that the
+   * break is *over*, which the clock alone cannot say — otherwise skipping a
+   * break and reloading would drop the reader straight back into it.
+   *
+   * Unindexed and optional, so it needs no migration: Dexie stores whatever
+   * shape the object has, and nothing queries `.where()` on this.
+   */
+  breakEndedAt?: Date;
   /** False = still needs to reach the backend. See docs/features/sync.md. */
   synced?: boolean;
 }

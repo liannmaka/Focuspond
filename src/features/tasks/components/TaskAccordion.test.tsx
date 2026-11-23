@@ -1,7 +1,11 @@
-import { describe, expect, it, vi } from "vitest";
+// The rows read the running session live, which needs a real IndexedDB.
+import "fake-indexeddb/auto";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import userEvent from "@testing-library/user-event";
 
-import { renderWithIntl, screen } from "@/test/renderWithIntl";
+import { renderWithIntl, screen, waitFor } from "@/test/renderWithIntl";
+import { db, pomodoroDB } from "@/lib/db/indexedDB";
+import { resetTickStore } from "@/features/pomodoro/store/tick";
 import { startOfToday } from "../lib/planning";
 import { TaskAccordion } from "./TaskAccordion";
 import type { Task } from "../types/task";
@@ -349,5 +353,107 @@ describe("TaskAccordion", () => {
     );
 
     expect(screen.getByPlaceholderText("What needs doing?")).toHaveFocus();
+  });
+});
+
+describe("TaskAccordion — a session already running", () => {
+  beforeEach(async () => {
+    await db.pomodoros.clear();
+    resetTickStore();
+  });
+
+  const seedRunning = async (taskId: number, minutesAgo: number) => {
+    const id = await pomodoroDB.start(taskId, 25);
+    await db.pomodoros.update(id, {
+      startTime: new Date(Date.now() - minutesAgo * 60_000),
+    });
+    return id;
+  };
+
+  /**
+   * The row used to look untouched while 25 minutes counted down on it. The
+   * clock replaces the start affordance, because starting is not what this
+   * row offers any more.
+   */
+  it("shows the clock on the row being worked on", async () => {
+    await seedRunning(1, 10);
+    renderWithIntl(
+      <TaskAccordion
+        group="today"
+        tasks={[makeTask({ id: 1 })]}
+      />
+    );
+
+    expect(await screen.findByText("15:00")).toBeInTheDocument();
+  });
+
+  /** "Elsewhere": only the row that is actually running. */
+  it("leaves the other rows alone", async () => {
+    await seedRunning(1, 10);
+    renderWithIntl(
+      <TaskAccordion
+        group="today"
+        tasks={[makeTask({ id: 1 }), makeTask({ id: 2, title: "Other" })]}
+      />
+    );
+
+    await screen.findByText("15:00");
+    expect(screen.getAllByText("15:00")).toHaveLength(1);
+    expect(
+      screen.getByRole("link", { name: "Start focus on Other" })
+    ).toHaveAttribute("href", "/home/timer/2");
+  });
+
+  it("still links back to the session it is showing", async () => {
+    await seedRunning(1, 10);
+    renderWithIntl(
+      <TaskAccordion
+        group="today"
+        tasks={[makeTask({ id: 1 })]}
+      />
+    );
+
+    await screen.findByText("15:00");
+    expect(
+      screen.getByRole("link", { name: "Start focus on Ship the plan" })
+    ).toHaveAttribute("href", "/home/timer/1");
+  });
+
+  /** "After": the session ends and the row goes back to offering one. */
+  it("returns to the start affordance once the session ends", async () => {
+    const id = await seedRunning(1, 10);
+    renderWithIntl(
+      <TaskAccordion
+        group="today"
+        tasks={[makeTask({ id: 1 })]}
+      />
+    );
+    await screen.findByText("15:00");
+
+    await pomodoroDB.abandon(id);
+
+    await waitFor(() =>
+      expect(screen.queryByText("15:00")).not.toBeInTheDocument()
+    );
+  });
+
+  /** A break is not work on this row — the row should not claim it is. */
+  it("shows no clock on the row while a break is running", async () => {
+    const id = await pomodoroDB.start(1, 25);
+    await db.pomodoros.update(id, {
+      startTime: new Date(Date.now() - 26 * 60_000),
+    });
+    await pomodoroDB.complete(id);
+
+    renderWithIntl(
+      <TaskAccordion
+        group="today"
+        tasks={[makeTask({ id: 1 })]}
+      />
+    );
+
+    expect(
+      await screen.findByRole("link", { name: "Start focus on Ship the plan" })
+    ).toBeInTheDocument();
   });
 });

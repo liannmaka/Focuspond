@@ -3,7 +3,10 @@ import Dexie, { Table } from "dexie";
 import type { EnergyLevel } from "@/features/mood/constants/moods";
 import type { MoodEntry } from "@/features/mood/types/mood";
 import type { PomodoroSession } from "@/features/pomodoro/types/pomodoro";
-import { plannedEnd } from "@/features/pomodoro/lib/timer";
+import {
+  DEFAULT_DURATION_MINUTES,
+  plannedEnd,
+} from "@/features/pomodoro/lib/timer";
 import {
   plannedForView,
   startOfDay,
@@ -470,9 +473,15 @@ export const taskDB = {
 // ---------------------------------------------------------------------------
 
 export const pomodoroDB = {
+  /**
+   * Opens a session. `duration` defaults to one focus block — from
+   * `DEFAULT_DURATION_MINUTES`, not a 25 written here as well: two constants
+   * meaning "a focus block" is how a session gets created at the old length
+   * after the block length changes, with nothing to catch it.
+   */
   async start(
     taskId: number | undefined,
-    duration: number = 25
+    duration: number = DEFAULT_DURATION_MINUTES
   ): Promise<number> {
     return await db.pomodoros.add({
       taskId,
@@ -562,6 +571,41 @@ export const pomodoroDB = {
       return await db.pomodoros.update(id, {
         endTime: new Date(),
         completed: false,
+        synced: false,
+      });
+    });
+  },
+
+  /**
+   * The session that finished most recently — what a break hangs off.
+   *
+   * Completed only. An abandoned session ended early and has nothing to
+   * recover from, so it earns no break.
+   */
+  async getLastCompleted(): Promise<PomodoroSession | undefined> {
+    const finished = await db.pomodoros
+      .filter((session) => session.completed && session.endTime !== undefined)
+      .toArray();
+
+    return finished.sort(
+      (a, b) => (b.endTime?.getTime() ?? 0) - (a.endTime?.getTime() ?? 0)
+    )[0];
+  },
+
+  /**
+   * Marks the break after a session as finished — skipped, or run to the end.
+   *
+   * Once-only, like `complete`: the screen reconsiders an elapsed break on
+   * every tick, and the first write is what makes the break stop being owed.
+   * Re-stamping it on a later tick would move the record of when it ended.
+   */
+  async endBreak(id: number, now: Date = new Date()): Promise<number> {
+    return await db.transaction("rw", db.pomodoros, async () => {
+      const session = await db.pomodoros.get(id);
+      if (!session || session.breakEndedAt) return 0;
+
+      return await db.pomodoros.update(id, {
+        breakEndedAt: now,
         synced: false,
       });
     });

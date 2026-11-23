@@ -111,3 +111,77 @@ describe("FrogOfTheDay", () => {
     });
   });
 });
+
+describe("while a session is running on it", () => {
+  /**
+   * The card offered "Start focus" while that very session counted down on
+   * another screen — not silent about it, but saying something untrue.
+   */
+  it("says resume, with the time left", () => {
+    render({ kind: "chosen", frog: frog() }, { runningTime: "18:42" });
+
+    expect(
+      screen.getByRole("button", { name: /resume · 18:42/i })
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: /^start focus$/i })
+    ).not.toBeInTheDocument();
+  });
+
+  it("offers to start when nothing is running", () => {
+    render({ kind: "chosen", frog: frog() });
+
+    expect(
+      screen.getByRole("button", { name: /start focus/i })
+    ).toBeInTheDocument();
+  });
+
+  /** Swapping is still allowed: a running session is not a commitment. */
+  it("still lets the frog be swapped", () => {
+    render({ kind: "chosen", frog: frog() }, { runningTime: "18:42" });
+
+    expect(
+      screen.getByRole("button", { name: /pick another/i })
+    ).toBeInTheDocument();
+  });
+
+  /**
+   * A suggestion is not a session. The accept button has to stay an accept
+   * button, or the card would offer to resume something never started.
+   */
+  it("does not relabel an unaccepted suggestion", () => {
+    render(
+      { kind: "suggested", frog: frog({ isFrog: false }) },
+      {
+        runningTime: "18:42",
+      }
+    );
+
+    expect(
+      screen.getByRole("button", { name: /make this my frog/i })
+    ).toBeInTheDocument();
+    expect(screen.queryByText(/18:42/)).not.toBeInTheDocument();
+  });
+
+  /**
+   * The clock in the label made the button resize every second, shoving "Pick
+   * another" sideways with it.
+   *
+   * Asserted as a class because that *is* the mechanism and jsdom applies no
+   * Tailwind CSS, so there is no computed `font-variant-numeric` to read. The
+   * other half of the fix — a label that is always the same number of
+   * characters — is covered by `formatRemaining`'s own padding tests.
+   */
+  it("holds its width while the clock runs", () => {
+    render({ kind: "chosen", frog: frog() }, { runningTime: "18:42" });
+
+    // `classList.contains`, not a substring of `className`: the first version
+    // of this test matched "tabular-nums" inside "tabular-nums-OFF" and passed
+    // against the broken code.
+    expect(
+      screen
+        .getByRole("button", { name: /resume/i })
+        .classList.contains("tabular-nums")
+    ).toBe(true);
+  });
+});

@@ -63,16 +63,19 @@ describe("SideBar", () => {
   });
 
   /**
-   * The dashboard grid reserves a fixed 235px column for this panel and places
-   * children in order, so a section under /home that drops the panel slides
-   * `main` into that column and renders the page 235px wide. The focus screen
-   * keeps the panel until that layout is fixed — this is the guard.
+   * A screen whose whole job is one task and a clock should not sit beside a
+   * list of everything else you could be doing.
+   *
+   * This asserted the opposite for one commit: the grid used to render a
+   * panel-less page 235px wide, so the focus screen carried the panel to avoid
+   * it. The layout places `main` explicitly now, so the panel is a choice
+   * again rather than a workaround.
    */
-  it("keeps the dashboard panel on the focus screen", () => {
+  it("drops the dashboard panel on the focus screen", () => {
     pathname = "/home/timer/free";
     renderWithIntl(<SideBar />);
 
-    expect(screen.getByText("Dashboard")).toBeInTheDocument();
+    expect(screen.queryByText("Dashboard")).not.toBeInTheDocument();
   });
 
   it("drops the panel outside the task section", () => {
@@ -80,5 +83,12 @@ describe("SideBar", () => {
     renderWithIntl(<SideBar />);
 
     expect(screen.queryByText("Dashboard")).not.toBeInTheDocument();
+  });
+
+  it("keeps the panel on a task list", () => {
+    pathname = "/home/today";
+    renderWithIntl(<SideBar />);
+
+    expect(screen.getByText("Dashboard")).toBeInTheDocument();
   });
 });

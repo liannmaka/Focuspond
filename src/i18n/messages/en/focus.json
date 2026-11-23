@@ -12,11 +12,6 @@
     "hint": "Nothing else needs you right now.",
     "abandon": "End session"
   },
-  "finished": {
-    "title": "Session complete",
-    "body": "That's one focus block done.",
-    "again": "Start another"
-  },
   "busy": {
     "title": "A session is already running",
     "body": "One at a time. End it, or go back and finish it.",
@@ -25,5 +20,64 @@
   "missing": {
     "title": "That task isn't on this device",
     "body": "It may have been deleted, or created in another browser — tasks live on the device that made them."
+  },
+  "break": {
+    "eyebrow": "Mindful break",
+    "done": "Session complete",
+    "credited": "That's one focus block done.",
+    "task": "on “{title}”.",
+    "label": "Break ends in",
+    "suggested": "~{minutes} min",
+    "action": "Back to focus",
+    "prompts": {
+      "box-breathing": {
+        "title": "Box breathing",
+        "body": "In for four, hold for four, out for four, hold for four. Four rounds is plenty."
+      },
+      "long-exhale": {
+        "title": "One long exhale",
+        "body": "Breathe in through your nose, then let the air out slowly — twice as long as it took to come in."
+      },
+      "one-breath": {
+        "title": "Just one breath",
+        "body": "One slow breath, paying attention to the whole of it. That's the entire exercise."
+      },
+      "eyes-off-screen": {
+        "title": "Look away",
+        "body": "Find something at least six metres off and rest your eyes on it. Screens ask them to stay at one distance for too long."
+      },
+      "window-gaze": {
+        "title": "Out of the window",
+        "body": "Pick one thing outside and watch it for a while. Weather counts. Pigeons count."
+      },
+      "water": {
+        "title": "Get some water",
+        "body": "Fill a glass, drink it standing up. The walk there is part of it."
+      },
+      "do-nothing": {
+        "title": "Do nothing",
+        "body": "Not your phone, not a quick email. Sit still and be a bit bored for five minutes — it is allowed."
+      },
+      "shoulder-roll": {
+        "title": "Roll your shoulders",
+        "body": "Five slow circles back, five forward. Notice where they were sitting before you started."
+      },
+      "neck-release": {
+        "title": "Let your neck go",
+        "body": "Lower one ear towards your shoulder and breathe there for a few seconds. Then the other side. No pulling."
+      },
+      "stand-and-reach": {
+        "title": "Stand and reach up",
+        "body": "Straighten up, reach both arms overhead, breathe in. Lower them slowly on the way out."
+      },
+      "walk-it-out": {
+        "title": "Walk somewhere else",
+        "body": "Another room, the corridor, the end of the street. Anywhere that isn't this chair."
+      },
+      "shake-it-off": {
+        "title": "Shake it off",
+        "body": "Stand up and shake out your hands, arms and legs for thirty seconds. Looks silly, works anyway."
+      }
+    }
   }
 }

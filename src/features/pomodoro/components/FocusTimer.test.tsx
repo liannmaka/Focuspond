@@ -86,6 +86,11 @@ describe("FocusTimer", () => {
   /**
    * "After": the session ran out while the tab was closed. The time passed, so
    * the block counts — settled on load rather than waiting for a tick.
+   *
+   * No break is offered: this session ended fifteen minutes ago, and a rest
+   * five minutes long is not owed a quarter of an hour later. Coming back to
+   * find a break counting down for work you finished before lunch would be the
+   * clock inventing a state nobody was in.
    */
   it("settles a session that finished while the tab was away", async () => {
     const taskId = await seedTask();
@@ -93,10 +98,13 @@ describe("FocusTimer", () => {
 
     renderWithIntl(<FocusTimer taskId={String(taskId)} />);
 
-    expect(await screen.findByText("Session complete")).toBeInTheDocument();
     await waitFor(async () =>
       expect((await taskDB.get(taskId))!.focusBlocksDone).toBe(1)
     );
+    expect(
+      await screen.findByRole("button", { name: /start 25 minutes/i })
+    ).toBeInTheDocument();
+    expect(screen.queryByText("Session complete")).not.toBeInTheDocument();
   });
 
   /**

@@ -38,3 +38,30 @@ export function useTodayMood(): MoodEntry | undefined {
 export function useTodayEnergy(): EnergyLevel | undefined {
   return useTodayMood()?.energyLevel;
 }
+
+/**
+ * Today's energy with "still loading" told apart from "never checked in".
+ *
+ * `useTodayEnergy` cannot distinguish them — both are `undefined` — which is
+ * fine where the answer only ranks or annotates something, and the UI can
+ * simply say nothing until it knows. It is not fine where the answer *chooses*
+ * what to show: picking a break prompt from the unknown-energy pool and then
+ * swapping it a tick later, once the mood arrives, changes the suggestion under
+ * someone who has already started following it.
+ *
+ * Added alongside the simpler hooks rather than changing them, so existing
+ * callers keep the shape they were written against.
+ */
+export type EnergyState =
+  | { status: "loading" }
+  | { status: "unknown" }
+  | { status: "known"; energy: EnergyLevel };
+
+export function useTodayEnergyState(): EnergyState {
+  const mood = useLiveQuery(async () => (await moodDB.getToday()) ?? null, []);
+
+  if (mood === undefined) return { status: "loading" };
+  if (mood === null) return { status: "unknown" };
+
+  return { status: "known", energy: mood.energyLevel };
+}

@@ -22,7 +22,11 @@ const SubmitButton = ({ isSubmitting, isValid }: SubmitButtonProps) => {
   return (
     <button
       type="submit"
-      aria-label="Submit waitlist"
+      // No aria-label: the visible "Join waitlist" is already the accessible
+      // name, and overriding it with "Submit waitlist" broke voice control —
+      // "click Join waitlist" matches what is on screen, not what was
+      // announced. This one was real; the four the roadmap flagged were passed
+      // to `<Button>`, which drops them (see its `ariaLabel` note).
       disabled={isSubmitting || !isValid}
       className="font-sora cursor-pointer bg-accent hover:bg-accent-hover px-4 py-2.5 rounded-full m-2 text-accent-ink relative overflow-hidden font-medium group ring-4 ring-surface shadow-e1 disabled:opacity-50 disabled:cursor-not-allowed min-w-28"
     >
