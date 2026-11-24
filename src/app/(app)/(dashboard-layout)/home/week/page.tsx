@@ -12,7 +12,7 @@ import {
 export default function WeekPage() {
   const t = useTranslations("tasks.page");
 
-  const tasks = useTasks("week") ?? [];
+  const tasks = useTasks("week");
   const doneToday = useDoneToday("week");
 
   return (

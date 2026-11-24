@@ -29,14 +29,14 @@ export default function AllPage() {
       <div className="space-y-8">
         <TaskAccordion
           group="today"
-          tasks={today ?? []}
+          tasks={today}
           addToGroup="today"
           doneToday={todayDone}
           onToggleTask={toggleTask}
         />
         <TaskAccordion
           group="week"
-          tasks={week ?? []}
+          tasks={week}
           addToGroup="week"
           doneToday={weekDone}
           defaultOpen={false}
@@ -44,7 +44,7 @@ export default function AllPage() {
         />
         <TaskAccordion
           group="backlog"
-          tasks={backlog ?? []}
+          tasks={backlog}
           addToGroup="backlog"
           doneToday={backlogDone}
           defaultOpen={false}

@@ -89,3 +89,31 @@ describe("the shared tick", () => {
     expect(active.result.current).toBeGreaterThan(0);
   });
 });
+
+describe("a surface arriving between ticks", () => {
+  /**
+   * `subscribe()` refreshes the shared instant, but it runs in an effect —
+   * after the first paint. Without a floor, that paint measures against
+   * whatever the store last held, which may be frozen from before the
+   * component existed: the interval stops when the last watcher leaves. It
+   * showed up as a three-minute break rendering 03:01 for one frame.
+   */
+  it("never reads an instant older than its own mount", () => {
+    vi.useFakeTimers();
+    const frozen = Date.now();
+    useTickStore.setState({ now: frozen, listeners: 0 });
+    vi.advanceTimersByTime(5000);
+
+    // Every render's value, not just the settled one: `renderHook`'s `result`
+    // reports the value *after* effects have run, and the effect is what
+    // refreshes the store — so the frame this guards is already gone by then.
+    const seen: number[] = [];
+    renderHook(() => {
+      const value = useTick(true);
+      seen.push(value);
+      return value;
+    });
+
+    expect(seen[0]).toBeGreaterThanOrEqual(frozen + 5000);
+  });
+});

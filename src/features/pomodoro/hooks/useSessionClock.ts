@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useLiveQuery } from "dexie-react-hooks";
 
 import { pomodoroDB } from "@/lib/db/indexedDB";
@@ -55,7 +55,13 @@ export function useSessionClock(): SessionClock {
     Boolean(running) ||
     Boolean(lastCompleted?.completed && !lastCompleted.breakEndedAt);
 
-  const now = new Date(useTick(ticking));
+  // Memoised on the millisecond, not rebuilt per render: the settle effects
+  // below depend on `now`, and a fresh Date object every render re-runs them
+  // every render. They are guarded, so nothing went wrong — but "runs
+  // constantly and is saved by a guard" is not a thing to leave in a file whose
+  // whole job is deciding when to write.
+  const nowMs = useTick(ticking);
+  const now = useMemo(() => new Date(nowMs), [nowMs]);
 
   // Guards against the close-outs running twice from one component: the
   // effects re-fire on every tick and the writes are not instant.

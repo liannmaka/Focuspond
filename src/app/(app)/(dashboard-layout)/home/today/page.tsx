@@ -24,7 +24,10 @@ export default function TodayPage() {
   const router = useRouter();
   const [picking, setPicking] = useState(false);
 
-  const tasks = useTasks("today") ?? [];
+  // Both shapes, deliberately: the frog logic needs an array to rank, while
+  // the list needs to know the difference between "loading" and "empty".
+  const todayTasks = useTasks("today");
+  const tasks = todayTasks ?? [];
   const doneToday = useDoneToday("today");
   const energy = useTodayEnergy();
   const session = useRunningSession();
@@ -59,6 +62,9 @@ export default function TodayPage() {
           same question asked twice. */}
       <FrogOfTheDay
         state={cardState}
+        // The card reads both lists, so it is only honest once both have
+        // answered — otherwise it asks you to pick a frog you already have.
+        loading={todayTasks === undefined || doneToday === undefined}
         // Only when the running session is this frog's: a session on another
         // task is that task's business, and the card saying "Resume" would
         // send the reader somewhere they did not mean to go.
@@ -83,7 +89,7 @@ export default function TodayPage() {
       <div className="mt-10">
         <TaskAccordion
           group="today"
-          tasks={tasks}
+          tasks={todayTasks}
           addToGroup="today"
           doneToday={doneToday}
           onToggleTask={toggleTask}

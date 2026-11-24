@@ -4,6 +4,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import { ThemeProvider } from "@/features/theme/components/ThemeProvider";
 import { ThemedToaster } from "@/features/theme/components/ThemedToaster";
+import WriteFailureToaster from "@/components/system/WriteFailureToaster";
 import "@/styles/globals.css";
 
 const manrope = localFont({
@@ -132,6 +133,8 @@ export default async function RootLayout({
           >
             {children}
             <ThemedToaster />
+            {/* Reports a write that storage refused — see lib/db/writeGuard. */}
+            <WriteFailureToaster />
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>

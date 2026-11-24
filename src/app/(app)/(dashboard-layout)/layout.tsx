@@ -1,3 +1,4 @@
+import StorageNotice from "@/components/system/StorageNotice";
 import BottomNav from "../_components/BottomNav";
 import TopBar from "../_components/TopBar";
 import SideBar from "../_components/Sidebar";
@@ -28,6 +29,7 @@ export default function PwaLayout({ children }: { children: React.ReactNode }) {
           <SideBar />
 
           <main className="col-start-3 overflow-y-auto bg-surface px-6 py-8 md:px-10 md:py-12">
+            <StorageNotice />
             {children}
           </main>
         </div>
@@ -35,6 +37,7 @@ export default function PwaLayout({ children }: { children: React.ReactNode }) {
         {/* Mobile Layout */}
         <div className="lg:hidden h-full grid grid-rows-[1fr_64px]">
           <main className="overflow-y-auto bg-surface px-6 py-8 md:px-10 md:py-12">
+            <StorageNotice />
             {children}
           </main>
 

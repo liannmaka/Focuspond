@@ -24,6 +24,7 @@ export const namespaces = [
   "mood",
   "tasks",
   "focus",
+  "progress",
 ] as const;
 
 export type Namespace = (typeof namespaces)[number];

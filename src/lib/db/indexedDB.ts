@@ -3,6 +3,7 @@ import Dexie, { Table } from "dexie";
 import type { EnergyLevel } from "@/features/mood/constants/moods";
 import type { MoodEntry } from "@/features/mood/types/mood";
 import type { PomodoroSession } from "@/features/pomodoro/types/pomodoro";
+import type { Reflection } from "@/features/progress/types/progress";
 import {
   DEFAULT_DURATION_MINUTES,
   plannedEnd,
@@ -22,7 +23,7 @@ import type {
   TaskGroup,
 } from "@/features/tasks/types/task";
 
-export type { MoodEntry, PomodoroSession, Task };
+export type { MoodEntry, PomodoroSession, Reflection, Task };
 
 /**
  * A task as actually stored. `synced` is bookkeeping for a backend that does
@@ -113,6 +114,7 @@ export class FocusPondDB extends Dexie {
   moods!: Table<MoodEntry, number>;
   tasks!: Table<StoredTask, number>;
   pomodoros!: Table<PomodoroSession, number>;
+  reflections!: Table<Reflection, number>;
 
   constructor() {
     super("FocusPondDB");
@@ -205,6 +207,24 @@ export class FocusPondDB extends Dexie {
           stale.map((id) => tasks.update(id, { isFrog: false, synced: false }))
         );
       });
+
+    /**
+     * v5 — `reflections`, one row per day for the day's-end note.
+     *
+     * A new table needs no upgrade callback: there is nothing to migrate, and
+     * Dexie creates it on open. Indexed on `date` (local midnight), because
+     * every read is "the note for this day" — the id is never the question.
+     *
+     * The roadmap called this v3; it is v5. v3 was the `plannedFor` migration
+     * and v4 the one-frog-per-day repair, both of which arrived after that
+     * line was written.
+     */
+    this.version(5).stores({
+      moods: "++id, level, createdAt",
+      tasks: "++id, plannedFor, energyRequired, createdAt",
+      pomodoros: "++id, taskId, startTime",
+      reflections: "++id, date",
+    });
   }
 }
 
@@ -463,6 +483,25 @@ export const taskDB = {
     return await db.tasks.get(id);
   },
 
+  /**
+   * Every frog that was actually eaten — what the streak and the week's count
+   * are built from.
+   *
+   * Filtered, not queried: `isFrog` and `completed` are booleans, which are not
+   * valid IndexedDB keys, so `.where()` on either would quietly match nothing.
+   * A `completedAt` is required because a day cannot be credited without one.
+   */
+  async getEatenFrogs(): Promise<Task[]> {
+    return await db.tasks
+      .filter(
+        (task) =>
+          task.isFrog === true &&
+          task.completed === true &&
+          task.completedAt !== undefined
+      )
+      .toArray();
+  },
+
   async delete(id: number): Promise<void> {
     await db.tasks.delete(id);
   },
@@ -508,7 +547,11 @@ export const pomodoroDB = {
       .toArray();
 
     return open.sort(
-      (a, b) => b.startTime.getTime() - a.startTime.getTime()
+      (a, b) =>
+        b.startTime.getTime() - a.startTime.getTime() ||
+        // Same tie-break as `getLastCompleted`: equal timestamps must not leave
+        // "the most recent" to read order.
+        (b.id ?? 0) - (a.id ?? 0)
     )[0];
   },
 
@@ -588,7 +631,13 @@ export const pomodoroDB = {
       .toArray();
 
     return finished.sort(
-      (a, b) => (b.endTime?.getTime() ?? 0) - (a.endTime?.getTime() ?? 0)
+      (a, b) =>
+        (b.endTime?.getTime() ?? 0) - (a.endTime?.getTime() ?? 0) ||
+        // Tie-break on id, which is monotonic: two sessions can share an
+        // `endTime` to the millisecond — back-to-back one-minute blocks, or a
+        // test — and "the most recent" then came down to whatever order the
+        // rows happened to be read in.
+        (b.id ?? 0) - (a.id ?? 0)
     )[0];
   },
 
@@ -618,6 +667,20 @@ export const pomodoroDB = {
       .toArray();
   },
 
+  /**
+   * Every session seen through to the end — the other half of a streak day.
+   *
+   * Abandoned sessions are excluded: they have an `endTime` too, so filtering
+   * on that alone would credit a day for work that was called off.
+   */
+  async getAllCompleted(): Promise<PomodoroSession[]> {
+    return await db.pomodoros
+      .filter(
+        (session) => session.completed === true && session.endTime !== undefined
+      )
+      .toArray();
+  },
+
   async getUnsynced(): Promise<PomodoroSession[]> {
     return await db.pomodoros
       .filter((pomodoro) => pomodoro.synced === false)
@@ -626,5 +689,71 @@ export const pomodoroDB = {
 
   async markAsSynced(id: number): Promise<number> {
     return await db.pomodoros.update(id, { synced: true });
+  },
+};
+
+// ---------------------------------------------------------------------------
+// Reflections
+// ---------------------------------------------------------------------------
+
+export const reflectionDB = {
+  /** The note for a given day, or undefined if none was written. */
+  async getForDay(now: Date = new Date()): Promise<Reflection | undefined> {
+    return await db.reflections
+      .where("date")
+      .between(startOfToday(now), startOfTomorrow(now), true, false)
+      .first();
+  },
+
+  /**
+   * Writes the day's note, replacing whatever was there.
+   *
+   * One row per day, so this is an upsert keyed on the day rather than an
+   * append — a reflection is something you revise, not a log you add to, and
+   * two rows for one day would make "did I reflect today" ambiguous.
+   *
+   * **A blank note is no note.** Clearing the field deletes the row instead of
+   * storing an empty string, so an empty box never counts as having reflected.
+   * Returns the id kept, or undefined when the note was cleared.
+   */
+  async save(
+    note: string,
+    now: Date = new Date()
+  ): Promise<number | undefined> {
+    const trimmed = note.trim();
+
+    return await db.transaction("rw", db.reflections, async () => {
+      const existing = await db.reflections
+        .where("date")
+        .between(startOfToday(now), startOfTomorrow(now), true, false)
+        .first();
+
+      if (trimmed.length === 0) {
+        if (existing?.id) await db.reflections.delete(existing.id);
+        return undefined;
+      }
+
+      if (existing?.id) {
+        await db.reflections.update(existing.id, {
+          note: trimmed,
+          updatedAt: now,
+          synced: false,
+        });
+        return existing.id;
+      }
+
+      return await db.reflections.add({
+        date: startOfToday(now),
+        note: trimmed,
+        createdAt: now,
+        synced: false,
+      });
+    });
+  },
+
+  async getUnsynced(): Promise<Reflection[]> {
+    return await db.reflections
+      .filter((reflection) => reflection.synced === false)
+      .toArray();
   },
 };

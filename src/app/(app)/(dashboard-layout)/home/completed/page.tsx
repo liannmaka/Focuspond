@@ -8,7 +8,7 @@ import { useCompletedTasks, toggleTask } from "@/features/tasks/hooks/useTasks";
 export default function CompletedPage() {
   const t = useTranslations("tasks.page");
 
-  const tasks = useCompletedTasks() ?? [];
+  const tasks = useCompletedTasks();
 
   return (
     <div className="mx-auto w-full max-w-4xl">

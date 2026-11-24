@@ -55,7 +55,8 @@ export function useTodayEnergy(): EnergyLevel | undefined {
 export type EnergyState =
   | { status: "loading" }
   | { status: "unknown" }
-  | { status: "known"; energy: EnergyLevel };
+  /** The check-in itself comes too, for surfaces that show its label. */
+  | { status: "known"; energy: EnergyLevel; mood: MoodEntry };
 
 export function useTodayEnergyState(): EnergyState {
   const mood = useLiveQuery(async () => (await moodDB.getToday()) ?? null, []);
@@ -63,5 +64,5 @@ export function useTodayEnergyState(): EnergyState {
   if (mood === undefined) return { status: "loading" };
   if (mood === null) return { status: "unknown" };
 
-  return { status: "known", energy: mood.energyLevel };
+  return { status: "known", energy: mood.energyLevel, mood };
 }

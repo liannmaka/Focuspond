@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 
 import { moodIdForLevel } from "@/features/mood/constants/moods";
-import { useTodayMood } from "@/features/mood/hooks/useMood";
+import { useTodayEnergyState } from "@/features/mood/hooks/useMood";
 import { useTasks } from "@/features/tasks/hooks/useTasks";
 import { energyFits, energyTagKey } from "@/features/tasks/lib/taskDisplay";
 
@@ -19,13 +19,18 @@ export default function EnergyOverview() {
   // energyTagKey() returns keys rooted at `tasks`, not at the panel.
   const tTasks = useTranslations("tasks");
   const tMood = useTranslations("mood");
-  const mood = useTodayMood();
-  const tasks = useTasks("today") ?? [];
+  const energy = useTodayEnergyState();
+  const tasks = useTasks("today");
 
-  // Still resolving the first query — render nothing rather than flash "no mood".
-  if (mood === undefined && tasks.length === 0) return null;
+  /*
+    Nothing until both answers are in. The old guard checked
+    `mood === undefined && tasks.length === 0`, which could not tell a mood
+    still loading from a day with no check-in, and counted "0 of 0 tasks suit
+    your energy" while the task list was still on its way.
+  */
+  if (energy.status === "loading" || tasks === undefined) return null;
 
-  if (!mood) {
+  if (energy.status === "unknown") {
     return (
       <section className="px-6">
         <h3 className="mb-2 font-sora text-[10.5px] font-bold tracking-[0.1em] text-ink-subtle uppercase">
@@ -42,9 +47,10 @@ export default function EnergyOverview() {
     );
   }
 
+  const { mood } = energy;
   const moodId = moodIdForLevel(mood.level);
   const fitting = tasks.filter((task) =>
-    energyFits(task.energyRequired, mood.energyLevel)
+    energyFits(task.energyRequired, energy.energy)
   ).length;
 
   return (
@@ -56,7 +62,7 @@ export default function EnergyOverview() {
       <p className="font-sora text-sm font-semibold text-ink">
         {moodId ? tMood(`moods.${moodId}.label`) : mood.label}
         <span className="ml-2 font-manrope text-xs font-normal text-ink-subtle">
-          {tTasks(energyTagKey(mood.energyLevel))}
+          {tTasks(energyTagKey(energy.energy))}
         </span>
       </p>
 

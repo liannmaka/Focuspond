@@ -4,6 +4,7 @@ import type marketing from "@/i18n/messages/en/marketing.json";
 import type mood from "@/i18n/messages/en/mood.json";
 import type tasks from "@/i18n/messages/en/tasks.json";
 import type focus from "@/i18n/messages/en/focus.json";
+import type progress from "@/i18n/messages/en/progress.json";
 import type { Locale } from "@/i18n/config";
 
 /**
@@ -18,6 +19,7 @@ type Messages = {
   mood: typeof mood;
   tasks: typeof tasks;
   focus: typeof focus;
+  progress: typeof progress;
 };
 
 declare module "next-intl" {

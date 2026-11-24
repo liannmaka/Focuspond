@@ -106,7 +106,18 @@ describe("the break after a session", () => {
 
     renderWithIntl(<FocusTimer taskId={String(taskId)} />);
 
-    expect(await screen.findByRole("timer")).toHaveTextContent("03:00");
+    /*
+      Not an exact `03:00`. The shared tick is up to a second behind real time
+      by design, and the display rounds up, so a break with 3:00 left can
+      legitimately read 02:59 or 03:00 depending on where in the second the
+      render lands — which is invisible on screen and was a flake here.
+
+      The claim worth asserting is that it *resumed* rather than restarted:
+      05:00 or 25:00 would fail this, and those are the bugs.
+    */
+    expect(await screen.findByRole("timer")).toHaveTextContent(
+      /^(02:5\d|03:00)$/
+    );
   });
 
   /** "Back to focus" — a break you must finish would just be another task. */

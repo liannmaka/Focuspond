@@ -19,6 +19,7 @@ import {
   taskDB,
   moodDB,
   pomodoroDB,
+  reflectionDB,
   migrateToPlannedFor,
   staleFrogIds,
 } from "./indexedDB";
@@ -31,6 +32,7 @@ beforeEach(async () => {
   await db.tasks.clear();
   await db.moods.clear();
   await db.pomodoros.clear();
+  await db.reflections.clear();
 });
 
 /** Local midnight, `days` ago. */
@@ -896,5 +898,171 @@ describe("pomodoroDB — breaks", () => {
     // Nothing stops this: the break is derived, so an unfinished session simply
     // has no break for `breakStatus` to report.
     expect((await db.pomodoros.get(id))!.completed).toBe(false);
+  });
+});
+
+describe("reflectionDB", () => {
+  it("has nothing for a day with no note", async () => {
+    expect(await reflectionDB.getForDay()).toBeUndefined();
+  });
+
+  it("keeps a note and reads it back", async () => {
+    await reflectionDB.save("Cleared the backlog");
+
+    expect((await reflectionDB.getForDay())!.note).toBe("Cleared the backlog");
+  });
+
+  /**
+   * "Twice": a reflection is revised, not appended to. Two rows for one day
+   * would make "did I reflect today" ambiguous and the page's read arbitrary.
+   */
+  it("replaces the day's note rather than adding another", async () => {
+    await reflectionDB.save("First thought");
+    await reflectionDB.save("Better thought");
+
+    expect(await db.reflections.count()).toBe(1);
+    expect((await reflectionDB.getForDay())!.note).toBe("Better thought");
+  });
+
+  it("records when it was first written and when it changed", async () => {
+    await reflectionDB.save("First thought");
+    const created = (await reflectionDB.getForDay())!;
+
+    await reflectionDB.save("Second thought");
+    const updated = (await reflectionDB.getForDay())!;
+
+    expect(updated.id).toBe(created.id);
+    expect(updated.createdAt).toEqual(created.createdAt);
+    expect(updated.updatedAt).toBeInstanceOf(Date);
+  });
+
+  it("trims what it stores", async () => {
+    await reflectionDB.save("   padded   ");
+
+    expect((await reflectionDB.getForDay())!.note).toBe("padded");
+  });
+
+  /** "Undo": clearing the box is not the same as having reflected blankly. */
+  it("removes the note when it is cleared", async () => {
+    await reflectionDB.save("Something");
+    await reflectionDB.save("   ");
+
+    expect(await reflectionDB.getForDay()).toBeUndefined();
+    expect(await db.reflections.count()).toBe(0);
+  });
+
+  it("does not create a row for a blank note", async () => {
+    await reflectionDB.save("");
+
+    expect(await db.reflections.count()).toBe(0);
+  });
+
+  /** One row per day, so yesterday's note is left where it is. */
+  it("keeps days apart", async () => {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    await reflectionDB.save("Yesterday's note", yesterday);
+    await reflectionDB.save("Today's note");
+
+    expect(await db.reflections.count()).toBe(2);
+    expect((await reflectionDB.getForDay())!.note).toBe("Today's note");
+    expect((await reflectionDB.getForDay(yesterday))!.note).toBe(
+      "Yesterday's note"
+    );
+  });
+
+  /** A note typed at 23:50 belongs to that evening, not to tomorrow. */
+  it("files a late-evening note under that evening", async () => {
+    const lateTonight = new Date();
+    lateTonight.setHours(23, 50, 0, 0);
+
+    await reflectionDB.save("Late thought", lateTonight);
+
+    expect((await reflectionDB.getForDay(lateTonight))!.note).toBe(
+      "Late thought"
+    );
+    expect((await reflectionDB.getForDay(lateTonight))!.date).toEqual(
+      startOfToday(lateTonight)
+    );
+  });
+});
+
+describe("progress reads", () => {
+  it("counts only frogs that were actually eaten", async () => {
+    const eaten = await taskDB.add({
+      title: "Eaten",
+      plannedFor: startOfToday(),
+      energyRequired: "high",
+      estimatedMinutes: 25,
+    });
+    await taskDB.setFrog(eaten);
+    await taskDB.setCompleted(eaten, true);
+
+    // A frog still in play, and a completed task that was never the frog.
+    const open = await taskDB.add({
+      title: "Still going",
+      plannedFor: startOfToday(),
+      energyRequired: "high",
+      estimatedMinutes: 25,
+    });
+    await taskDB.setFrog(open);
+    const other = await taskDB.add({
+      title: "Just a task",
+      plannedFor: startOfToday(),
+      energyRequired: "low",
+      estimatedMinutes: 25,
+    });
+    await taskDB.setCompleted(other, true);
+
+    const frogs = await taskDB.getEatenFrogs();
+    expect(frogs).toHaveLength(1);
+    expect(frogs[0].title).toBe("Eaten");
+  });
+
+  /** An abandoned session has an endTime too — it must not credit a day. */
+  it("counts only sessions seen through to the end", async () => {
+    const done = await pomodoroDB.start(undefined);
+    await pomodoroDB.complete(done);
+    const quit = await pomodoroDB.start(undefined);
+    await pomodoroDB.abandon(quit);
+    await pomodoroDB.start(undefined);
+
+    const completed = await pomodoroDB.getAllCompleted();
+    expect(completed).toHaveLength(1);
+    expect(completed[0].id).toBe(done);
+  });
+});
+
+describe("pomodoroDB — ties", () => {
+  /**
+   * Two sessions can share an `endTime` to the millisecond: back-to-back
+   * one-minute blocks, or any test that creates both in one tick. "The most
+   * recent" then came down to the order Dexie happened to return rows in,
+   * which is how a passing test started failing when an unrelated test was
+   * added above it.
+   */
+  it("picks the newer of two sessions that finished in the same instant", async () => {
+    const first = await pomodoroDB.start(undefined, 25);
+    const second = await pomodoroDB.start(undefined, 25);
+    const sameInstant = new Date(2026, 10, 18, 12, 0);
+
+    await db.pomodoros.update(first, { startTime: sameInstant });
+    await db.pomodoros.update(second, { startTime: sameInstant });
+    await pomodoroDB.complete(first);
+    await pomodoroDB.complete(second);
+
+    expect((await pomodoroDB.getLastCompleted())?.id).toBe(second);
+  });
+
+  it("picks the newer of two sessions opened in the same instant", async () => {
+    const first = await pomodoroDB.start(undefined, 25);
+    const second = await pomodoroDB.start(undefined, 25);
+    const sameInstant = new Date();
+
+    await db.pomodoros.update(first, { startTime: sameInstant });
+    await db.pomodoros.update(second, { startTime: sameInstant });
+
+    expect((await pomodoroDB.getRunning())?.id).toBe(second);
   });
 });

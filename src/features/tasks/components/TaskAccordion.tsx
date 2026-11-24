@@ -22,7 +22,14 @@ type TaskAccordionProps = {
    * alongside `TaskGroup` rather than inside it.
    */
   group: TaskGroup | "completed";
-  tasks: Task[];
+  /**
+   * Open tasks in this group — `undefined` while the live query resolves.
+   *
+   * Pass it through rather than defaulting to `[]`: the two are different
+   * answers, and collapsing them is what made every page load flash an empty
+   * state over tasks that were about to appear.
+   */
+  tasks: Task[] | undefined;
   defaultOpen?: boolean;
   /**
    * Which group a task added here belongs to. Omit to hide the add affordances
@@ -40,6 +47,9 @@ type TaskAccordionProps = {
   doneToday?: Task[];
   onToggleTask?: (id: number, completed: boolean) => void;
 };
+
+/** Width of each skeleton bar, so three loading rows look like a list. */
+const SKELETON_WIDTHS = ["42%", "58%", "35%"] as const;
 
 /**
  * The day a carried-over task was meant for.
@@ -106,19 +116,33 @@ export function TaskAccordion({
   const canAdd = addToGroup !== undefined;
 
   /**
+   * **Three states, not two.** `undefined` is the live query still resolving;
+   * an array is an answer, even an empty one.
+   *
+   * Pages used to collapse these with `?? []`, and the comment in `useTasks`
+   * called that deliberate. It was not: a loading list and an empty one then
+   * rendered identically, so every page load flashed "Still water — nothing
+   * here yet" before the real tasks arrived. Telling someone their day is
+   * empty when it is not is the worst thing this list can say, and it said it
+   * on every refresh.
+   */
+  const isLoading = tasks === undefined;
+  const rows = tasks ?? [];
+
+  /**
    * The header counts what the list actually shows. A ratio against a different
    * number is how "4/4" ended up above an apparently empty group — the four
    * were real, but three of them were elsewhere.
    */
-  const openCount = tasks.length;
+  const openCount = rows.length;
 
   /**
    * Nothing open splits into two very different states: a group nobody has
    * filled in, and one that has been finished today. Treating them alike told a
    * reader who had just completed four tasks that there was "nothing here yet".
    */
-  const isCleared = openCount === 0 && doneToday.length > 0;
-  const isEmpty = openCount === 0 && !isCleared;
+  const isCleared = !isLoading && openCount === 0 && doneToday.length > 0;
+  const isEmpty = !isLoading && openCount === 0 && !isCleared;
 
   /** Adding into a collapsed group would write into something unseen. */
   function startAdding() {
@@ -194,6 +218,31 @@ export function TaskAccordion({
           </div>
         )}
 
+        {/*
+          Loading says nothing. Three quiet bars hold the space the list will
+          take, so the page does not claim to know what is in it yet — and does
+          not jump when it finds out.
+        */}
+        {isLoading && (
+          <ul
+            className="space-y-1 py-1"
+            aria-hidden
+          >
+            {[0, 1, 2].map((row) => (
+              <li
+                key={row}
+                className="-mx-2.5 flex items-center gap-3.5 rounded-lg px-2.5 py-2"
+              >
+                <span className="size-4 shrink-0 animate-pulse rounded-full bg-ambient-soft" />
+                <span
+                  className="h-3 animate-pulse rounded bg-ambient-soft"
+                  style={{ width: SKELETON_WIDTHS[row] }}
+                />
+              </li>
+            ))}
+          </ul>
+        )}
+
         {isEmpty && !isAdding && (
           <div className="flex flex-col items-center gap-1 px-6 py-10 text-center">
             {/* A still pond: concentric rings with nothing dropped in yet. */}
@@ -218,9 +267,9 @@ export function TaskAccordion({
           </div>
         )}
 
-        {!isEmpty && (
+        {!isEmpty && !isLoading && (
           <ul className="py-1">
-            {tasks.map((task) =>
+            {rows.map((task) =>
               /* Editing replaces the row in place rather than opening a modal,
                  so the list stays the thing you are working in. */
               editingId !== undefined && task.id === editingId ? (
@@ -247,14 +296,37 @@ export function TaskAccordion({
                     }
                   />
 
-                  <span
-                    className={`flex-1 text-sm ${
-                      task.completed
-                        ? "text-ink-subtle line-through"
-                        : "text-ink"
-                    }`}
-                  >
-                    {task.title}
+                  <span className="flex min-w-0 flex-1 flex-col">
+                    <span
+                      className={`truncate text-sm ${
+                        task.completed
+                          ? "text-ink-subtle line-through"
+                          : "text-ink"
+                      }`}
+                    >
+                      {task.title}
+                    </span>
+
+                    {/*
+                      The note, which until now was written and never shown —
+                      the same dead write the mood check-in was before M2. A
+                      field you cannot read is not the Quick Notes downscope
+                      the roadmap promised, it is a hole with a placeholder in
+                      it.
+
+                      One truncated line, in quiet ink: enough to recognise
+                      what you wrote, not enough to turn a calm list into a
+                      wall of text. Hiding it behind a second click is how it
+                      got lost in the first place.
+                    */}
+                    {task.notes && (
+                      <span
+                        className="truncate text-xs text-ink-subtle"
+                        title={task.notes}
+                      >
+                        {task.notes}
+                      </span>
+                    )}
                   </span>
 
                   {/*

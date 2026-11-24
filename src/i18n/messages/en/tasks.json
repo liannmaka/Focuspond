@@ -88,6 +88,12 @@
     "current": "Current",
     "delete": "Delete",
     "focusOn": "Start focus on {title}",
-    "makeFrog": "Make this the frog"
+    "makeFrog": "Make this the frog",
+    "confirmDelete": {
+      "title": "Delete “{title}”?",
+      "body": "This cannot be undone. The task and its note are removed, any focus sessions you finished on it stay on your record.",
+      "confirm": "Delete",
+      "cancel": "Cancel"
+    }
   }
 }

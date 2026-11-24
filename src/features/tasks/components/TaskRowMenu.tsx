@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Flame, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 
+import ConfirmDialog from "@/components/ui/ConfirmDialog";
+
 import {
   deleteTask,
   setFrog,
@@ -35,6 +37,7 @@ export default function TaskRowMenu({
 }) {
   const t = useTranslations("tasks");
   const [open, setOpen] = useState(false);
+  const [confirming, setConfirming] = useState(false);
   const frogEaten = useFrogEatenToday();
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -169,9 +172,9 @@ export default function TaskRowMenu({
         <button
           type="button"
           role="menuitem"
-          onClick={async () => {
+          onClick={() => {
             setOpen(false);
-            await deleteTask(id);
+            setConfirming(true);
           }}
           className="flex w-full cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-sm text-danger transition-colors hover:bg-danger/10"
         >
@@ -182,6 +185,29 @@ export default function TaskRowMenu({
           {t("row.delete")}
         </button>
       </div>
+
+      {/*
+        Asked before, not undone after. Deletion is final — no trash, no server
+        copy — and an undo that lives in a toast is only as good as the reader's
+        chance of reaching it before it goes.
+
+        The body says what actually happens, which is not quite what it would
+        say elsewhere: the task and its note go, and the focus sessions already
+        finished on it stay. They are a record of work that was really done, and
+        a deleted task is no reason to take yesterday's blocks off the board.
+      */}
+      <ConfirmDialog
+        open={confirming}
+        title={t("row.confirmDelete.title", { title: task.title })}
+        body={t("row.confirmDelete.body")}
+        confirmLabel={t("row.confirmDelete.confirm")}
+        cancelLabel={t("row.confirmDelete.cancel")}
+        onCancel={() => setConfirming(false)}
+        onConfirm={async () => {
+          setConfirming(false);
+          await deleteTask(id);
+        }}
+      />
     </div>
   );
 }

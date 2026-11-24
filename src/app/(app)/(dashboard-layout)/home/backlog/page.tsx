@@ -12,7 +12,7 @@ import {
 export default function BacklogPage() {
   const t = useTranslations("tasks.page");
 
-  const tasks = useTasks("backlog") ?? [];
+  const tasks = useTasks("backlog");
   const doneToday = useDoneToday("backlog");
 
   return (

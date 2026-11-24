@@ -185,3 +185,51 @@ describe("while a session is running on it", () => {
     ).toBe(true);
   });
 });
+
+describe("before the day's tasks have arrived", () => {
+  /**
+   * The card had the list's flaw in a louder place: an unresolved query
+   * reaches `frogState` as an empty array, indistinguishable from a day with
+   * nothing in it — so the hero surface opened by asking you to pick a frog
+   * you had already picked.
+   */
+  it("does not ask for a frog it cannot know is missing", () => {
+    renderWithIntl(
+      <FrogOfTheDay
+        state={{ kind: "none" }}
+        loading
+      />
+    );
+
+    expect(screen.queryByText("Pick your frog")).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: /choose your frog/i })
+    ).not.toBeInTheDocument();
+  });
+
+  it("says it is still working it out", () => {
+    const { container } = renderWithIntl(
+      <FrogOfTheDay
+        state={{ kind: "none" }}
+        loading
+      />
+    );
+
+    expect(container.querySelector("[aria-busy]")).toBeInTheDocument();
+    expect(container.querySelectorAll(".animate-pulse").length).toBeGreaterThan(
+      0
+    );
+  });
+
+  it("shows the frog once it is known", () => {
+    render({ kind: "chosen", frog: frog() });
+
+    expect(screen.getByText("Write the proposal")).toBeInTheDocument();
+  });
+
+  it("asks for a frog once it knows there is none", () => {
+    render({ kind: "none" });
+
+    expect(screen.getByText("Pick your frog")).toBeInTheDocument();
+  });
+});

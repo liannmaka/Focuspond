@@ -356,6 +356,76 @@ describe("TaskAccordion", () => {
   });
 });
 
+describe("TaskAccordion — before the tasks arrive", () => {
+  /**
+   * The bug: pages collapsed a still-loading query to [] with ?? [], so a
+   * loading list and an empty one rendered identically — every page load
+   * flashed "Still water, nothing here yet" over tasks that were about to
+   * appear. Telling someone their day is empty when it is not is the worst
+   * thing this list can say.
+   */
+  it("says nothing about being empty while it is still loading", () => {
+    renderWithIntl(
+      <TaskAccordion
+        group="today"
+        tasks={undefined}
+      />
+    );
+
+    expect(screen.queryByText("Still water")).not.toBeInTheDocument();
+  });
+
+  it("holds the space the list will take", () => {
+    const { container } = renderWithIntl(
+      <TaskAccordion
+        group="today"
+        tasks={undefined}
+      />
+    );
+
+    expect(container.querySelectorAll(".animate-pulse").length).toBeGreaterThan(
+      0
+    );
+  });
+
+  it("does not offer to add a first task before it knows there are none", () => {
+    renderWithIntl(
+      <TaskAccordion
+        group="today"
+        tasks={undefined}
+        addToGroup="today"
+      />
+    );
+
+    expect(
+      screen.queryByRole("button", { name: /add your first/i })
+    ).not.toBeInTheDocument();
+  });
+
+  it("shows the empty state once it knows the group is empty", () => {
+    renderWithIntl(
+      <TaskAccordion
+        group="today"
+        tasks={[]}
+      />
+    );
+
+    expect(screen.getByText("Still water")).toBeInTheDocument();
+  });
+
+  it("shows the tasks once they arrive", () => {
+    renderWithIntl(
+      <TaskAccordion
+        group="today"
+        tasks={[makeTask({ id: 1 })]}
+      />
+    );
+
+    expect(screen.getByText("Ship the plan")).toBeInTheDocument();
+    expect(screen.queryByText("Still water")).not.toBeInTheDocument();
+  });
+});
+
 describe("TaskAccordion — a session already running", () => {
   beforeEach(async () => {
     await db.pomodoros.clear();
@@ -455,5 +525,55 @@ describe("TaskAccordion — a session already running", () => {
     expect(
       await screen.findByRole("link", { name: "Start focus on Ship the plan" })
     ).toBeInTheDocument();
+  });
+});
+
+describe("TaskAccordion — the note on a task", () => {
+  /**
+   * `Task.notes` was written by the composer and rendered nowhere: you could
+   * add a note and never see it again without opening the editor. That is the
+   * same dead write the mood check-in was before M2, and it meant the
+   * roadmap's Quick Notes downscope — "a note field on a task" — was not
+   * actually delivered.
+   */
+  it("shows the note under the task it belongs to", () => {
+    renderWithIntl(
+      <TaskAccordion
+        group="today"
+        tasks={[makeTask({ id: 1, notes: "Ask Tunde for the figures first" })]}
+      />
+    );
+
+    expect(
+      screen.getByText("Ask Tunde for the figures first")
+    ).toBeInTheDocument();
+  });
+
+  it("adds nothing to a task without one", () => {
+    const { container } = renderWithIntl(
+      <TaskAccordion
+        group="today"
+        tasks={[makeTask({ id: 1 })]}
+      />
+    );
+
+    expect(container.querySelectorAll("[title]")).toHaveLength(0);
+  });
+
+  /** Long notes must not push the row's metadata off the line. */
+  it("keeps a long note to one line, with the whole of it on hover", () => {
+    // Trimmed: Testing Library normalises whitespace when matching text, so a
+    // fixture with a trailing space can never be found by its own value.
+    const long = "A note that goes on ".repeat(20).trim();
+    renderWithIntl(
+      <TaskAccordion
+        group="today"
+        tasks={[makeTask({ id: 1, notes: long })]}
+      />
+    );
+
+    const note = screen.getByText(long);
+    expect(note.className).toContain("truncate");
+    expect(note).toHaveAttribute("title", long);
   });
 });

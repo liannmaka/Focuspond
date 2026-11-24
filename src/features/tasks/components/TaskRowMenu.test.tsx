@@ -3,8 +3,9 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import userEvent from "@testing-library/user-event";
 
 import { renderWithIntl, screen, waitFor } from "@/test/renderWithIntl";
-import { db, taskDB } from "@/lib/db/indexedDB";
+import { db, pomodoroDB, taskDB } from "@/lib/db/indexedDB";
 import { startOfToday, viewFor } from "../lib/planning";
+import type { Task } from "../types/task";
 import TaskRowMenu from "./TaskRowMenu";
 
 beforeEach(async () => {
@@ -181,7 +182,7 @@ describe("TaskRowMenu", () => {
     });
   });
 
-  it("deletes the task", async () => {
+  it("deletes the task once the deletion is confirmed", async () => {
     const task = await seed();
     renderWithIntl(
       <TaskRowMenu
@@ -192,9 +193,108 @@ describe("TaskRowMenu", () => {
 
     await openMenu();
     await userEvent.click(screen.getByRole("menuitem", { name: "Delete" }));
+    await userEvent.click(screen.getByRole("button", { name: "Delete" }));
 
     await waitFor(async () => {
       expect(await db.tasks.get(task.id!)).toBeUndefined();
     });
+  });
+});
+
+describe("deleting a task", () => {
+  const openDeleteDialog = async (task: Task) => {
+    renderWithIntl(
+      <TaskRowMenu
+        task={task}
+        onEdit={() => {}}
+      />
+    );
+    await openMenu();
+    await userEvent.click(screen.getByRole("menuitem", { name: "Delete" }));
+  };
+
+  /**
+   * Asked before, not undone after. An undo living in a toast is only as good
+   * as the reader's chance of noticing and reaching it before it disappears,
+   * and deletion here is final — no trash, no server copy.
+   */
+  it("asks before removing anything", async () => {
+    const task = await seed();
+    await openDeleteDialog(task);
+
+    expect(await screen.findByRole("alertdialog")).toBeInTheDocument();
+    expect(await db.tasks.get(task.id!)).toBeDefined();
+  });
+
+  it("names the task it is about to remove", async () => {
+    const task = await seed();
+    await openDeleteDialog(task);
+
+    expect(await screen.findByRole("alertdialog")).toHaveTextContent(
+      "Ship the plan"
+    );
+  });
+
+  /** "Undo": cancelling has to leave everything exactly as it was. */
+  it("keeps the task when the question is declined", async () => {
+    const task = await seed();
+    await openDeleteDialog(task);
+
+    await userEvent.click(screen.getByRole("button", { name: "Cancel" }));
+
+    expect(await db.tasks.get(task.id!)).toBeDefined();
+    expect(screen.queryByRole("alertdialog")).not.toBeInTheDocument();
+  });
+
+  it("keeps the task when the dialog is dismissed with Escape", async () => {
+    const task = await seed();
+    await openDeleteDialog(task);
+
+    await userEvent.keyboard("{Escape}");
+
+    expect(await db.tasks.get(task.id!)).toBeDefined();
+    expect(screen.queryByRole("alertdialog")).not.toBeInTheDocument();
+  });
+
+  /**
+   * The dangerous button must never be one stray Enter away, and whoever
+   * opened this by accident should be able to leave the way they arrived.
+   */
+  it("starts with the safe answer focused", async () => {
+    const task = await seed();
+    await openDeleteDialog(task);
+
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: "Cancel" })).toHaveFocus()
+    );
+  });
+
+  it("removes the task when the deletion is confirmed", async () => {
+    const task = await seed();
+    await openDeleteDialog(task);
+
+    await userEvent.click(screen.getByRole("button", { name: "Delete" }));
+
+    await waitFor(async () =>
+      expect(await db.tasks.get(task.id!)).toBeUndefined()
+    );
+  });
+
+  /**
+   * The sessions stay. They are a record of work that was really done, and a
+   * deleted task is no reason to take yesterday's focus blocks off the board.
+   */
+  it("leaves finished focus sessions on the record", async () => {
+    const task = await seed();
+    const session = await pomodoroDB.start(task.id!, 25);
+    await pomodoroDB.complete(session);
+
+    await openDeleteDialog(task);
+    await userEvent.click(screen.getByRole("button", { name: "Delete" }));
+
+    await waitFor(async () =>
+      expect(await db.tasks.get(task.id!)).toBeUndefined()
+    );
+    expect(await pomodoroDB.getAllCompleted()).toHaveLength(1);
   });
 });

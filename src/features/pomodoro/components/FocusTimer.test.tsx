@@ -80,7 +80,12 @@ describe("FocusTimer", () => {
 
     renderWithIntl(<FocusTimer taskId={String(taskId)} />);
 
-    expect(await screen.findByRole("timer")).toHaveTextContent("15:00");
+    // 14:59 or 15:00: the shared tick is up to a second behind by design and
+    // the display rounds up, so the exact second is not a promise. Restarting
+    // from 25:00 — the bug this guards — fails either way.
+    expect(await screen.findByRole("timer")).toHaveTextContent(
+      /^(14:5\d|15:00)$/
+    );
   });
 
   /**

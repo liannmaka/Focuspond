@@ -9,6 +9,15 @@ import type { Frog } from "../types/task";
 type FrogOfTheDayProps = {
   state: FrogState<Frog>;
   /**
+   * True while the day's tasks are still being read.
+   *
+   * Without it the card had the same flaw the list did: an unresolved query
+   * reaches `frogState` as an empty array, which is indistinguishable from a
+   * day with nothing in it — so the hero surface of the app opened by asking
+   * you to pick a frog you had already picked.
+   */
+  loading?: boolean;
+  /**
    * `mm:ss` when a session is already running on *this* frog.
    *
    * Without it the card offered "Start focus" while that very session counted
@@ -42,6 +51,7 @@ type FrogOfTheDayProps = {
  */
 export default function FrogOfTheDay({
   state,
+  loading = false,
   runningTime,
   onStart,
   onSwap,
@@ -56,6 +66,36 @@ export default function FrogOfTheDay({
       : state.kind === "suggested"
         ? t("suggestedEyebrow")
         : t("eyebrow");
+
+  if (loading) {
+    return (
+      <section
+        aria-busy
+        aria-label={t("eyebrow")}
+        className="relative overflow-hidden rounded-xl border border-line bg-surface-raised p-6 shadow-e2 md:p-8"
+      >
+        <div
+          className="ripple-field pointer-events-none absolute inset-0"
+          aria-hidden
+        />
+        {/*
+          The same height the card will be, so the page below it does not jump
+          when the answer arrives. Quiet bars rather than a spinner: this is the
+          first thing on the screen, and a spinner on the hero surface of a calm
+          app reads as something going wrong.
+        */}
+        <div
+          className="relative flex flex-col gap-4"
+          aria-hidden
+        >
+          <span className="h-2.5 w-28 animate-pulse rounded bg-ambient-soft" />
+          <span className="h-7 w-2/3 animate-pulse rounded bg-ambient-soft md:h-8" />
+          <span className="h-3.5 w-40 animate-pulse rounded bg-ambient-soft" />
+          <span className="mt-2 h-9 w-56 animate-pulse rounded-lg bg-ambient-soft" />
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section

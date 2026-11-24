@@ -3,6 +3,7 @@
 import { useCallback } from "react";
 
 import { pomodoroDB } from "@/lib/db/indexedDB";
+import { guardWrite } from "@/lib/db/writeGuard";
 import { breakRemainingMs, breakStatus } from "../lib/breaks";
 import {
   DEFAULT_DURATION_MINUTES,
@@ -79,7 +80,10 @@ export function usePomodoro(taskId?: number): Pomodoro {
 
   const endBreak = useCallback(async () => {
     const last = await pomodoroDB.getLastCompleted();
-    if (last?.id && !last.breakEndedAt) await pomodoroDB.endBreak(last.id);
+    if (last?.id && !last.breakEndedAt) {
+      const id = last.id;
+      await guardWrite("session.end", () => pomodoroDB.endBreak(id));
+    }
   }, []);
 
   const start = useCallback(
@@ -92,7 +96,9 @@ export function usePomodoro(taskId?: number): Pomodoro {
       // open, the record would claim a break that was skipped was still owed.
       await endBreak();
 
-      await pomodoroDB.start(taskId, duration);
+      await guardWrite("session.start", () =>
+        pomodoroDB.start(taskId, duration)
+      );
       // No clock nudge here: the shared tick may be up to a second behind the
       // row it is measuring, which would read as 25:01 on a 25-minute block.
       // `remainingMs` caps at the session's length precisely so this is safe.
@@ -102,7 +108,10 @@ export function usePomodoro(taskId?: number): Pomodoro {
 
   const abandon = useCallback(async () => {
     const open = await pomodoroDB.getRunning();
-    if (open?.id) await pomodoroDB.abandon(open.id);
+    if (open?.id) {
+      const id = open.id;
+      await guardWrite("session.end", () => pomodoroDB.abandon(id));
+    }
   }, []);
 
   return {

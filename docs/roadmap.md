@@ -441,7 +441,7 @@ clock, not just this one path.
 **Done:** finish a session → break screen with a prompt → countdown →
 "Back to focus" returns with block 2 queued.
 
-### M6 — Progress: streaks + day's end · 8 hrs · weeks 8–10
+### M6 — Progress: streaks + day's end · ✅ done
 
 - `src/features/progress/lib/streak.ts` _(new)_ — `currentStreak(days)`; a day
   counts if ≥1 focus session completed **or** the frog was completed. **Pure, no
@@ -449,14 +449,38 @@ clock, not just this one path.
 - `src/features/progress/lib/streak.test.ts` _(new)_ — boundaries, gaps, timezones.
 - `src/features/progress/hooks/useProgress.ts` _(new)_ — live queries over
   `db.pomodoros` plus completed tasks.
-- `src/lib/db/indexedDB.ts` — **Dexie v3**: add `reflections: "++id, date"`. Follow
-  the existing `.version(n).stores().upgrade()` pattern.
+- `src/lib/db/indexedDB.ts` — **Dexie v5** (not v3; v3 was `plannedFor` and v4
+  the one-frog repair): `reflections: "++id, date"`, keyed on local midnight so
+  a note typed at 23:50 belongs to that evening. A blank note deletes the row —
+  an empty box is not a blank reflection, it is no reflection. Also
+  `getEatenFrogs` and `getAllCompleted`, both filtered rather than queried
+  because booleans are not valid IndexedDB keys.
 - `analytics/page.tsx` — replace `<h1>Analytics</h1>` with the Progress page:
   streak, this week's completed frogs, focus blocks today, and one
   "what went well today?" field.
 - `Sidebar.tsx` — relabel the nav item (`getCurrentSection` already handles
   `/analytics`). `FrogsSummary.tsx` — replace `<div>Hello Frogs</div>`. Uncomment
   its `DashboardPanel` row.
+
+**The rule worth keeping:** a day that has not finished cannot have been
+missed. With yesterday counted and today still empty the streak stands, and the
+page says _"Today is still open"_ rather than leaving a number to be read as a
+warning. Counting strictly back from today would show `0` over breakfast after
+twelve honest days — discouraging, and not true yet.
+
+Everything is derived from stored rows on each render. No counter accumulates,
+so none can drift, and a row written on another device later simply counts.
+
+Two bugs found while building it, both in older code:
+
+- `getLastCompleted` and `getRunning` resolved ties arbitrarily. Two sessions
+  sharing an `endTime` to the millisecond left "most recent" to whatever order
+  Dexie returned rows in — which surfaced as a _passing_ test failing once an
+  unrelated test was added above it. Both tie-break on id now.
+- `useTick` let a surface's **first paint** measure against the shared
+  instant's last value, which is frozen whenever no one is watching the clock.
+  A three-minute break rendered `03:01` for one frame. The hook now floors at
+  its own mount time.
 
 **Done:** complete a session → `/analytics` shows "1 day streak", one completed
 frog, and accepts a reflection note that survives reload.

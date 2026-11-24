@@ -3,6 +3,7 @@
 import { useLiveQuery } from "dexie-react-hooks";
 
 import { taskDB } from "@/lib/db/indexedDB";
+import { guardWrite } from "@/lib/db/writeGuard";
 import { eatenFrog } from "../lib/taskDisplay";
 import { viewFor } from "../lib/planning";
 import type { NewTaskInput, Task, TaskGroup } from "../types/task";
@@ -137,30 +138,46 @@ export function useTaskCounts(): TaskCounts | undefined {
 // --- Mutations ---------------------------------------------------------------
 // Thin wrappers so pages never import `taskDB` directly. Every live query
 // observing the tasks table re-runs on its own after these resolve.
+//
+// All of them go through `guardWrite`: storage can refuse (a full disk, an
+// origin over quota, site data blocked), and a write that fails silently in a
+// local-first app does not degrade into a stale screen — the work is simply
+// gone at the next reload, with no moment at which anyone was told.
 
-export async function addTask(input: NewTaskInput): Promise<number> {
-  return taskDB.add(input);
+export async function addTask(
+  input: NewTaskInput
+): Promise<number | undefined> {
+  return guardWrite("task.add", () => taskDB.add(input));
 }
 
 export async function toggleTask(
   id: number,
   completed: boolean
 ): Promise<void> {
-  await taskDB.setCompleted(id, completed);
+  await guardWrite("task.complete", () => taskDB.setCompleted(id, completed));
 }
 
+/**
+ * Deletes a task. **Final** — no trash, no server copy, nothing to restore
+ * from, which is why the row menu asks before calling this.
+ *
+ * This briefly returned the deleted row so the caller could offer an undo
+ * toast instead of asking. The toast was the wrong guard: it is only as good
+ * as the reader's chance of noticing and reaching it before it disappears, and
+ * on something that cannot be recovered that is not a guard at all.
+ */
 export async function deleteTask(id: number): Promise<void> {
-  await taskDB.delete(id);
+  await guardWrite("task.delete", () => taskDB.delete(id));
 }
 
 /** Promotes one task to the day's frog, demoting any other. */
 export async function setFrog(id: number): Promise<void> {
-  await taskDB.setFrog(id);
+  await guardWrite("task.frog", () => taskDB.setFrog(id));
 }
 
 export async function updateTask(
   id: number,
   updates: Partial<Task>
 ): Promise<void> {
-  await taskDB.update(id, updates);
+  await guardWrite("task.update", () => taskDB.update(id, updates));
 }

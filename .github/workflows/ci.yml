@@ -33,6 +33,14 @@ jobs:
 
       - name: Test
         run: pnpm test
+        env:
+          # A timezone that observes daylight saving, so the date code is
+          # actually exercised across a 23- and a 25-hour day. The project is
+          # developed in Africa/Lagos (UTC+1, no DST), where every day is
+          # exactly 24 hours and a streak stepping by 86,400,000 ms looks
+          # perfectly correct — so without this, the DST cases in
+          # features/progress and features/tasks assert nothing anywhere.
+          TZ: Europe/London
 
       - name: Build
         run: pnpm build

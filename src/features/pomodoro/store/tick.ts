@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { create } from "zustand";
 
 /**
@@ -70,6 +70,19 @@ export const useTickStore = create<TickStore>((set, get) => ({
 export function useTick(active: boolean): number {
   const ticking = useTickStore((state) => (active ? state.now : 0));
 
+  /*
+    A floor for the first render. `subscribe()` refreshes the shared instant,
+    but it runs in an effect — *after* the first paint — so that paint would
+    otherwise measure against whatever the store last held, which may be
+    frozen from before this component existed (the interval stops when the
+    last watcher leaves). On a three-minute break that rendered 03:01: a clock
+    reporting more time than is left, for one frame.
+
+    `Math.max` rather than an assignment, because the shared tick overtakes
+    this within the second and must win from then on.
+  */
+  const mountedAt = useRef(Date.now());
+
   useEffect(() => {
     if (!active) return;
 
@@ -78,7 +91,7 @@ export function useTick(active: boolean): number {
     return unsubscribe;
   }, [active]);
 
-  return active ? ticking : Date.now();
+  return active ? Math.max(ticking, mountedAt.current) : Date.now();
 }
 
 /** Test seam: drops the interval and the count between tests. */
