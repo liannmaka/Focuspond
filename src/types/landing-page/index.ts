@@ -39,7 +39,7 @@ export type FaqKey =
   | "no-account"
   | "vibe-switcher";
 
-export type FooterNavKey = "pricing" | "contact" | "getStarted";
+export type FooterNavKey = "pricing" | "contact" | "getStarted" | "waitlist";
 
 export interface NavLink {
   /** Section id; also the translation key under `marketing.nav`. */
@@ -88,7 +88,11 @@ export interface Testimonial {
   key: TestimonialKey;
 }
 
+/** Copy lives in `marketing.waitlist.items.<key>`; a literal union keeps
+ *  `t()` checked against the English catalog. */
+export type WaitlistKey = "focused-sessions" | "mindful-breaks" | "clarity";
+
 export interface Waitlist {
   Icon: LucideIcon;
-  benefit: string;
+  key: WaitlistKey;
 }

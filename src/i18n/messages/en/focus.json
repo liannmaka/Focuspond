@@ -4,7 +4,7 @@
   "blocks": "{done} of {total} focus blocks done",
   "back": "Back to today",
   "idle": {
-    "body": "{minutes} minutes on this one thing. The clock runs on its own — close the tab, reload, come back; it keeps the time for you.",
+    "body": "{minutes} minutes on this one thing. The clock runs on its own, so close the tab, reload, come back; it keeps the time for you.",
     "action": "Start {minutes} minutes"
   },
   "running": {
@@ -19,7 +19,7 @@
   },
   "missing": {
     "title": "That task isn't on this device",
-    "body": "It may have been deleted, or created in another browser — tasks live on the device that made them."
+    "body": "It may have been deleted, or created in another browser. Tasks live on the device that made them."
   },
   "break": {
     "eyebrow": "Mindful break",
@@ -36,7 +36,7 @@
       },
       "long-exhale": {
         "title": "One long exhale",
-        "body": "Breathe in through your nose, then let the air out slowly — twice as long as it took to come in."
+        "body": "Breathe in through your nose, then let the air out slowly, twice as long as it took to come in."
       },
       "one-breath": {
         "title": "Just one breath",
@@ -56,7 +56,7 @@
       },
       "do-nothing": {
         "title": "Do nothing",
-        "body": "Not your phone, not a quick email. Sit still and be a bit bored for five minutes — it is allowed."
+        "body": "Not your phone, not a quick email. Sit still and be a bit bored for five minutes. It is allowed."
       },
       "shoulder-roll": {
         "title": "Roll your shoulders",

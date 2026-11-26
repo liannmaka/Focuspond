@@ -389,7 +389,12 @@ and a row lands in `pomodoros`.
   tick and read a second high — 15:01 left on a session with 15:00 to go.
   `subscribe()` now refreshes the instant, not just the interval.
 
-- `TimerRing.tsx` — `elapsedFraction()` already returns the 0 → 1 it needs.
+- ~~`TimerRing.tsx`~~ — ✅ **done.** Sweeps clockwise from twelve around the
+  digits, fed by `elapsedFraction()`. `aria-hidden`: it says what the clock
+  already says, and nobody should have to hear a circle described. The sweep
+  is a stroke dash offset rather than an arc path, which would have to
+  special-case the half circle, and `motion-reduce` drops the transition so a
+  reader who asked for less motion still gets a moving clock.
 - Pause, if it is wanted, with the schema field it needs.
 
 ### M5 — Mindful breaks · ✅ done
@@ -517,8 +522,12 @@ frog, and accepts a reflection note that survives reload.
   anywhere, and dead controls are the fastest way to lose a stranger's trust.
 - `Sidebar.tsx` — the two bottom `IconButton`s (Sun, Settings) have no `onClick`.
   Give them destinations or remove them.
-- First run: a stranger lands on an empty `/home/all`. Seed 2–3 example tasks on
-  an empty DB, or add an inline hint. `tasks.list.empty` copy already exists.
+- ~~First run~~ — ✅ **done, and neither of the options here was the fix.**
+  Seeding example tasks starts the relationship with a chore and a small lie;
+  an inline hint on `/home/all` explains a screen that cannot teach anyway. The
+  real defect was the destination: the check-in pushed to `/home/all`, a flat
+  three-section list with no frog card. **It now lands on `/home/today`**,
+  where the empty frog card already asks the only question that matters.
 - ~~**Four aria-labels**~~ — ✅ **done, and this entry was wrong about why.**
   `Hero.tsx`, `HowItWorks.tsx`, `CtaBanner.tsx` and `ui/SignupButton.tsx` each
   carried `aria-label="Sign up for FocusPond"` over a visible "Start for free".
@@ -535,15 +544,28 @@ frog, and accepts a reflection note that survives reload.
   "Join waitlist" — exactly the voice-control mismatch described above, on a
   control nobody had flagged. Also removed.
 
-- **`/waitlist`** — repurpose, do not delete. It says _"Be the first to experience
-  FocusPond when we launch"_ on a site that says "Start for free", and it is
-  publicly reachable and indexable. Rewrite as _"Get notified when accounts and
-  backup land."_ Link it from `Footer.tsx`. That keeps the already-working
-  `src/app/api/waitlist/route.ts` earning its keep and builds the M8 list.
+- ~~**`/waitlist`** — repurpose~~ — ✅ **done.** It said "be the first to
+  experience FocusPond when we launch" on a site whose main button says "Start
+  for free" — a contradiction on a public, indexable page, and unlinked from
+  anywhere, which is how it drifted out of date unnoticed. It is now a list for
+  one specific promise, accounts and backup, and says the true thing: the app
+  works today and keeps everything on this device. Its copy moved into
+  `marketing.json` (it was the last hardcoded English on a localised page,
+  including the validation error), and the footer links it.
 - **Recommended (+3 hrs): local export/import JSON.** "Download my data" /
   "Restore from file". It answers _"what if I clear my browser?"_ with no server
   and no dishonesty, and it is what makes deferring accounts read as deliberate
   rather than unfinished.
+
+- ~~PWA install~~ — ✅ **the two things that would have spoiled the phone
+  test.** `start_url` was `/`, so tapping the home-screen icon opened the
+  marketing site rather than the app; it is `/home/today` now, and precached,
+  so a cold launch with no connection opens the app instead of the offline
+  screen. And iOS ignores manifest icons for Add to Home Screen, so without an
+  `apple-touch-icon` the installed icon was a screenshot of the page.
+
+  **Still needs HTTPS to test.** Service workers refuse `http://192.168.x.x`,
+  so a LAN address will not install — use a Vercel preview or a tunnel.
 
 **Done:** on a phone that has never opened it — install to home screen, enable
 airplane mode, check in, pick a frog, run a session, take a break, see the streak.

@@ -30,6 +30,9 @@ const withSerwist = withSerwistInit({
   register: true,
   additionalPrecacheEntries: [
     { url: "/", revision },
+    // The manifest start_url: a cold launch with no connection should open
+    // the app, not the offline screen.
+    { url: "/home/today", revision },
     { url: "/offline", revision },
   ],
 });

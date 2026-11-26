@@ -5,7 +5,9 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "FocusPond - Mood-Aware Productivity",
     short_name: "FocusPond",
     description: "Stay focused and productive with mood-based task suggestions",
-    start_url: "/",
+    // The app, not the marketing page. Tapping a home-screen icon and
+    // landing on the website is the clearest way to look unfinished.
+    start_url: "/home/today",
     display: "standalone",
     // Both match --surface (light) in src/styles/globals.css so the splash and
     // browser chrome are continuous with the app's ground.

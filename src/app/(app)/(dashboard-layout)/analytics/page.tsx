@@ -49,7 +49,14 @@ export default function ProgressPage() {
             </p>
 
             <p className="font-sora text-4xl leading-none font-semibold tracking-[-0.03em] text-ink tabular-nums md:text-5xl">
-              {progress ? t("streak.count", { count: progress.streak }) : "—"}
+              {progress ? (
+                t("streak.count", { count: progress.streak })
+              ) : (
+                <span
+                  className="inline-block h-8 w-40 animate-pulse rounded bg-ambient-soft align-middle"
+                  aria-hidden
+                />
+              )}
             </p>
 
             {/*
@@ -126,7 +133,12 @@ function Stat({
       </p>
 
       <p className="mt-2 font-sora text-3xl leading-none font-semibold tracking-[-0.02em] text-ink tabular-nums">
-        {value ?? "—"}
+        {value ?? (
+          <span
+            className="inline-block h-6 w-12 animate-pulse rounded bg-ambient-soft align-middle"
+            aria-hidden
+          />
+        )}
       </p>
 
       {caption && <p className="mt-1.5 text-xs text-ink-subtle">{caption}</p>}

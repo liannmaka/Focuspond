@@ -36,7 +36,14 @@ export default function FrogsSummary() {
             className="size-3.5 shrink-0 text-accent-text"
             aria-hidden
           />
-          {progress ? t("streak.count", { count: progress.streak }) : "—"}
+          {progress ? (
+            t("streak.count", { count: progress.streak })
+          ) : (
+            <span
+              className="inline-block h-3.5 w-20 animate-pulse rounded bg-ambient-soft align-middle"
+              aria-hidden
+            />
+          )}
         </p>
 
         <p className="mt-1 text-xs text-ink-subtle">

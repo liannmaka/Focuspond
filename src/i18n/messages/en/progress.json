@@ -4,7 +4,7 @@
     "label": "Day streak",
     "count": "{count, plural, =0 {No streak yet} =1 {# day} other {# days}}",
     "counted": "Today is counted.",
-    "open": "Today is still open — a session or your frog keeps it going.",
+    "open": "Today is still open. A session or your frog keeps it going.",
     "none": "Finish a focus session, or eat your frog, and this starts."
   },
   "frogs": {

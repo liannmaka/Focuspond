@@ -6,6 +6,7 @@ import { ArrowLeft, Play, Square } from "lucide-react";
 import Button from "@/components/ui/Button";
 import { useTask } from "@/features/tasks/hooks/useTasks";
 import BreakScreen from "./BreakScreen";
+import TimerRing from "./TimerRing";
 import { usePomodoro } from "../hooks/usePomodoro";
 import {
   DEFAULT_DURATION_MINUTES,
@@ -134,20 +135,23 @@ export default function FocusTimer({ taskId }: { taskId: string }) {
 
         {state.kind === "running" && (
           <>
-            <p className="font-sora text-[10px] font-bold tracking-[0.13em] text-ink-subtle uppercase">
-              {t("running.label")}
-            </p>
-            <p
-              // A clock that announces itself every second is unusable with a
-              // screen reader, so the live region is off and the element is
-              // labelled as a timer instead.
-              role="timer"
-              aria-live="off"
-              className="mt-1 font-sora text-6xl leading-none font-semibold tracking-[-0.03em] text-ink tabular-nums md:text-7xl"
-            >
-              {state.display}
-            </p>
-            <p className="mt-4 text-sm text-ink-muted">{t("running.hint")}</p>
+            <TimerRing fraction={state.fraction}>
+              <p className="font-sora text-[10px] font-bold tracking-[0.13em] text-ink-subtle uppercase">
+                {t("running.label")}
+              </p>
+              <p
+                // A clock that announces itself every second is unusable with a
+                // screen reader, so the live region is off and the element is
+                // labelled as a timer instead.
+                role="timer"
+                aria-live="off"
+                className="mt-1 font-sora text-5xl leading-none font-semibold tracking-[-0.03em] text-ink tabular-nums"
+              >
+                {state.display}
+              </p>
+            </TimerRing>
+
+            <p className="mt-5 text-sm text-ink-muted">{t("running.hint")}</p>
 
             <div className="mt-7">
               <Button

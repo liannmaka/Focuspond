@@ -52,7 +52,7 @@ export default function MoodCheckIn() {
         duration: 2000,
       });
 
-      router.push("/home/all");
+      router.push("/home/today");
     } catch (error) {
       console.error("Failed to save mood:", error);
 
@@ -73,7 +73,7 @@ export default function MoodCheckIn() {
   };
 
   const handleSkip = () => {
-    router.push("/home/all");
+    router.push("/home/today");
   };
 
   return (

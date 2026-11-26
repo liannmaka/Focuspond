@@ -31,7 +31,7 @@
   },
   "auth": {
     "backHome": "Back to home",
-    "notWired": "Accounts aren't connected yet — this form doesn't submit anywhere.",
+    "notWired": "Accounts aren't connected yet, so this form doesn't submit anywhere.",
     "fields": {
       "name": "Name",
       "namePlaceholder": "Your name",
@@ -81,7 +81,7 @@
   },
   "writeError": {
     "title": "Couldn’t save {what}",
-    "body": "Your device refused the write. Nothing else was lost — try again in a moment.",
+    "body": "Your device refused the write. Nothing else was lost, so try again in a moment.",
     "full": "This device is out of storage space. Free some up, then try again.",
     "ops": {
       "task": {
@@ -106,11 +106,11 @@
   "storage": {
     "blocked": {
       "title": "Another tab is holding your data",
-      "body": "FocusPond is open in another tab on an older version. Close that tab and reload this one — nothing is lost."
+      "body": "FocusPond is open in another tab on an older version. Close that tab and reload this one. Nothing is lost."
     },
     "failed": {
       "title": "FocusPond can’t reach its storage",
-      "body": "Your tasks live in this browser, and it is refusing access — often site data being blocked, or a private window. Anything you do now will not be kept."
+      "body": "Your tasks live in this browser, and it is refusing access. That is often site data being blocked, or a private window. Anything you do now will not be kept."
     }
   }
 }

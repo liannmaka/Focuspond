@@ -13,5 +13,8 @@ export const navLinks: NavLink[] = [
 export const footerNavLinks: FooterNavLinks[] = [
   { href: "/pricing", key: "pricing" },
   { href: "/contact", key: "contact" },
+  // The notify-me list. Reachable from the site at last: it was indexable
+  // but unlinked, which is how its copy drifted out of date unnoticed.
+  { href: "/waitlist", key: "waitlist" },
   { href: "/mood", key: "getStarted" },
 ];

@@ -90,6 +90,14 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: "/favicon.ico",
+    // iOS ignores the manifest icons for Add to Home Screen and falls back to
+    // a screenshot of the page unless this is here.
+    apple: "/icons/icon-192x192.png",
+  },
+  appleWebApp: {
+    capable: true,
+    title: "FocusPond",
+    statusBarStyle: "default",
   },
 };
 
