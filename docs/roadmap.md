@@ -1,10 +1,26 @@
 # FocusPond roadmap — MVP and beyond
 
-Status: **M0 – M3a complete** (`3fa1c18`). Next up: **M3b**.
+Status: **M0 – M6 complete**, plus most of M7 (`cdcc331`).
 
-Tasks are fully editable as of M3a — title, effort, estimate, date and delete.
-`taskDB.setFrog` is the last database function still without a caller; M3b gives
-it one.
+The whole MVP loop works: check in → the frog is chosen with your energy in mind
+→ a focus session that survives a reload → a mindful break → a streak and a
+day's-end note. 417 tests.
+
+**What is actually left**
+
+|                       |                                                                                                                                                               |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Needs a device        | The phone test below. Install, airplane mode, run the loop. Needs HTTPS: a Vercel preview or a tunnel, because a service worker refuses `http://192.168.x.x`. |
+| Needs a person        | Four nav translations want a fluent speaker (see below).                                                                                                      |
+| Optional, recommended | Local export/import JSON (M7, ~3 hrs). The honest answer to "what if I clear my browser?"                                                                     |
+| Post-MVP              | M8 accounts (19 hrs), M9 sync (14 hrs).                                                                                                                       |
+
+**If you are picking this up on another machine:** your tasks, moods, sessions
+and reflections do **not** travel — they are in IndexedDB on the device that
+made them (see [features/sync.md](features/sync.md)). A fresh laptop opens an
+empty, working app. Copy `.env.example` to `.env.local` before `pnpm build`;
+placeholder values are enough unless you are touching the waitlist or contact
+forms.
 
 > **Translations needing a native check.** The "Upcoming" rename (`3fa1c18`) was
 > written without a fluent speaker: `pcm` "Dey Come", `ig` "Na-abịa",

@@ -1,11 +1,23 @@
 # Sync (not yet built)
 
 FocusPond is **local-first**. IndexedDB (`src/lib/db/indexedDB.ts`) is the source
-of truth for tasks, moods and focus sessions. There is currently no backend sync
+of truth for tasks, moods, focus sessions and reflections. There is currently no
+backend sync
 for app data, and no auth — the app runs in guest mode.
 
 Supabase _is_ used, but only for the marketing surfaces:
 `src/app/api/waitlist/route.ts` and `src/app/api/contact-form/route.ts`.
+
+## What this means day to day
+
+Opening the app on a second machine gives you an **empty, fully working app**.
+Nothing is broken and nothing is lost — the data is still on the laptop that
+made it. The same is true of a different browser, a private window, and a
+browser whose site data has been cleared.
+
+The code is pushed; the data is not, and will not be until M8 and M9. If you
+want your own tasks on both machines before then, the export/import feature in
+M7 is the honest answer, and it is still unbuilt.
 
 ## Why there's no sync yet
 
