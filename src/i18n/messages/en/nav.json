@@ -13,5 +13,14 @@
     "focus": "Free focus",
     "settings": "Settings",
     "profile": "Profile"
+  },
+  "bottom": {
+    "tasks": "Tasks",
+    "focus": "Focus",
+    "progress": "Progress",
+    "mood": "Mood"
+  },
+  "filters": {
+    "heading": "Filter tasks"
   }
 }

@@ -1,4 +1,5 @@
 import StorageNotice from "@/components/system/StorageNotice";
+import TaskTabsBar from "../_components/TaskTabsBar";
 import BottomNav from "../_components/BottomNav";
 import TopBar from "../_components/TopBar";
 import SideBar from "../_components/Sidebar";
@@ -38,6 +39,7 @@ export default function PwaLayout({ children }: { children: React.ReactNode }) {
         <div className="lg:hidden h-full grid grid-rows-[1fr_64px]">
           <main className="overflow-y-auto bg-surface px-6 py-8 md:px-10 md:py-12">
             <StorageNotice />
+            <TaskTabsBar />
             {children}
           </main>
 

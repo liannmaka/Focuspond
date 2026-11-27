@@ -1,7 +1,6 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { House, Smile, ChartNoAxesCombined, Timer } from "lucide-react";
 // Restored with the Settings and Profile buttons at the foot of the rail:
 // import { Settings, User } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -11,46 +10,13 @@ import { memo } from "react";
 import LanguageSwitcher from "@/features/i18n/components/LanguageSwitcher";
 import ThemeToggle from "@/features/theme/components/ThemeToggle";
 import DashboardPanel from "../_layouts/DashboardPanel";
+import { sectionFor, sections } from "@/data/web-app/navigation";
 import IconButton from "./IconButton";
-
-const getCurrentSection = (pathname: string) => {
-  // Most specific first: the focus screen lives under /home but is its own
-  // place in the rail, and the general test would swallow it.
-  if (pathname.startsWith("/home/timer")) return "focus";
-  if (pathname.startsWith("/home")) return "home";
-  if (pathname.startsWith("/analytics")) return "analytics";
-  if (pathname.startsWith("/mood")) return "mood";
-  return "others";
-};
-
-/** `labelKey` resolves under `nav.rail` — icon-only buttons need a name. */
-const PRIMARY_NAV_ITEMS = [
-  { icon: House, href: "/home/all", tab: "home", labelKey: "tasks" },
-  {
-    icon: ChartNoAxesCombined,
-    href: "/analytics",
-    tab: "analytics",
-    labelKey: "progress",
-  },
-  // /tools was here and routed to a page that has never existed. /mood is the
-  // real third destination. Smile, not Sun — the theme toggle owns the sun at
-  // the foot of this rail, and two identical icons in one 56px column meaning
-  // different things is a coin toss. It also matches the TopBar's mood pill.
-  { icon: Smile, href: "/mood", tab: "mood", labelKey: "mood" },
-  /*
-    A session tied to no task. `/home/timer/[taskId]` has always accepted the
-    literal `free` and `pomodoroDB.start` an undefined task id, but nothing
-    linked to it — it was reachable only by typing the URL. It belongs in the
-    rail rather than on a task row, because the whole point of it is that it
-    has no task.
-  */
-  { icon: Timer, href: "/home/timer/free", tab: "focus", labelKey: "focus" },
-] as const;
 
 export default function SideBar() {
   const pathname = usePathname();
 
-  const currentSection = getCurrentSection(pathname);
+  const currentSection = sectionFor(pathname);
 
   return (
     <>
@@ -78,12 +44,12 @@ const IconRail = memo(({ currentSection }: { currentSection: string }) => {
   return (
     <nav className="h-full border-r border-line px-2 py-2 flex flex-col justify-between bg-surface-overlay">
       <div className="space-y-1">
-        {PRIMARY_NAV_ITEMS.map(({ icon, href, tab, labelKey }) => (
+        {sections.map(({ icon, href, section, key }) => (
           <IconButton
-            key={tab}
+            key={key}
             icon={icon}
-            label={t(labelKey)}
-            isActive={currentSection === tab}
+            label={t(key)}
+            isActive={currentSection === section}
             onClick={() => handleNavigation(href)}
           />
         ))}

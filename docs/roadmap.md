@@ -552,6 +552,18 @@ frog, and accepts a reflection note that survives reload.
   works today and keeps everything on this device. Its copy moved into
   `marketing.json` (it was the last hardcoded English on a localised page,
   including the validation error), and the footer links it.
+- ~~Mobile navigation~~ — ✅ **done.** The rail is `hidden lg:grid` and the
+  bottom bar carried the five task filters, so below `lg` there was no way to
+  reach Progress, Mood or a free focus session **at all**. The bottom bar now
+  mirrors the rail (Tasks · Focus · Progress · Mood), and the filters moved to
+  a scrollable chip row above the list, which is where a control that narrows
+  what is on screen belongs.
+
+  Both navigations and the rail now read one `sections` list and one
+  `sectionFor` rule in `src/data/web-app/navigation.ts`. They each had their
+  own before, which is how they came to disagree about what the app even
+  contains.
+
 - **Recommended (+3 hrs): local export/import JSON.** "Download my data" /
   "Restore from file". It answers _"what if I clear my browser?"_ with no server
   and no dishonesty, and it is what makes deferring accounts read as deliberate
